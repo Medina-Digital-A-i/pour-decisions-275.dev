@@ -1,0 +1,34 @@
+{
+  "name": "Pour Decisions — Order Ahead",
+  "short_name": "Pour Decisions",
+  "description": "Cold-pressed juice and clean fuel · 348 Loudon Rd, Albany NY",
+  "start_url": "./index.html",
+  "scope": "./",
+  "id": "/pour-decisions-app/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#FFF8EC",
+  "theme_color": "#1F4860",
+  "lang": "en-US",
+  "dir": "ltr",
+  "categories": ["food", "lifestyle", "health"],
+  "icons": [
+    { "src": "assets/favicon-16.png", "sizes": "16x16", "type": "image/png" },
+    { "src": "assets/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "assets/favicon-48.png", "sizes": "48x48", "type": "image/png" },
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Order Ahead", "short_name": "Order", "url": "./index.html#/order", "description": "Skip the line — order pickup" },
+    { "name": "Pour Pass", "short_name": "Pass", "url": "./index.html#/pass", "description": "Track stamps and rewards" },
+    { "name": "Browse Menu", "short_name": "Menu", "url": "./index.html#/menu", "description": "See all 14 pours" }
+  ],
+  "screenshots": [
+    { "src": "assets/og-image.png", "sizes": "1200x630", "type": "image/png", "form_factor": "wide" }
+  ],
+  "prefer_related_applications": false
+}

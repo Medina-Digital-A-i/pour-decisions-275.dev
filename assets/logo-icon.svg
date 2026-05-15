@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Pour Decisions icon">
+  <title>Pour Decisions Icon</title>
+
+  <!-- Background with rounded corners (iOS-style squircle radius) -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="#1F4860"/>
+
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="35%" r="60%">
+      <stop offset="0%"  stop-color="#2C5F78" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#1F4860" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#F5C76B"/>
+      <stop offset="100%" stop-color="#E8B547"/>
+    </linearGradient>
+    <linearGradient id="lemonRind" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#F5C76B"/>
+      <stop offset="100%" stop-color="#E8B547"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Subtle inner glow over background -->
+  <rect x="0" y="0" width="1024" height="1024" rx="224" ry="224" fill="url(#bgGlow)"/>
+
+  <!-- Single bent straw (J-shape) -->
+  <path d="M 470 460
+           L 470 250
+           Q 470 200 520 200
+           L 600 200
+           Q 640 200 640 240
+           L 640 280
+           L 590 280
+           L 590 250
+           L 540 250
+           Q 530 250 530 270
+           L 530 460 Z"
+        fill="#FFF8EC" stroke="#1F4860" stroke-width="18" stroke-linejoin="round"/>
+
+  <!-- Cup lid -->
+  <rect x="232" y="436" width="560" height="56" rx="22" ry="22"
+        fill="#FFF8EC" stroke="#1F4860" stroke-width="18"/>
+
+  <!-- Cup body -->
+  <path d="M 252 504
+           L 772 504
+           L 722 884
+           Q 722 924 682 924
+           L 342 924
+           Q 302 924 302 884 Z"
+        fill="#FFF8EC" stroke="#1F4860" stroke-width="18" stroke-linejoin="round"/>
+
+  <!-- Liquid fill -->
+  <path d="M 268 514
+           L 756 514
+           L 710 870
+           Q 710 906 674 906
+           L 350 906
+           Q 314 906 314 870 Z"
+        fill="url(#liquid)"/>
+
+  <!-- Liquid surface highlight -->
+  <ellipse cx="512" cy="514" rx="240" ry="20" fill="#FBE5A8" opacity="0.6"/>
+
+  <!-- Lemon half-wedge with segment lines (lower-left, rotated -18deg) -->
+  <g transform="translate(258, 760) rotate(-18)">
+    <!-- Outer rind: half-circle -->
+    <path d="M -150 0 A 150 150 0 0 1 150 0 Z"
+          fill="url(#lemonRind)" stroke="#1F4860" stroke-width="14" stroke-linejoin="round"/>
+    <!-- Inner flesh: smaller half-circle -->
+    <path d="M -126 0 A 126 126 0 0 1 126 0 Z"
+          fill="#F5C76B" stroke="#1F4860" stroke-width="6" stroke-linejoin="round"/>
+    <!-- Segment lines: 5 radial lines from center-of-diameter outward through the flesh, spaced 30° apart -->
+    <g stroke="#1F4860" stroke-width="7" stroke-linecap="round" fill="none">
+      <line x1="0" y1="0" x2="0"     y2="-122"/>
+      <line x1="0" y1="0" x2="-61"   y2="-105.6"/>
+      <line x1="0" y1="0" x2="-105.6" y2="-61"/>
+      <line x1="0" y1="0" x2="61"    y2="-105.6"/>
+      <line x1="0" y1="0" x2="105.6" y2="-61"/>
+    </g>
+    <!-- Center pith dot at the diameter midpoint -->
+    <circle cx="0" cy="0" r="12" fill="#FBE5A8" stroke="#1F4860" stroke-width="5"/>
+  </g>
+</svg>
