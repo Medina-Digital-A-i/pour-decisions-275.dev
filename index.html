@@ -1446,5 +1446,187 @@ function init(){
 }
 window.addEventListener('DOMContentLoaded', init);
 </script>
+
+<!-- PINA CHATBOT -->
+<style>
+/* ── Pina Chat Widget ── */
+#pina-fab{position:fixed;bottom:calc(80px + var(--safe-bot) + 12px);right:16px;z-index:200;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--orange));border:none;cursor:pointer;box-shadow:0 4px 18px rgba(232,181,71,.45);display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .2s ease,box-shadow .2s ease;}
+#pina-fab:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(232,181,71,.55);}
+#pina-fab .pina-badge{position:absolute;top:-4px;right:-4px;background:var(--pink);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;display:none;}
+
+#pina-chat{position:fixed;bottom:calc(80px + var(--safe-bot) + 76px);right:16px;z-index:201;width:min(340px, calc(100vw - 32px));background:var(--cream);border-radius:var(--r-xl);box-shadow:var(--shadow-pop);display:flex;flex-direction:column;overflow:hidden;transform:translateY(16px) scale(.96);opacity:0;pointer-events:none;transition:transform .3s cubic-bezier(.2,.7,.2,1),opacity .3s ease;max-height:min(480px,calc(100dvh - 200px));}
+#pina-chat.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto;}
+
+.pina-head{background:linear-gradient(135deg,var(--teal-deep),var(--teal));color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.pina-head .pina-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.pina-head .pina-info{flex:1;min-width:0;}
+.pina-head .pina-name{font-family:var(--f-display);font-weight:800;font-size:15px;line-height:1.2;}
+.pina-head .pina-status{font-size:11px;opacity:.8;font-weight:500;}
+.pina-head .pina-close{background:none;border:none;color:#fff;font-size:20px;cursor:pointer;padding:0;line-height:1;opacity:.8;flex-shrink:0;}
+.pina-head .pina-close:hover{opacity:1;}
+
+#pina-messages{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overscroll-behavior:contain;}
+.pina-msg{max-width:80%;padding:9px 13px;border-radius:18px;font-size:14px;line-height:1.45;word-break:break-word;animation:msgIn .2s ease both;}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.pina-msg.assistant{background:var(--teal-deep);color:#fff;align-self:flex-start;border-bottom-left-radius:6px;}
+.pina-msg.user{background:var(--gold);color:var(--ink);align-self:flex-end;border-bottom-right-radius:6px;font-weight:600;}
+
+.pina-typing{align-self:flex-start;background:var(--teal-deep);color:#fff;padding:9px 14px;border-radius:18px;border-bottom-left-radius:6px;display:none;align-items:center;gap:4px;}
+.pina-typing.show{display:flex;}
+.pina-typing span{width:6px;height:6px;background:rgba(255,255,255,.7);border-radius:50%;animation:blink 1.2s ease infinite;}
+.pina-typing span:nth-child(2){animation-delay:.2s;}
+.pina-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,80%,100%{opacity:.3}40%{opacity:1}}
+
+.pina-suggestions{display:flex;gap:6px;flex-wrap:wrap;padding:0 12px 10px;flex-shrink:0;}
+.pina-suggestion{background:#fff;border:1.5px solid var(--line);border-radius:var(--r-pill);padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;color:var(--teal);transition:background .15s,border-color .15s;white-space:nowrap;}
+.pina-suggestion:hover{background:var(--cream-warm);border-color:var(--teal);}
+
+.pina-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:#fff;flex-shrink:0;}
+#pina-input{flex:1;border:1.5px solid var(--line);border-radius:var(--r-pill);padding:9px 14px;font-family:var(--f-body);font-size:14px;outline:none;background:var(--cream);color:var(--ink);transition:border-color .15s;}
+#pina-input:focus{border-color:var(--teal);}
+#pina-send{background:var(--teal);color:#fff;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s,transform .15s;}
+#pina-send:hover{background:var(--teal-deep);transform:scale(1.05);}
+#pina-send:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+</style>
+
+<!-- Pina FAB -->
+<button id="pina-fab" aria-label="Chat with Pina">
+  <span>🍍</span>
+  <span class="pina-badge" id="pina-badge">1</span>
+</button>
+
+<!-- Pina Chat Window -->
+<div id="pina-chat" role="dialog" aria-label="Chat with Pina">
+  <div class="pina-head">
+    <div class="pina-avatar">🍍</div>
+    <div class="pina-info">
+      <div class="pina-name">Pina</div>
+      <div class="pina-status">Your Pour Decisions guide</div>
+    </div>
+    <button class="pina-close" id="pina-close" aria-label="Close chat">×</button>
+  </div>
+  <div id="pina-messages">
+    <div class="pina-typing" id="pina-typing">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="pina-suggestions" id="pina-suggestions">
+    <button class="pina-suggestion" data-msg="What's on the menu?">Menu</button>
+    <button class="pina-suggestion" data-msg="What are your hours?">Hours</button>
+    <button class="pina-suggestion" data-msg="Where are you located?">Location</button>
+    <button class="pina-suggestion" data-msg="Tell me about cleanses">Cleanses</button>
+  </div>
+  <div class="pina-input-row">
+    <input id="pina-input" type="text" placeholder="Ask Pina anything..." maxlength="300" autocomplete="off" />
+    <button id="pina-send" aria-label="Send">&#10148;</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  const fab       = document.getElementById('pina-fab');
+  const chat      = document.getElementById('pina-chat');
+  const closeBtn  = document.getElementById('pina-close');
+  const messagesEl= document.getElementById('pina-messages');
+  const inputEl   = document.getElementById('pina-input');
+  const sendBtn   = document.getElementById('pina-send');
+  const typingEl  = document.getElementById('pina-typing');
+  const suggestEl = document.getElementById('pina-suggestions');
+  const badge     = document.getElementById('pina-badge');
+
+  let isOpen = false;
+  let history = [];
+  let waiting = false;
+  let greeted = false;
+
+  function toggleChat() {
+    isOpen = !isOpen;
+    chat.classList.toggle('open', isOpen);
+    if (isOpen) {
+      badge.style.display = 'none';
+      if (!greeted) { greet(); greeted = true; }
+      setTimeout(() => inputEl.focus(), 350);
+    }
+  }
+
+  function greet() {
+    addMessage("Hey! I'm Pina 🍍 — your guide to Pour Decisions. Ask me about our menu, hours, cleanses, or anything else!", 'assistant');
+  }
+
+  function addMessage(text, role) {
+    const div = document.createElement('div');
+    div.className = 'pina-msg ' + role;
+    div.textContent = text;
+    messagesEl.insertBefore(div, typingEl);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function showTyping() {
+    typingEl.classList.add('show');
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function hideTyping() {
+    typingEl.classList.remove('show');
+  }
+
+  async function send(text) {
+    const msg = text.trim();
+    if (!msg || waiting) return;
+
+    waiting = true;
+    sendBtn.disabled = true;
+    inputEl.value = '';
+    suggestEl.style.display = 'none';
+
+    addMessage(msg, 'user');
+    showTyping();
+
+    try {
+      const res = await fetch('/api/pina', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg, history })
+      });
+      const data = await res.json();
+      hideTyping();
+      const reply = data.reply || "Sorry, I had a little hiccup! Try again or give us a call.";
+      addMessage(reply, 'assistant');
+      history.push({ role: 'user', content: msg });
+      history.push({ role: 'assistant', content: reply });
+    } catch (e) {
+      hideTyping();
+      addMessage("Sorry, I'm having a moment! Try again or call us directly.", 'assistant');
+    } finally {
+      waiting = false;
+      sendBtn.disabled = false;
+    }
+  }
+
+  fab.addEventListener('click', toggleChat);
+  closeBtn.addEventListener('click', toggleChat);
+
+  sendBtn.addEventListener('click', () => send(inputEl.value));
+  inputEl.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(inputEl.value); }
+  });
+
+  suggestEl.querySelectorAll('.pina-suggestion').forEach(btn => {
+    btn.addEventListener('click', () => send(btn.dataset.msg));
+  });
+
+  // Show badge after a short delay to draw attention on first visit
+  setTimeout(() => {
+    if (!isOpen) {
+      badge.style.display = 'flex';
+      badge.textContent = '1';
+    }
+  }, 3500);
+})();
+</script>
+
 </body>
 </html>
