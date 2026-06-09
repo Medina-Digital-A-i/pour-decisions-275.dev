@@ -1,7 +1,7 @@
 {
   "name": "Pour Decisions — Order Ahead",
   "short_name": "Pour Decisions",
-  "description": "Cold-pressed juice, smoothies, salads & wraps · 359 Broadway Blvd, Albany NY",
+  "description": "Cold-pressed juice, smoothies, salads & wraps · 359 Northern Boulevard, Albany NY",
   "start_url": "./index.html",
   "scope": "./",
   "id": "/pour-decisions-app/",
@@ -20,6 +20,7 @@
     { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
     { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [

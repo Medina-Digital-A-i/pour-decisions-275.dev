@@ -2,7 +2,7 @@
    v1.1 · stale-while-revalidate for shell, cache-first for assets,
    offline fallback to offline.html, network-only for cross-origin POSTs. */
 
-const VERSION = 'pd-v2.2.0';
+const VERSION = 'pd-v2.3.0';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -16,6 +16,10 @@ const SHELL_ASSETS = [
   './assets/favicon-32.png',
   './assets/favicon-48.png',
   './assets/apple-touch-icon.png',
+  './assets/icon-192.png',
+  './assets/icon-512.png',
+  './assets/icon-maskable-192.png',
+  './assets/icon-maskable-512.png',
   './assets/logo-icon-256.png',
   './assets/logo-icon-512.png',
   './assets/logo-icon.svg',

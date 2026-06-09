@@ -11,7 +11,7 @@
 <meta name="format-detection" content="telephone=yes" />
 <meta name="description" content="Pour Decisions — cold-pressed juices, smoothies, wellness shots, salads & wraps in Albany NY. Order ahead, book packages, earn Pour Pass rewards." />
 <meta property="og:title" content="Pour Decisions — Order Ahead" />
-<meta property="og:description" content="Cold-pressed juice, smoothies, salads & wraps · 359 Broadway Blvd, Albany NY" />
+<meta property="og:description" content="Cold-pressed juice, smoothies, salads & wraps · 359 Northern Boulevard, Albany NY" />
 <meta property="og:image" content="assets/og-image.png" />
 <meta property="og:type" content="website" />
 <title>Pour Decisions — Cold-Pressed Juice · Albany NY</title>
@@ -97,6 +97,24 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .app-header{position:fixed;top:0;left:0;right:0;z-index:100;padding:calc(8px + var(--safe-top)) 16px 8px;background:rgba(255,248,236,.92);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;}
 .app-header .logo-wrap{display:flex;align-items:center;flex:1;min-width:0}
 .app-header .logo-wrap img{height:44px;width:auto}
+/* Slide-out nav drawer */
+.drawer-scrim{position:fixed;inset:0;z-index:300;background:rgba(10,28,37,.5);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease}
+.drawer-scrim.show{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;bottom:0;left:0;z-index:301;width:82%;max-width:330px;background:var(--cream,#FFF8EC);transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:6px 0 30px rgba(0,0,0,.25);overflow-y:auto}
+.drawer.show{transform:translateX(0)}
+.drawer-head{background:linear-gradient(150deg,var(--teal,#1F4860),var(--teal-deep,#0a1c25));color:#fff;padding:calc(20px + var(--safe-top)) 20px 20px;display:flex;align-items:center;gap:12px}
+.drawer-head img{width:46px;height:46px;border-radius:12px}
+.drawer-head .dh-t{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:20px;line-height:1}
+.drawer-head .dh-s{font-size:11.5px;opacity:.8;margin-top:3px}
+.drawer-nav{padding:10px 0;flex:1}
+.drawer-nav a,.drawer-nav button{display:flex;align-items:center;gap:14px;width:100%;padding:14px 22px;background:none;border:0;text-align:left;font-size:15.5px;font-weight:600;color:var(--teal-deep,#0a1c25);cursor:pointer;text-decoration:none}
+.drawer-nav a:active,.drawer-nav button:active{background:rgba(31,72,96,.07)}
+.drawer-nav .di{width:26px;text-align:center;font-size:19px}
+.drawer-sep{height:1px;background:var(--line,#eadfce);margin:8px 22px}
+.drawer-foot{padding:16px 22px calc(20px + var(--safe-bot));border-top:1px solid var(--line,#eadfce)}
+.drawer-foot .addr{font-size:12.5px;color:var(--muted,#7a8a93);line-height:1.5}
+.drawer-foot .socials{display:flex;gap:10px;margin-top:12px}
+.drawer-foot .socials a{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--teal,#1F4860);color:#fff;font-size:16px}
 .loc-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:var(--r-pill);background:var(--teal);color:#fff;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-left:10px;white-space:nowrap;}
 .loc-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(163,230,53,.25);animation:beat 1.6s ease-in-out infinite}
 @keyframes beat{50%{transform:scale(1.4)}}
@@ -553,6 +571,36 @@ h3{font-size:22px;font-weight:700;font-style:italic}
   </button>
 </header>
 
+<!-- NAV DRAWER -->
+<div class="drawer-scrim" id="drawer-scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Menu">
+  <div class="drawer-head">
+    <img src="assets/logo-icon-256.png" alt="" />
+    <div><div class="dh-t">Pour Decisions</div><div class="dh-s">Cold-pressed · Albany NY</div></div>
+  </div>
+  <nav class="drawer-nav" id="drawer-nav">
+    <button data-route="home"><span class="di">🏠</span>Home</button>
+    <button data-route="menu"><span class="di">🥤</span>Order / Menu</button>
+    <button data-route="pass"><span class="di">★</span>Pour Pass</button>
+    <button data-route="calendar"><span class="di">📅</span>Events Calendar</button>
+    <button data-route="packages"><span class="di">🎁</span>Cleanses &amp; Packages</button>
+    <button data-route="account"><span class="di">👤</span>My Account</button>
+    <div class="drawer-sep"></div>
+    <button id="drawer-install"><span class="di">📲</span>Install the App</button>
+    <button data-route="admin"><span class="di">🔑</span>Owner Login</button>
+    <div class="drawer-sep"></div>
+    <a href="tel:+15185557687"><span class="di">📞</span>Call the Shop</a>
+    <a href="https://maps.google.com/?q=359+Northern+Boulevard+Albany+NY+12204" target="_blank" rel="noopener"><span class="di">📍</span>Get Directions</a>
+  </nav>
+  <div class="drawer-foot">
+    <div class="addr">359 Northern Boulevard<br/>Albany, NY 12204<br/>Open 7AM – 7PM daily</div>
+    <div class="socials">
+      <a href="https://instagram.com/pourdecisionsjuicebar" target="_blank" rel="noopener" aria-label="Instagram">📷</a>
+      <a href="https://facebook.com/pourdecisionsjuicebar" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+    </div>
+  </div>
+</aside>
+
 <main id="app">
 
 <!-- HOME -->
@@ -634,7 +682,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <img src="assets/logo-pour-decisions.png" alt="Pour Decisions" />
     <p class="tag">Pour with purpose.</p>
     <p class="info">
-      359 Broadway Blvd, Albany NY 12204<br/>
+      359 Northern Boulevard, Albany NY 12204<br/>
       <a href="tel:+15185557687">(518) 555-POUR</a> · Open 7AM – 7PM<br/>
       <a href="mailto:hello@pourdecisions.co">hello@pourdecisions.co</a><br/>
       Delivery on DoorDash &amp; Uber Eats
@@ -683,7 +731,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
       <button class="pickup-opt active" data-pickup="asap"><div class="l">ASAP</div><div class="v">~12 min</div></button>
       <button class="pickup-opt" data-pickup="schedule"><div class="l">Schedule</div><div class="v">Pick a time</div></button>
     </div>
-    <div class="field"><label>Pickup location</label><select><option>359 Broadway Blvd, Albany NY (Default)</option></select></div>
+    <div class="field"><label>Pickup location</label><select><option>359 Northern Boulevard, Albany NY (Default)</option></select></div>
   </div>
   <div class="checkout-section">
     <h3>Your info</h3>
@@ -723,7 +771,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <p>Ready in ~12 minutes</p>
   </div>
   <div class="confirm-info">
-    <div class="info-row"><span>Pickup</span><strong>359 Broadway Blvd</strong></div>
+    <div class="info-row"><span>Pickup</span><strong>359 Northern Boulevard</strong></div>
     <div class="info-row"><span>Order #</span><strong id="conf-num-2">PD-1042</strong></div>
     <div class="info-row"><span>Total</span><strong id="conf-total">$0.00</strong></div>
     <div class="info-row"><span>Pour Pass</span><strong>+1 stamp · 6/9</strong></div>
@@ -1055,6 +1103,10 @@ h3{font-size:22px;font-weight:700;font-style:italic}
       <div class="eyebrow">Ingredients</div>
       <div class="ingredients" id="sheet-ing"></div>
     </div>
+    <div class="opt-group" id="opt-choice-group" style="display:none">
+      <label id="opt-choice-label">Choice</label>
+      <div class="boost-row" id="opt-choice-row"></div>
+    </div>
     <div class="opt-group" id="size-group">
       <label>Size</label>
       <div class="size-grid" id="size-grid">
@@ -1069,7 +1121,6 @@ h3{font-size:22px;font-weight:700;font-style:italic}
         <button class="boost" data-boost="avocado">+ Avocado <b>$2</b></button>
         <button class="boost" data-boost="protein">+ Protein Powder <b>$3</b></button>
         <button class="boost" data-boost="chia">+ Chia Seeds <b>$1</b></button>
-        <button class="boost" data-boost="hemp">+ Hemp Seeds <b>$2</b></button>
         <button class="boost" data-boost="flax">+ Flax Seeds <b>$1</b></button>
         <button class="boost" data-boost="fruit">+ Extra Fruit <b>$2</b></button>
       </div>
@@ -1136,7 +1187,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 <script>
 "use strict";
 
-const PIC = (id) => `https://images.unsplash.com/${id}?w=600&q=70&auto=format&fit=crop`;
+const PIC = (id) => `https://images.unsplash.com/${id}?w=900&h=700&q=80&auto=format&fit=crop`;
 
 // Menu mirrors the in-store Pour Decisions menu board.
 // Juices & smoothies are sized (12/16/32oz); shots, salads & wraps are single-serve (sizes:false).
@@ -1166,7 +1217,7 @@ const MENU = [
    ing:['beet','apple','carrot','ginger'],
    desc:'Supports circulation and endurance. Earthy, sweet, unmistakable.',
    macros:{cal:150,protein:3,carbs:36,fat:0,sugar:28},
-   img:PIC('photo-1618556658017-fd80b6f8b94c')},
+   img:PIC('photo-1620916566398-39f1143ab7be')},
   // ── SMOOTHIES ──
   {id:'island-vibes',name:'Island Vibes',cat:'smoothies',price:11,
    ing:['mango','pineapple','banana','coconut milk'],
@@ -1178,9 +1229,9 @@ const MENU = [
    desc:'A pre-workout with a dessert problem. Rich and filling.',
    macros:{cal:420,protein:14,carbs:52,fat:18,sugar:30},
    img:PIC('photo-1553530666-ba11a7da3888')},
-  {id:'berry-bliss',name:'Berry Bliss',cat:'smoothies',price:10,
+  {id:'berry-bliss',name:'Berry Protein',cat:'smoothies',price:12,
    ing:['mixed berries','banana','protein powder','oat milk'],
-   desc:'Antioxidant-packed and built for recovery.',
+   desc:'Antioxidant-packed and built for recovery. 20g of protein.',
    macros:{cal:300,protein:20,carbs:44,fat:6,sugar:28},
    img:PIC('photo-1505252585461-04db1eb84625')},
   {id:'green-energy',name:'Green Energy',cat:'smoothies',price:11,
@@ -1198,12 +1249,12 @@ const MENU = [
    ing:['turmeric','ginger','lemon','black pepper'],
    desc:'Anti-inflammatory defense in a 2oz hit.',
    macros:{cal:30,protein:0,carbs:7,fat:0,sugar:5},
-   img:PIC('photo-1597306633535-fdba89e5ea30')},
+   img:PIC('photo-1607330289024-1535c6b4e1c1')},
   {id:'energy-shot',name:'Energy Shot',cat:'shots',price:5,sizes:false,
    ing:['beet','ginger','lemon'],
    desc:'Clean, natural energy. No jitters, no sugar crash.',
    macros:{cal:35,protein:1,carbs:8,fat:0,sugar:6},
-   img:PIC('photo-1556228720-da4e85bcdac5')},
+   img:PIC('photo-1622597467836-f3285f2131b8')},
   // ── FRESH SALADS ──
   {id:'garden-fresh-salad',name:'Garden Fresh Salad',cat:'salads',price:12,sizes:false,
    ing:['mixed greens','cucumbers','tomatoes','carrots','red onions'],
@@ -1245,7 +1296,20 @@ const MENU = [
    ing:['black beans','corn','avocado','lettuce','tomatoes'],
    desc:'Hearty black beans and avocado with a Southwest kick.',
    macros:{cal:460,protein:15,carbs:60,fat:18,sugar:7},
-   img:PIC('photo-1564093497595-593b96d80180')}
+   img:PIC('photo-1564093497595-593b96d80180')},
+  // ── SIGNATURE SALADS (with protein) ──
+  {id:'salmon-salad',name:'Salmon Salad',cat:'salads',price:16,sizes:false,
+   opts:{label:'Salmon preparation',choices:['Grilled','Baked']},
+   ing:['salmon','mixed greens','cucumbers','tomatoes','red onion','lemon'],
+   desc:'A generous fillet — grilled or baked — over a crisp garden salad. Protein-packed and clean.',
+   macros:{cal:420,protein:34,carbs:18,fat:24,sugar:6},
+   img:PIC('photo-1467003909585-2f8a72700288')},
+  {id:'shrimp-salad',name:'Shrimp Salad',cat:'salads',price:15,sizes:false,
+   opts:{label:'Shrimp',choices:['On the salad','On the side']},
+   ing:['shrimp','mixed greens','cucumbers','tomatoes','avocado','lemon'],
+   desc:'Seasoned shrimp served right on the greens or plated on the side — your call.',
+   macros:{cal:360,protein:30,carbs:16,fat:18,sugar:5},
+   img:PIC('photo-1432139555190-58524dae6a55')}
 ];
 
 // Add-on prices match the in-store menu board.
@@ -1253,7 +1317,6 @@ const BOOSTS = {
   avocado:{label:'Avocado',price:2},
   protein:{label:'Protein Powder',price:3},
   chia:{label:'Chia Seeds',price:1},
-  hemp:{label:'Hemp Seeds',price:2},
   flax:{label:'Flax Seeds',price:1},
   fruit:{label:'Extra Fruit',price:2}
 };
@@ -1525,7 +1588,7 @@ function openSheet(id){
   const item = MENU.find(m => m.id===id);
   if(!item) return;
   STATE.currentItem = item;
-  STATE.qty = 1; STATE.size = 16; STATE.boosts = new Set();
+  STATE.qty = 1; STATE.size = 16; STATE.boosts = new Set(); STATE.choice = null;
   document.getElementById('sheet-pic').style.backgroundImage = `url('${item.img}')`;
   document.getElementById('sheet-cat').textContent = item.cat;
   document.getElementById('sheet-name').textContent = item.name;
@@ -1543,8 +1606,19 @@ function openSheet(id){
   grid.querySelector('[data-size="16"] .price').textContent = '$' + item.price;
   grid.querySelector('[data-size="32"] .price').textContent = '$' + Math.round(item.price * 1.6);
   document.querySelectorAll('#size-grid .size-opt').forEach(o => o.classList.toggle('active', o.dataset.size==='16'));
+  // Item choices (e.g. salmon grilled/baked, shrimp on salad/side)
+  const choiceGroup = document.getElementById('opt-choice-group');
+  if(item.opts){
+    STATE.choice = item.opts.choices[0];
+    document.getElementById('opt-choice-label').textContent = item.opts.label;
+    document.getElementById('opt-choice-row').innerHTML = item.opts.choices
+      .map((c,i) => `<button class="boost${i===0?' active':''}" data-choice="${c}">${c}</button>`).join('');
+    choiceGroup.style.display = '';
+  } else {
+    choiceGroup.style.display = 'none';
+  }
   document.getElementById('size-group').style.display = item.sizes===false ? 'none' : '';
-  document.getElementById('boost-group').style.display = item.cat==='shots' ? 'none' : '';
+  document.getElementById('boost-group').style.display = (item.cat==='shots'||item.cat==='salads'||item.cat==='wraps') ? 'none' : '';
   document.querySelectorAll('#boost-row .boost').forEach(b => b.classList.remove('active'));
   document.getElementById('qty-n').textContent = '1';
   updateAddPrice();
@@ -1568,6 +1642,13 @@ document.querySelectorAll('#boost-row .boost').forEach(b => {
     updateAddPrice();
   });
 });
+// Single-select item choices (grilled/baked, on salad/on side)
+document.getElementById('opt-choice-row').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-choice]'); if(!btn) return;
+  document.querySelectorAll('#opt-choice-row .boost').forEach(x => x.classList.remove('active'));
+  btn.classList.add('active');
+  STATE.choice = btn.dataset.choice;
+});
 document.getElementById('qty-plus').addEventListener('click', () => { STATE.qty++; document.getElementById('qty-n').textContent = STATE.qty; updateAddPrice(); });
 document.getElementById('qty-minus').addEventListener('click', () => { if(STATE.qty>1){STATE.qty--; document.getElementById('qty-n').textContent = STATE.qty; updateAddPrice();} });
 
@@ -1587,6 +1668,7 @@ document.getElementById('btn-add-cart').addEventListener('click', () => {
   STATE.cart.push({
     id:item.id, name:item.name,
     size: item.sizes===false ? (item.cat==='shots' ? '2oz' : 'regular') : STATE.size+'oz',
+    choice: STATE.choice || '',
     boosts:[...STATE.boosts].map(b => BOOSTS[b] ? BOOSTS[b].label : b), qty:STATE.qty,
     price:unitPrice(), img:item.img, cat:item.cat
   });
@@ -1627,7 +1709,7 @@ function renderCart(){
           <div class="pic" style="background-image:url('${it.img}')"></div>
           <div>
             <h4>${it.name}</h4>
-            <div class="opts">${it.size}${it.boosts.length?' · +'+it.boosts.join(' +'):''} · qty ${it.qty}</div>
+            <div class="opts">${it.choice?it.choice+' · ':''}${it.size}${it.boosts.length?' · +'+it.boosts.join(' +'):''} · qty ${it.qty}</div>
             <button class="rm" data-rm="${i}">REMOVE</button>
           </div>
           <span class="price">$${(it.price*it.qty).toFixed(2)}</span>
@@ -2063,6 +2145,23 @@ document.getElementById('install-x').addEventListener('click', () => {
   localStorage.setItem('pd-install-dismissed','1');
 });
 document.getElementById('install-row').addEventListener('click', () => {
+  if(isStandalone()){ toast("You're already using the installed app 🎉"); return; }
+  triggerInstall();
+});
+
+// ── Nav drawer (top-left hamburger) ──
+const drawer = document.getElementById('drawer');
+const drawerScrim = document.getElementById('drawer-scrim');
+function openDrawer(){ drawer.classList.add('show'); drawerScrim.classList.add('show'); }
+function closeDrawer(){ drawer.classList.remove('show'); drawerScrim.classList.remove('show'); }
+document.getElementById('btn-menu-burger').addEventListener('click', openDrawer);
+drawerScrim.addEventListener('click', closeDrawer);
+// Any route button or link inside the drawer closes it after acting.
+document.getElementById('drawer-nav').addEventListener('click', (e) => {
+  if(e.target.closest('[data-route],a')) closeDrawer();
+});
+document.getElementById('drawer-install').addEventListener('click', () => {
+  closeDrawer();
   if(isStandalone()){ toast("You're already using the installed app 🎉"); return; }
   triggerInstall();
 });
