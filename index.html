@@ -41,6 +41,7 @@
   --orange:#FF6B35; --pink:#FF3D80;
   --lime:#A3E635; --lime-deep:#65A30D;
   --cyan:#22D3EE; --yellow:#FACC15;
+  --pine:#2E7D54; --pine-deep:#1B5E3F; --moss:#7FB069;
   --ink:#1A1A1A; --ink-soft:#3F3F46;
   --muted:#71717A; --line:rgba(31,72,96,.12); --white:#FFFFFF;
   --f-display:'Fraunces', ui-serif, Georgia, serif;
@@ -76,7 +77,8 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .container{padding:0 20px;max-width:520px;margin:0 auto}
 
 /* SPLASH */
-#splash{position:fixed;inset:0;z-index:200;background:radial-gradient(120% 80% at 50% 30%, #2a5a76 0%, var(--teal) 55%, var(--teal-deep) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .6s ease, visibility .6s ease;}
+#splash{position:fixed;inset:0;z-index:200;background:radial-gradient(120% 80% at 50% 30%, #2a5a76 0%, var(--teal) 50%, var(--pine-deep) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .6s ease, visibility .6s ease;}
+#splash .treeline{position:absolute;left:0;right:0;bottom:0;height:72px;opacity:.55}
 #splash .glow{position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle, rgba(232,181,71,.45) 0%, rgba(232,181,71,0) 65%);filter:blur(20px);animation:pulse 2.6s ease-in-out infinite;}
 #splash .splash-logo{width:min(78vw,360px);height:auto;filter:drop-shadow(0 12px 40px rgba(0,0,0,.4));animation:logoIn 1.2s cubic-bezier(.2,.7,.2,1) both;position:relative;z-index:2;}
 #splash .splash-tag{margin-top:16px;color:#FCEFD6;font-family:var(--f-num);letter-spacing:.4em;font-size:14px;opacity:0;animation:tagIn .9s ease .8s both;position:relative;z-index:2;}
@@ -114,7 +116,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .btn-lg{padding:18px 28px;font-size:17px}
 
 /* HOME */
-.hero{position:relative;border-radius:var(--r-xl);overflow:hidden;margin:14px 16px 0;background:radial-gradient(120% 80% at 80% 20%, rgba(255,107,53,.85), transparent 50%),radial-gradient(120% 80% at 20% 90%, rgba(255,61,128,.85), transparent 55%),linear-gradient(160deg, var(--teal) 0%, var(--teal-deep) 100%);color:#fff;padding:28px 22px 26px;min-height:380px;isolation:isolate;}
+.hero{position:relative;border-radius:var(--r-xl);overflow:hidden;margin:14px 16px 0;background:radial-gradient(120% 80% at 80% 15%, rgba(255,107,53,.95), transparent 52%),radial-gradient(110% 80% at 15% 95%, rgba(163,230,53,.55), transparent 50%),radial-gradient(120% 80% at 20% 45%, rgba(255,61,128,.75), transparent 55%),linear-gradient(160deg, var(--teal) 0%, var(--pine-deep) 100%);color:#fff;padding:28px 22px 80px;min-height:380px;isolation:isolate;}
 .hero::after{content:"";position:absolute;inset:0;background-image:url("https://images.unsplash.com/photo-1570696516188-ade861b84a49?w=900&q=70&auto=format&fit=crop");background-size:cover;background-position:center;mix-blend-mode:overlay;opacity:.32;z-index:-1;}
 .hero .eyebrow{color:var(--gold)}
 .hero h1{color:#fff;margin-top:8px}
@@ -155,11 +157,11 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .colorblock{margin:28px 0;padding:36px 24px;color:#fff;position:relative;overflow:hidden;text-align:center;}
 .colorblock h2{color:#fff}
 .colorblock p{margin:8px 0 18px;color:rgba(255,255,255,.92);max-width:34ch;margin-inline:auto;font-weight:500}
-.colorblock.orange{background:var(--orange)}
-.colorblock.pink{background:var(--pink)}
+.colorblock.orange{background:radial-gradient(110% 90% at 80% 0%, var(--yellow), transparent 55%),linear-gradient(150deg,var(--orange),#E5491D)}
+.colorblock.pink{background:radial-gradient(110% 90% at 15% 0%, var(--orange), transparent 50%),linear-gradient(150deg,var(--pink),#D11A60)}
 .colorblock.lime{background:var(--lime);color:var(--teal-deep)}
 .colorblock.lime h2,.colorblock.lime p{color:var(--teal-deep)}
-.colorblock.teal{background:var(--teal)}
+.colorblock.teal{background:radial-gradient(110% 90% at 85% 10%, rgba(163,230,53,.4), transparent 50%),linear-gradient(150deg,var(--teal),var(--pine-deep))}
 .colorblock .deco{position:absolute;pointer-events:none;opacity:.35}
 
 /* MENU */
@@ -368,6 +370,39 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .event-card .body p{font-size:12px;color:var(--muted);margin:0;font-weight:600}
 .event-card .pill{padding:4px 8px;border-radius:var(--r-pill);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#fff}
 
+/* PINE TREELINE — repeating silhouette, two layers for depth */
+.treeline{height:44px;pointer-events:none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='100' viewBox='0 0 70 100'%3E%3Cpath d='M35 5 L20 35 L27 35 L14 62 L23 62 L8 88 L31 88 L31 100 L39 100 L39 88 L62 88 L47 62 L56 62 L43 35 L50 35 Z' fill='%231B5E3F'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='100' viewBox='0 0 70 100'%3E%3Cpath d='M35 5 L20 35 L27 35 L14 62 L23 62 L8 88 L31 88 L31 100 L39 100 L39 88 L62 88 L47 62 L56 62 L43 35 L50 35 Z' fill='%232E7D54'/%3E%3C/svg%3E");
+  background-repeat:repeat-x,repeat-x;
+  background-size:auto 100%,auto 72%;
+  background-position:0 bottom,35px bottom;}
+.treeline.on-dark{filter:none;opacity:.9}
+.treeline.on-cream{opacity:.85;margin-top:28px}
+.hero .treeline{position:absolute;left:0;right:0;bottom:-1px;height:54px;opacity:.55;z-index:0}
+
+/* BOOK THE SPACE */
+.book-cta{margin:18px 16px 0;padding:22px;border-radius:var(--r-lg);position:relative;overflow:hidden;color:#fff;
+  background:radial-gradient(110% 90% at 85% 10%, rgba(163,230,53,.5), transparent 50%),linear-gradient(150deg, var(--pine) 0%, var(--pine-deep) 100%);box-shadow:var(--shadow-card);}
+.book-cta .eyebrow{color:var(--gold)}
+.book-cta h3{color:#fff;font-size:24px;margin:6px 0 4px}
+.book-cta p{font-size:13px;color:rgba(255,255,255,.88);margin:0 0 14px;max-width:32ch;font-weight:500}
+.book-cta .trees{position:absolute;right:10px;bottom:6px;font-size:38px;opacity:.5;letter-spacing:-10px}
+.btn-pine{background:var(--pine);color:#fff;box-shadow:0 6px 20px rgba(46,125,84,.4)}
+.book-card{margin:16px;background:#fff;border-radius:var(--r-lg);box-shadow:var(--shadow-card);padding:20px;border-top:6px solid var(--pine)}
+.book-card .field{margin-bottom:14px}
+.book-card label{display:block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--pine-deep);margin-bottom:6px}
+.book-card input,.book-card select,.book-card textarea{width:100%;padding:13px 14px;border-radius:var(--r-md);border:2px solid var(--line);background:var(--cream);color:var(--ink);font-weight:600}
+.book-card input:focus,.book-card select:focus,.book-card textarea:focus{outline:none;border-color:var(--pine)}
+.book-card textarea{resize:vertical;min-height:70px}
+.book-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.book-confirm{margin:16px;background:linear-gradient(150deg,var(--pine) 0%,var(--pine-deep) 100%);border-radius:var(--r-lg);color:#fff;padding:26px 22px;text-align:center;box-shadow:var(--shadow-pop)}
+.book-confirm .big{font-size:46px;margin-bottom:6px}
+.book-confirm h3{color:#fff;font-size:24px}
+.book-confirm .ref{display:inline-block;margin:12px 0;padding:8px 18px;border-radius:var(--r-pill);background:rgba(255,255,255,.16);font-family:var(--f-num);font-size:20px;letter-spacing:.12em;color:var(--gold)}
+.book-confirm p{font-size:13px;color:rgba(255,255,255,.88)}
+
 /* PACKAGES */
 .pkg-hero{margin:14px 16px;padding:24px 22px;border-radius:var(--r-xl);background:linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);color:#fff;position:relative;overflow:hidden;}
 .pkg-hero h2{color:#fff}
@@ -452,6 +487,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
   <span class="sparkle">✦</span><span class="sparkle">✦</span>
   <img class="splash-logo" src="assets/logo-pour-decisions.png" alt="Pour Decisions" />
   <div class="splash-tag">COLD-PRESSED · ALBANY NY</div>
+  <div class="treeline"></div>
 </div>
 
 <!-- HEADER -->
@@ -486,6 +522,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
       <button class="btn btn-ghost" style="border-color:#fff;color:#fff" data-route="packages">Book Pkgs</button>
     </div>
     <img class="hero-logo-stamp" src="assets/logo-pour-decisions.png" alt="" />
+    <div class="treeline"></div>
   </div>
 
   <div class="quick-actions">
@@ -548,6 +585,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <button class="btn btn-gold" data-route="packages">See All Packages</button>
   </div>
 
+  <div class="treeline on-cream"></div>
   <footer class="footer">
     <img src="assets/logo-pour-decisions.png" alt="Pour Decisions" />
     <p class="tag">Pour with purpose.</p>
@@ -721,6 +759,100 @@ h3{font-size:22px;font-weight:700;font-style:italic}
       <div id="cal-event-list"></div>
     </div>
   </div>
+  <div class="book-cta">
+    <span class="eyebrow">Host With Us</span>
+    <h3>Book the space</h3>
+    <p>Birthdays, team off-sites, wellness classes, pop-ups — our bar is yours after hours.</p>
+    <button class="btn btn-gold" data-route="book">Start a Booking →</button>
+    <span class="trees">🌲🌲🌲</span>
+  </div>
+</section>
+
+<!-- BOOK THE SPACE -->
+<section class="view" data-view="book">
+  <div class="container" style="padding-top:14px">
+    <div class="eyebrow" style="color:var(--pine)">Private Events</div>
+    <h1 style="font-size:clamp(34px,9vw,52px)">Your <em>pour</em>, your party.</h1>
+    <p style="color:var(--ink-soft);margin:8px 0 0;font-size:14px">Tell us about your event and we'll confirm within 24 hours. Juice bar, smoothie flights, and salad spreads included on request.</p>
+  </div>
+  <form class="book-card" id="book-form">
+    <div class="field"><label>Your name</label><input type="text" id="bk-name" placeholder="Jordan Rivers" required /></div>
+    <div class="field"><label>Email or phone</label><input type="text" id="bk-contact" placeholder="you@email.com / (518) 555-0123" required /></div>
+    <div class="book-row">
+      <div class="field"><label>Date</label><input type="date" id="bk-date" required /></div>
+      <div class="field"><label>Time window</label>
+        <select id="bk-time">
+          <option>Morning (7–11am)</option>
+          <option>Midday (11am–3pm)</option>
+          <option selected>Evening (5–9pm)</option>
+          <option>After hours (7–11pm)</option>
+        </select>
+      </div>
+    </div>
+    <div class="book-row">
+      <div class="field"><label>Event type</label>
+        <select id="bk-type">
+          <option>Birthday</option>
+          <option>Corporate / team event</option>
+          <option>Wellness class</option>
+          <option>Pop-up / market</option>
+          <option>Private buyout</option>
+        </select>
+      </div>
+      <div class="field"><label>Guests</label>
+        <select id="bk-size">
+          <option>Up to 10</option>
+          <option selected>10 – 25</option>
+          <option>25 – 50</option>
+          <option>50+</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Anything else?</label><textarea id="bk-notes" placeholder="Smoothie bar for 20, two vegan trays, birthday shout-out for Maya…"></textarea></div>
+    <button type="submit" class="btn btn-pine btn-block btn-lg">Request Booking 🌲</button>
+  </form>
+  <div class="book-confirm" id="book-confirm" style="display:none">
+    <div class="big">🌲🎉</div>
+    <h3>Request received!</h3>
+    <span class="ref" id="bk-ref">PD-EVT-0000</span>
+    <p id="bk-summary">We'll confirm by email within 24 hours.</p>
+    <button class="btn btn-gold" style="margin-top:14px" data-route="calendar">Back to Events</button>
+  </div>
+</section>
+
+<!-- OWNER TOOLS (staff only) -->
+<section class="view" data-view="admin">
+  <div class="container" style="padding-top:14px">
+    <div class="eyebrow" style="color:var(--pine)">Owner Tools</div>
+    <h1 style="font-size:clamp(34px,9vw,52px)">Post an <em>event</em></h1>
+    <p style="color:var(--ink-soft);margin:8px 0 0;font-size:14px">Events you post here go live on the app calendar and home feed instantly.</p>
+  </div>
+  <form class="book-card" id="admin-gate">
+    <div class="field"><label>Staff PIN</label><input type="password" inputmode="numeric" maxlength="6" id="ad-pin" placeholder="••••" autocomplete="off" /></div>
+    <button type="submit" class="btn btn-pine btn-block">Unlock Owner Tools</button>
+  </form>
+  <form class="book-card" id="admin-form" style="display:none">
+    <div class="field"><label>Event title</label><input type="text" id="ad-title" placeholder="Smoothie Saturday · Live DJ" required /></div>
+    <div class="book-row">
+      <div class="field"><label>Date</label><input type="date" id="ad-date" required /></div>
+      <div class="field"><label>Type</label>
+        <select id="ad-type">
+          <option value="special">Special</option>
+          <option value="class">Class</option>
+          <option value="popup">Pop-up</option>
+          <option value="cleanse">Cleanse</option>
+          <option value="buyout">Buyout</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Time</label><input type="text" id="ad-time" placeholder="4:00pm – 6:00pm" required /></div>
+    <div class="field"><label>Description</label><textarea id="ad-desc" placeholder="What's happening, what's included, how to join…"></textarea></div>
+    <button type="submit" class="btn btn-pine btn-block btn-lg">Publish Event 🌲</button>
+  </form>
+  <div class="cal-list" id="admin-list-wrap" style="padding:0 16px;display:none">
+    <h3>Your posted events</h3>
+    <div id="admin-event-list"></div>
+  </div>
 </section>
 
 <!-- PACKAGES -->
@@ -808,6 +940,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <button class="account-row" data-route="notifications"><span class="ico ic-4">🔔</span><div class="body"><h4>Notifications</h4><p>3 unread</p></div><span class="chev">›</span></button>
     <button class="account-row"><span class="ico ic-5">💳</span><div class="body"><h4>Payment Methods</h4><p>Visa •••• 4429</p></div><span class="chev">›</span></button>
     <button class="account-row"><span class="ico ic-6">⚙️</span><div class="body"><h4>Settings & Privacy</h4><p>Preferences, language, support</p></div><span class="chev">›</span></button>
+    <button class="account-row" id="owner-login"><span class="ico" style="background:var(--pine);color:#fff">🌲</span><div class="body"><h4>Owner Tools</h4><p>Staff only · post events & manage the board</p></div><span class="chev">›</span></button>
   </div>
   <div style="padding:30px 16px;text-align:center">
     <img src="assets/logo-pour-decisions.png" style="width:90px;opacity:.45;margin:0 auto" />
@@ -891,7 +1024,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <p id="m-desc">Bring a friend, sip a free pineapple-ginger pour. Live DJ, raffle, and 2x Pour Pass stamps.</p>
     <div class="actions">
       <button class="btn btn-ghost" id="m-close" style="flex:0 0 auto;padding:14px 18px">Close</button>
-      <button class="btn btn-primary" style="flex:1">RSVP →</button>
+      <button class="btn btn-primary" id="m-rsvp" style="flex:1">RSVP →</button>
     </div>
   </div>
 </div>
@@ -1069,7 +1202,22 @@ function buildEvents(){
     return {date:new Date(d.getFullYear(), d.getMonth(), d.getDate()), ...s};
   });
 }
-const EVENTS = buildEvents();
+// Owner-posted events live in localStorage and merge with the seed calendar.
+function loadOwnerEvents(){
+  try{
+    return (JSON.parse(localStorage.getItem('pd-owner-events')) || []).map(e => ({
+      ...e, date:new Date(e.iso + 'T12:00:00'), custom:true
+    }));
+  }catch(_){ return []; }
+}
+function saveOwnerEvents(list){
+  localStorage.setItem('pd-owner-events', JSON.stringify(list));
+}
+let EVENTS = [];
+function rebuildEvents(){
+  EVENTS = buildEvents().concat(loadOwnerEvents()).sort((a,b) => a.date - b.date);
+}
+rebuildEvents();
 
 const STATE = {
   cart:[], view:'home', filter:'all',
@@ -1080,13 +1228,18 @@ const STATE = {
 function go(view){
   STATE.view = view;
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.dataset.view===view));
-  const navMap = {home:'home',menu:'menu',cart:'menu',checkout:'menu',confirm:'home',calendar:'calendar',packages:'packages','pkg-detail':'packages',pass:'account',notifications:'account',account:'account'};
+  const navMap = {home:'home',menu:'menu',cart:'menu',checkout:'menu',confirm:'home',calendar:'calendar',book:'calendar',admin:'account',packages:'packages','pkg-detail':'packages',pass:'account',notifications:'account',account:'account'};
   document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.toggle('active', n.dataset.route===navMap[view]));
   window.scrollTo({top:0,behavior:'instant'});
   if(view==='cart') renderCart();
   if(view==='checkout') renderCheckoutSummary();
   if(view==='calendar') renderCalendar();
   if(view==='notifications') renderNotifications();
+  if(view==='book'){
+    document.getElementById('book-form').style.display='';
+    document.getElementById('book-confirm').style.display='none';
+  }
+  if(view==='admin') renderAdminList();
 }
 
 document.addEventListener('click', (e) => {
@@ -1453,10 +1606,105 @@ function openModal(ev){
   pill.textContent = EVENT_TYPES[ev.type].label;
   pill.style.background = EVENT_TYPES[ev.type].color;
   pill.style.color = (ev.type==='class'||ev.type==='special') ? 'var(--teal-deep)' : '#fff';
+  STATE.currentEvent = ev;
+  syncRsvpBtn(ev);
   modal.classList.add('show');
 }
 document.getElementById('m-close').addEventListener('click', () => modal.classList.remove('show'));
 modal.addEventListener('click', e => { if(e.target===modal) modal.classList.remove('show'); });
+
+// RSVP — toggle attendance per event (keyed by title + date)
+STATE.rsvps = new Set();
+const rsvpBtn = document.getElementById('m-rsvp');
+function rsvpKey(ev){ return ev.title + '|' + ev.date.toDateString(); }
+function syncRsvpBtn(ev){
+  const going = STATE.rsvps.has(rsvpKey(ev));
+  rsvpBtn.textContent = going ? "✓ You're going" : 'RSVP →';
+  rsvpBtn.classList.toggle('btn-pine', going);
+  rsvpBtn.classList.toggle('btn-primary', !going);
+}
+rsvpBtn.addEventListener('click', () => {
+  const ev = STATE.currentEvent; if(!ev) return;
+  const k = rsvpKey(ev);
+  if(STATE.rsvps.has(k)){ STATE.rsvps.delete(k); toast('RSVP removed'); }
+  else { STATE.rsvps.add(k); toast("You're on the list · " + ev.title); }
+  syncRsvpBtn(ev);
+});
+
+// BOOK THE SPACE — mock submit, consistent with the rest of the demo data
+document.getElementById('book-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('bk-name').value.trim();
+  const contact = document.getElementById('bk-contact').value.trim();
+  const date = document.getElementById('bk-date').value;
+  if(!name || !contact || !date){ toast('Please fill name, contact & date'); return; }
+  const type = document.getElementById('bk-type').value;
+  const time = document.getElementById('bk-time').value;
+  const size = document.getElementById('bk-size').value;
+  const ref = 'PD-EVT-' + String(Math.floor(1000 + Math.random()*9000));
+  document.getElementById('bk-ref').textContent = ref;
+  document.getElementById('bk-summary').textContent =
+    `${type} · ${date} · ${time} · ${size} guests. We'll confirm with ${name} within 24 hours.`;
+  document.getElementById('book-form').style.display = 'none';
+  document.getElementById('book-confirm').style.display = '';
+  window.scrollTo({top:0,behavior:'smooth'});
+  toast('Booking request sent 🌲');
+});
+
+// OWNER TOOLS — PIN-gated event publishing (PIN 7687 = "POUR" on a phone keypad).
+// Events persist in localStorage on this device; wiring to a shared backend is the
+// production step so posts sync to every customer's phone.
+STATE.admin = false;
+function syncAdminGate(){
+  document.getElementById('admin-gate').style.display = STATE.admin ? 'none' : '';
+  document.getElementById('admin-form').style.display = STATE.admin ? '' : 'none';
+  document.getElementById('admin-list-wrap').style.display = STATE.admin ? '' : 'none';
+}
+document.getElementById('owner-login').addEventListener('click', () => { syncAdminGate(); go('admin'); });
+document.getElementById('admin-gate').addEventListener('submit', e => {
+  e.preventDefault();
+  const pin = document.getElementById('ad-pin').value;
+  if(pin === '7687'){ STATE.admin = true; syncAdminGate(); renderAdminList(); toast('Welcome back, boss 🌲'); }
+  else toast('Wrong PIN');
+  document.getElementById('ad-pin').value = '';
+});
+function renderAdminList(){
+  const root = document.getElementById('admin-event-list');
+  const own = loadOwnerEvents().sort((a,b) => a.date - b.date);
+  root.innerHTML = own.length ? own.map((ev,i) => `
+    <div class="event-card">
+      <div class="date-stack">
+        <div class="mo">${['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][ev.date.getMonth()]}</div>
+        <div class="d">${ev.date.getDate()}</div>
+      </div>
+      <div class="body"><h4>${ev.title}</h4><p>${ev.time}</p></div>
+      <button class="btn btn-ghost" data-del-ev="${i}" style="padding:8px 12px;font-size:12px;border-color:var(--pink);color:var(--pink)">Delete</button>
+    </div>
+  `).join('') : '<div class="empty-state" style="padding:20px"><p>Nothing posted yet. Publish your first event above.</p></div>';
+  root.querySelectorAll('[data-del-ev]').forEach(b => {
+    b.addEventListener('click', () => {
+      const list = loadOwnerEvents().sort((a,b) => a.date - b.date);
+      list.splice(parseInt(b.dataset.delEv,10),1);
+      saveOwnerEvents(list.map(e => ({iso:e.iso,type:e.type,title:e.title,time:e.time,desc:e.desc})));
+      rebuildEvents(); renderAdminList(); renderHomeEvents();
+      toast('Event removed');
+    });
+  });
+}
+document.getElementById('admin-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const title = document.getElementById('ad-title').value.trim();
+  const iso = document.getElementById('ad-date').value;
+  const time = document.getElementById('ad-time').value.trim();
+  if(!title || !iso || !time){ toast('Title, date & time required'); return; }
+  const list = loadOwnerEvents().map(e2 => ({iso:e2.iso,type:e2.type,title:e2.title,time:e2.time,desc:e2.desc}));
+  list.push({iso, type:document.getElementById('ad-type').value, title, time,
+    desc:document.getElementById('ad-desc').value.trim() || 'Posted by the Pour Decisions crew.'});
+  saveOwnerEvents(list);
+  rebuildEvents(); renderAdminList(); renderHomeEvents();
+  e.target.reset();
+  toast('Event live on the calendar 🌲');
+});
 
 const PKGS = {
   sub:{title:'Weekly subscription',eyebrow:'Subscription',blurb:'Pick a tier. Skip or cancel anytime.',
