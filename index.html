@@ -678,9 +678,9 @@ h3{font-size:22px;font-weight:700;font-style:italic}
   </div>
   <div class="checkout-section">
     <h3>Your info</h3>
-    <div class="field"><label>Name</label><input type="text" value="Migs Money" /></div>
-    <div class="field"><label>Phone</label><input type="tel" placeholder="(518) 555-1234" /></div>
-    <div class="field"><label>Notes for the bar</label><textarea rows="2" placeholder="Extra ginger, no ice, etc."></textarea></div>
+    <div class="field"><label>Name</label><input type="text" id="co-name" placeholder="Your name" /></div>
+    <div class="field"><label>Phone</label><input type="tel" id="co-phone" placeholder="(518) 555-1234" /></div>
+    <div class="field"><label>Notes for the bar</label><textarea rows="2" id="co-notes" placeholder="Extra ginger, no ice, etc."></textarea></div>
   </div>
   <div class="checkout-section">
     <h3>Tip the team</h3>
@@ -694,9 +694,8 @@ h3{font-size:22px;font-weight:700;font-style:italic}
   <div class="checkout-section">
     <h3>Payment</h3>
     <div class="pay-method">
-      <span class="icon">VISA</span>
-      <div style="flex:1"><strong>•••• 4429</strong><br/><small style="color:var(--muted)">Default</small></div>
-      <span style="color:var(--muted);font-size:12px">CHANGE</span>
+      <span class="icon">💵</span>
+      <div style="flex:1"><strong>Pay at pickup</strong><br/><small style="color:var(--muted)">Card or cash at the counter</small></div>
     </div>
   </div>
   <div class="summary" id="checkout-summary"></div>
@@ -1534,6 +1533,11 @@ function renderCart(){
 }
 
 function renderCheckoutSummary(){
+  if(isSignedIn() && SESSION.user){
+    const n=document.getElementById('co-name'), p=document.getElementById('co-phone');
+    if(n && !n.value) n.value = SESSION.user.name||'';
+    if(p && !p.value) p.value = prettyPhone(SESSION.user.phone)||'';
+  }
   const t = cartTotals();
   document.getElementById('checkout-summary').innerHTML = `
     <div class="row"><span>Subtotal</span><span>$${t.subtotal.toFixed(2)}</span></div>
@@ -1556,14 +1560,37 @@ document.querySelectorAll('.pickup-opt').forEach(p => {
     p.classList.add('active');
   });
 });
-document.getElementById('btn-place-order').addEventListener('click', () => {
+document.getElementById('btn-place-order').addEventListener('click', async () => {
+  if(STATE.cart.length===0){ toast('Your bag is empty'); go('menu'); return; }
+  const name = (val('co-name')) || (SESSION.user && SESSION.user.name) || '';
+  const phone = normPhone(val('co-phone') || (SESSION.user && SESSION.user.phone) || '');
+  if(phone.length!==10){ toast('Add your mobile number — it earns your stamp & pickup text'); const p=document.getElementById('co-phone'); if(p) p.focus(); return; }
   const t = cartTotals();
-  const num = 'PD-' + Math.floor(1000 + Math.random()*9000);
-  document.getElementById('conf-num').textContent = '#' + num;
-  document.getElementById('conf-num-2').textContent = num;
-  document.getElementById('conf-total').textContent = '$' + t.total.toFixed(2);
-  STATE.cart = []; updateCartBadge();
-  go('confirm');
+  const pickEl = document.querySelector('.pickup-opt.active');
+  const items = STATE.cart.map(it => ({ name:it.name, qty:it.qty, size:it.size, price:it.price, boosts:it.boosts }));
+  const payload = { name, phone, items, subtotal:t.subtotal, tax:t.tax, tip:t.tip, total:t.total, pickup:(pickEl?pickEl.dataset.pickup:'asap'), notes:val('co-notes') };
+  const btn = document.getElementById('btn-place-order'); btn.disabled=true; btn.textContent='Placing…';
+  try{
+    let order;
+    if(DEV){
+      order = { num:'PD-'+Math.floor(1000+Math.random()*9000) };
+      if(isSignedIn() && SESSION.user){ SESSION.user.stamps=Math.min(9,(SESSION.user.stamps||0)+1); SESSION.user.orders=(SESSION.user.orders||0)+1; saveSession(); }
+    } else {
+      const r = await api('/api/orders', {method:'POST', body:payload});
+      order = r.order || {};
+      if(isSignedIn() && r.customer && normPhone(r.customer.phone)===normPhone(SESSION.user.phone)){
+        SESSION.user.stamps = r.customer.stars||0; SESSION.user.orders = r.customer.lifetime||0; saveSession();
+      }
+    }
+    document.getElementById('conf-num').textContent = '#' + (order.num||'PD');
+    document.getElementById('conf-num-2').textContent = order.num||'PD';
+    document.getElementById('conf-total').textContent = '$' + t.total.toFixed(2);
+    document.getElementById('conf-stamp').textContent = '+1 stamp' + (isSignedIn()&&SESSION.user?(' · '+Math.min(9,SESSION.user.stamps||0)+'/9'):'');
+    STATE.cart = []; updateCartBadge(); renderAccount(); renderPass();
+    go('confirm');
+  }catch(e){
+    toast(e.message || 'Could not place order — please try again');
+  }finally{ btn.disabled=false; btn.textContent='Place Order →'; }
 });
 
 function renderNotifications(){
