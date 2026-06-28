@@ -85,34 +85,36 @@ We already have Twilio. Add these to Vercel → **Settings → Environment Varia
 
 ---
 
-## 6. Point the real domain → pourdecisionjuicebar.com
+## 6. Point the real domain → pourdecisionsjuicebar.com
 
-Goal: the app lives at **pourdecisionjuicebar.com** instead of the `…vercel.app` URL.
-The domain currently points to the **Wix** site, so this moves it to the new app.
+**Correct domain (plural): `pourdecisionsjuicebar.com`.** (Not the singular
+"pourdecision…".) Its DNS is managed by **Wix** (nameservers ns8/ns9.wixdns.net).
 
-**Already done by me:** added `pourdecisionjuicebar.com` to the Vercel project
-`pour-decisions`. Now the DNS has to point at Vercel.
+**What's already true (you did this):** the Wix DNS already has Vercel's IP
+`76.76.21.21` on the root. ✅
 
-**Phebe — at wherever the domain's DNS is managed (Wix domain settings, or the
-registrar like GoDaddy/Google Domains):**
-1. Change/add these records:
-   | Type | Name/Host | Value |
-   |---|---|---|
-   | `A` | `@` (root) | `76.76.21.21` |
-   | `CNAME` | `www` | `cname.vercel-dns.com` |
-   (Remove the old Wix A/CNAME records for `@` and `www`.)
-2. Back in Vercel → project **pour-decisions → Settings → Domains** → the domain
-   should flip to **Valid / verified** within minutes–hours; Vercel auto-issues the
-   SSL certificate. Confirm the exact records there if Wix shows a conflict.
-3. ⚠️ **Do this AFTER steps 2–4** (deploy reconnected + database attached) so the
-   domain lands on a working build, not an error page.
+**Two fixes needed — both in the Vercel/Wix dashboards (the CLI can't, it reports
+"no access" to this domain — it's owned by your main Vercel account):**
+
+1. **Wix DNS → remove the leftover Wix record.** The root (`@`) currently has BOTH
+   `76.76.21.21` (Vercel ✅) **and** `185.230.63.107` (old Wix). Delete the Wix one so
+   only `76.76.21.21` remains. Also add `CNAME  www → cname.vercel-dns.com`.
+2. **Vercel dashboard → attach the domain to the right project.** `pourdecisionsjuicebar.com`
+   is currently assigned to a **different Vercel project**. Open Vercel → the project
+   that should serve the app (the one connected to GitHub `Medina-Digital-A-i/
+   pour-decisions-275.dev`) → **Settings → Domains → Add** `pourdecisionsjuicebar.com`
+   (Vercel will offer to move it from the other project — accept). It should then show
+   **Valid** and auto-issue SSL.
+
+⚠️ Do this **after** the deploy + database are working (§2–§4), so the domain lands on
+a live build, not an error.
 
 Notes:
-- This takes the domain **off the Wix site** — the Wix page stops being the live site
-  at that address (it still exists in your Wix account, just not at this domain).
-- No code change needed — the app uses relative URLs, so it works on any domain.
-- The app already installed on the Mac mini points at the old `vercel.app` URL —
-  once the domain is live, re-install it from **https://pourdecisionjuicebar.com**.
+- This takes the domain **off the Wix site** (the Wix page still exists, just not at
+  this address).
+- No code change needed — the app works on any domain.
+- The app installed on the Mac mini points at the old `vercel.app` URL — once the
+  domain is live, re-install it from **https://pourdecisionsjuicebar.com**.
 
 ---
 
