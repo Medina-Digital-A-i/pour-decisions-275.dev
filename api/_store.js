@@ -40,6 +40,23 @@ export async function writeList(key, list) {
   await kvCommand(['SET', key, JSON.stringify(list)]);
 }
 
+/* ── Generic key helpers (used by auth: codes + sessions) ── */
+export async function kvSet(key, value, ttlSec) {
+  const args = ['SET', key, String(value)];
+  if (ttlSec) args.push('EX', String(ttlSec));
+  return kvCommand(args);
+}
+export async function kvGet(key) { return kvCommand(['GET', key]); }
+export async function kvDel(key) { return kvCommand(['DEL', key]); }
+
+/** Resolve the signed-in phone from an `x-session` token, or null. */
+export async function getSessionPhone(req) {
+  if (!kvConfigured()) return null;
+  const token = (req.headers && req.headers['x-session']) || '';
+  if (!token) return null;
+  try { return (await kvGet(`pd:session:${token}`)) || null; } catch { return null; }
+}
+
 /** Shared admin PIN check. Defaults to 7687 ("POUR") until ADMIN_PIN is set. */
 export function checkPin(req) {
   const expected = process.env.ADMIN_PIN || '7687';

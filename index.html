@@ -485,7 +485,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
   </div>
   <button class="icon-btn" aria-label="Notifications" data-route="notifications">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 7 3 9H3c0-2 3-2 3-9Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 20a2 2 0 0 0 4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    <span class="badge" id="notif-count">3</span>
+    <span class="badge" id="notif-count" style="display:none">0</span>
   </button>
   <button class="icon-btn" aria-label="Cart" data-route="cart">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.5 12.5A2 2 0 0 0 9.5 18h8.5l2-9H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.4" fill="currentColor"/><circle cx="17" cy="21" r="1.4" fill="currentColor"/></svg>
@@ -719,7 +719,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <div class="info-row"><span>Pickup</span><strong>348 Loudon Rd</strong></div>
     <div class="info-row"><span>Order #</span><strong id="conf-num-2">PD-1042</strong></div>
     <div class="info-row"><span>Total</span><strong id="conf-total">$0.00</strong></div>
-    <div class="info-row"><span>Pour Pass</span><strong>+1 stamp · 6/9</strong></div>
+    <div class="info-row"><span>Pour Pass</span><strong id="conf-stamp">+1 stamp</strong></div>
   </div>
   <div class="container" style="margin-top:14px">
     <button class="btn btn-primary btn-block btn-lg" data-route="home">Back to Home</button>
@@ -737,32 +737,13 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <div class="eyebrow">Loyalty</div>
     <h1 style="font-size:clamp(34px,9vw,52px)">Pour <em>Pass</em></h1>
   </div>
-  <div class="pass-card">
-    <div class="eyebrow">Member Since 2025</div>
-    <div class="name">Migs Money</div>
-    <div class="num">5<small>/9 stamps</small></div>
-    <div class="progress"><span></span></div>
-    <div class="lbl">4 more pours and your 10th is free</div>
-  </div>
-  <div class="section-h"><h2 style="font-size:24px">Stamp card</h2></div>
-  <div class="stamps">
-    <div class="stamp filled"></div>
-    <div class="stamp filled"></div>
-    <div class="stamp filled"></div>
-    <div class="stamp filled"></div>
-    <div class="stamp filled"></div>
-    <div class="stamp next"><span class="n">6</span></div>
-    <div class="stamp"><span class="n">7</span></div>
-    <div class="stamp"><span class="n">8</span></div>
-    <div class="stamp"><span class="n">9</span></div>
-    <div class="stamp" style="background:var(--gold)"><span class="n" style="color:var(--teal-deep);opacity:1">★</span></div>
-  </div>
+  <div id="pass-body"></div>
   <div class="section-h"><h2 style="font-size:24px">Rewards Vault</h2></div>
   <div class="reward-grid">
-    <div class="reward"><div class="hd"><span class="ico">🥤</span><h4>Free 16oz Pour</h4></div><p>Any green or citrus juice</p><span class="pts">FREE @ 9</span></div>
-    <div class="reward"><div class="hd"><span class="ico">🎁</span><h4>Birthday Bottle</h4></div><p>32oz on your big day</p><span class="pts">UNLOCKED</span></div>
-    <div class="reward"><div class="hd"><span class="ico">⚡</span><h4>2x Stamp Tuesday</h4></div><p>Double up every Tuesday</p><span class="pts">ACTIVE</span></div>
-    <div class="reward locked"><div class="hd"><span class="ico">👑</span><h4>VIP Tier</h4></div><p>$200 spend unlocks 15% off</p><span class="pts">$140 / $200</span></div>
+    <div class="reward"><div class="hd"><span class="ico">🥤</span><h4>Free 16oz Pour</h4></div><p>Any green or citrus juice</p><span class="pts">@ 9 STAMPS</span></div>
+    <div class="reward"><div class="hd"><span class="ico">🎁</span><h4>Birthday Bottle</h4></div><p>32oz on your big day</p><span class="pts">MEMBERS</span></div>
+    <div class="reward"><div class="hd"><span class="ico">⚡</span><h4>2x Stamp Tuesday</h4></div><p>Double stamps every Tuesday</p><span class="pts">WEEKLY</span></div>
+    <div class="reward"><div class="hd"><span class="ico">👑</span><h4>VIP Tier</h4></div><p>$200 lifetime spend unlocks 15% off</p><span class="pts">@ $200</span></div>
   </div>
   <div style="padding:24px 16px;text-align:center">
     <p class="script" style="color:var(--teal);font-size:22px;margin:0">Loyalty that actually pours back.</p>
@@ -872,24 +853,12 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <div class="eyebrow">Profile</div>
     <h1 style="font-size:clamp(34px,9vw,52px)">My <em>account</em></h1>
   </div>
-  <div class="profile-hero">
-    <svg class="palm palm-r" viewBox="0 0 100 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M48 180 C46 155 43 128 44 105 C45 88 46 72 50 55 C51 44 53 35 55 25 C56 18 58 14 60 14 C62 14 64 18 65 25 C67 35 69 44 70 55 C74 72 75 88 76 105 C77 128 74 155 72 180Z"/><path d="M58 28 C48 20 32 10 12 16 C16 24 32 30 50 32Z"/><path d="M57 22 C46 8 38 -6 20 0 C28 14 42 22 56 26Z"/><path d="M56 18 C50 4 50 -10 62 -14 C64 2 62 14 60 22Z"/><path d="M62 26 C74 18 90 10 108 16 C104 24 88 30 70 32Z"/><path d="M63 22 C74 8 82 -6 100 0 C92 14 78 22 64 26Z"/></svg>
-    <div class="av">M</div>
-    <h2 style="font-size:26px">Migs Money</h2>
-    <p>Member · 5/9 stamps · 12 orders · since 2025</p>
-  </div>
-  <div class="account-list">
-    <button class="account-row" data-route="pass"><span class="ico ic-1">★</span><div class="body"><h4>Pour Pass</h4><p>5 of 9 stamps · 4 from your next free pour</p></div><span class="chev">›</span></button>
-    <button class="account-row"><span class="ico ic-2">📦</span><div class="body"><h4>Order History</h4><p>12 orders · Last: 2 days ago</p></div><span class="chev">›</span></button>
-    <button class="account-row" data-route="packages"><span class="ico ic-3">🔄</span><div class="body"><h4>My Subscriptions</h4><p>1 active · ships every Tuesday</p></div><span class="chev">›</span></button>
-    <button class="account-row" data-route="notifications"><span class="ico ic-4">🔔</span><div class="body"><h4>Notifications</h4><p>3 unread</p></div><span class="chev">›</span></button>
-    <button class="account-row"><span class="ico ic-5">💳</span><div class="body"><h4>Payment Methods</h4><p>Visa •••• 4429</p></div><span class="chev">›</span></button>
-    <button class="account-row"><span class="ico ic-6">⚙️</span><div class="body"><h4>Settings & Privacy</h4><p>Preferences, language, support</p></div><span class="chev">›</span></button>
-  </div>
+  <div id="account-body"></div>
   <div style="padding:30px 16px;text-align:center">
     <img src="assets/logo-pour-decisions.png" style="width:90px;opacity:.45;margin:0 auto" />
     <p class="script" style="color:var(--teal);font-size:20px;margin-top:6px">Pour with purpose.</p>
-    <p style="color:var(--muted);font-size:12px;margin-top:14px">Pour Decisions v2.0 · Albany NY</p>
+    <p style="color:var(--muted);font-size:12px;margin-top:14px">Pour Decisions · Albany NY</p>
+    <button data-admin-open style="margin-top:12px;background:none;border:none;color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.04em;cursor:pointer;text-decoration:underline">Owner / Staff login →</button>
   </div>
 </section>
 
@@ -902,6 +871,15 @@ h3{font-size:22px;font-weight:700;font-style:italic}
   <div class="notif-list" id="notif-list"></div>
 </section>
 
+<!-- ADMIN / OWNER DASHBOARD -->
+<section class="view" data-view="admin">
+  <div class="container" style="padding-top:14px">
+    <div class="eyebrow">Owner Tools</div>
+    <h1 style="font-size:clamp(30px,8vw,46px)">Dashboard</h1>
+  </div>
+  <div id="admin-body"></div>
+</section>
+
 </main>
 
 <!-- BOTTOM NAV -->
@@ -912,6 +890,31 @@ h3{font-size:22px;font-weight:700;font-style:italic}
   <button class="nav-item" data-route="packages"><span class="ico">🎁</span><span>Pkgs</span></button>
   <button class="nav-item" data-route="account"><span class="ico">◐</span><span>Me</span></button>
 </nav>
+
+<!-- AUTH SHEET -->
+<div class="scrim" id="auth-scrim"></div>
+<div class="sheet" id="auth-sheet" aria-label="Sign in">
+  <div class="grab"></div>
+  <div style="position:relative;padding:8px 22px 34px">
+    <button class="icon-btn" id="auth-close" aria-label="Close" style="position:absolute;right:14px;top:-2px;color:var(--teal-deep)">✕</button>
+    <div id="auth-phone-step">
+      <div class="eyebrow" style="color:var(--gold)">Pour Pass</div>
+      <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:var(--teal-deep);margin:2px 0 6px">Sign in</h2>
+      <p style="color:var(--muted);font-size:14px;margin:0 0 16px">Your mobile number is your Pour Pass. We'll text you a 6-digit code — no password to remember.</p>
+      <div class="field"><label>Mobile number</label><input type="tel" id="auth-phone" inputmode="tel" autocomplete="tel" placeholder="(518) 555-0123" /></div>
+      <button class="btn btn-primary btn-block btn-lg" id="auth-send">Text me a code</button>
+    </div>
+    <div id="auth-code-step" hidden>
+      <div class="eyebrow" style="color:var(--gold)">Verify</div>
+      <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:var(--teal-deep);margin:2px 0 6px">Enter code</h2>
+      <p style="color:var(--muted);font-size:14px;margin:0 0 16px">Sent to <strong id="auth-phone-echo"></strong> · <button id="auth-back" style="background:none;border:none;color:var(--teal);font-weight:700;cursor:pointer;padding:0;font-size:14px">change</button></p>
+      <div class="field"><label>6-digit code</label><input type="tel" id="auth-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="------" style="letter-spacing:.4em;font-size:20px" /></div>
+      <div class="field" id="auth-name-field" hidden><label>Your first name</label><input type="text" id="auth-name" autocomplete="given-name" placeholder="So we know what to call you" /></div>
+      <button class="btn btn-primary btn-block btn-lg" id="auth-verify">Verify &amp; sign in</button>
+    </div>
+    <p id="auth-msg" style="text-align:center;font-size:13px;margin:12px 0 0;min-height:18px"></p>
+  </div>
+</div>
 
 <!-- ITEM SHEET -->
 <div class="scrim" id="scrim"></div>
@@ -1058,13 +1061,9 @@ const MENU = [
    img:PIC('photo-1597306633535-fdba89e5ea30')}
 ];
 
-const NOTIFICATIONS = [
-  {ico:'🥤',color:'var(--orange)',title:'Order PD-1041 ready for pickup',body:'Grab it within 20 minutes for peak freshness.',t:'2 MIN AGO',unread:true},
-  {ico:'★',color:'var(--gold)',title:'You unlocked 5 stamps!',body:'4 more pours and your 10th is on us.',t:'2 DAYS AGO',unread:true},
-  {ico:'📅',color:'var(--cyan)',title:'Pina Power Hour Saturday',body:'4-6pm · DJ + 2x stamp · RSVP now',t:'YESTERDAY',unread:true},
-  {ico:'🎁',color:'var(--pink)',title:'Subscription ships Tuesday',body:'12 bottles · greens-heavy mix · changes close Sun 9pm',t:'3 DAYS AGO',unread:false},
-  {ico:'⚡',color:'var(--lime)',title:'Tuesday = 2x stamps',body:'Your weekly reminder.',t:'5 DAYS AGO',unread:false}
-];
+// Notifications are per-user; populated from the signed-in member's feed.
+// Empty until the backend (orders/loyalty) sends real activity.
+const NOTIFICATIONS = [];
 
 const EVENT_TYPES = {
   cleanse:{label:'Cleanse',color:'var(--orange)'},
@@ -1090,13 +1089,35 @@ function buildEvents(){
     {offset:44,type:'class',title:'Yoga & Juice · Washington Park',time:'8:00am – 10:00am',desc:'45-min flow plus cold-pressed shot. $25 includes both.'},
     {offset:52,type:'buyout',title:'Corporate Buyout · CDPHP',time:'12pm – 2pm',desc:'Closed lunch hour for private corporate event.'}
   ];
-  return seeds.map(s => {
+  return seeds.map((s,i) => {
     const d = new Date(today);
     d.setDate(d.getDate() + s.offset);
-    return {date:new Date(d.getFullYear(), d.getMonth(), d.getDate()), ...s};
+    return {id:'seed'+i, date:new Date(d.getFullYear(), d.getMonth(), d.getDate()), ...s};
   });
 }
-const EVENTS = buildEvents();
+let EVENTS = buildEvents();
+
+// Events come from the backend (/api/events) so the owner dashboard controls them.
+// Local preview (no serverless) uses an on-device store seeded from the samples
+// above so add/edit/delete is testable; pre-launch prod with no DB keeps the samples.
+function isoOf(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function evFromApi(e){ return { id:e.id, date:new Date(e.iso+'T00:00:00'), type:e.type||'special', title:e.title, time:e.time||'', desc:e.desc||'' }; }
+function devEvents(){
+  try{ const r=localStorage.getItem('pd_dev_events'); if(r) return JSON.parse(r); }catch{}
+  const seed = buildEvents().map((e,i)=>({ id:'ev'+i, iso:isoOf(e.date), type:e.type, title:e.title, time:e.time, desc:e.desc }));
+  localStorage.setItem('pd_dev_events', JSON.stringify(seed));
+  return seed;
+}
+async function loadEvents(){
+  try{
+    const r = await api('/api/events');
+    if(r && r.configured && Array.isArray(r.events)) EVENTS = r.events.map(evFromApi);
+    else if(DEV) EVENTS = devEvents().map(evFromApi);
+  }catch(e){ if(DEV) EVENTS = devEvents().map(evFromApi); }
+  EVENTS.sort((a,b)=>a.date-b.date);
+  renderHomeEvents();
+  if(STATE.view==='calendar') renderCalendar();
+}
 
 const STATE = {
   cart:[], view:'home', filter:'all',
@@ -1114,6 +1135,184 @@ function go(view){
   if(view==='checkout') renderCheckoutSummary();
   if(view==='calendar') renderCalendar();
   if(view==='notifications') renderNotifications();
+  if(view==='account') renderAccount();
+  if(view==='pass') renderPass();
+  if(view==='admin') renderAdmin();
+}
+
+// ── Session / accounts ──
+// Identity is the customer's mobile number. Sign-in = phone + 6-digit SMS code
+// verified server-side via /api/auth. On localhost with no serverless backend
+// we fall back to an on-device per-phone store so the flow is testable in preview.
+const DEV = ['localhost','127.0.0.1'].includes(location.hostname);
+const SESSION = { token:null, user:null };
+
+function loadSession(){
+  try{ const s = JSON.parse(localStorage.getItem('pd_session')||'null'); if(s && s.token){ SESSION.token=s.token; SESSION.user=s.user; } }catch{}
+}
+function saveSession(){ localStorage.setItem('pd_session', JSON.stringify({token:SESSION.token, user:SESSION.user})); }
+function isSignedIn(){ return !!SESSION.token; }
+function signOut(){
+  SESSION.token=null; SESSION.user=null; localStorage.removeItem('pd_session');
+  renderAccount(); renderPass(); updateNotifBadge(); go('home'); toast('Signed out');
+}
+
+async function api(path, opts={}){
+  const headers = Object.assign({'Content-Type':'application/json'}, opts.headers||{});
+  if(SESSION.token) headers['x-session'] = SESSION.token;
+  const res = await fetch(path, { method:opts.method||'GET', headers, body: opts.body?JSON.stringify(opts.body):undefined });
+  let data=null; try{ data=await res.json(); }catch{}
+  if(!res.ok) throw Object.assign(new Error((data&&data.error)||('HTTP '+res.status)), {status:res.status, data});
+  return data;
+}
+
+function normPhone(p){ return String(p||'').replace(/\D/g,'').replace(/^1(?=\d{10}$)/,''); }
+function prettyPhone(p){ const d=normPhone(p); return d.length===10 ? `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}` : (p||''); }
+
+// On-device fallback store (local preview only — real data lives server-side).
+function devUsers(){ try{ return JSON.parse(localStorage.getItem('pd_dev_users')||'{}'); }catch{ return {}; } }
+function devSaveUser(u){ const all=devUsers(); all[u.phone]=u; localStorage.setItem('pd_dev_users', JSON.stringify(all)); }
+
+async function authRequestCode(phone){
+  try{ return await api('/api/auth', {method:'POST', body:{action:'request', phone}}); }
+  catch(e){ if(DEV) return {ok:true, dev:true}; throw e; }
+}
+async function authVerify(phone, code, name){
+  try{ return await api('/api/auth', {method:'POST', body:{action:'verify', phone, code, name}}); }
+  catch(e){
+    if(DEV){
+      if(!/^\d{6}$/.test(String(code||''))) throw Object.assign(new Error('Enter the 6-digit code'),{status:400});
+      const p = normPhone(phone);
+      let u = devUsers()[p];
+      if(!u) u = { phone:p, name:(name||'').trim()||'Member', stamps:0, lifetime:0, orders:0, spent:0, notifications:[], since:new Date().getFullYear() };
+      if(name && name.trim()) u.name = name.trim();
+      devSaveUser(u);
+      return { token:'dev-'+p, user:u };
+    }
+    throw e;
+  }
+}
+
+// ── Auth sheet ──
+const authScrim = document.getElementById('auth-scrim');
+const authSheet = document.getElementById('auth-sheet');
+let authPhone = '';
+function authMsg(t, ok){ const el=document.getElementById('auth-msg'); el.textContent=t||''; el.style.color = ok?'var(--teal)':'#d9534f'; }
+function openAuth(){
+  authPhone='';
+  document.getElementById('auth-phone-step').hidden=false;
+  document.getElementById('auth-code-step').hidden=true;
+  document.getElementById('auth-name-field').hidden=true;
+  document.getElementById('auth-phone').value='';
+  document.getElementById('auth-code').value='';
+  document.getElementById('auth-name').value='';
+  authMsg('');
+  authScrim.classList.add('show'); authSheet.classList.add('show');
+  setTimeout(()=>document.getElementById('auth-phone').focus(), 140);
+}
+function closeAuth(){ authScrim.classList.remove('show'); authSheet.classList.remove('show'); }
+document.getElementById('auth-close').addEventListener('click', closeAuth);
+authScrim.addEventListener('click', closeAuth);
+document.getElementById('auth-back').addEventListener('click', ()=>{
+  document.getElementById('auth-code-step').hidden=true;
+  document.getElementById('auth-phone-step').hidden=false; authMsg('');
+});
+document.getElementById('auth-send').addEventListener('click', async ()=>{
+  const p = normPhone(document.getElementById('auth-phone').value);
+  if(p.length!==10){ authMsg('Enter a 10-digit US mobile number'); return; }
+  const btn = document.getElementById('auth-send'); btn.disabled=true; btn.textContent='Sending…';
+  try{
+    const r = await authRequestCode(p);
+    authPhone = p;
+    document.getElementById('auth-phone-echo').textContent = prettyPhone(p);
+    document.getElementById('auth-phone-step').hidden=true;
+    document.getElementById('auth-code-step').hidden=false;
+    document.getElementById('auth-name-field').hidden = !(r && (r.isNew || r.dev));
+    authMsg(r && r.dev ? 'Local preview — enter any 6 digits' : 'Code sent — check your texts', true);
+    setTimeout(()=>document.getElementById('auth-code').focus(), 140);
+  }catch(e){
+    authMsg(e.status===501 ? 'Texting not connected yet — add Twilio to go live' : (e.message||'Could not send code'));
+  }finally{ btn.disabled=false; btn.textContent='Text me a code'; }
+});
+document.getElementById('auth-verify').addEventListener('click', async ()=>{
+  const code = document.getElementById('auth-code').value.trim();
+  const name = document.getElementById('auth-name').value;
+  if(!/^\d{6}$/.test(code)){ authMsg('Enter the 6-digit code'); return; }
+  const btn = document.getElementById('auth-verify'); btn.disabled=true; btn.textContent='Verifying…';
+  try{
+    const r = await authVerify(authPhone, code, name);
+    SESSION.token=r.token; SESSION.user=r.user; saveSession();
+    closeAuth(); renderAccount(); renderPass(); updateNotifBadge();
+    toast('Welcome, '+((r.user&&r.user.name)||'friend')+'!'); go('account');
+  }catch(e){ authMsg(e.message || 'That code did not match'); }
+  finally{ btn.disabled=false; btn.textContent='Verify & sign in'; }
+});
+
+document.addEventListener('click', (e)=>{
+  if(e.target.closest('[data-auth-open]')){ closeDrawer(); openAuth(); }
+  if(e.target.closest('[data-signout]')){ signOut(); }
+  if(e.target.closest('[data-admin-open]')){ closeDrawer(); go('admin'); }
+});
+
+// ── Account / Pass / badge rendering ──
+function emptyState(icon, title, body, signIn){
+  return `<div style="text-align:center;padding:40px 26px">
+    <div style="font-size:46px;margin-bottom:8px">${icon}</div>
+    <h3 style="font-family:var(--f-display);font-style:italic;font-weight:800;font-size:22px;color:var(--teal-deep);margin:0 0 6px">${title}</h3>
+    <p style="color:var(--muted);font-size:14px;max-width:300px;margin:0 auto 16px">${body}</p>
+    ${signIn?`<button class="btn btn-primary btn-lg" data-auth-open>Sign in</button>`:''}
+  </div>`;
+}
+function renderAccount(){
+  const root = document.getElementById('account-body'); if(!root) return;
+  if(!isSignedIn()){
+    root.innerHTML = `
+      <div class="profile-hero"><div class="av">?</div><h2 style="font-size:24px">Welcome</h2><p>Sign in to track rewards &amp; orders</p></div>
+      <div class="container">
+        <button class="btn btn-primary btn-block btn-lg" data-auth-open>Sign in / Create account</button>
+        <p style="text-align:center;color:var(--muted);font-size:12px;margin-top:10px">Browse and explore freely — sign in only when you want to order or check rewards.</p>
+      </div>`;
+    return;
+  }
+  const u = SESSION.user||{};
+  const initial = ((u.name||'?').trim().charAt(0)||'?').toUpperCase();
+  const stamps = u.stamps||0, orders = u.orders||0;
+  root.innerHTML = `
+    <div class="profile-hero"><div class="av">${initial}</div><h2 style="font-size:26px">${u.name||'Member'}</h2><p>Member · ${stamps}/9 stamps · ${orders} order${orders===1?'':'s'}</p></div>
+    <div class="account-list">
+      <button class="account-row" data-route="pass"><span class="ico ic-1">★</span><div class="body"><h4>Pour Pass</h4><p>${stamps} of 9 stamps</p></div><span class="chev">›</span></button>
+      <button class="account-row" data-route="notifications"><span class="ico ic-4">🔔</span><div class="body"><h4>Notifications</h4><p>${(u.notifications&&u.notifications.length)||0} new</p></div><span class="chev">›</span></button>
+      <button class="account-row" data-route="packages"><span class="ico ic-3">🔄</span><div class="body"><h4>Packages &amp; Subscriptions</h4><p>Cleanses, party packs, catering</p></div><span class="chev">›</span></button>
+      <button class="account-row"><span class="ico ic-5">📱</span><div class="body"><h4>Mobile</h4><p>${prettyPhone(u.phone)}</p></div><span class="chev"></span></button>
+    </div>
+    <div class="container" style="margin-top:8px"><button class="btn btn-ghost btn-block" data-signout>Sign out</button></div>`;
+}
+function renderPass(){
+  const root = document.getElementById('pass-body'); if(!root) return;
+  if(!isSignedIn()){
+    root.innerHTML = `
+      <div class="pass-card"><div class="eyebrow">Pour Pass</div><div class="name">Buy 9, get the 10th free</div><div class="num">0<small>/9 stamps</small></div><div class="progress"><span style="width:0%"></span></div><div class="lbl">Sign in to start earning free pours</div></div>
+      <div class="container"><button class="btn btn-primary btn-block btn-lg" data-auth-open>Sign in to start your Pass</button></div>`;
+    return;
+  }
+  const u = SESSION.user||{};
+  const stamps = Math.max(0, Math.min(9, u.stamps||0));
+  const remaining = 9-stamps, pct = Math.round((stamps/9)*100);
+  let cells='';
+  for(let i=1;i<=9;i++){
+    cells += stamps>=i ? `<div class="stamp filled"></div>`
+      : (stamps+1===i ? `<div class="stamp next"><span class="n">${i}</span></div>` : `<div class="stamp"><span class="n">${i}</span></div>`);
+  }
+  cells += `<div class="stamp" style="background:var(--gold)"><span class="n" style="color:var(--teal-deep);opacity:1">★</span></div>`;
+  root.innerHTML = `
+    <div class="pass-card"><div class="eyebrow">${u.since?('Member Since '+u.since):'Member'}</div><div class="name">${u.name||'Member'}</div><div class="num">${stamps}<small>/9 stamps</small></div><div class="progress"><span style="width:${pct}%"></span></div><div class="lbl">${remaining===0?'Free pour unlocked! 🎉':(remaining+' more pour'+(remaining===1?'':'s')+' and your 10th is free')}</div></div>
+    <div class="section-h"><h2 style="font-size:24px">Stamp card</h2></div>
+    <div class="stamps">${cells}</div>`;
+}
+function updateNotifBadge(){
+  const el = document.getElementById('notif-count'); if(!el) return;
+  const n = (isSignedIn() && SESSION.user && SESSION.user.notifications) ? SESSION.user.notifications.filter(x=>x.unread).length : 0;
+  el.textContent = n; el.style.display = n>0 ? '' : 'none';
 }
 
 // ── Sidebar drawer ──
@@ -1201,8 +1400,9 @@ function renderFeatured(){
 
 function renderHomeEvents(){
   const root = document.getElementById('home-events');
-  const upcoming = EVENTS.slice(0,3);
-  root.innerHTML = `<div style="padding:0 16px">${upcoming.map(ev => eventCardHTML(ev)).join('')}</div>`;
+  const start = new Date(); start.setHours(0,0,0,0);
+  const upcoming = EVENTS.filter(ev => ev.date>=start).slice(0,3);
+  root.innerHTML = `<div style="padding:0 16px">${upcoming.length?upcoming.map(ev => eventCardHTML(ev)).join(''):'<p style="color:var(--muted);font-size:14px">No upcoming events right now — check back soon.</p>'}</div>`;
   root.querySelectorAll('.event-card').forEach((card,i) => {
     card.addEventListener('click', () => openModal(upcoming[i]));
   });
@@ -1368,13 +1568,22 @@ document.getElementById('btn-place-order').addEventListener('click', () => {
 
 function renderNotifications(){
   const root = document.getElementById('notif-list');
-  root.innerHTML = NOTIFICATIONS.map(n => `
+  if(!isSignedIn()){
+    root.innerHTML = emptyState('🔔','Sign in for notifications','Order updates, rewards, and events land here once you sign in.', true);
+    return;
+  }
+  const list = (SESSION.user && SESSION.user.notifications) || [];
+  if(!list.length){
+    root.innerHTML = emptyState('🔔','No notifications yet',"You're all caught up — order updates and rewards will show here.", false);
+    return;
+  }
+  root.innerHTML = list.map(n => `
     <div class="notif ${n.unread?'unread':''}">
-      <div class="ico" style="background:${n.color}">${n.ico}</div>
+      <div class="ico" style="background:${n.color||'var(--teal)'}">${n.ico||'🔔'}</div>
       <div style="flex:1;min-width:0">
         <h4>${n.title}</h4>
-        <p>${n.body}</p>
-        <div class="t">${n.t}</div>
+        <p>${n.body||''}</p>
+        <div class="t">${n.t||''}</div>
       </div>
     </div>
   `).join('');
@@ -1536,11 +1745,208 @@ function toast(msg){
   toastTO = setTimeout(() => document.getElementById('toast').classList.remove('show'), 2200);
 }
 
+// ── Owner dashboard ──
+let adminPin = sessionStorage.getItem('pd_admin_pin') || '';
+function adminHeaders(){ return adminPin ? {'x-admin-pin':adminPin} : {}; }
+function val(id){ const el=document.getElementById(id); return el?String(el.value).trim():''; }
+
+async function adminValidate(pin){
+  if(DEV) return pin === (localStorage.getItem('pd_dev_admin_pin')||'7687');
+  try{ await api('/api/loyalty', {headers:{'x-admin-pin':pin}}); return true; }
+  catch(e){ if(e.status===401) return false; return true; }
+}
+async function adminAddEvent(ev){
+  if(DEV){ const list=devEvents(); list.push({id:'ev'+Date.now().toString(36), ...ev}); localStorage.setItem('pd_dev_events', JSON.stringify(list)); return; }
+  await api('/api/events',{method:'POST', headers:adminHeaders(), body:ev});
+}
+async function adminDeleteEvent(id){
+  if(DEV){ const list=devEvents().filter(e=>e.id!==id); localStorage.setItem('pd_dev_events', JSON.stringify(list)); return; }
+  await api('/api/events?id='+encodeURIComponent(id),{method:'DELETE', headers:adminHeaders()});
+}
+
+function renderAdmin(){
+  const root=document.getElementById('admin-body'); if(!root) return;
+  if(!adminPin){
+    root.innerHTML=`
+      <div style="max-width:380px;margin:6px auto;padding:0 16px">
+        <div style="text-align:center;padding:14px 0 6px"><div style="font-size:42px">🔒</div><p style="color:var(--muted);font-size:14px">Staff only — enter the PIN to manage the bar.</p></div>
+        <div class="field"><label>Staff PIN</label><input type="tel" id="admin-pin" inputmode="numeric" maxlength="8" placeholder="----" style="letter-spacing:.3em;font-size:20px"/></div>
+        <button class="btn btn-primary btn-block btn-lg" id="admin-enter">Enter dashboard</button>
+        <button class="btn btn-ghost btn-block" id="admin-exit" style="margin-top:8px">← Back to app</button>
+        <p id="admin-pin-msg" style="text-align:center;color:#d9534f;font-size:13px;min-height:18px;margin-top:8px"></p>
+      </div>`;
+    const enter=async()=>{
+      const pin=val('admin-pin'); const msg=document.getElementById('admin-pin-msg');
+      if(!pin){ msg.textContent='Enter the PIN'; return; }
+      msg.textContent='Checking…'; msg.style.color='var(--muted)';
+      const ok=await adminValidate(pin);
+      if(!ok){ msg.textContent='Wrong PIN'; msg.style.color='#d9534f'; return; }
+      adminPin=pin; sessionStorage.setItem('pd_admin_pin', pin); STATE.adminTab='events'; renderAdmin();
+    };
+    document.getElementById('admin-enter').addEventListener('click', enter);
+    document.getElementById('admin-pin').addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
+    document.getElementById('admin-exit').addEventListener('click', ()=>go('account'));
+    return;
+  }
+  const tabs=[['events','📅 Events'],['orders','🧾 Orders'],['loyalty','⭐ Loyalty'],['bookings','📩 Bookings']];
+  const cur=STATE.adminTab||'events';
+  root.innerHTML=`
+    <div style="display:flex;gap:6px;overflow-x:auto;padding:2px 16px 12px">
+      ${tabs.map(([k,l])=>`<button class="admin-tab" data-tab="${k}" style="white-space:nowrap;padding:8px 14px;border-radius:999px;border:none;font-weight:700;font-size:13px;cursor:pointer;background:${cur===k?'var(--teal-deep)':'rgba(0,0,0,.06)'};color:${cur===k?'#fff':'var(--teal-deep)'}">${l}</button>`).join('')}
+    </div>
+    <div id="admin-tab-body" style="padding:0 16px;min-height:120px"></div>
+    <div style="padding:18px 16px"><button class="btn btn-ghost btn-block" id="admin-lock">Lock dashboard</button></div>`;
+  root.querySelectorAll('.admin-tab').forEach(b=>b.addEventListener('click', ()=>{ STATE.adminTab=b.dataset.tab; renderAdmin(); }));
+  document.getElementById('admin-lock').addEventListener('click', ()=>{ adminPin=''; sessionStorage.removeItem('pd_admin_pin'); go('account'); toast('Dashboard locked'); });
+  const body=document.getElementById('admin-tab-body');
+  if(cur==='events') adminRenderEvents(body); else adminRenderList(body, cur);
+}
+
+function adminRenderEvents(body){
+  const evs=[...EVENTS].sort((a,b)=>a.date-b.date);
+  const typeOpts=Object.keys(EVENT_TYPES).map(k=>`<option value="${k}">${EVENT_TYPES[k].label}</option>`).join('');
+  body.innerHTML=`
+    <div class="checkout-section" style="margin:0 0 14px">
+      <h3 id="ev-form-title" style="font-family:var(--f-display);font-style:italic;font-weight:800;font-size:20px;color:var(--teal-deep);margin:0 0 10px">Add an event</h3>
+      <input type="hidden" id="ev-edit-id" value=""/>
+      <div class="field"><label>Title</label><input type="text" id="ev-title" placeholder="Piña Power Hour"/></div>
+      <div class="field"><label>Date</label><input type="date" id="ev-date"/></div>
+      <div class="field"><label>Time</label><input type="text" id="ev-time" placeholder="4:00pm – 6:00pm"/></div>
+      <div class="field"><label>Type</label><select id="ev-type">${typeOpts}</select></div>
+      <div class="field"><label>Description</label><textarea rows="2" id="ev-desc" placeholder="What's happening?"></textarea></div>
+      <button class="btn btn-primary btn-block" id="ev-save">Publish event</button>
+      <button class="btn btn-ghost btn-block" id="ev-cancel" style="margin-top:6px;display:none">Cancel edit</button>
+    </div>
+    <h3 style="font-family:var(--f-display);font-style:italic;font-weight:800;font-size:20px;color:var(--teal-deep);margin:6px 0 8px">Scheduled (${evs.length})</h3>
+    <div id="ev-list">${evs.length?evs.map(adminEventRow).join(''):'<p style="color:var(--muted);font-size:14px">No events yet — add one above.</p>'}</div>`;
+  document.getElementById('ev-save').addEventListener('click', adminSaveEvent);
+  document.getElementById('ev-cancel').addEventListener('click', ()=>adminRenderEvents(body));
+  body.querySelectorAll('[data-ev-del]').forEach(b=>b.addEventListener('click', ()=>adminDelEvent(b.dataset.evDel)));
+  body.querySelectorAll('[data-ev-edit]').forEach(b=>b.addEventListener('click', ()=>adminEditEvent(b.dataset.evEdit)));
+}
+function adminEventRow(ev){
+  const mo=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][ev.date.getMonth()];
+  const label=EVENT_TYPES[ev.type]?EVENT_TYPES[ev.type].label:ev.type;
+  return `<div style="display:flex;gap:10px;align-items:center;background:#fff;border-radius:14px;padding:12px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+    <div style="text-align:center;min-width:40px"><div style="font-size:11px;font-weight:800;color:var(--muted)">${mo}</div><div style="font-size:20px;font-weight:900;color:var(--teal-deep)">${ev.date.getDate()}</div></div>
+    <div style="flex:1;min-width:0"><h4 style="margin:0;font-size:15px;color:var(--teal-deep)">${ev.title}</h4><p style="margin:2px 0 0;color:var(--muted);font-size:12px">${ev.time||''}${ev.time?' · ':''}${label}</p></div>
+    <button data-ev-edit="${ev.id}" aria-label="Edit" style="background:none;border:none;cursor:pointer;font-size:17px">✏️</button>
+    <button data-ev-del="${ev.id}" aria-label="Delete" style="background:none;border:none;cursor:pointer;font-size:17px">🗑️</button>
+  </div>`;
+}
+async function adminSaveEvent(){
+  const title=val('ev-title'), date=val('ev-date'), time=val('ev-time'), type=val('ev-type'), desc=val('ev-desc'), editId=val('ev-edit-id');
+  if(!title||!date){ toast('Title and date are required'); return; }
+  const btn=document.getElementById('ev-save'); btn.disabled=true; btn.textContent='Saving…';
+  try{
+    if(editId) await adminDeleteEvent(editId);
+    await adminAddEvent({iso:date, type:type||'special', title, time, desc});
+    await loadEvents();
+    toast(editId?'Event updated':'Event published');
+    const body=document.getElementById('admin-tab-body'); if(body) adminRenderEvents(body);
+  }catch(e){ toast(e.message||'Could not save event'); btn.disabled=false; btn.textContent='Publish event'; }
+}
+function adminEditEvent(id){
+  const ev=EVENTS.find(e=>e.id===id); if(!ev) return;
+  document.getElementById('ev-edit-id').value=id;
+  document.getElementById('ev-title').value=ev.title;
+  document.getElementById('ev-date').value=isoOf(ev.date);
+  document.getElementById('ev-time').value=ev.time||'';
+  document.getElementById('ev-type').value=ev.type;
+  document.getElementById('ev-desc').value=ev.desc||'';
+  document.getElementById('ev-form-title').textContent='Edit event';
+  document.getElementById('ev-save').textContent='Save changes';
+  document.getElementById('ev-cancel').style.display='';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+async function adminDelEvent(id){
+  if(!confirm('Delete this event?')) return;
+  try{ await adminDeleteEvent(id); await loadEvents(); const body=document.getElementById('admin-tab-body'); if(body) adminRenderEvents(body); toast('Event deleted'); }
+  catch(e){ toast(e.message||'Could not delete'); }
+}
+
+async function adminRenderList(body, kind){
+  if(DEV){
+    body.innerHTML=`<div style="text-align:center;padding:30px 10px"><div style="font-size:40px">🔌</div><p style="color:var(--muted);font-size:14px;max-width:280px;margin:8px auto">Live ${kind} show up here once the database is connected. Local preview can't display shared business data — but the screen and its actions are wired and ready.</p></div>`;
+    return;
+  }
+  body.innerHTML=`<p style="color:var(--muted);font-size:14px;padding:10px 0">Loading ${kind}…</p>`;
+  try{
+    if(kind==='orders'){ const r=await api('/api/orders',{headers:adminHeaders()}); adminShowOrders(body, r.orders||[]); }
+    else if(kind==='loyalty'){ const r=await api('/api/loyalty',{headers:adminHeaders()}); adminShowLoyalty(body, r.customers||[]); }
+    else if(kind==='bookings'){ const r=await api('/api/bookings',{headers:adminHeaders()}); adminShowBookings(body, r.bookings||[]); }
+  }catch(e){
+    body.innerHTML=`<p style="color:#d9534f;font-size:14px;padding:10px 0">${e.status===401?'PIN rejected — lock and re-enter.':'Could not load — is the database connected?'}</p>`;
+  }
+}
+function adminCard(inner){ return `<div style="background:#fff;border-radius:14px;padding:12px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)">${inner}</div>`; }
+function adminShowOrders(body, orders){
+  if(!orders.length){ body.innerHTML='<p style="color:var(--muted);font-size:14px;padding:8px 0">No orders yet.</p>'; return; }
+  body.innerHTML=orders.map(o=>{
+    const items=(o.items||[]).map(i=>`${i.qty||1}× ${i.name||i.title||'item'}`).join(', ');
+    const next = o.status==='new'?['ready','Mark ready']:(o.status==='ready'?['done','Mark picked up']:null);
+    const col = o.status==='new'?'var(--orange)':(o.status==='ready'?'var(--lime)':'var(--muted)');
+    return adminCard(`
+      <div style="display:flex;justify-content:space-between;align-items:center"><strong style="color:var(--teal-deep)">${o.num||o.id}</strong><span style="font-size:11px;font-weight:800;text-transform:uppercase;color:${col}">${o.status||'new'}</span></div>
+      <div style="font-size:13px;color:var(--teal-deep);margin-top:4px">${o.name||''} · ${prettyPhone(o.phone)}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">${items}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><strong>$${Number(o.total||0).toFixed(2)}</strong>${next?`<button data-ord="${o.id}" data-to="${next[0]}" class="btn btn-primary" style="padding:6px 12px;font-size:12px">${next[1]}</button>`:''}</div>`);
+  }).join('');
+  body.querySelectorAll('[data-ord]').forEach(b=>b.addEventListener('click', async ()=>{
+    b.disabled=true;
+    try{ await api('/api/orders?id='+encodeURIComponent(b.dataset.ord),{method:'PATCH', headers:adminHeaders(), body:{status:b.dataset.to}}); adminRenderList(body,'orders'); }
+    catch(e){ toast(e.message||'Could not update'); b.disabled=false; }
+  }));
+}
+function adminShowLoyalty(body, customers){
+  const form=`<div class="checkout-section" style="margin:0 0 12px">
+    <h3 style="font-family:var(--f-display);font-style:italic;font-weight:800;font-size:18px;color:var(--teal-deep);margin:0 0 8px">Log a stamp (walk-in)</h3>
+    <div class="field"><label>Name</label><input type="text" id="loy-name" placeholder="Customer name"/></div>
+    <div class="field"><label>Phone</label><input type="tel" id="loy-phone" placeholder="(518) 555-0123"/></div>
+    <button class="btn btn-primary btn-block" id="loy-add">+1 Stamp</button>
+  </div>`;
+  const list=customers.length?customers.map(c=>adminCard(`
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><strong style="color:var(--teal-deep)">${c.name||'Member'}</strong><div style="font-size:12px;color:var(--muted)">${prettyPhone(c.phone)}</div></div>
+      <div style="text-align:right"><div style="font-weight:900;color:var(--teal-deep)">${c.stars||0}/9</div><div style="font-size:11px;color:var(--muted)">${c.rewards||0} free · ${c.lifetime||0} total</div></div>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:8px"><button data-loy="${c.phone}" data-d="1" class="btn btn-ghost" style="flex:1;padding:6px;font-size:13px">+1</button><button data-loy="${c.phone}" data-d="-1" class="btn btn-ghost" style="flex:1;padding:6px;font-size:13px">−1</button></div>`)).join(''):'<p style="color:var(--muted);font-size:14px">No members yet.</p>';
+  body.innerHTML=form+`<h3 style="font-family:var(--f-display);font-style:italic;font-weight:800;font-size:18px;color:var(--teal-deep);margin:6px 0 8px">Members (${customers.length})</h3>`+list;
+  document.getElementById('loy-add').addEventListener('click', async ()=>{
+    const name=val('loy-name'), phone=val('loy-phone');
+    if(!phone){ toast('Phone required'); return; }
+    try{ await api('/api/loyalty',{method:'POST', headers:adminHeaders(), body:{phone, name, delta:1}}); adminRenderList(body,'loyalty'); toast('Stamp added'); }
+    catch(e){ toast(e.message||'Could not add'); }
+  });
+  body.querySelectorAll('[data-loy]').forEach(b=>b.addEventListener('click', async ()=>{
+    try{ await api('/api/loyalty',{method:'POST', headers:adminHeaders(), body:{phone:b.dataset.loy, delta:Number(b.dataset.d)}}); adminRenderList(body,'loyalty'); }
+    catch(e){ toast(e.message||'Could not adjust'); }
+  }));
+}
+function adminShowBookings(body, bookings){
+  if(!bookings.length){ body.innerHTML='<p style="color:var(--muted);font-size:14px;padding:8px 0">No booking requests.</p>'; return; }
+  body.innerHTML=bookings.map(bk=>adminCard(`
+    <div style="display:flex;justify-content:space-between"><strong style="color:var(--teal-deep)">${bk.name||''}</strong><span style="font-size:12px;color:var(--muted)">${bk.date||''} ${bk.time||''}</span></div>
+    <div style="font-size:13px;color:var(--teal-deep);margin-top:3px">${bk.contact||''}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:2px">${[bk.type,bk.size?('party '+bk.size):'',bk.notes].filter(Boolean).join(' · ')}</div>
+    <div style="margin-top:8px;text-align:right"><button data-bk="${bk.id}" class="btn btn-ghost" style="padding:6px 12px;font-size:12px">Archive</button></div>`)).join('');
+  body.querySelectorAll('[data-bk]').forEach(b=>b.addEventListener('click', async ()=>{
+    if(!confirm('Archive this request?')) return;
+    try{ await api('/api/bookings?id='+encodeURIComponent(b.dataset.bk),{method:'DELETE', headers:adminHeaders()}); adminRenderList(body,'bookings'); }
+    catch(e){ toast(e.message||'Could not archive'); }
+  }));
+}
+
 function init(){
+  loadSession();
   renderFeatured();
   renderMenu();
   renderHomeEvents();
+  renderAccount();
+  renderPass();
   updateCartBadge();
+  updateNotifBadge();
+  loadEvents();
   setTimeout(() => document.getElementById('splash').classList.add('gone'), 1700);
   if('serviceWorker' in navigator){
     navigator.serviceWorker.register('sw.js').catch(() => {});

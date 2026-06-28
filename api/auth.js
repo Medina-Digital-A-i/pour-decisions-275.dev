@@ -1,0 +1,131 @@
+/* Auth API — passwordless phone + 6-digit SMS code.
+ *
+ *   POST /api/auth { action:'request', phone }
+ *        → generates a code, stores it (10 min TTL), texts it via Twilio.
+ *          Returns { ok, isNew, sent }.
+ *   POST /api/auth { action:'verify', phone, code, name }
+ *        → checks the code, ensures the customer exists, issues a session
+ *          token (120-day TTL). Returns { token, user }.
+ *   GET  /api/auth (header x-session)
+ *        → returns the signed-in { user } (for refresh), or 401.
+ *
+ * Identity is the mobile number (digits only) — the same key the loyalty
+ * store uses, so a signed-in member and their Pour Pass are one record.
+ *
+ * Degrades safely:
+ *   - No KV attached  → 501 (front-end uses on-device fallback in local dev).
+ *   - No Twilio set   → 501 on request, unless AUTH_DEV_CODE is set (then the
+ *                       code is fixed to that value and not texted, for testing).
+ */
+import { randomBytes, randomInt } from 'crypto';
+import {
+  kvConfigured, kvSet, kvGet, kvDel,
+  normPhone, getCustomer, adjustStamps, getSessionPhone, sendJson,
+} from './_store.js';
+
+const CODE_TTL = 60 * 10;          // 10 minutes
+const SESSION_TTL = 60 * 60 * 24 * 120; // 120 days
+
+function shapeUser(c) {
+  return {
+    phone: c.phone,
+    name: c.name || 'Member',
+    stamps: c.stars || 0,
+    rewards: c.rewards || 0,
+    orders: c.lifetime || 0,
+    spent: c.spent || 0,
+    since: c.createdAt ? new Date(c.createdAt).getFullYear() : new Date().getFullYear(),
+    notifications: [],
+  };
+}
+
+function twilioConfigured() {
+  return Boolean(
+    process.env.TWILIO_ACCOUNT_SID &&
+    process.env.TWILIO_AUTH_TOKEN &&
+    (process.env.TWILIO_FROM || process.env.TWILIO_MESSAGING_SERVICE_SID)
+  );
+}
+
+async function sendSms(phone, body) {
+  const sid = process.env.TWILIO_ACCOUNT_SID;
+  const tok = process.env.TWILIO_AUTH_TOKEN;
+  const from = process.env.TWILIO_FROM;
+  const msvc = process.env.TWILIO_MESSAGING_SERVICE_SID;
+  const params = new URLSearchParams();
+  params.set('To', '+1' + normPhone(phone));
+  if (msvc) params.set('MessagingServiceSid', msvc); else params.set('From', from);
+  params.set('Body', body);
+  const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
+    method: 'POST',
+    headers: {
+      Authorization: 'Basic ' + Buffer.from(`${sid}:${tok}`).toString('base64'),
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: params.toString(),
+  });
+  if (!res.ok) { console.error('Twilio error', res.status, await res.text()); return false; }
+  return true;
+}
+
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-session');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  if (req.method === 'OPTIONS') return res.status(204).end();
+
+  if (!kvConfigured()) {
+    return sendJson(res, 501, { configured: false, error: 'Accounts not connected yet (attach the cloud store).' });
+  }
+
+  try {
+    // GET → refresh the signed-in user from their session token.
+    if (req.method === 'GET') {
+      const phone = await getSessionPhone(req);
+      if (!phone) return sendJson(res, 401, { error: 'Not signed in' });
+      const c = await getCustomer(phone);
+      if (!c) return sendJson(res, 401, { error: 'Not signed in' });
+      return sendJson(res, 200, { user: shapeUser(c) });
+    }
+
+    if (req.method !== 'POST') return sendJson(res, 405, { error: 'Method not allowed' });
+
+    const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
+    const action = body.action;
+    const phone = normPhone(body.phone);
+    if (phone.length !== 10) return sendJson(res, 400, { error: 'Enter a 10-digit US mobile number' });
+
+    if (action === 'request') {
+      const devCode = process.env.AUTH_DEV_CODE;
+      const canText = twilioConfigured();
+      if (!canText && !devCode) {
+        return sendJson(res, 501, { error: 'Texting not connected yet — add Twilio to go live.' });
+      }
+      const code = devCode || String(randomInt(0, 1000000)).padStart(6, '0');
+      await kvSet(`pd:authcode:${phone}`, code, CODE_TTL);
+      const existing = await getCustomer(phone);
+      let sent = false;
+      if (canText) sent = await sendSms(phone, `Your Pour Decisions code is ${code}. Expires in 10 minutes.`);
+      return sendJson(res, 200, { ok: true, isNew: !existing, sent });
+    }
+
+    if (action === 'verify') {
+      const code = String(body.code || '').trim();
+      if (!/^\d{6}$/.test(code)) return sendJson(res, 400, { error: 'Enter the 6-digit code' });
+      const stored = await kvGet(`pd:authcode:${phone}`);
+      if (!stored || String(stored) !== code) return sendJson(res, 401, { error: 'That code is wrong or expired' });
+
+      // Ensure the customer exists and set their name (delta 0 = no stamp change).
+      const c = await adjustStamps(phone, 0, (body.name || '').trim() || undefined);
+      const token = randomBytes(24).toString('hex');
+      await kvSet(`pd:session:${token}`, phone, SESSION_TTL);
+      await kvDel(`pd:authcode:${phone}`);
+      return sendJson(res, 200, { token, user: shapeUser(c) });
+    }
+
+    return sendJson(res, 400, { error: 'Unknown action' });
+  } catch (e) {
+    console.error('auth handler error', e);
+    return sendJson(res, 500, { error: 'Something went wrong' });
+  }
+}
