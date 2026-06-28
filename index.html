@@ -1155,6 +1155,17 @@ function signOut(){
   SESSION.token=null; SESSION.user=null; localStorage.removeItem('pd_session');
   renderAccount(); renderPass(); updateNotifBadge(); go('home'); toast('Signed out');
 }
+// Pull the signed-in member's latest stamps/orders from the server on load,
+// so the pass reflects walk-in stamps the owner adds. (Skipped in local dev.)
+async function refreshUser(){
+  if(!isSignedIn() || DEV) return;
+  try{
+    const r = await api('/api/auth');
+    if(r && r.user){ SESSION.user = r.user; saveSession(); renderAccount(); renderPass(); updateNotifBadge(); }
+  }catch(e){
+    if(e.status===401){ SESSION.token=null; SESSION.user=null; localStorage.removeItem('pd_session'); renderAccount(); renderPass(); updateNotifBadge(); }
+  }
+}
 
 async function api(path, opts={}){
   const headers = Object.assign({'Content-Type':'application/json'}, opts.headers||{});
@@ -1973,6 +1984,7 @@ function init(){
   renderPass();
   updateCartBadge();
   updateNotifBadge();
+  refreshUser();
   loadEvents();
   setTimeout(() => document.getElementById('splash').classList.add('gone'), 1700);
   if('serviceWorker' in navigator){
