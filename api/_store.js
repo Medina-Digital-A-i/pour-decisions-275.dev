@@ -1,53 +1,59 @@
 /* Pour Decisions — tiny persistence layer.
  *
- * Uses a Vercel KV / Upstash Redis REST store when its env vars are present
- * (KV_REST_API_URL + KV_REST_API_TOKEN — Vercel injects these automatically
- * when you attach a KV store to the project). No npm dependency required:
- * we talk to the REST API directly.
+ * Talks to a Redis store via the `REDIS_URL` connection string that Vercel
+ * injects when you attach an Upstash/Redis database to the project. Also accepts
+ * KV_URL / REDIS_TLS_URL as aliases. Uses ioredis (a single pooled client reused
+ * across warm serverless invocations).
  *
- * When the store isn't configured yet, helpers report `configured:false`
- * and the front-end falls back to on-device storage, so nothing breaks.
+ * When no Redis URL is configured, helpers report `configured:false` and the
+ * front-end falls back to on-device storage, so nothing breaks.
  */
 
-const KV_URL = process.env.KV_REST_API_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN;
+import Redis from 'ioredis';
 
-export const kvConfigured = () => Boolean(KV_URL && KV_TOKEN);
+const REDIS_URL =
+  process.env.REDIS_URL ||
+  process.env.REDIS_TLS_URL ||
+  process.env.KV_URL ||
+  null;
 
-async function kvCommand(args) {
-  const res = await fetch(KV_URL, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${KV_TOKEN}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(args),
-  });
-  if (!res.ok) throw new Error(`KV ${res.status}`);
-  const data = await res.json();
-  return data.result;
+export const kvConfigured = () => Boolean(REDIS_URL);
+
+let _client = null;
+function client() {
+  if (!_client) {
+    _client = new Redis(REDIS_URL, {
+      lazyConnect: false,
+      maxRetriesPerRequest: 3,
+      enableReadyCheck: false,
+      // Upstash and most managed Redis use TLS (rediss://); ioredis reads that
+      // from the URL scheme. Keep the connection alive across warm invocations.
+      keepAlive: 10000,
+    });
+    _client.on('error', (e) => console.error('Redis error', e && e.message));
+  }
+  return _client;
 }
 
 /** Read a JSON array stored under `key`. Returns [] if missing. */
 export async function readList(key) {
-  const raw = await kvCommand(['GET', key]);
+  const raw = await client().get(key);
   if (!raw) return [];
   try { return JSON.parse(raw); } catch { return []; }
 }
 
 /** Overwrite the JSON array stored under `key`. */
 export async function writeList(key, list) {
-  await kvCommand(['SET', key, JSON.stringify(list)]);
+  await client().set(key, JSON.stringify(list));
 }
 
 /* ── Generic key helpers (used by auth: codes + sessions) ── */
 export async function kvSet(key, value, ttlSec) {
-  const args = ['SET', key, String(value)];
-  if (ttlSec) args.push('EX', String(ttlSec));
-  return kvCommand(args);
+  if (ttlSec) return client().set(key, String(value), 'EX', ttlSec);
+  return client().set(key, String(value));
 }
-export async function kvGet(key) { return kvCommand(['GET', key]); }
-export async function kvDel(key) { return kvCommand(['DEL', key]); }
+export async function kvGet(key) { return client().get(key); }
+export async function kvDel(key) { return client().del(key); }
 
 /** Resolve the signed-in phone from an `x-session` token, or null. */
 export async function getSessionPhone(req) {
