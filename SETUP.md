@@ -85,7 +85,38 @@ We already have Twilio. Add these to Vercel → **Settings → Environment Varia
 
 ---
 
-## 6. What's already done (no action needed)
+## 6. Point the real domain → pourdecisionjuicebar.com
+
+Goal: the app lives at **pourdecisionjuicebar.com** instead of the `…vercel.app` URL.
+The domain currently points to the **Wix** site, so this moves it to the new app.
+
+**Already done by me:** added `pourdecisionjuicebar.com` to the Vercel project
+`pour-decisions`. Now the DNS has to point at Vercel.
+
+**Phebe — at wherever the domain's DNS is managed (Wix domain settings, or the
+registrar like GoDaddy/Google Domains):**
+1. Change/add these records:
+   | Type | Name/Host | Value |
+   |---|---|---|
+   | `A` | `@` (root) | `76.76.21.21` |
+   | `CNAME` | `www` | `cname.vercel-dns.com` |
+   (Remove the old Wix A/CNAME records for `@` and `www`.)
+2. Back in Vercel → project **pour-decisions → Settings → Domains** → the domain
+   should flip to **Valid / verified** within minutes–hours; Vercel auto-issues the
+   SSL certificate. Confirm the exact records there if Wix shows a conflict.
+3. ⚠️ **Do this AFTER steps 2–4** (deploy reconnected + database attached) so the
+   domain lands on a working build, not an error page.
+
+Notes:
+- This takes the domain **off the Wix site** — the Wix page stops being the live site
+  at that address (it still exists in your Wix account, just not at this domain).
+- No code change needed — the app uses relative URLs, so it works on any domain.
+- The app already installed on the Mac mini points at the old `vercel.app` URL —
+  once the domain is live, re-install it from **https://pourdecisionjuicebar.com**.
+
+---
+
+## 7. What's already done (no action needed)
 
 - Customer accounts: phone + SMS-code **sign in / sign out** on the Me page; per-user
   Pour Pass, orders, notifications. No more fake "Migs Money" data.
