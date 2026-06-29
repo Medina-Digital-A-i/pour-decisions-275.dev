@@ -1013,11 +1013,14 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <div class="opt-group">
       <label>Boost it</label>
       <div class="boost-row" id="boost-row">
-        <button class="boost" data-boost="ginger">+ Ginger</button>
-        <button class="boost" data-boost="turmeric">+ Turmeric</button>
         <button class="boost" data-boost="protein">+ Protein</button>
         <button class="boost" data-boost="collagen">+ Collagen</button>
-        <button class="boost" data-boost="cbd">+ CBD</button>
+        <button class="boost" data-boost="sea moss">+ Sea Moss</button>
+        <button class="boost" data-boost="spirulina">+ Spirulina</button>
+        <button class="boost" data-boost="ashwagandha">+ Ashwagandha</button>
+        <button class="boost" data-boost="ginger">+ Ginger</button>
+        <button class="boost" data-boost="turmeric">+ Turmeric</button>
+        <button class="boost" data-boost="MCT oil">+ MCT Oil</button>
       </div>
     </div>
   </div>
@@ -1235,8 +1238,11 @@ const PHOTOS = {
 // Replacements for original photos that 404'd upstream. null = use the
 // branded gradient+emoji tile until a verified photo is slotted in.
 const REPHOTO = {
-  'celery-clean':null, 'beet-the-day':null, 'carrot-glow':null,
-  'wheatgrass-shot':null, 'turmeric-shot':null
+  'celery-clean':'photo-1594486111002-0bdd23c501bf',
+  'beet-the-day':'photo-1551040096-5f4aec6ca12b',
+  'carrot-glow':'photo-1622597468311-592703487650',
+  'wheatgrass-shot':'photo-1565775935974-03efac547d67',
+  'turmeric-shot':'photo-1612182062936-e33efa5d537e'
 };
 MENU.forEach(m => {
   if(Object.prototype.hasOwnProperty.call(REPHOTO, m.id)) m.img = REPHOTO[m.id] ? PIC(REPHOTO[m.id]) : '';
@@ -1366,18 +1372,18 @@ const EVENT_TYPES = {
 function buildEvents(){
   const today = new Date();
   const seeds = [
-    {offset:2,type:'class',title:'Juice Cleanse Kickoff',time:'6:00pm – 7:00pm',desc:'Free intro to the 3-day cleanse with Q&A from our nutritionist. Includes one shot to take home.'},
-    {offset:5,type:'special',title:"Mother's Day Pour",time:'All day',desc:'Free 12oz Berry Blitz with any package booking. Treat the boss lady.'},
-    {offset:9,type:'popup',title:'Smoothie Pop-up @ Empire Plaza',time:'11:00am – 2:00pm',desc:"We're posting up at Empire State Plaza. Free samples, surprise menu."},
-    {offset:12,type:'class',title:'Pina Power Hour',time:'4:00pm – 6:00pm',desc:'Bring a friend, sip a free pineapple-ginger pour. Live DJ, raffle, and 2x Pour Pass stamps.'},
-    {offset:15,type:'cleanse',title:'3-Day Cleanse Drop',time:'Pickup window 7am – 12pm',desc:'Pre-orders ship for the May cohort. Pickup Tuesday morning.'},
-    {offset:19,type:'buyout',title:'Private Buyout · Anniversary',time:'7:00pm – 10:00pm',desc:'Closed for private event. Doors reopen Friday at 7am.'},
-    {offset:24,type:'class',title:'Wellness Wednesday: Macros 101',time:'7:00pm – 8:00pm',desc:'Quick session on building a macro plan around cold-pressed juice.'},
-    {offset:28,type:'popup',title:'Saratoga Track Pop-up',time:'9:00am – 4:00pm',desc:'Race-day shots and smoothies trackside.'},
-    {offset:33,type:'special',title:'Memorial Day Bottle Bash',time:'9am – 5pm',desc:'BOGO on 32oz bottles. Stack them deep.'},
-    {offset:38,type:'cleanse',title:'5-Day Cleanse Drop',time:'Pickup 7am – 12pm',desc:'June cohort kickoff. 30 bottles per cleanse.'},
-    {offset:44,type:'class',title:'Yoga & Juice · Washington Park',time:'8:00am – 10:00am',desc:'45-min flow plus cold-pressed shot. $25 includes both.'},
-    {offset:52,type:'buyout',title:'Corporate Buyout · CDPHP',time:'12pm – 2pm',desc:'Closed lunch hour for private corporate event.'}
+    {offset:2,type:'class',title:'Summer Cleanse Kickoff',time:'6:00pm – 7:00pm',desc:'Free intro to the 3-day reset with Q&A from our nutritionist. Includes one wellness shot to take home.'},
+    {offset:4,type:'special',title:'Açaí Bowl Launch Party',time:'All day',desc:'Our new bowls are here — free granola upgrade on any bowl all day. Try the Pitaya Glow.'},
+    {offset:6,type:'popup',title:'Farmers Market Pop-up · Delmar',time:'9:00am – 1:00pm',desc:"We're slinging cold-pressed at the Bethlehem Farmers Market. Free samples, surprise menu."},
+    {offset:9,type:'class',title:'Pina Power Hour',time:'4:00pm – 6:00pm',desc:'Bring a friend, sip a free pineapple-ginger pour. Live DJ, raffle, and 2x Pour Pass stamps.'},
+    {offset:13,type:'cleanse',title:'3-Day Cleanse Drop',time:'Pickup window 7am – 12pm',desc:'Pre-orders ready for the summer cohort. Six bottles a day, three days.'},
+    {offset:16,type:'class',title:'Yoga & Juice · Washington Park',time:'8:00am – 10:00am',desc:'45-min sunrise flow plus a cold-pressed shot. $25 includes both. Mats provided.'},
+    {offset:20,type:'special',title:'Salad Season Special',time:'11am – 3pm',desc:'Any new salad + a wellness shot for $16. Eat your colors.'},
+    {offset:24,type:'class',title:'Wellness Wednesday: Macros 101',time:'7:00pm – 8:00pm',desc:'Quick session on building a macro plan around cold-pressed juice and protein bowls.'},
+    {offset:29,type:'popup',title:'Saratoga Track Pop-up',time:'9:00am – 4:00pm',desc:'Race-day shots and smoothies trackside all season. Find the teal tent.'},
+    {offset:35,type:'cleanse',title:'5-Day Cleanse Drop',time:'Pickup 7am – 12pm',desc:'Summer cohort kickoff. 30 bottles per cleanse, fully mapped out.'},
+    {offset:42,type:'buyout',title:'Corporate Buyout · CDPHP',time:'12pm – 2pm',desc:'Closed lunch hour for a private corporate wellness event.'},
+    {offset:50,type:'special',title:'Hydration Happy Hour',time:'3:00pm – 5:00pm',desc:'$2 off every wellness shot and coconut-water cooler. Beat the heat.'}
   ];
   return seeds.map((s,i) => {
     const d = new Date(today);
