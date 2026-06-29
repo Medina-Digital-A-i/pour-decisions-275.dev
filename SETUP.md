@@ -59,21 +59,41 @@ pushing code no longer publishes the site.
 
 ---
 
-## 4. Turn on text-message login (Twilio)
+## 4. Turn on text-message login (Twilio Verify)  ✅ recommended
 
-We already have Twilio. Add these to Vercel → **Settings → Environment Variables**
-(Production), then redeploy:
+Sign-in uses **Twilio Verify** — Twilio generates, sends, and checks the code for
+you, and sends it through Twilio's own compliant infrastructure. This is the fix
+for "the code says sent but never arrives": a plain Twilio number that isn't
+registered for **A2P 10DLC** gets silently blocked by US carriers; Verify avoids
+that. Set up:
+
+1. Twilio Console → **Verify → Services → Create new** (name it "Pour Decisions").
+2. Copy the **Service SID** (starts with `VA…`).
+3. In Vercel → **Settings → Environment Variables** (Production), add:
 
 | Variable | Value |
 |---|---|
 | `TWILIO_ACCOUNT_SID` | from Twilio console |
 | `TWILIO_AUTH_TOKEN` | from Twilio console |
-| `TWILIO_FROM` | a Twilio phone number we own (e.g. +1518…) |
+| `TWILIO_VERIFY_SERVICE_SID` | the `VA…` Service SID from step 2 |
 
-- Verify: sign in with a real phone → you should get a 6-digit text → enter it → in.
-- **Optional shortcut for testing before Twilio is ready:** set `AUTH_DEV_CODE` to a
-  fixed value (e.g. `000000`). Then sign-in accepts that code without texting. **Remove
-  it before real launch** (it's a master code).
+4. **Redeploy**, then sign in with a real phone → you get a 6-digit text → enter it → in.
+
+**Check what's wired up (no secrets shown):** open
+`https://<your-site>/api/auth?diag=1` in a browser. It reports whether the store
+and Verify are connected and which path is active.
+
+**See why a text isn't arriving (live send + carrier status):**
+`https://<your-site>/api/auth?testsms=1&to=5185551234&pin=<ADMIN_PIN>` — sends a
+real text and reports Twilio's final delivery status (e.g. names error `30034`,
+the A2P-10DLC block).
+
+- **Legacy / fallback:** if `TWILIO_VERIFY_SERVICE_SID` is not set but
+  `TWILIO_FROM` is, sign-in falls back to a self-managed SMS code (works only if
+  that number is 10DLC-registered). Prefer Verify.
+- **Testing shortcut:** set `AUTH_DEV_CODE` to a fixed value (e.g. `000000`) and
+  sign-in accepts that code without texting at all. **Remove before launch** — it's
+  a master code.
 
 ---
 

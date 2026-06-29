@@ -47,6 +47,67 @@ function twilioConfigured() {
   );
 }
 
+// Twilio Verify — the preferred OTP path. Twilio generates, stores, sends, and
+// checks the code, routing it through its own compliant sending pool (much
+// better deliverability than a self-managed 10DLC number).
+function verifyConfigured() {
+  return Boolean(
+    process.env.TWILIO_ACCOUNT_SID &&
+    process.env.TWILIO_AUTH_TOKEN &&
+    process.env.TWILIO_VERIFY_SERVICE_SID
+  );
+}
+function twilioAuthHeader() {
+  return 'Basic ' + Buffer.from(`${process.env.TWILIO_ACCOUNT_SID}:${process.env.TWILIO_AUTH_TOKEN}`).toString('base64');
+}
+// Start a verification — Twilio sends the code. Returns {ok} or {ok:false,error}.
+async function verifyStart(phone) {
+  const svc = process.env.TWILIO_VERIFY_SERVICE_SID;
+  const params = new URLSearchParams();
+  params.set('To', '+1' + normPhone(phone));
+  params.set('Channel', 'sms');
+  try {
+    const res = await fetch(`https://verify.twilio.com/v2/Services/${svc}/Verifications`, {
+      method: 'POST',
+      headers: { Authorization: twilioAuthHeader(), 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString(),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      console.error('Verify start failed', res.status, JSON.stringify(data));
+      return { ok: false, error: (data && data.message) || `Twilio Verify error ${res.status}` };
+    }
+    return { ok: true, status: data.status };
+  } catch (e) {
+    console.error('Verify start error', e && e.message);
+    return { ok: false, error: 'Could not reach Twilio Verify. Please try again.' };
+  }
+}
+// Check a code. Returns {ok:true,approved} or {ok:false} on a system error.
+async function verifyCheck(phone, code) {
+  const svc = process.env.TWILIO_VERIFY_SERVICE_SID;
+  const params = new URLSearchParams();
+  params.set('To', '+1' + normPhone(phone));
+  params.set('Code', code);
+  try {
+    const res = await fetch(`https://verify.twilio.com/v2/Services/${svc}/VerificationCheck`, {
+      method: 'POST',
+      headers: { Authorization: twilioAuthHeader(), 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString(),
+    });
+    const data = await res.json().catch(() => ({}));
+    // 404 = verification expired / already used / max attempts → treat as "not approved".
+    if (!res.ok && res.status !== 404) {
+      console.error('Verify check failed', res.status, JSON.stringify(data));
+      return { ok: false };
+    }
+    return { ok: true, approved: Boolean(data && data.status === 'approved') };
+  } catch (e) {
+    console.error('Verify check error', e && e.message);
+    return { ok: false };
+  }
+}
+
 async function sendSms(phone, body) {
   const sid = process.env.TWILIO_ACCOUNT_SID;
   const tok = process.env.TWILIO_AUTH_TOKEN;
@@ -112,10 +173,13 @@ export default async function handler(req, res) {
       return sendJson(res, 200, {
         diag: true,
         storeConnected: kvConfigured(),
+        verifyConfigured: verifyConfigured(),
         twilioConfigured: twilioConfigured(),
+        activePath: verifyConfigured() ? 'twilio-verify' : (twilioConfigured() ? 'legacy-sms' : (process.env.AUTH_DEV_CODE ? 'dev-code' : 'none')),
         have: {
           TWILIO_ACCOUNT_SID: Boolean(process.env.TWILIO_ACCOUNT_SID),
           TWILIO_AUTH_TOKEN: Boolean(process.env.TWILIO_AUTH_TOKEN),
+          TWILIO_VERIFY_SERVICE_SID: Boolean(process.env.TWILIO_VERIFY_SERVICE_SID),
           TWILIO_FROM: Boolean(process.env.TWILIO_FROM),
           TWILIO_MESSAGING_SERVICE_SID: Boolean(process.env.TWILIO_MESSAGING_SERVICE_SID),
           AUTH_DEV_CODE: Boolean(process.env.AUTH_DEV_CODE),
@@ -123,8 +187,8 @@ export default async function handler(req, res) {
         },
         fromLast4: from ? from.slice(-4) : null,
         hint: !kvConfigured() ? 'Cloud store (REDIS_URL) is not connected — sign-in cannot work until it is.'
-          : !twilioConfigured() ? 'Twilio env vars are missing — add TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN and TWILIO_FROM.'
-          : 'Store + Twilio both configured. Use ?testsms to see if a real send succeeds.',
+          : verifyConfigured() ? 'Twilio Verify is active — codes are sent and checked by Twilio Verify (best deliverability).'
+          : 'Recommended: create a Twilio Verify Service and set TWILIO_VERIFY_SERVICE_SID (starts with VA…). Without it, sign-in uses the legacy self-managed SMS path, which carriers may block if the number is not registered for A2P 10DLC.',
       });
     }
     if (url.searchParams.get('testsms') === '1') {
@@ -180,6 +244,18 @@ export default async function handler(req, res) {
 
     if (action === 'request') {
       const devCode = process.env.AUTH_DEV_CODE;
+
+      // Preferred path: Twilio Verify handles code generation, delivery & expiry.
+      if (verifyConfigured() && !devCode) {
+        const r = await verifyStart(phone);
+        if (!r.ok) {
+          return sendJson(res, 502, { error: r.error || "We couldn't text your code right now. Please try again." });
+        }
+        const existing = await getCustomer(phone);
+        return sendJson(res, 200, { ok: true, isNew: !existing, sent: true, channel: 'verify' });
+      }
+
+      // Fallback path: AUTH_DEV_CODE (testing) or legacy self-managed SMS code.
       const canText = twilioConfigured();
       if (!canText && !devCode) {
         return sendJson(res, 501, { error: 'Texting not connected yet — add Twilio to go live.' });
@@ -206,14 +282,24 @@ export default async function handler(req, res) {
     if (action === 'verify') {
       const code = String(body.code || '').trim();
       if (!/^\d{6}$/.test(code)) return sendJson(res, 400, { error: 'Enter the 6-digit code' });
-      const stored = await kvGet(`pd:authcode:${phone}`);
-      if (!stored || String(stored) !== code) return sendJson(res, 401, { error: 'That code is wrong or expired' });
+      const devCode = process.env.AUTH_DEV_CODE;
+
+      // Preferred path: ask Twilio Verify whether the code is correct.
+      if (verifyConfigured() && !devCode) {
+        const r = await verifyCheck(phone, code);
+        if (!r.ok) return sendJson(res, 502, { error: 'Could not check the code right now — please try again.' });
+        if (!r.approved) return sendJson(res, 401, { error: 'That code is wrong or expired' });
+      } else {
+        // Fallback: our own stored code (dev / legacy).
+        const stored = await kvGet(`pd:authcode:${phone}`);
+        if (!stored || String(stored) !== code) return sendJson(res, 401, { error: 'That code is wrong or expired' });
+        await kvDel(`pd:authcode:${phone}`);
+      }
 
       // Ensure the customer exists and set their name (delta 0 = no stamp change).
       const c = await adjustStamps(phone, 0, (body.name || '').trim() || undefined);
       const token = randomBytes(24).toString('hex');
       await kvSet(`pd:session:${token}`, phone, SESSION_TTL);
-      await kvDel(`pd:authcode:${phone}`);
       return sendJson(res, 200, { token, user: shapeUser(c) });
     }
 
