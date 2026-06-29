@@ -41,7 +41,9 @@ export default async function handler(req, res) {
         name: name || '', phone: normPhone(phone),
         items, subtotal: Number(body.subtotal) || 0, tax: Number(body.tax) || 0,
         tip: Number(body.tip) || 0, total: Number(total) || 0,
-        pickup: body.pickup || '359 Northern Boulevard',
+        pickup: body.pickup || '348 Loudon Rd, Albany NY',
+        when: body.when === 'schedule' ? 'schedule' : 'asap',
+        notes: String(body.notes || '').slice(0, 280),
         status: 'new', createdAt: new Date().toISOString(),
       };
       orders.unshift(order);

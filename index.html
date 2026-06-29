@@ -674,7 +674,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
       <button class="pickup-opt active" data-pickup="asap"><div class="l">ASAP</div><div class="v">~12 min</div></button>
       <button class="pickup-opt" data-pickup="schedule"><div class="l">Schedule</div><div class="v">Pick a time</div></button>
     </div>
-    <div class="field"><label>Pickup location</label><select><option>348 Loudon Rd, Albany NY (Default)</option></select></div>
+    <div class="field"><label>Pickup location</label><select id="co-location"><option>348 Loudon Rd, Albany NY</option></select></div>
   </div>
   <div class="checkout-section">
     <h3>Your info</h3>
@@ -1584,8 +1584,10 @@ document.getElementById('btn-place-order').addEventListener('click', async () =>
   if(phone.length!==10){ toast('Add your mobile number — it earns your stamp & pickup text'); const p=document.getElementById('co-phone'); if(p) p.focus(); return; }
   const t = cartTotals();
   const pickEl = document.querySelector('.pickup-opt.active');
+  const locEl = document.getElementById('co-location');
+  const pickup = (locEl && locEl.value ? locEl.value : '').replace(/\s*\(Default\)\s*$/,'');
   const items = STATE.cart.map(it => ({ name:it.name, qty:it.qty, size:it.size, price:it.price, boosts:it.boosts }));
-  const payload = { name, phone, items, subtotal:t.subtotal, tax:t.tax, tip:t.tip, total:t.total, pickup:(pickEl?pickEl.dataset.pickup:'asap'), notes:val('co-notes') };
+  const payload = { name, phone, items, subtotal:t.subtotal, tax:t.tax, tip:t.tip, total:t.total, pickup, when:(pickEl?pickEl.dataset.pickup:'asap'), notes:val('co-notes') };
   const btn = document.getElementById('btn-place-order'); btn.disabled=true; btn.textContent='Placing…';
   try{
     let order;
@@ -1934,6 +1936,8 @@ function adminShowOrders(body, orders){
       <div style="display:flex;justify-content:space-between;align-items:center"><strong style="color:var(--teal-deep)">${o.num||o.id}</strong><span style="font-size:11px;font-weight:800;text-transform:uppercase;color:${col}">${o.status||'new'}</span></div>
       <div style="font-size:13px;color:var(--teal-deep);margin-top:4px">${o.name||''} · ${prettyPhone(o.phone)}</div>
       <div style="font-size:12px;color:var(--muted);margin-top:2px">${items}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">${(o.when==='schedule'?'Scheduled':'ASAP')}${o.pickup?(' · '+o.pickup):''}</div>
+      ${o.notes?`<div style="font-size:12px;color:var(--orange);margin-top:4px;font-weight:600">📝 ${o.notes}</div>`:''}
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><strong>$${Number(o.total||0).toFixed(2)}</strong>${next?`<button data-ord="${o.id}" data-to="${next[0]}" class="btn btn-primary" style="padding:6px 12px;font-size:12px">${next[1]}</button>`:''}</div>`);
   }).join('');
   body.querySelectorAll('[data-ord]').forEach(b=>b.addEventListener('click', async ()=>{
