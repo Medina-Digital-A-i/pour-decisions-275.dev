@@ -202,6 +202,16 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .confirm-hero .palm-l{bottom:-4px;left:-8px;width:80px;opacity:.15;color:var(--teal-deep)}
 .confirm-hero .palm-r{bottom:-4px;right:-8px;width:70px;opacity:.12;color:var(--teal-deep);transform:scaleX(-1)}
 
+/* POUR PASS — "pour level" glass that fills as stamps accrue */
+.pour-glass-wrap{text-align:center;margin:18px 16px 4px}
+.pour-glass{position:relative;width:118px;height:160px;margin:0 auto;border:3px solid var(--teal-deep);border-top:0;border-radius:10px 10px 30px 30px;overflow:hidden;background:rgba(255,255,255,.55);box-shadow:inset 0 -6px 14px rgba(20,50,65,.06)}
+.pour-glass .juice{position:absolute;left:0;right:0;bottom:0;height:calc(var(--fill,0) * 100%);background:var(--grad-tropic);transition:height 1s cubic-bezier(.2,.8,.2,1)}
+.pour-glass .juice .surface{position:absolute;top:-7px;left:0;right:0;height:13px;background:var(--gold-glow);border-radius:50%;opacity:.9}
+@media (prefers-reduced-motion:no-preference){.pour-glass .juice .surface{animation:wobble 2.6s ease-in-out infinite}}
+@keyframes wobble{50%{transform:translateY(3px) scaleX(1.05)}}
+.pour-glass .glass-label{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-num);font-size:34px;letter-spacing:.04em;color:var(--teal-deep);text-shadow:0 1px 2px rgba(255,255,255,.5);z-index:1}
+.pour-glass-cap{margin:10px 0 0;font-size:13px;font-weight:600;color:var(--muted)}
+
 /* DAILY QUOTE */
 .quote-card{position:relative;margin:22px 16px 4px;padding:22px 22px 20px;border-radius:var(--r-lg);background:var(--grad-fresh);color:#fff;box-shadow:var(--shadow-card);overflow:hidden;}
 .quote-card::before{content:"\201C";position:absolute;top:-18px;left:14px;font-family:var(--f-display);font-style:italic;font-size:120px;line-height:1;color:rgba(255,255,255,.16);}
@@ -1672,6 +1682,13 @@ function renderPass(){
   cells += `<div class="stamp" style="background:var(--gold)"><span class="n" style="color:var(--teal-deep);opacity:1">★</span></div>`;
   root.innerHTML = `
     <div class="pass-card"><div class="eyebrow">${u.since?('Member Since '+u.since):'Member'}</div><div class="name">${u.name||'Member'}</div><div class="num">${stamps}<small>/9 stamps</small></div><div class="progress"><span style="width:${pct}%"></span></div><div class="lbl">${remaining===0?'Free pour unlocked! 🎉':(remaining+' more pour'+(remaining===1?'':'s')+' and your 10th is free')}</div></div>
+    <div class="pour-glass-wrap">
+      <div class="pour-glass" style="--fill:${(stamps/9).toFixed(3)}">
+        <div class="juice"><span class="surface"></span></div>
+        <div class="glass-label">${stamps}/9</div>
+      </div>
+      <p class="pour-glass-cap">${remaining===0?'Your glass is full — free pour unlocked! 🎉':'Fill the glass to earn a free pour'}</p>
+    </div>
     <div class="section-h"><h2 style="font-size:24px">Stamp card</h2></div>
     <div class="stamps">${cells}</div>`;
 }
