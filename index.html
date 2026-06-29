@@ -47,9 +47,17 @@
   --f-body:'Manrope', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   --f-num:'Bebas Neue', Impact, sans-serif;
   --f-script:'Caveat', cursive;
+  --teal-bright:#2BA7A0; --gold-glow:#FFD77A; --paper:#FFFDF8;
   --r-sm:8px; --r-md:14px; --r-lg:22px; --r-xl:32px; --r-pill:999px;
-  --shadow-card:0 4px 18px rgba(20,50,65,.08), 0 1px 3px rgba(20,50,65,.06);
-  --shadow-pop:0 18px 40px rgba(20,50,65,.18);
+  /* Two-tier elevation — tight contact shadow + soft ambient, surface-tinted */
+  --shadow-sm:0 1px 2px rgba(20,50,65,.06), 0 2px 6px rgba(20,50,65,.06);
+  --shadow-card:0 2px 4px rgba(20,50,65,.05), 0 8px 24px rgba(20,50,65,.10);
+  --shadow-pop:0 4px 12px rgba(20,50,65,.10), 0 24px 60px rgba(20,50,65,.22);
+  --shadow-gold:0 6px 22px rgba(232,181,71,.40), 0 2px 6px rgba(198,143,44,.30);
+  /* Signature gradients — used sparingly as accents */
+  --grad-fresh:linear-gradient(150deg,var(--teal-bright) 0%, var(--teal) 100%);
+  --grad-gold:linear-gradient(145deg,var(--gold-glow) 0%, var(--gold) 55%, var(--gold-deep) 100%);
+  --grad-tropic:linear-gradient(135deg,#FFD77A 0%, var(--gold) 30%, #FF8A4C 70%, var(--pink) 110%);
   --safe-top:env(safe-area-inset-top, 0px);
   --safe-bot:env(safe-area-inset-bottom, 0px);
 }
@@ -115,7 +123,12 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 
 /* HOME */
 .hero{position:relative;border-radius:var(--r-xl);overflow:hidden;margin:14px 16px 0;background:radial-gradient(120% 80% at 80% 20%, rgba(255,107,53,.85), transparent 50%),radial-gradient(120% 80% at 20% 90%, rgba(255,61,128,.85), transparent 55%),linear-gradient(160deg, var(--teal) 0%, var(--teal-deep) 100%);color:#fff;padding:28px 22px 26px;min-height:380px;isolation:isolate;}
-.hero::after{content:"";position:absolute;inset:0;background-image:url("https://images.unsplash.com/photo-1570696516188-ade861b84a49?w=900&q=70&auto=format&fit=crop");background-size:cover;background-position:center;mix-blend-mode:overlay;opacity:.32;z-index:-1;}
+/* Real, saturated food photo layer (not blended away) … */
+.hero::after{content:"";position:absolute;inset:0;background-image:url("https://images.unsplash.com/photo-1570696516188-ade861b84a49?w=1000&q=80&auto=format&fit=crop");background-size:cover;background-position:center;opacity:.92;z-index:-2;}
+/* … with a readability scrim only where the text sits */
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg, rgba(10,28,37,.20) 0%, rgba(10,28,37,.45) 50%, rgba(10,28,37,.82) 100%);z-index:-1;}
+@media (prefers-reduced-motion:no-preference){.hero::after{animation:kenburns 20s ease-in-out infinite alternate}}
+@keyframes kenburns{to{transform:scale(1.07) translateY(-2%)}}
 .hero .eyebrow{color:var(--gold)}
 .hero h1{color:#fff;margin-top:8px}
 .hero h1 em{font-style:italic;color:var(--gold)}
@@ -126,6 +139,10 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 
 /* Quick actions */
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px;padding:0 16px}
+/* Horizontal, swipeable category row (fits 7 categories cleanly on mobile) */
+.qa-scroll{display:flex;grid-template-columns:none;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.qa-scroll::-webkit-scrollbar{display:none}
+.qa-scroll .qa{flex:0 0 78px;scroll-snap-align:start}
 .qa{background:var(--white);border-radius:var(--r-md);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;box-shadow:var(--shadow-card);transition:transform .18s ease;font-weight:700;font-size:11px;color:var(--teal);text-transform:uppercase;letter-spacing:.04em;}
 .qa:active{transform:translateY(1px) scale(.96)}
 .qa .ico{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;color:#fff;font-size:22px;}
@@ -176,6 +193,14 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .confirm-hero .palm-l{bottom:-4px;left:-8px;width:80px;opacity:.15;color:var(--teal-deep)}
 .confirm-hero .palm-r{bottom:-4px;right:-8px;width:70px;opacity:.12;color:var(--teal-deep);transform:scaleX(-1)}
 
+/* DAILY QUOTE */
+.quote-card{position:relative;margin:22px 16px 4px;padding:22px 22px 20px;border-radius:var(--r-lg);background:var(--grad-fresh);color:#fff;box-shadow:var(--shadow-card);overflow:hidden;}
+.quote-card::before{content:"\201C";position:absolute;top:-18px;left:14px;font-family:var(--f-display);font-style:italic;font-size:120px;line-height:1;color:rgba(255,255,255,.16);}
+.quote-card .qe{font-family:var(--f-num);letter-spacing:.16em;font-size:12px;text-transform:uppercase;color:var(--gold-glow);display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.quote-card .qt{font-family:var(--f-display);font-style:italic;font-weight:800;font-size:20px;line-height:1.25;position:relative;z-index:1;}
+.quote-card .qa{margin-top:10px;font-weight:700;font-size:13px;opacity:.92}
+.quote-card .qa::before{content:"— "}
+
 /* MENU */
 .cat-strip{display:flex;gap:10px;overflow-x:auto;padding:0 16px 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
 .cat-strip::-webkit-scrollbar{display:none}
@@ -184,14 +209,25 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .cat-chip.active{color:#fff;background:var(--teal);border-color:var(--teal-deep)}
 
 .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:0 16px 24px}
-.menu-card{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--white);box-shadow:var(--shadow-card);display:flex;flex-direction:column;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;min-height:240px;}
-.menu-card:active{transform:translateY(1px) scale(.98)}
-.menu-card .img{position:relative;height:130px;background-size:cover;background-position:center;}
-.menu-card .img::after{content:"";position:absolute;inset:0;background:linear-gradient(165deg,transparent 50%, rgba(0,0,0,.18) 100%);}
-.menu-card .cat-tag{position:absolute;top:8px;left:8px;padding:4px 8px;border-radius:var(--r-pill);background:rgba(255,255,255,.95);color:var(--teal);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
+.menu-card{position:relative;border-radius:var(--r-lg);overflow:hidden;background:var(--paper);box-shadow:var(--shadow-card);display:flex;flex-direction:column;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease;min-height:248px;}
+.menu-card:active{transform:translateY(2px) scale(.985);box-shadow:var(--shadow-sm)}
+.menu-card .img{position:relative;height:148px;background-size:cover;background-position:center;}
+.menu-card .img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%, rgba(10,28,37,.42) 100%);}
+.menu-card .cat-tag{position:absolute;top:8px;left:8px;padding:4px 9px;border-radius:var(--r-pill);background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--teal);font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
 .menu-card .body{padding:12px 14px 14px;flex:1;display:flex;flex-direction:column}
 .menu-card h4{font-family:var(--f-display);font-style:italic;font-weight:800;font-size:18px;line-height:1.05;margin:0 0 4px;color:var(--teal-deep)}
-.menu-card .ing{font-size:11px;color:var(--muted);margin:0 0 8px;line-height:1.3;font-weight:500}
+.menu-card .ing{font-size:11px;color:var(--muted);margin:0 0 8px;line-height:1.3;font-weight:500;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+/* Floating, color-aware add button overlapping the photo/body seam */
+.menu-card .add{position:absolute;right:12px;top:148px;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:20px;font-weight:800;box-shadow:var(--shadow-gold);z-index:2;}
+.menu-card:active .add{transform:translateY(-50%) scale(.86) rotate(90deg)}
+/* Staggered entrance */
+@media (prefers-reduced-motion:no-preference){
+  .menu-card{animation:cardIn .45s cubic-bezier(.2,.8,.2,1) both}
+  .menu-card:nth-child(2){animation-delay:.04s}.menu-card:nth-child(3){animation-delay:.08s}
+  .menu-card:nth-child(4){animation-delay:.12s}.menu-card:nth-child(5){animation-delay:.16s}
+  .menu-card:nth-child(6){animation-delay:.20s}.menu-card:nth-child(n+7){animation-delay:.24s}
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
 .menu-card .row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto}
 .menu-card .price{font-family:var(--f-num);font-size:24px;color:var(--teal);line-height:1}
 .menu-card .add{width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--teal-deep);display:grid;place-items:center;font-size:18px;font-weight:800;box-shadow:0 4px 12px rgba(232,181,71,.5);}
@@ -203,11 +239,22 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .menu-card[data-cat="roots"] .img{background-color:#fbcfe8}
 .menu-card[data-cat="smoothies"] .img{background-color:#fef08a}
 .menu-card[data-cat="shots"] .img{background-color:#a5f3fc}
+.menu-card[data-cat="salads"] .img{background-color:#bbf7d0}
+.menu-card[data-cat="bowls"] .img{background-color:#ddd6fe}
 .menu-card[data-cat="greens"] .add{background:var(--lime);color:var(--teal-deep)}
 .menu-card[data-cat="citrus"] .add{background:var(--orange);color:#fff}
 .menu-card[data-cat="roots"] .add{background:var(--pink);color:#fff}
 .menu-card[data-cat="smoothies"] .add{background:var(--yellow);color:var(--teal-deep)}
 .menu-card[data-cat="shots"] .add{background:var(--cyan);color:var(--teal-deep)}
+.menu-card[data-cat="salads"] .add{background:#16a34a;color:#fff}
+.menu-card[data-cat="bowls"] .add{background:#7c3aed;color:#fff}
+/* Emoji tile shown when an item has no photo yet — looks intentional, not broken. */
+.menu-card .img.no-photo{display:grid;place-items:center}
+.menu-card .img-emoji{font-size:54px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.18));opacity:.92;transition:transform .25s ease}
+.menu-card:active .img-emoji{transform:scale(.9)}
+/* Add button: real button reset + tactile press */
+.menu-card .add{border:0;cursor:pointer;font-family:inherit;padding:0;transition:transform .15s ease, box-shadow .15s ease}
+.menu-card .add:active{transform:scale(.86)}
 
 /* SHEET */
 .scrim{position:fixed;inset:0;z-index:120;background:rgba(20,50,65,.55);opacity:0;visibility:hidden;transition:opacity .25s ease, visibility .25s ease}
@@ -586,13 +633,17 @@ h3{font-size:22px;font-weight:700;font-style:italic}
       <h2>Pick your weapon</h2>
     </div>
   </div>
-  <div class="quick-actions" style="grid-template-columns:repeat(5,1fr)">
+  <div class="quick-actions qa-scroll">
     <button class="qa" style="background:linear-gradient(180deg,#d9f99d,#a3e635);color:var(--teal-deep)" data-route="menu" data-cat="greens"><span class="ico">🌿</span><span>Greens</span></button>
     <button class="qa" style="background:linear-gradient(180deg,#fed7aa,#fb923c);color:#fff" data-route="menu" data-cat="citrus"><span class="ico">🍊</span><span>Citrus</span></button>
     <button class="qa" style="background:linear-gradient(180deg,#fbcfe8,#ec4899);color:#fff" data-route="menu" data-cat="roots"><span class="ico">🥕</span><span>Roots</span></button>
     <button class="qa" style="background:linear-gradient(180deg,#fef08a,#facc15);color:var(--teal-deep)" data-route="menu" data-cat="smoothies"><span class="ico">🍓</span><span>Smoothie</span></button>
+    <button class="qa" style="background:linear-gradient(180deg,#bbf7d0,#16a34a);color:#fff" data-route="menu" data-cat="salads"><span class="ico">🥗</span><span>Salads</span></button>
+    <button class="qa" style="background:linear-gradient(180deg,#ddd6fe,#7c3aed);color:#fff" data-route="menu" data-cat="bowls"><span class="ico">🍇</span><span>Bowls</span></button>
     <button class="qa" style="background:linear-gradient(180deg,#a5f3fc,#22d3ee);color:var(--teal-deep)" data-route="menu" data-cat="shots"><span class="ico">⚡</span><span>Shots</span></button>
   </div>
+
+  <div id="home-quote"></div>
 
   <div class="colorblock teal">
     <svg class="palm palm-l" viewBox="0 0 100 180" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M48 180 C46 155 43 128 44 105 C45 88 46 72 50 55 C51 44 53 35 55 25 C56 18 58 14 60 14 C62 14 64 18 65 25 C67 35 69 44 70 55 C74 72 75 88 76 105 C77 128 74 155 72 180Z"/><path d="M58 28 C48 20 32 10 12 16 C16 24 32 30 50 32Z"/><path d="M57 22 C46 8 38 -6 20 0 C28 14 42 22 56 26Z"/><path d="M56 18 C50 4 50 -10 62 -14 C64 2 62 14 60 22Z"/><path d="M62 26 C74 18 90 10 108 16 C104 24 88 30 70 32Z"/><path d="M63 22 C74 8 82 -6 100 0 C92 14 78 22 64 26Z"/><path d="M55 30 C38 28 22 34 8 44 C20 46 38 38 54 34Z"/><path d="M65 30 C82 28 98 34 112 44 C100 46 82 38 66 34Z"/></svg>
@@ -649,6 +700,8 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <button class="cat-chip" data-cat="roots"><span class="swatch" style="background:var(--pink)"></span>Roots</button>
     <button class="cat-chip" data-cat="smoothies"><span class="swatch" style="background:var(--yellow)"></span>Smoothies</button>
     <button class="cat-chip" data-cat="shots"><span class="swatch" style="background:var(--cyan)"></span>Shots</button>
+    <button class="cat-chip" data-cat="salads"><span class="swatch" style="background:#16a34a"></span>Salads</button>
+    <button class="cat-chip" data-cat="bowls"><span class="swatch" style="background:#7c3aed"></span>Bowls</button>
   </div>
   <div class="menu-grid" id="menu-grid"></div>
 </section>
@@ -1062,12 +1115,202 @@ const MENU = [
    ing:['turmeric','ginger','lemon','black pepper','honey'],
    desc:"Inflammation's worst enemy.",
    macros:{cal:30,protein:0,carbs:7,fat:0,sugar:5},
-   img:PIC('photo-1597306633535-fdba89e5ea30')}
+   img:PIC('photo-1597306633535-fdba89e5ea30')},
+
+  // ── Functional add-ons (2025–26 trend refresh) ──
+  {id:'chlorophyll-cooler',name:'Chlorophyll Cooler',cat:'greens',price:9,
+   ing:['cucumber','liquid chlorophyll','lime','mint','coconut water'],
+   desc:'Deep-green hydration with a glow-up rep.',
+   macros:{cal:60,protein:1,carbs:14,fat:0,sugar:9}},
+  {id:'sea-moss-immunity',name:'Sea Moss Immunity',cat:'citrus',price:11,
+   ing:['orange','pineapple','sea moss gel','ginger','turmeric','lemon'],
+   desc:'Mineral-rich sea moss meets bright citrus.',
+   macros:{cal:130,protein:2,carbs:30,fat:0,sugar:22}},
+  {id:'collagen-glow-smoothie',name:'Collagen Glow',cat:'smoothies',price:11,
+   ing:['strawberry','banana','collagen peptides','oat milk','almond butter','vanilla'],
+   desc:'Creamy berry blend for skin, hair & recovery.',
+   macros:{cal:360,protein:20,carbs:44,fat:12,sugar:26}},
+  {id:'adaptogen-cacao',name:'Adaptogen Cacao',cat:'smoothies',price:12,
+   ing:['banana','cacao','ashwagandha','reishi','oat milk','almond butter','dates'],
+   desc:'Chocolatey, calming, mushroom-powered focus.',
+   macros:{cal:390,protein:12,carbs:52,fat:16,sugar:28}},
+  {id:'sea-moss-shot',name:'Sea Moss Shot',cat:'shots',price:6,
+   ing:['sea moss gel','pineapple','ginger','lime'],
+   desc:'A 2oz mineral hit. The wellness flex.',
+   macros:{cal:35,protein:1,carbs:8,fat:0,sugar:5}},
+
+  // ── Salads (NYC fast-casual wellness) ──
+  {id:'kale-caesar-crunch',name:'Kale Caesar Crunch',cat:'salads',price:13,
+   ing:['kale','romaine','grilled chicken','parmesan','sourdough croutons','lemon caesar'],
+   desc:'Massaged kale, real parm, our lemony caesar.',
+   macros:{cal:430,protein:34,carbs:22,fat:24,sugar:4}},
+  {id:'harvest-bowl',name:'Harvest Bowl',cat:'salads',price:15,
+   ing:['wild rice','roasted chicken','sweet potato','apple','goat cheese','almonds','kale'],
+   desc:'Roasted, hearty, sweet-savory comfort in a bowl.',
+   macros:{cal:680,protein:33,carbs:62,fat:32,sugar:16}},
+  {id:'southwest-chipotle',name:'Southwest Chipotle',cat:'salads',price:14,
+   ing:['romaine','black beans','roasted corn','avocado','cherry tomato','tortilla strips','chipotle-lime'],
+   desc:'Smoky, crunchy, loaded Tex-Mex greens.',
+   macros:{cal:520,protein:18,carbs:48,fat:30,sugar:8}},
+  {id:'mediterranean-falafel',name:'Mediterranean Falafel',cat:'salads',price:14,
+   ing:['arugula','spinach','falafel','cucumber','cherry tomato','kalamata olives','lemon-tahini'],
+   desc:'Crispy falafel over greens with creamy tahini.',
+   macros:{cal:560,protein:17,carbs:54,fat:32,sugar:9}},
+  {id:'quinoa-power-bowl',name:'Quinoa Power Bowl',cat:'salads',price:15,
+   ing:['quinoa','grilled chicken','chickpeas','kale','sweet potato','avocado','green goddess'],
+   desc:'High-protein grain bowl built to actually fill you.',
+   macros:{cal:640,protein:38,carbs:55,fat:28,sugar:8}},
+  {id:'rainbow-detox-bowl',name:'Rainbow Detox Bowl',cat:'salads',price:13,
+   ing:['kale','red cabbage','carrot','beet','edamame','avocado','ginger-miso'],
+   desc:'Vegan, raw, ridiculously colorful. Pure reset.',
+   macros:{cal:410,protein:14,carbs:42,fat:22,sugar:12}},
+  {id:'cobb-protein-salad',name:'Loaded Cobb',cat:'salads',price:15,
+   ing:['romaine','grilled chicken','turkey bacon','egg','avocado','blue cheese','ranch'],
+   desc:'The classic protein bomb, stacked high.',
+   macros:{cal:620,protein:42,carbs:14,fat:42,sugar:5}},
+
+  // ── Acai / smoothie bowls ──
+  {id:'classic-acai-bowl',name:'Classic Acai Bowl',cat:'bowls',price:13,
+   ing:['acai','banana','blueberry','oat milk','granola','strawberry','honey'],
+   desc:'The original purple bowl. Always a good idea.',
+   macros:{cal:480,protein:9,carbs:78,fat:14,sugar:42}},
+  {id:'pitaya-glow-bowl',name:'Pitaya Glow Bowl',cat:'bowls',price:14,
+   ing:['pitaya','mango','banana','coconut milk','granola','kiwi','coconut flakes'],
+   desc:'Bright-pink dragonfruit, tropical and gram-worthy.',
+   macros:{cal:450,protein:8,carbs:74,fat:12,sugar:40}},
+  {id:'protein-power-bowl',name:'Protein Power Bowl',cat:'bowls',price:15,
+   ing:['acai','banana','peanut butter','plant protein','oat milk','granola','cacao nibs'],
+   desc:'Acai meets 20g protein. Recovery, blended.',
+   macros:{cal:620,protein:22,carbs:68,fat:24,sugar:34}},
+  {id:'green-machine-bowl',name:'Green Machine Bowl',cat:'bowls',price:14,
+   ing:['spinach','spirulina','banana','mango','avocado','oat milk','granola','hemp seeds'],
+   desc:'A vegan green bowl that tastes tropical.',
+   macros:{cal:440,protein:11,carbs:62,fat:18,sugar:30}}
 ];
+
+// Per-category visuals — used for the menu chips and as an appetizing
+// gradient + emoji fallback whenever an item has no photo yet.
+const CAT_META = {
+  greens:{grad:'linear-gradient(135deg,#d9f99d 0%,#4d7c0f 100%)',emoji:'🥬',label:'Greens'},
+  citrus:{grad:'linear-gradient(135deg,#fed7aa 0%,#ea580c 100%)',emoji:'🍊',label:'Citrus'},
+  roots:{grad:'linear-gradient(135deg,#fbcfe8 0%,#be185d 100%)',emoji:'🥕',label:'Roots'},
+  smoothies:{grad:'linear-gradient(135deg,#fef08a 0%,#ca8a04 100%)',emoji:'🍓',label:'Smoothies'},
+  shots:{grad:'linear-gradient(135deg,#a5f3fc 0%,#0891b2 100%)',emoji:'⚡',label:'Shots'},
+  salads:{grad:'linear-gradient(135deg,#bbf7d0 0%,#15803d 100%)',emoji:'🥗',label:'Salads'},
+  bowls:{grad:'linear-gradient(135deg,#ddd6fe 0%,#6d28d9 100%)',emoji:'🍇',label:'Bowls'}
+};
 
 // Notifications are per-user; populated from the signed-in member's feed.
 // Empty until the backend (orders/loyalty) sends real activity.
 const NOTIFICATIONS = [];
+
+// ── Daily wellness quotes ──────────────────────────────────────────────
+// Rotates one quote per calendar day (deterministic, same for everyone) and
+// drops it into each signed-in member's notifications as the "Daily Squeeze".
+const QUOTES = [
+  {q:"Let food be thy medicine and medicine be thy food.",a:"Hippocrates"},
+  {q:"Take care of your body. It's the only place you have to live.",a:"Jim Rohn"},
+  {q:"The greatest wealth is health.",a:"Virgil"},
+  {q:"You are what you eat, so don't be fast, cheap, easy, or fake.",a:"Unknown"},
+  {q:"Eat for the body you want, not the body you have.",a:"Unknown"},
+  {q:"Every time you eat is an opportunity to nourish your body.",a:"Unknown"},
+  {q:"A healthy outside starts from the inside.",a:"Robert Urich"},
+  {q:"Your diet is a bank account. Good food choices are good investments.",a:"Bethenny Frankel"},
+  {q:"To eat is a necessity, but to eat intelligently is an art.",a:"La Rochefoucauld"},
+  {q:"The food you eat can be either the safest and most powerful form of medicine, or the slowest form of poison.",a:"Ann Wigmore"},
+  {q:"Don't eat anything your great-great-grandmother wouldn't recognize as food.",a:"Michael Pollan"},
+  {q:"Health is not about the weight you lose, but about the life you gain.",a:"Unknown"},
+  {q:"When diet is wrong, medicine is of no use. When diet is correct, medicine is of no need.",a:"Ayurvedic Proverb"},
+  {q:"Drink your greens before they drink you.",a:"Pour Decisions"},
+  {q:"Hydrate like your future depends on it. It does.",a:"Pour Decisions"},
+  {q:"The body achieves what the mind believes.",a:"Napoleon Hill"},
+  {q:"Wellness is the natural state of a body in balance.",a:"Unknown"},
+  {q:"Eat the rainbow. Your cells are counting on it.",a:"Pour Decisions"},
+  {q:"Small daily improvements are the key to staggering long-term results.",a:"Unknown"},
+  {q:"Your body hears everything your mind says. Stay positive.",a:"Unknown"},
+  {q:"Nourish to flourish.",a:"Unknown"},
+  {q:"Good things come to those who sweat.",a:"Unknown"},
+  {q:"The first wealth is health.",a:"Ralph Waldo Emerson"},
+  {q:"He who has health has hope, and he who has hope has everything.",a:"Arabian Proverb"},
+  {q:"Real food doesn't have ingredients. Real food is ingredients.",a:"Jamie Oliver"},
+  {q:"An early-morning walk is a blessing for the whole day.",a:"Henry David Thoreau"},
+  {q:"Water is the driving force of all nature.",a:"Leonardo da Vinci"},
+  {q:"Eat well, move daily, hydrate often, sleep lots, love your body.",a:"Unknown"},
+  {q:"The greatest medicine of all is teaching people how not to need it.",a:"Hippocrates"},
+  {q:"Vegetables are a must on a diet. I suggest carrot cake, zucchini bread, and pumpkin pie.",a:"Jim Davis"},
+  {q:"It's not about perfect. It's about effort.",a:"Jillian Michaels"},
+  {q:"A fit body, a calm mind, a house full of love. These cannot be bought — they must be earned.",a:"Naval Ravikant"},
+  {q:"Healthy is an outfit that looks different on everybody.",a:"Unknown"},
+  {q:"Strive for progress, not perfection.",a:"Unknown"},
+  {q:"Energy and persistence conquer all things.",a:"Benjamin Franklin"},
+  {q:"Self-care is how you take your power back.",a:"Lalah Delia"},
+  {q:"You can't pour from an empty cup. Take care of yourself first.",a:"Unknown"},
+  {q:"The groundwork for all happiness is good health.",a:"Leigh Hunt"},
+  {q:"What you eat in private, you wear in public.",a:"Unknown"},
+  {q:"Movement is a medicine for creating change in a person's physical, emotional, and mental states.",a:"Carol Welch"},
+  {q:"Sleep is the best meditation.",a:"Dalai Lama"},
+  {q:"A green smoothie a day keeps the sluggishness away.",a:"Pour Decisions"},
+  {q:"Invest in your body. It's where you'll live the rest of your life.",a:"Unknown"},
+  {q:"Discipline is choosing between what you want now and what you want most.",a:"Abraham Lincoln"},
+  {q:"You don't have to eat less, you just have to eat right.",a:"Unknown"},
+  {q:"Fall in love with taking care of yourself.",a:"Unknown"},
+  {q:"The doctor of the future will give no medicine but will interest patients in the care of the human frame, in diet, and in the cause and prevention of disease.",a:"Thomas Edison"},
+  {q:"Glow from the inside out.",a:"Pour Decisions"},
+  {q:"Healthy habits are learned the same way as unhealthy ones — through practice.",a:"Wayne Dyer"},
+  {q:"Listen to your body. It's smarter than you think.",a:"Unknown"},
+  {q:"A juice a day keeps the grumps away.",a:"Pour Decisions"},
+  {q:"Your only limit is you. Be brave and fearless.",a:"Unknown"},
+  {q:"Eat clean, train dirty, stay humble.",a:"Unknown"},
+  {q:"Health is a relationship between you and your body.",a:"Terri Guillemets"},
+  {q:"Wellness is not a 'medical fix' but a way of living.",a:"Greg Anderson"},
+  {q:"Gratitude is the healthiest of all human emotions.",a:"Zig Ziglar"},
+  {q:"Be stronger than your excuses.",a:"Unknown"},
+  {q:"What you put in your body today is who you become tomorrow.",a:"Pour Decisions"},
+  {q:"Slow down and everything you are chasing will come around and catch you.",a:"John De Paola"},
+  {q:"The mind and body are not separate. What affects one, affects the other.",a:"Unknown"},
+  {q:"Eat to live, don't live to eat.",a:"Socrates"},
+  {q:"Take a deep breath. It's just a bad day, not a bad life.",a:"Unknown"},
+  {q:"Cold-pressed, never stressed.",a:"Pour Decisions"},
+  {q:"Be the energy you want to attract.",a:"Unknown"},
+  {q:"There is no diet that will do what healthy eating does.",a:"Unknown"},
+  {q:"A river cuts through rock not because of its power, but its persistence.",a:"Jim Watkins"},
+  {q:"Make today so awesome yesterday gets jealous.",a:"Unknown"},
+  {q:"健康 — health — begins the moment you decide you're worth it.",a:"Pour Decisions"},
+  {q:"Treat your body like it belongs to someone you love.",a:"Unknown"},
+  {q:"Wake up. Drink something green. Conquer.",a:"Pour Decisions"}
+];
+function dayNumber(d){ const dt = d || new Date(); return Math.floor(Date.UTC(dt.getFullYear(), dt.getMonth(), dt.getDate()) / 86400000); }
+function dayKey(d){ const dt = d || new Date(); return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0'); }
+function quoteOfDay(d){ const i = ((dayNumber(d) % QUOTES.length) + QUOTES.length) % QUOTES.length; return QUOTES[i]; }
+function renderHomeQuote(){
+  const el = document.getElementById('home-quote'); if(!el) return;
+  const q = quoteOfDay();
+  el.innerHTML = `<div class="quote-card">
+    <div class="qe">🌱 Daily Squeeze</div>
+    <div class="qt">${q.q}</div>
+    <div class="qa">${q.a}</div>
+  </div>`;
+}
+// Client-side notifications store. The server feed resets on refresh, so the
+// daily quote lives here and is merged in for display + the unread badge.
+function localNotifs(){ try{ return JSON.parse(localStorage.getItem('pd_notifs')||'[]'); }catch{ return []; } }
+function saveLocalNotifs(a){ try{ localStorage.setItem('pd_notifs', JSON.stringify(a.slice(0,40))); }catch{} }
+function ensureDailyQuoteNotif(){
+  if(!isSignedIn()) return;
+  const key = dayKey();
+  const all = localNotifs();
+  if(all.some(n => n.id === 'quote-'+key)) return;
+  const q = quoteOfDay();
+  all.unshift({ id:'quote-'+key, ico:'🌱', color:'#16a34a', title:'Daily Squeeze',
+    body:'“'+q.q+'” — '+q.a, t:'Today', unread:true });
+  saveLocalNotifs(all);
+  updateNotifBadge();
+}
+function allNotifs(){
+  const server = (isSignedIn() && SESSION.user && Array.isArray(SESSION.user.notifications)) ? SESSION.user.notifications : [];
+  return localNotifs().concat(server);
+}
+function markNotifsRead(){ saveLocalNotifs(localNotifs().map(n => ({...n, unread:false}))); updateNotifBadge(); }
 
 const EVENT_TYPES = {
   cleanse:{label:'Cleanse',color:'var(--orange)'},
@@ -1138,7 +1381,7 @@ function go(view){
   if(view==='cart') renderCart();
   if(view==='checkout'){ renderCheckoutSummary(); initPayments(); }
   if(view==='calendar') renderCalendar();
-  if(view==='notifications') renderNotifications();
+  if(view==='notifications'){ renderNotifications(); markNotifsRead(); }
   if(view==='account') renderAccount();
   if(view==='pass') renderPass();
   if(view==='admin') renderAdmin();
@@ -1166,7 +1409,7 @@ async function refreshUser(){
   if(!isSignedIn() || DEV) return;
   try{
     const r = await api('/api/auth');
-    if(r && r.user){ SESSION.user = r.user; saveSession(); renderAccount(); renderPass(); updateNotifBadge(); }
+    if(r && r.user){ SESSION.user = r.user; saveSession(); ensureDailyQuoteNotif(); renderAccount(); renderPass(); updateNotifBadge(); }
   }catch(e){
     if(e.status===401){ SESSION.token=null; SESSION.user=null; localStorage.removeItem('pd_session'); renderAccount(); renderPass(); updateNotifBadge(); }
   }
@@ -1311,7 +1554,7 @@ document.getElementById('auth-verify').addEventListener('click', async ()=>{
   try{
     const r = await authVerify(authPhone, code, name);
     SESSION.token=r.token; SESSION.user=r.user; saveSession();
-    closeAuth(); renderAccount(); renderPass(); updateNotifBadge();
+    closeAuth(); ensureDailyQuoteNotif(); renderAccount(); renderPass(); updateNotifBadge();
     toast('Welcome, '+((r.user&&r.user.name)||'friend')+'!'); go('account');
   }catch(e){ authMsg(e.message || 'That code did not match'); }
   finally{ btn.disabled=false; btn.textContent='Verify & sign in'; }
@@ -1380,7 +1623,7 @@ function renderPass(){
 }
 function updateNotifBadge(){
   const el = document.getElementById('notif-count'); if(!el) return;
-  const n = (isSignedIn() && SESSION.user && SESSION.user.notifications) ? SESSION.user.notifications.filter(x=>x.unread).length : 0;
+  const n = isSignedIn() ? allNotifs().filter(x=>x.unread).length : 0;
   el.textContent = n; el.style.display = n>0 ? '' : 'none';
 }
 
@@ -1412,10 +1655,15 @@ document.addEventListener('click', (e) => {
 function renderMenu(){
   const grid = document.getElementById('menu-grid');
   const items = STATE.filter==='all' ? MENU : MENU.filter(i => i.cat===STATE.filter);
-  grid.innerHTML = items.map(item => `
+  grid.innerHTML = items.map(item => {
+    const meta = CAT_META[item.cat] || {};
+    const imgInner = item.img
+      ? `<div class="img" style="background-image:url('${item.img}')">`
+      : `<div class="img no-photo" style="background-image:${meta.grad||'var(--teal)'}"><span class="img-emoji">${meta.emoji||'🥤'}</span>`;
+    return `
     <div class="menu-card" data-cat="${item.cat}" data-id="${item.id}">
-      <div class="img" style="background-image:url('${item.img}')">
-        <span class="cat-tag">${item.cat}</span>
+      ${imgInner}
+        <span class="cat-tag">${meta.label||item.cat}</span>
       </div>
       <div class="body">
         <h4>${item.name}</h4>
@@ -1426,11 +1674,11 @@ function renderMenu(){
         </div>
         <div class="row">
           <span class="price">$${item.price}</span>
-          <span class="add">+</span>
+          <button class="add" aria-label="Add ${item.name}">+</button>
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
   grid.querySelectorAll('.menu-card').forEach(c => {
     c.addEventListener('click', () => openSheet(c.dataset.id));
   });
@@ -1679,7 +1927,7 @@ function renderNotifications(){
     root.innerHTML = emptyState('🔔','Sign in for notifications','Order updates, rewards, and events land here once you sign in.', true);
     return;
   }
-  const list = (SESSION.user && SESSION.user.notifications) || [];
+  const list = allNotifs();
   if(!list.length){
     root.innerHTML = emptyState('🔔','No notifications yet',"You're all caught up — order updates and rewards will show here.", false);
     return;
@@ -2051,9 +2299,11 @@ function init(){
   renderFeatured();
   renderMenu();
   renderHomeEvents();
+  renderHomeQuote();
   renderAccount();
   renderPass();
   updateCartBadge();
+  ensureDailyQuoteNotif();
   updateNotifBadge();
   refreshUser();
   loadEvents();
