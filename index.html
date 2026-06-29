@@ -1233,6 +1233,12 @@ document.getElementById('auth-send').addEventListener('click', async ()=>{
   const btn = document.getElementById('auth-send'); btn.disabled=true; btn.textContent='Sending…';
   try{
     const r = await authRequestCode(p);
+    // A real (non-dev) request must report sent:true. If the server couldn't
+    // actually text it, don't advance — show the failure instead of pretending.
+    if(r && !r.dev && r.sent === false){
+      authMsg("We couldn't text your code right now. Double-check the number, then try again.");
+      return;
+    }
     authPhone = p;
     document.getElementById('auth-phone-echo').textContent = prettyPhone(p);
     document.getElementById('auth-phone-step').hidden=true;

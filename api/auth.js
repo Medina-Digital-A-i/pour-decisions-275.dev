@@ -56,16 +56,27 @@ async function sendSms(phone, body) {
   params.set('To', '+1' + normPhone(phone));
   if (msvc) params.set('MessagingServiceSid', msvc); else params.set('From', from);
   params.set('Body', body);
-  const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
-    method: 'POST',
-    headers: {
-      Authorization: 'Basic ' + Buffer.from(`${sid}:${tok}`).toString('base64'),
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: params.toString(),
-  });
-  if (!res.ok) { console.error('Twilio error', res.status, await res.text()); return false; }
-  return true;
+  try {
+    const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Basic ' + Buffer.from(`${sid}:${tok}`).toString('base64'),
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: params.toString(),
+    });
+    if (!res.ok) {
+      // Surface Twilio's own message (e.g. unverified number, 10DLC not
+      // registered, geo-permissions) so the failure isn't silent.
+      const detail = await res.text().catch(() => '');
+      console.error('Twilio send failed', res.status, detail);
+      return { ok: false, status: res.status, detail };
+    }
+    return { ok: true };
+  } catch (e) {
+    console.error('Twilio request error', e && e.message);
+    return { ok: false, status: 0, detail: (e && e.message) || 'network error' };
+  }
 }
 
 export default async function handler(req, res) {
@@ -105,7 +116,18 @@ export default async function handler(req, res) {
       await kvSet(`pd:authcode:${phone}`, code, CODE_TTL);
       const existing = await getCustomer(phone);
       let sent = false;
-      if (canText) sent = await sendSms(phone, `Your Pour Decisions code is ${code}. Expires in 10 minutes.`);
+      if (canText) {
+        const r = await sendSms(phone, `Your Pour Decisions code is ${code}. Expires in 10 minutes.`);
+        sent = r.ok;
+        if (!sent) {
+          // Don't leave a code the member can never receive, and don't pretend
+          // it was sent — tell the client the text actually failed.
+          await kvDel(`pd:authcode:${phone}`);
+          return sendJson(res, 502, {
+            error: "We couldn't text your code right now. Double-check the number, then try again.",
+          });
+        }
+      }
       return sendJson(res, 200, { ok: true, isNew: !existing, sent });
     }
 

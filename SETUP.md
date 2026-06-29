@@ -48,8 +48,10 @@ pushing code no longer publishes the site.
 1. Vercel dashboard → project **pour-decisions** → **Storage** tab.
 2. **Create Database → KV (Upstash Redis)** → accept free plan → **Connect** it to
    the `pour-decisions` project (Production + Preview).
-3. This **auto-adds** `KV_REST_API_URL` and `KV_REST_API_TOKEN` to the project — no
-   copy-paste needed.
+3. This **auto-adds** a `REDIS_URL` connection string to the project (Upstash also
+   exposes it as `REDIS_TLS_URL` / `KV_URL` — the app accepts any of the three). No
+   copy-paste needed. *(The app talks to Redis over `ioredis`, so it needs the
+   `redis(s)://…` URL, not the old `KV_REST_API_URL` / `KV_REST_API_TOKEN` REST pair.)*
 4. **Redeploy** so the app picks them up.
 5. Verify: in the app, **Me → Owner/Staff login → 7687**. The Orders/Loyalty/Bookings
    tabs should now load (empty) instead of "connect the database". Add an event — it
