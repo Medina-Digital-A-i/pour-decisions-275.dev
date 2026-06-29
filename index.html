@@ -114,7 +114,9 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:var(--r-pill);font-weight:800;font-size:15px;letter-spacing:.01em;transition:transform .15s ease, box-shadow .15s ease;cursor:pointer;}
 .btn:active{transform:translateY(1px) scale(.98)}
 .btn-primary{background:var(--teal);color:#fff;box-shadow:0 6px 20px rgba(31,72,96,.28)}
-.btn-gold{background:var(--gold);color:var(--teal-deep);box-shadow:0 6px 20px rgba(232,181,71,.45)}
+.btn-gold{background:var(--grad-gold);color:var(--teal-deep);box-shadow:var(--shadow-gold);position:relative;overflow:hidden}
+.btn-gold::after{content:"";position:absolute;inset:0;transform:translateX(-130%);background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.5) 50%,transparent 70%)}
+.btn-gold:active::after{transform:translateX(130%);transition:transform .6s ease}
 .btn-pink{background:var(--pink);color:#fff;box-shadow:0 6px 20px rgba(255,61,128,.4)}
 .btn-orange{background:var(--orange);color:#fff;box-shadow:0 6px 20px rgba(255,107,53,.4)}
 .btn-ghost{background:transparent;border:2px solid var(--teal);color:var(--teal)}
@@ -231,7 +233,7 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 }
 @keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
 .menu-card .row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:auto}
-.menu-card .price{font-family:var(--f-num);font-size:24px;color:var(--teal);line-height:1}
+.menu-card .price{font-family:var(--f-num);font-size:24px;color:var(--teal);line-height:1;font-variant-numeric:tabular-nums}
 .menu-card .add{width:30px;height:30px;border-radius:50%;background:var(--gold);color:var(--teal-deep);display:grid;place-items:center;font-size:18px;font-weight:800;box-shadow:0 4px 12px rgba(232,181,71,.5);}
 .menu-card .macros{display:flex;gap:6px;flex-wrap:wrap;font-family:var(--f-num);font-size:13px;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:6px;}
 .menu-card .macros span{display:inline-flex;align-items:center;gap:3px}
@@ -265,6 +267,8 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .sheet.show{transform:none}
 .sheet .grab{width:48px;height:5px;background:rgba(31,72,96,.25);border-radius:3px;margin:10px auto 6px}
 .sheet .pic{height:42dvh;background-size:cover;background-position:center;position:relative;margin:0 14px;border-radius:var(--r-lg);overflow:hidden;}
+.sheet .pic.no-photo{display:grid;place-items:center}
+.sheet .pic.no-photo::before{content:attr(data-emoji);font-size:96px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))}
 .sheet .pic .close{position:absolute;top:12px;right:12px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.95);color:var(--teal);display:grid;place-items:center;font-size:18px;font-weight:800;box-shadow:var(--shadow-card)}
 .sheet .pic .cat-tag{position:absolute;top:14px;left:14px;padding:6px 11px;border-radius:var(--r-pill);background:#fff;color:var(--teal);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
 .sheet .body{padding:18px 22px 22px;overflow-y:auto;flex:1}
@@ -1735,12 +1739,12 @@ document.querySelectorAll('#cat-strip .cat-chip').forEach(ch => {
 
 function renderFeatured(){
   const carousel = document.getElementById('featured-carousel');
-  const featured = ['green-reign','pina-power','beet-the-day','berry-blitz'].map(id => MENU.find(m => m.id===id));
-  const colorByCat = {greens:'var(--lime)',citrus:'var(--orange)',roots:'var(--pink)',smoothies:'var(--yellow)',shots:'var(--cyan)'};
-  const txtByCat = {greens:'var(--teal-deep)',citrus:'#fff',roots:'#fff',smoothies:'var(--teal-deep)',shots:'var(--teal-deep)'};
+  const featured = ['green-reign','pina-power','classic-acai-bowl','berry-blitz','kale-caesar-crunch'].map(id => MENU.find(m => m.id===id)).filter(Boolean);
+  const colorByCat = {greens:'var(--lime)',citrus:'var(--orange)',roots:'var(--pink)',smoothies:'var(--yellow)',shots:'var(--cyan)',salads:'#16a34a',bowls:'#7c3aed'};
+  const txtByCat = {greens:'var(--teal-deep)',citrus:'#fff',roots:'#fff',smoothies:'var(--teal-deep)',shots:'var(--teal-deep)',salads:'#fff',bowls:'#fff'};
   carousel.innerHTML = featured.map(item => `
     <div class="feat-card" data-id="${item.id}">
-      <div class="ph" style="background-image:url('${item.img}')"></div>
+      <div class="ph" style="background-image:${item.img?`url('${item.img}')`:(CAT_META[item.cat]||{}).grad||'var(--teal)'}"></div>
       <div class="meta">
         <span class="pill" style="background:${colorByCat[item.cat]};color:${txtByCat[item.cat]}">${item.cat}</span>
         <h3>${item.name}</h3>
@@ -1771,8 +1775,12 @@ function openSheet(id){
   if(!item) return;
   STATE.currentItem = item;
   STATE.qty = 1; STATE.size = 16; STATE.boosts = new Set();
-  document.getElementById('sheet-pic').style.backgroundImage = `url('${item.img}')`;
-  document.getElementById('sheet-cat').textContent = item.cat;
+  const meta = CAT_META[item.cat] || {};
+  const picEl = document.getElementById('sheet-pic');
+  picEl.style.backgroundImage = item.img ? `url('${item.img}')` : (meta.grad||'var(--teal)');
+  picEl.classList.toggle('no-photo', !item.img);
+  picEl.dataset.emoji = item.img ? '' : (meta.emoji||'🥤');
+  document.getElementById('sheet-cat').textContent = meta.label||item.cat;
   document.getElementById('sheet-name').textContent = item.name;
   document.getElementById('sheet-desc').textContent = item.desc;
   document.getElementById('sheet-macros').innerHTML = `
