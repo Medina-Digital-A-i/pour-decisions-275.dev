@@ -72,11 +72,28 @@ async function sendSms(phone, body) {
       console.error('Twilio send failed', res.status, detail);
       return { ok: false, status: res.status, detail };
     }
-    return { ok: true };
+    // Twilio accepted the request — capture the message SID + initial status so
+    // a diagnostic can poll the *final* delivery state (carrier filtering /
+    // A2P 10DLC blocks show up here, not at create time).
+    const data = await res.json().catch(() => ({}));
+    return { ok: true, sid: data.sid || null, twStatus: data.status || null, errorCode: data.error_code || null };
   } catch (e) {
     console.error('Twilio request error', e && e.message);
     return { ok: false, status: 0, detail: (e && e.message) || 'network error' };
   }
+}
+
+// Fetch a message's current delivery status + error code (after carriers act).
+async function fetchTwilioStatus(sid) {
+  const acc = process.env.TWILIO_ACCOUNT_SID, tok = process.env.TWILIO_AUTH_TOKEN;
+  try {
+    const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${acc}/Messages/${sid}.json`, {
+      headers: { Authorization: 'Basic ' + Buffer.from(`${acc}:${tok}`).toString('base64') },
+    });
+    if (!res.ok) return null;
+    const d = await res.json().catch(() => ({}));
+    return { status: d.status || null, errorCode: d.error_code || null, errorMessage: d.error_message || null };
+  } catch { return null; }
 }
 
 export default async function handler(req, res) {
@@ -117,7 +134,26 @@ export default async function handler(req, res) {
       if (to.length !== 10) return sendJson(res, 400, { error: 'Add a 10-digit number: ?to=5185551234' });
       if (!twilioConfigured()) return sendJson(res, 200, { sent: false, reason: 'Twilio env vars are not set', twilioConfigured: false });
       const r = await sendSms(to, 'Pour Decisions test — your text setup is working! 🍊');
-      return sendJson(res, r.ok ? 200 : 502, { sent: r.ok, twilioStatus: r.status || null, twilioError: r.detail || null });
+      if (!r.ok) return sendJson(res, 502, { acceptedByTwilio: false, twilioError: r.detail || null });
+      // Twilio accepted it. Poll the final delivery status — this is where an
+      // unregistered A2P 10DLC number shows up as undelivered (error 30034).
+      let final = null;
+      if (r.sid) {
+        await new Promise((rs) => setTimeout(rs, 5000));
+        final = await fetchTwilioStatus(r.sid);
+      }
+      const delivered = final && ['delivered', 'sent'].includes(final.status);
+      return sendJson(res, 200, {
+        acceptedByTwilio: true,
+        messageSid: r.sid,
+        deliveryStatus: final ? final.status : (r.twStatus || 'unknown'),
+        errorCode: final ? final.errorCode : null,
+        errorMessage: final ? final.errorMessage : null,
+        verdict: delivered ? 'Delivered — texting works.'
+          : (final && final.errorCode === 30034) ? 'BLOCKED: this number is not registered for A2P 10DLC. Register it in Twilio (or use a verified Toll-Free number).'
+          : (final && final.status === 'undelivered') ? `Carrier did not deliver it (error ${final.errorCode}). Check the number's A2P 10DLC / Toll-Free verification in Twilio.`
+          : 'Twilio accepted it but final delivery is still pending — check the Twilio Messaging logs for this SID.',
+      });
     }
   }
 
