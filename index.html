@@ -172,20 +172,22 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .colorblock{margin:28px 0;padding:36px 24px;color:#fff;position:relative;overflow:hidden;text-align:center;}
 .colorblock h2{color:#fff}
 .colorblock p{margin:8px 0 18px;color:rgba(255,255,255,.92);max-width:34ch;margin-inline:auto;font-weight:500}
-.colorblock.orange{background:var(--orange)}
-.colorblock.pink{background:var(--pink)}
-.colorblock.lime{background:var(--lime);color:var(--teal-deep)}
+/* Gradient fills + top rim-light read premium where flat fills read amateur */
+.colorblock{box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.colorblock.orange{background:linear-gradient(145deg,#FF8A4C 0%,#FF6B35 55%,#F0541F 100%)}
+.colorblock.pink{background:linear-gradient(145deg,#FF5C97 0%,#FF3D80 60%,#E32B6A 100%)}
+.colorblock.lime{background:linear-gradient(145deg,#BEF264 0%,#A3E635 60%,#84CC16 100%);color:var(--teal-deep)}
 .colorblock.lime h2,.colorblock.lime p{color:var(--teal-deep)}
-.colorblock.teal{background:var(--teal)}
+.colorblock.teal{background:linear-gradient(160deg,#1E5A66 0%,var(--teal) 45%,var(--teal-deep) 100%)}
 .colorblock .deco{position:absolute;pointer-events:none;opacity:.35}
 
 /* ── PALM TREE SILHOUETTES ─────────────────────────────────── */
 .palm{position:absolute;pointer-events:none;overflow:visible}
 .hero .palm-l{bottom:-8px;left:-10px;width:110px;opacity:.18;color:#fff;transform:scaleX(1)}
 .hero .palm-r{bottom:-8px;right:-10px;width:90px;opacity:.15;color:#fff;transform:scaleX(-1)}
-.colorblock .palm-l{bottom:-6px;left:-8px;width:90px;opacity:.22;color:#fff}
-.colorblock .palm-r{bottom:-6px;right:-8px;width:75px;opacity:.18;color:#fff;transform:scaleX(-1)}
-.colorblock.lime .palm-l,.colorblock.lime .palm-r{color:var(--teal-deep);opacity:.15}
+.colorblock .palm-l{bottom:-6px;left:-8px;width:90px;opacity:.10;color:#fff}
+.colorblock .palm-r{bottom:-6px;right:-8px;width:75px;opacity:.08;color:#fff;transform:scaleX(-1)}
+.colorblock.lime .palm-l,.colorblock.lime .palm-r{color:var(--teal-deep);opacity:.08}
 .footer .palm-l{bottom:0;left:-12px;width:100px;opacity:.2;color:var(--gold)}
 .footer .palm-r{bottom:0;right:-12px;width:82px;opacity:.16;color:var(--gold);transform:scaleX(-1)}
 .profile-hero .palm-r{bottom:-4px;right:-6px;width:80px;opacity:.15;color:var(--teal-deep);transform:scaleX(-1)}
@@ -344,8 +346,14 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .pass-card .lbl{font-size:12px;font-weight:600;opacity:.85;margin-top:8px}
 .stamps{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px;padding:0 16px}
 .stamp{aspect-ratio:1;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow-card);position:relative;}
-.stamp.filled{background:var(--gold);}
+.stamp.filled{background:var(--grad-gold);}
 .stamp.filled::after{content:"✓";color:var(--teal-deep);font-weight:900;font-size:22px}
+@media (prefers-reduced-motion:no-preference){
+  .stamp.filled{animation:stampPop .5s cubic-bezier(.2,1.4,.4,1) both}
+  .stamp.next{animation:dashPulse 1.8s ease-in-out infinite}
+}
+@keyframes stampPop{0%{transform:scale(.2) rotate(-30deg);opacity:0}60%{transform:scale(1.18) rotate(6deg);opacity:1}100%{transform:scale(1)}}
+@keyframes dashPulse{50%{box-shadow:0 0 0 6px rgba(240,188,78,.16)}}
 .stamp.locked{background:rgba(31,72,96,.08);box-shadow:none}
 .stamp.next{background:#fff;border:2px dashed var(--gold)}
 .stamp .n{font-family:var(--f-num);font-size:20px;color:var(--teal);opacity:.5}
@@ -448,7 +456,8 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .tier .sub{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
 
 /* BOTTOM NAV */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:90;padding:8px 8px calc(8px + var(--safe-bot));background:rgba(255,248,236,.96);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:90;padding:8px 8px calc(8px + var(--safe-bot));background:rgba(255,248,236,.72);backdrop-filter:saturate(160%) blur(16px);-webkit-backdrop-filter:saturate(160%) blur(16px);border-top:1px solid rgba(255,255,255,.5);box-shadow:0 -8px 24px rgba(20,50,65,.06);display:grid;grid-template-columns:repeat(5,1fr);}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.bottom-nav{background:rgba(255,248,236,.97)}}
 .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;}
 .nav-item .ico{font-size:22px;line-height:1}
 .nav-item.active{color:var(--teal)}
@@ -1199,6 +1208,36 @@ const CAT_META = {
   salads:{grad:'linear-gradient(135deg,#bbf7d0 0%,#15803d 100%)',emoji:'🥗',label:'Salads'},
   bowls:{grad:'linear-gradient(135deg,#ddd6fe 0%,#6d28d9 100%)',emoji:'🍇',label:'Bowls'}
 };
+
+// Photos for the new menu items (Unsplash IDs, each verified to load + match).
+const PHOTOS = {
+  'chlorophyll-cooler':'photo-1610622929850-77f505c3ce5a',
+  'sea-moss-immunity':'photo-1600271886742-f049cd451bba',
+  'collagen-glow-smoothie':'photo-1589734575451-8ddc34c5752b',
+  'adaptogen-cacao':'photo-1571181405951-1350bfd48223',
+  'sea-moss-shot':'photo-1498604214351-227898deb373',
+  'kale-caesar-crunch':'photo-1669283714145-f97867f6c238',
+  'harvest-bowl':'photo-1512621776951-a57141f2eefd',
+  'southwest-chipotle':'photo-1559317996-d154e05c76fb',
+  'mediterranean-falafel':'photo-1606735584785-1848fdcaea57',
+  'quinoa-power-bowl':'photo-1623428187969-5da2dcea5ebf',
+  'rainbow-detox-bowl':'photo-1662743086910-38419bbf7f34',
+  'cobb-protein-salad':'photo-1562634117-6645bf4a9136',
+  'classic-acai-bowl':'photo-1590301157411-8686d4a34f10',
+  'pitaya-glow-bowl':'photo-1590301157284-ab2f8707bdc1',
+  'protein-power-bowl':'photo-1546913830-dab67cd3d3d8',
+  'green-machine-bowl':'photo-1595883911764-195dfece9fdc'
+};
+// Replacements for original photos that 404'd upstream. null = use the
+// branded gradient+emoji tile until a verified photo is slotted in.
+const REPHOTO = {
+  'celery-clean':null, 'beet-the-day':null, 'carrot-glow':null,
+  'wheatgrass-shot':null, 'turmeric-shot':null
+};
+MENU.forEach(m => {
+  if(Object.prototype.hasOwnProperty.call(REPHOTO, m.id)) m.img = REPHOTO[m.id] ? PIC(REPHOTO[m.id]) : '';
+  if(!m.img && PHOTOS[m.id]) m.img = PIC(PHOTOS[m.id]);
+});
 
 // Notifications are per-user; populated from the signed-in member's feed.
 // Empty until the backend (orders/loyalty) sends real activity.
