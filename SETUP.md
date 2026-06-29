@@ -83,7 +83,31 @@ We already have Twilio. Add these to Vercel → **Settings → Environment Varia
 |---|---|---|
 | `ADMIN_PIN` | owner dashboard PIN (defaults to `7687` if unset) | recommended now — pick your own |
 | `ANTHROPIC_API_KEY` | the Piña chatbot's answers | when you want Piña live |
-| `SQUARE_ACCESS_TOKEN` + `SQUARE_LOCATION_ID` | in-app card payments | Phase 3 (payments) |
+
+---
+
+## 5b. Take card payments at checkout (Square)
+
+Until these are set, checkout shows **"Pay at pickup"** and nothing is charged.
+Add all four (from your Square Developer dashboard → your app → **Credentials**),
+then redeploy:
+
+| Variable | Value | Secret? |
+|---|---|---|
+| `SQUARE_ACCESS_TOKEN` | Access token for the chosen environment | **yes** |
+| `SQUARE_LOCATION_ID` | the location ID money is taken for | no |
+| `SQUARE_APPLICATION_ID` | the app's Application ID (the browser needs it) | no |
+| `SQUARE_ENVIRONMENT` | `sandbox` (test cards) or `production` (real money) | no |
+
+- **Test first:** set `SQUARE_ENVIRONMENT=sandbox` with your **Sandbox** token +
+  app ID + a sandbox location, and pay with Square's test card
+  `4111 1111 1111 1111`, any future expiry, any CVV/ZIP. No real money moves.
+- **Go live:** switch all four to your **Production** values and set
+  `SQUARE_ENVIRONMENT=production`. Real cards are now charged when an order is placed.
+- The card is collected by Square in the browser (PCI-safe — the raw card number
+  never touches our server); we only ever receive a one-time token to charge.
+- The order is recorded and the Pour Pass stamp is awarded **only after** the card
+  clears. A declined card shows the customer an error and creates no order.
 
 ---
 

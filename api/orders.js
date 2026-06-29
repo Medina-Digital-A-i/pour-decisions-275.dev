@@ -13,6 +13,7 @@
 import {
   kvConfigured, readList, writeList, checkPin, sendJson, awardStamp, normPhone,
 } from './_store.js';
+import { squareEnabled, squareCharge } from './_square.js';
 
 const KEY = 'pd:orders';
 
@@ -34,16 +35,37 @@ export default async function handler(req, res) {
       if (!phone || !Array.isArray(items) || !items.length) {
         return sendJson(res, 400, { error: 'phone and items required' });
       }
+      const num = body.num || 'PD-' + String(Math.floor(1000 + Math.random() * 9000));
+      const totalCents = Math.round((Number(total) || 0) * 100);
+
+      // When card payments are turned on, the money must clear BEFORE we record
+      // the order or award a stamp — no payment, no order.
+      let payment = null;
+      if (squareEnabled()) {
+        if (!body.sourceId) return sendJson(res, 400, { error: 'Card details are required' });
+        if (totalCents <= 0) return sendJson(res, 400, { error: 'Order total is invalid' });
+        const charged = await squareCharge({
+          sourceId: body.sourceId,
+          amountCents: totalCents,
+          referenceId: num,
+          note: 'Pour Decisions order ' + num,
+        });
+        if (!charged.ok) return sendJson(res, 402, { error: charged.error || 'Card was declined' });
+        payment = charged.payment;
+      }
+
       const orders = await readList(KEY);
       const order = {
         id: 'ord_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-        num: body.num || 'PD-' + String(Math.floor(1000 + Math.random() * 9000)),
+        num,
         name: name || '', phone: normPhone(phone),
         items, subtotal: Number(body.subtotal) || 0, tax: Number(body.tax) || 0,
         tip: Number(body.tip) || 0, total: Number(total) || 0,
         pickup: body.pickup || '348 Loudon Rd, Albany NY',
         when: body.when === 'schedule' ? 'schedule' : 'asap',
         notes: String(body.notes || '').slice(0, 280),
+        paid: Boolean(payment),
+        payment: payment || null,
         status: 'new', createdAt: new Date().toISOString(),
       };
       orders.unshift(order);

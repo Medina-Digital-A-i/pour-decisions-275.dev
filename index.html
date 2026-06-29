@@ -691,11 +691,16 @@ h3{font-size:22px;font-weight:700;font-style:italic}
       <button class="tip" data-tip=".25">25%</button>
     </div>
   </div>
-  <div class="checkout-section">
+  <div class="checkout-section" id="pay-section">
     <h3>Payment</h3>
-    <div class="pay-method">
+    <div class="pay-method" id="pay-at-pickup">
       <span class="icon">💵</span>
       <div style="flex:1"><strong>Pay at pickup</strong><br/><small style="color:var(--muted)">Card or cash at the counter</small></div>
+    </div>
+    <div id="pay-card-wrap" hidden>
+      <div id="sq-card" style="background:#fff;border-radius:var(--r-md);box-shadow:var(--shadow-card);padding:14px;min-height:56px"></div>
+      <div id="pay-card-msg" style="font-size:12px;margin-top:8px;min-height:16px"></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:4px">🔒 Secured by Square. Your card is charged when you place the order.</div>
     </div>
   </div>
   <div class="summary" id="checkout-summary"></div>
@@ -1131,7 +1136,7 @@ function go(view){
   document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.toggle('active', n.dataset.route===navMap[view]));
   window.scrollTo({top:0,behavior:'instant'});
   if(view==='cart') renderCart();
-  if(view==='checkout') renderCheckoutSummary();
+  if(view==='checkout'){ renderCheckoutSummary(); initPayments(); }
   if(view==='calendar') renderCalendar();
   if(view==='notifications') renderNotifications();
   if(view==='account') renderAccount();
@@ -1202,6 +1207,54 @@ async function authVerify(phone, code, name){
     throw e;
   }
 }
+
+// ── Card payments (Square Web Payments SDK) ──
+// Loads only when the server reports Square is configured. Until then the
+// checkout stays "pay at pickup" and nothing here runs.
+const PAY = { config:null, card:null, ready:false, initing:false };
+function payMsg(t, ok){ const el=document.getElementById('pay-card-msg'); if(!el) return; el.textContent=t||''; el.style.color = ok?'var(--teal)':'#d9534f'; }
+function loadSquareSdk(env){
+  return new Promise((resolve,reject)=>{
+    if(window.Square) return resolve();
+    const url = env==='production'
+      ? 'https://web.squarecdn.com/v1/square.js'
+      : 'https://sandbox.web.squarecdn.com/v1/square.js';
+    const s=document.createElement('script'); s.src=url; s.async=true;
+    s.onload=()=>resolve(); s.onerror=()=>reject(new Error('Could not load the payment form'));
+    document.head.appendChild(s);
+  });
+}
+async function initPayments(){
+  if(DEV || PAY.ready || PAY.initing) return;
+  PAY.initing = true;
+  try{
+    if(!PAY.config){ try{ PAY.config = await api('/api/pay'); }catch{ PAY.config = {enabled:false}; } }
+    const cfg = PAY.config;
+    if(!cfg || !cfg.enabled) return; // not connected yet → stays pay-at-pickup
+    // Card payments are on: show the card form, hide the pay-at-pickup note.
+    const pickupEl=document.getElementById('pay-at-pickup'); if(pickupEl) pickupEl.hidden=true;
+    const wrap=document.getElementById('pay-card-wrap'); if(wrap) wrap.hidden=false;
+    await loadSquareSdk(cfg.environment);
+    const payments = window.Square.payments(cfg.applicationId, cfg.locationId);
+    const card = await payments.card();
+    await card.attach('#sq-card');
+    PAY.card = card; PAY.ready = true; payMsg('');
+  }catch(e){
+    console.error('payments init failed', e);
+    payMsg('Card payment is temporarily unavailable. Please try again in a moment.');
+  }finally{ PAY.initing=false; }
+}
+// Returns a one-time card token, or throws with a user-friendly message.
+async function tokenizeCard(){
+  if(!PAY.ready || !PAY.card) throw new Error('Payment form is still loading — give it a second');
+  const result = await PAY.card.tokenize();
+  if(result.status !== 'OK'){
+    const detail = (result.errors && result.errors[0] && result.errors[0].message) || 'Check your card details and try again';
+    throw new Error(detail);
+  }
+  return result.token;
+}
+function paymentsEnabled(){ return !DEV && PAY.config && PAY.config.enabled; }
 
 // ── Auth sheet ──
 const authScrim = document.getElementById('auth-scrim');
@@ -1590,6 +1643,12 @@ document.getElementById('btn-place-order').addEventListener('click', async () =>
   const payload = { name, phone, items, subtotal:t.subtotal, tax:t.tax, tip:t.tip, total:t.total, pickup, when:(pickEl?pickEl.dataset.pickup:'asap'), notes:val('co-notes') };
   const btn = document.getElementById('btn-place-order'); btn.disabled=true; btn.textContent='Placing…';
   try{
+    // If card payments are on, charge the card first — tokenize before we POST.
+    if(paymentsEnabled()){
+      btn.textContent='Processing card…';
+      try{ payload.sourceId = await tokenizeCard(); payMsg(''); }
+      catch(err){ payMsg(err.message||'Check your card details and try again'); btn.disabled=false; btn.textContent='Place Order →'; return; }
+    }
     let order;
     if(DEV){
       order = { num:'PD-'+Math.floor(1000+Math.random()*9000) };
@@ -1603,7 +1662,9 @@ document.getElementById('btn-place-order').addEventListener('click', async () =>
     }
     document.getElementById('conf-num').textContent = '#' + (order.num||'PD');
     document.getElementById('conf-num-2').textContent = order.num||'PD';
-    document.getElementById('conf-total').textContent = '$' + t.total.toFixed(2);
+    const pay = order.payment;
+    document.getElementById('conf-total').textContent = '$' + t.total.toFixed(2) +
+      (pay && pay.last4 ? ' · '+(pay.brand||'Card')+' ••'+pay.last4 : '');
     document.getElementById('conf-stamp').textContent = '+1 stamp' + (isSignedIn()&&SESSION.user?(' · '+Math.min(9,SESSION.user.stamps||0)+'/9'):'');
     STATE.cart = []; updateCartBadge(); renderAccount(); renderPass();
     go('confirm');
@@ -1938,7 +1999,7 @@ function adminShowOrders(body, orders){
       <div style="font-size:12px;color:var(--muted);margin-top:2px">${items}</div>
       <div style="font-size:11px;color:var(--muted);margin-top:2px">${(o.when==='schedule'?'Scheduled':'ASAP')}${o.pickup?(' · '+o.pickup):''}</div>
       ${o.notes?`<div style="font-size:12px;color:var(--orange);margin-top:4px;font-weight:600">📝 ${o.notes}</div>`:''}
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><strong>$${Number(o.total||0).toFixed(2)}</strong>${next?`<button data-ord="${o.id}" data-to="${next[0]}" class="btn btn-primary" style="padding:6px 12px;font-size:12px">${next[1]}</button>`:''}</div>`);
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px"><strong>$${Number(o.total||0).toFixed(2)} <span style="font-size:11px;font-weight:700;color:${o.paid?'var(--lime-deep,#3a7a00)':'var(--muted)'}">${o.paid?('PAID'+(o.payment&&o.payment.last4?(' ••'+o.payment.last4):'')):'Pay at counter'}</span></strong>${next?`<button data-ord="${o.id}" data-to="${next[0]}" class="btn btn-primary" style="padding:6px 12px;font-size:12px">${next[1]}</button>`:''}</div>`);
   }).join('');
   body.querySelectorAll('[data-ord]').forEach(b=>b.addEventListener('click', async ()=>{
     b.disabled=true;
