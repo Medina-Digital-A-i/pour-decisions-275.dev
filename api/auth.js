@@ -85,6 +85,42 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(204).end();
 
+  // ── Diagnostics (run BEFORE any config gate; never leak secrets) ──
+  // GET /api/auth?diag=1                      → what's wired up
+  // GET /api/auth?testsms=1&to=NNN&pin=PIN    → attempt a real text, show Twilio's exact error
+  if (req.method === 'GET') {
+    const url = new URL(req.url, 'http://x');
+    if (url.searchParams.get('diag') === '1') {
+      const from = process.env.TWILIO_FROM || '';
+      return sendJson(res, 200, {
+        diag: true,
+        storeConnected: kvConfigured(),
+        twilioConfigured: twilioConfigured(),
+        have: {
+          TWILIO_ACCOUNT_SID: Boolean(process.env.TWILIO_ACCOUNT_SID),
+          TWILIO_AUTH_TOKEN: Boolean(process.env.TWILIO_AUTH_TOKEN),
+          TWILIO_FROM: Boolean(process.env.TWILIO_FROM),
+          TWILIO_MESSAGING_SERVICE_SID: Boolean(process.env.TWILIO_MESSAGING_SERVICE_SID),
+          AUTH_DEV_CODE: Boolean(process.env.AUTH_DEV_CODE),
+          store_REDIS_URL: Boolean(process.env.REDIS_URL || process.env.REDIS_TLS_URL || process.env.KV_URL),
+        },
+        fromLast4: from ? from.slice(-4) : null,
+        hint: !kvConfigured() ? 'Cloud store (REDIS_URL) is not connected — sign-in cannot work until it is.'
+          : !twilioConfigured() ? 'Twilio env vars are missing — add TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN and TWILIO_FROM.'
+          : 'Store + Twilio both configured. Use ?testsms to see if a real send succeeds.',
+      });
+    }
+    if (url.searchParams.get('testsms') === '1') {
+      const pin = url.searchParams.get('pin') || '';
+      if (String(pin) !== String(process.env.ADMIN_PIN || '7687')) return sendJson(res, 401, { error: 'Bad or missing PIN (?pin=...)' });
+      const to = normPhone(url.searchParams.get('to') || '');
+      if (to.length !== 10) return sendJson(res, 400, { error: 'Add a 10-digit number: ?to=5185551234' });
+      if (!twilioConfigured()) return sendJson(res, 200, { sent: false, reason: 'Twilio env vars are not set', twilioConfigured: false });
+      const r = await sendSms(to, 'Pour Decisions test — your text setup is working! 🍊');
+      return sendJson(res, r.ok ? 200 : 502, { sent: r.ok, twilioStatus: r.status || null, twilioError: r.detail || null });
+    }
+  }
+
   if (!kvConfigured()) {
     return sendJson(res, 501, { configured: false, error: 'Accounts not connected yet (attach the cloud store).' });
   }
