@@ -349,6 +349,8 @@ h3{font-size:22px;font-weight:700;font-style:italic}
 .confirm-hero h2{color:var(--teal-deep);margin:6px 0 6px}
 .confirm-hero .num{font-family:var(--f-num);font-size:64px;color:var(--teal-deep);line-height:1;letter-spacing:.04em}
 .confirm-hero p{margin:6px 0 0;font-weight:600}
+.status-track{height:6px;background:rgba(20,50,65,.14);border-radius:999px;overflow:hidden;margin:14px auto 8px;max-width:260px}
+.status-track span{display:block;height:100%;width:0;background:var(--grad-fresh);border-radius:999px;transition:width .8s ease}
 .confirm-info{padding:16px}
 .info-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
 .info-row strong{color:var(--teal-deep);font-weight:800}
@@ -798,7 +800,8 @@ h3{font-size:22px;font-weight:700;font-style:italic}
     <span class="eyebrow" style="color:var(--teal)">Order Placed</span>
     <h2>You're <em>pouring</em></h2>
     <div class="num" id="conf-num">#PD-1042</div>
-    <p>Ready in ~12 minutes</p>
+    <div class="status-track"><span id="conf-track"></span></div>
+    <p id="conf-status">Squeezing your order…</p>
   </div>
   <div class="confirm-info">
     <div class="info-row"><span>Pickup</span><strong>348 Loudon Rd</strong></div>
@@ -1866,6 +1869,27 @@ document.getElementById('btn-add-cart').addEventListener('click', (e) => {
   updateCartBadge(true);
   toast('Added to bag · ' + item.name);
 });
+// Playful "we're on it" sequence on the confirmation screen.
+function runConfirmStatus(){
+  const track = document.getElementById('conf-track');
+  const label = document.getElementById('conf-status');
+  if(!track || !label) return;
+  const stages = [
+    ['Squeezing your order…', 34],
+    ['Pouring it fresh…', 68],
+    ['Capping it off — ready in ~12 min 🍊', 100],
+  ];
+  let i = 0;
+  track.style.width = '6%';
+  const tick = () => {
+    if(i >= stages.length) return;
+    label.textContent = stages[i][0];
+    track.style.width = stages[i][1] + '%';
+    i++;
+    if(i < stages.length) setTimeout(tick, 1100);
+  };
+  tick();
+}
 // Little juice droplet that arcs from the tapped button to the cart icon.
 function flyToCart(fromEl){
   try{
@@ -2010,6 +2034,7 @@ document.getElementById('btn-place-order').addEventListener('click', async () =>
     document.getElementById('conf-stamp').textContent = '+1 stamp' + (isSignedIn()&&SESSION.user?(' · '+Math.min(9,SESSION.user.stamps||0)+'/9'):'');
     STATE.cart = []; updateCartBadge(); renderAccount(); renderPass();
     go('confirm');
+    runConfirmStatus();
   }catch(e){
     toast(e.message || 'Could not place order — please try again');
   }finally{ btn.disabled=false; btn.textContent='Place Order →'; }
