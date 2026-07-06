@@ -37,10 +37,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600;1,9..144,900&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet">
 <style>
   :root{
-    --teal:#1F4860; --teal-deep:#12303C; --teal-ink:#0e2029; --teal-bright:#2BA7A0;
-    --gold:#E8B547; --gold-deep:#C68F2C; --gold-glow:#FFD77A;
+    /* Pink / coral primary */
+    --pink:#E8426A; --pink-deep:#C4284E; --pink-light:#F06080;
+    --palm-shadow:rgba(180,20,55,.28);
+    /* Navy backgrounds */
+    --navy:#1C1F2E; --navy-mid:#252840; --navy-card:rgba(28,31,46,.85);
+    /* Teal aliases → navy for compatibility */
+    --teal:#1F4860; --teal-deep:#1C1F2E; --teal-ink:#1C1F2E; --teal-bright:#2BA7A0;
+    --teal-mid:#252840; --teal-card:rgba(255,255,255,.07);
+    /* Gold */
+    --gold:#E8B547; --gold-deep:#C68F2C; --gold-glow:#FFD980;
+    /* Misc */
     --cream:#FFF8EC; --paper:#FFFDF8;
-    --orange:#FF6B35; --pink:#FF3D80; --lime:#A3E635; --lime-deep:#65A30D;
+    --orange:#FF6B35; --lime:#A3E635; --lime-deep:#65A30D;
     --cyan:#22D3EE; --purple:#7C3AED; --ink:#1A1A1A; --muted:#5E5E66;
     --f-display:'Fraunces',ui-serif,Georgia,serif; --f-body:'Manrope',system-ui,sans-serif;
     --f-num:'Bebas Neue',Impact,sans-serif;
@@ -57,8 +66,8 @@
   .noscroll{scrollbar-width:none}
   .tap{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
   .tap:active{transform:scale(.96)}
-  html,body{margin:0;padding:0;height:100%;background:var(--teal-ink)}
-  .pd-app{width:100%;min-height:100dvh;background:var(--teal-deep);position:relative;display:flex;flex-direction:column;overflow:hidden}
+  html,body{margin:0;padding:0;height:100%;background:var(--pink)}
+  .pd-app{width:100%;min-height:100dvh;background:var(--pink);position:relative;display:flex;flex-direction:column;overflow:hidden}
   .pd-sidebar{display:none}
   .pd-bottom-nav-wrap{position:relative;z-index:85}
   @media(min-width:768px) and (max-width:1023px){
@@ -66,9 +75,9 @@
     .pd-main-content-wrap{max-width:680px;margin:0 auto;width:100%}
   }
   @media(min-width:1024px){
-    body{display:flex;background:var(--teal-ink)}
+    body{display:flex;background:var(--pink)}
     .pd-app{flex-direction:row;max-width:none;width:100vw;height:100dvh;overflow:hidden}
-    .pd-sidebar{display:flex !important;flex-direction:column;width:220px;flex:0 0 220px;background:var(--teal-deep);height:100dvh;position:sticky;top:0;border-right:1px solid rgba(255,255,255,.08);z-index:50;overflow-y:auto}
+    .pd-sidebar{display:flex !important;flex-direction:column;width:220px;flex:0 0 220px;background:var(--navy);height:100dvh;position:sticky;top:0;border-right:1px solid rgba(255,255,255,.1);z-index:50;overflow-y:auto}
     .pd-bottom-nav-wrap{display:none !important}
     .pd-main-scroll{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;height:100dvh}
     .pd-pina-fab{position:fixed !important;right:24px !important;bottom:24px !important}
@@ -101,7 +110,7 @@
         <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
         <div style="padding:16px;border-top:1px solid rgba(255,255,255,.08);">
           <div style="display:flex;align-items:center;gap:10px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-weight:900;color:var(--teal-deep);font-size:15px;">{{ userInitial }}</div>
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-weight:900;color:var(--navy);font-size:15px;">{{ userInitial }}</div>
             <div>
               <div style="font-weight:700;color:#fff;font-size:13px;">{{ userName }}</div>
               <div style="font-size:11px;color:var(--gold-glow);">{{ points }} pts</div>
@@ -131,7 +140,7 @@
             <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:44px;line-height:.92;letter-spacing:-.03em;margin:26px 0 0;text-shadow:0 4px 18px rgba(0,0,0,.22);">Juice o'clock<br>starts here.</h2>
           </div>
 
-          <div style="margin-top:auto;background:var(--teal-deep);border-radius:34px 34px 0 0;position:relative;z-index:3;padding:30px 24px 40px;box-shadow:0 -20px 50px rgba(0,0,0,.25);">
+          <div style="margin-top:auto;background:var(--navy);border-radius:34px 34px 0 0;position:relative;z-index:3;padding:30px 24px 40px;box-shadow:0 -20px 50px rgba(0,0,0,.25);">
             <h3 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:28px;color:#fff;margin:0;letter-spacing:-.02em;">{{ authTitle }}</h3>
             <p style="color:rgba(255,255,255,.6);font-size:13.5px;line-height:1.5;margin:6px 0 22px;">{{ authSub }}</p>
 
@@ -206,7 +215,7 @@
             </div>
           </div>
 
-          <div style="background:var(--teal-deep);border-radius:32px 32px 0 0;margin-top:-26px;position:relative;z-index:3;padding:26px 0 0;">
+          <div style="background:var(--navy);border-radius:32px 32px 0 0;margin-top:-26px;position:relative;z-index:3;padding:26px 0 0;">
             <div class="noscroll" style="display:flex;gap:9px;overflow-x:auto;padding:0 18px 6px;">
               <sc-for list="{{ homeChips }}" as="c" hint-placeholder-count="4">
                 <span onClick="{{ c.go }}" class="tap" style="flex:0 0 auto;background:{{ c.bg }};color:{{ c.fg }};font-weight:{{ c.fw }};font-size:13px;padding:10px 18px;border-radius:99px;display:inline-flex;align-items:center;gap:6px;">{{ c.label }}</span>
@@ -233,7 +242,7 @@
             </div>
 
             <sc-if value="{{ showInstallBanner }}" hint-placeholder-val="{{ false }}">
-            <div style="margin:20px 16px 0;background:linear-gradient(135deg,rgba(14,84,84,.9),rgba(10,61,61,.95));border:1px solid rgba(232,181,71,.3);border-radius:20px;padding:16px;display:flex;gap:14px;align-items:center;">
+            <div style="margin:20px 16px 0;background:linear-gradient(135deg,rgba(28,31,46,.95),rgba(37,40,64,.95));border:1px solid rgba(232,181,71,.3);border-radius:20px;padding:16px;display:flex;gap:14px;align-items:center;">
               <div style="font-size:36px;flex:0 0 auto;">📲</div>
               <div style="flex:1;min-width:0;">
                 <div style="font-weight:800;color:#fff;font-size:14px;margin-bottom:3px;">Add to Home Screen</div>
@@ -256,13 +265,13 @@
               </div>
             </div>
 
-            <div onClick="{{ goPass }}" class="tap" style="margin:16px 16px 0;border-radius:26px;padding:26px 22px;background:linear-gradient(150deg,#22D3EE,#0EA5C4);color:var(--teal-deep);position:relative;overflow:hidden;box-shadow:0 16px 34px rgba(34,211,238,.3);">
+            <div onClick="{{ goPass }}" class="tap" style="margin:16px 16px 0;border-radius:26px;padding:26px 22px;background:linear-gradient(150deg,#E8426A,#C4284E);color:#fff;position:relative;overflow:hidden;box-shadow:0 16px 34px rgba(232,66,106,.3);">
               <div style="position:absolute;bottom:-30px;right:-10px;font-size:120px;opacity:.28;">🥤</div>
-              <div style="font-family:var(--f-num);letter-spacing:.18em;font-size:12px;">POUR PASS</div>
+              <div style="font-family:var(--f-num);letter-spacing:.18em;font-size:12px;color:rgba(255,255,255,.85);">POUR PASS</div>
               <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:26px;line-height:.98;margin:6px 0 12px;max-width:14ch;">{{ passRemaining }} pours from a free juice</div>
               <div style="display:flex;gap:5px;">
                 <span style="flex:{{ passFilled }};height:9px;border-radius:99px;background:var(--teal-deep);"></span>
-                <span style="flex:{{ passEmpty }};height:9px;border-radius:99px;background:rgba(20,50,65,.25);"></span>
+                <span style="flex:{{ passEmpty }};height:9px;border-radius:99px;background:rgba(255,255,255,.25);"></span>
               </div>
             </div>
             <sc-if value="{{ showSignInCta }}" hint-placeholder-val="{{ false }}">
@@ -367,7 +376,7 @@
               <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:44px;line-height:.9;letter-spacing:-.03em;margin:12px 0 0;text-shadow:0 3px 14px rgba(0,0,0,.2);">{{ item.name }}</h2>
             </div>
           </div>
-          <div style="background:var(--teal-deep);border-radius:30px 30px 0 0;margin-top:-24px;position:relative;z-index:3;padding:26px 20px 0;">
+          <div style="background:var(--navy);border-radius:30px 30px 0 0;margin-top:-24px;position:relative;z-index:3;padding:26px 20px 0;">
             <p style="color:rgba(255,255,255,.82);font-size:15px;line-height:1.6;font-weight:500;margin:0 0 20px;">{{ item.blurb }}</p>
             <div style="font-family:var(--f-num);letter-spacing:.16em;font-size:13px;color:var(--gold-glow);margin-bottom:10px;">WHAT'S INSIDE</div>
             <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;">
@@ -390,7 +399,7 @@
               </sc-for>
             </div>
           </div>
-          <div style="position:sticky;bottom:0;background:linear-gradient(180deg,rgba(18,48,60,0),var(--teal-deep) 34%);padding:18px 20px 26px;display:flex;gap:14px;align-items:center;z-index:5;">
+          <div style="position:sticky;bottom:0;background:linear-gradient(180deg,rgba(28,31,46,0),var(--navy) 34%);padding:18px 20px 26px;display:flex;gap:14px;align-items:center;z-index:5;">
             <div style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.08);border-radius:99px;padding:8px 10px;">
               <button onClick="{{ decQty }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);border:0;color:#fff;font-size:22px;line-height:1;display:grid;place-items:center;">−</button>
               <span style="font-family:var(--f-num);font-size:24px;color:#fff;min-width:20px;text-align:center;">{{ qty }}</span>
@@ -404,12 +413,14 @@
         <!-- ===================== CART ===================== -->
         <sc-if value="{{ isCart }}" hint-placeholder-val="{{ false }}">
         <div style="animation:floatIn .35s ease both;min-height:100%;display:flex;flex-direction:column;">
-          <div style="padding:44px 20px 18px;display:flex;align-items:center;gap:12px;">
-            <button onClick="{{ back }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:0;display:grid;place-items:center;">
+          <div style="padding:44px 20px 18px;background:linear-gradient(160deg,#E8426A 0%,#C4284E 60%,#8B1A35 100%);display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 240 520" style="position:absolute;left:-52px;top:60px;width:160px;height:auto;transform:scaleX(-1);pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.3)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg viewBox="0 0 240 520" style="position:absolute;right:-58px;top:20px;width:220px;height:auto;pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <button onClick="{{ back }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);border:0;display:grid;place-items:center;position:relative;z-index:2;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
-            <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;margin:0;letter-spacing:-.02em;">Your order</h2>
-            <img src="assets/logo-clean-512.png" style="margin-left:auto;height:28px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions">
+            <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;margin:0;letter-spacing:-.02em;position:relative;z-index:2;">Your order</h2>
+            <img src="assets/logo-clean-512.png" style="margin-left:auto;height:28px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));position:relative;z-index:2;" alt="Pour Decisions">
           </div>
           <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ true }}">
           <div style="flex:1;padding:6px 16px 0;display:flex;flex-direction:column;gap:12px;">
@@ -456,12 +467,14 @@
         <!-- ===================== CHECKOUT ===================== -->
         <sc-if value="{{ isCheckout }}" hint-placeholder-val="{{ false }}">
         <div style="animation:floatIn .35s ease both;padding-bottom:150px;">
-          <div style="padding:44px 20px 18px;display:flex;align-items:center;gap:12px;">
-            <button onClick="{{ goCart }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:0;display:grid;place-items:center;">
+          <div style="padding:44px 20px 18px;background:linear-gradient(160deg,#E8426A 0%,#C4284E 60%,#8B1A35 100%);display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 240 520" style="position:absolute;left:-52px;top:60px;width:160px;height:auto;transform:scaleX(-1);pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.3)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg viewBox="0 0 240 520" style="position:absolute;right:-58px;top:20px;width:220px;height:auto;pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <button onClick="{{ goCart }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);border:0;display:grid;place-items:center;position:relative;z-index:2;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
-            <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;margin:0;letter-spacing:-.02em;">Checkout</h2>
-            <img src="assets/logo-clean-512.png" style="margin-left:auto;height:28px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions">
+            <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;margin:0;letter-spacing:-.02em;position:relative;z-index:2;">Checkout</h2>
+            <img src="assets/logo-clean-512.png" style="margin-left:auto;height:28px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));position:relative;z-index:2;" alt="Pour Decisions">
           </div>
           <div style="padding:6px 20px 0;display:flex;flex-direction:column;gap:16px;">
             <div>
@@ -478,7 +491,7 @@
             <div>
               <div style="font-family:var(--f-num);letter-spacing:.16em;font-size:13px;color:var(--gold-glow);margin-bottom:10px;">STORE</div>
               <div style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px;">
-                <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(150deg,#22D3EE,#0EA5C4);display:grid;place-items:center;font-size:22px;">📍</div>
+                <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(150deg,#E8426A,#C4284E);display:grid;place-items:center;font-size:22px;">📍</div>
                 <div><div style="font-weight:800;color:#fff;font-size:14px;">Pour Decisions · Albany</div><div style="font-size:12px;color:rgba(255,255,255,.6);">275 Lark St · ready in ~12 min</div></div>
               </div>
             </div>
@@ -499,7 +512,7 @@
               <span style="font-family:var(--f-num);font-size:34px;color:var(--gold-glow);">{{ totalLabel }}</span>
             </div>
           </div>
-          <div style="position:sticky;bottom:0;background:linear-gradient(180deg,rgba(18,48,60,0),var(--teal-deep) 34%);padding:18px 20px 26px;z-index:5;">
+          <div style="position:sticky;bottom:0;background:linear-gradient(180deg,rgba(28,31,46,0),var(--navy) 34%);padding:18px 20px 26px;z-index:5;">
             <button onClick="{{ placeOrder }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(232,181,71,.45);">Place order · {{ totalLabel }}</button>
           </div>
         </div>
@@ -532,13 +545,14 @@
         <!-- ===================== POUR PASS ===================== -->
         <sc-if value="{{ isPass }}" hint-placeholder-val="{{ false }}">
         <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
-          <div style="padding:44px 20px 24px;background:linear-gradient(155deg,#22D3EE,#0EA5C4 55%,#0E7490);color:var(--teal-deep);position:relative;overflow:hidden;">
-            <svg viewBox="0 0 240 520" style="position:absolute;left:-40px;bottom:-130px;width:155px;height:auto;"><g fill="rgba(14,48,60,.2)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+          <div style="padding:44px 20px 24px;background:linear-gradient(155deg,#E8426A,#C4284E 55%,#8B1A35);color:#fff;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 240 520" style="position:absolute;left:-40px;bottom:-130px;width:155px;height:auto;"><g fill="rgba(180,20,55,.25)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
             <div style="position:absolute;bottom:-40px;right:-14px;font-size:150px;opacity:.24;">🥤</div>
+            <svg viewBox="0 0 240 520" style="position:absolute;right:-58px;top:20px;width:220px;height:auto;pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
             <div style="position:relative;z-index:2;margin-bottom:14px;"><img src="assets/logo-clean-512.png" style="height:32px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions"></div>
             <div style="font-family:var(--f-num);letter-spacing:.22em;font-size:14px;">POUR PASS</div>
             <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:40px;line-height:.92;letter-spacing:-.03em;margin:6px 0 20px;">Sip. Earn.<br>Repeat.</h2>
-            <div style="background:rgba(18,48,60,.9);border-radius:24px;padding:22px;color:#fff;box-shadow:0 16px 34px rgba(0,0,0,.2);position:relative;overflow:hidden;">
+            <div style="background:rgba(28,31,46,.92);border-radius:24px;padding:22px;color:#fff;box-shadow:0 16px 34px rgba(0,0,0,.2);position:relative;overflow:hidden;">
               <div style="display:flex;justify-content:space-between;align-items:baseline;">
                 <div><div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:700;">Pour Points</div><div style="font-family:var(--f-num);font-size:52px;color:var(--gold-glow);line-height:.9;margin-top:2px;">{{ points }}</div></div>
                 <div style="text-align:right;"><div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:700;">Gold Member</div><div style="font-size:13px;color:#fff;font-weight:700;margin-top:2px;">🥇 {{ memberSince }}</div></div>
@@ -572,12 +586,14 @@
         <!-- ===================== NOTIFICATIONS ===================== -->
         <sc-if value="{{ isNotif }}" hint-placeholder-val="{{ false }}">
         <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
-          <div style="padding:44px 20px 18px;display:flex;align-items:center;gap:12px;">
-            <button onClick="{{ goHome }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:0;display:grid;place-items:center;">
+          <div style="padding:44px 20px 18px;background:linear-gradient(160deg,#E8426A 0%,#C4284E 60%,#8B1A35 100%);display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 240 520" style="position:absolute;left:-52px;top:60px;width:160px;height:auto;transform:scaleX(-1);pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.3)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg viewBox="0 0 240 520" style="position:absolute;right:-58px;top:20px;width:220px;height:auto;pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <button onClick="{{ goHome }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);border:0;display:grid;place-items:center;position:relative;z-index:2;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
             </button>
-            <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;margin:0;letter-spacing:-.02em;">Fresh drops</h2>
-            <img src="assets/logo-clean-512.png" style="margin-left:auto;height:28px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions">
+            <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;margin:0;letter-spacing:-.02em;position:relative;z-index:2;">Fresh drops</h2>
+            <img src="assets/logo-clean-512.png" style="margin-left:auto;height:28px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));position:relative;z-index:2;" alt="Pour Decisions">
           </div>
           <div style="padding:6px 16px 0;display:flex;flex-direction:column;gap:12px;">
             <sc-for list="{{ notifications }}" as="n" hint-placeholder-count="4">
@@ -622,7 +638,7 @@
                 <div style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;text-align:center;"><div style="font-family:var(--f-num);font-size:32px;color:var(--gold-glow);line-height:1;">{{ points }}</div><div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:4px;">Points</div></div>
               </div>
               <!-- Mini Pour Pass progress -->
-              <div onClick="{{ goPass }}" class="tap" style="background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);border-radius:18px;padding:14px 16px;margin-bottom:14px;">
+              <div onClick="{{ goPass }}" class="tap" style="background:rgba(232,66,106,.1);border:1px solid rgba(232,66,106,.2);border-radius:18px;padding:14px 16px;margin-bottom:14px;">
                 <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:8px;"><span style="color:#fff;">Pour Pass: {{ passFilled }}/9 pours</span><span style="color:var(--gold-glow);">Free at 9 →</span></div>
                 <div style="display:flex;gap:4px;">
                   <span style="flex:{{ passFilled }};height:7px;border-radius:99px;background:var(--gold);"></span>
@@ -743,18 +759,18 @@
               </div>
             </div>
             <!-- center hub -->
-            <button onClick="{{ spin }}" class="tap" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:6;width:86px;height:86px;border-radius:50%;background:var(--teal-deep);border:5px solid var(--cream);color:var(--gold-glow);font-family:var(--f-num);letter-spacing:.1em;font-size:24px;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.35);cursor:pointer;">{{ spinLabel }}</button>
+            <button onClick="{{ spin }}" class="tap" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:6;width:86px;height:86px;border-radius:50%;background:var(--navy);border:5px solid var(--cream);color:var(--gold-glow);font-family:var(--f-num);letter-spacing:.1em;font-size:24px;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.35);cursor:pointer;">{{ spinLabel }}</button>
           </div>
 
           <div style="position:relative;z-index:3;text-align:center;margin-top:22px;">
-            <button onClick="{{ spin }}" class="tap" style="background:var(--teal-deep);color:#fff;font-weight:800;font-size:15px;padding:15px 40px;border-radius:99px;border:0;box-shadow:0 12px 28px rgba(0,0,0,.28);">🎡 Spin the wheel</button>
+            <button onClick="{{ spin }}" class="tap" style="background:var(--navy);color:#fff;font-weight:800;font-size:15px;padding:15px 40px;border-radius:99px;border:0;box-shadow:0 12px 28px rgba(0,0,0,.28);">🎡 Spin the wheel</button>
             <p style="color:rgba(255,255,255,.82);font-size:12px;font-weight:600;margin:14px 0 0;">1 free spin every day · come back tomorrow for more</p>
           </div>
 
           <!-- WIN OVERLAY: Signed-in + won a prize -->
           <sc-if value="{{ showWinClaim }}" hint-placeholder-val="{{ false }}">
           <div style="position:absolute;inset:0;z-index:20;background:rgba(9,22,28,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:30px;animation:floatIn .3s ease both;">
-            <div style="width:100%;max-width:320px;background:var(--teal-deep);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;position:relative;overflow:hidden;">
+            <div style="width:100%;max-width:320px;background:var(--navy);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;position:relative;overflow:hidden;">
               <div style="position:absolute;top:-30px;left:-10px;font-size:50px;opacity:.5;">🎉</div>
               <div style="position:absolute;top:-24px;right:-6px;font-size:44px;opacity:.5;">✨</div>
               <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:{{ wonItem.grad }};display:grid;place-items:center;font-size:60px;box-shadow:0 14px 30px rgba(0,0,0,.3);">{{ wonItem.emoji }}</div>
@@ -770,7 +786,7 @@
           <!-- WIN OVERLAY: Not signed in + won — prompt to sign in -->
           <sc-if value="{{ showWinSignInPrompt }}" hint-placeholder-val="{{ false }}">
           <div style="position:absolute;inset:0;z-index:20;background:rgba(9,22,28,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:30px;animation:floatIn .3s ease both;">
-            <div style="width:100%;max-width:320px;background:var(--teal-deep);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;position:relative;overflow:hidden;">
+            <div style="width:100%;max-width:320px;background:var(--navy);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;position:relative;overflow:hidden;">
               <div style="position:absolute;top:-30px;left:-10px;font-size:50px;opacity:.5;">🎉</div>
               <div style="position:absolute;top:-24px;right:-6px;font-size:44px;opacity:.5;">✨</div>
               <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:{{ wonItem.grad }};display:grid;place-items:center;font-size:60px;box-shadow:0 14px 30px rgba(0,0,0,.3);">{{ wonItem.emoji }}</div>
@@ -786,7 +802,7 @@
           <!-- LOSE OVERLAY -->
           <sc-if value="{{ showLoseResult }}" hint-placeholder-val="{{ false }}">
           <div style="position:absolute;inset:0;z-index:20;background:rgba(9,22,28,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:30px;animation:floatIn .3s ease both;">
-            <div style="width:100%;max-width:320px;background:var(--teal-deep);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;">
+            <div style="width:100%;max-width:320px;background:var(--navy);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;">
               <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:60px;">😔</div>
               <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:14px;color:rgba(255,255,255,.5);margin-top:18px;">BETTER LUCK NEXT TIME</div>
               <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;line-height:1;margin-top:4px;">Try again!</div>
@@ -841,8 +857,9 @@
         <!-- ===================== EVENTS + VENUE RENTAL ===================== -->
         <sc-if value="{{ isEvents }}" hint-placeholder-val="{{ false }}">
         <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
-          <div style="padding:44px 20px 24px;background:linear-gradient(160deg,#22D3EE 0%,#0EA5C4 42%,#0E7490 100%);color:#fff;position:relative;overflow:hidden;">
-            <svg viewBox="0 0 240 520" style="position:absolute;right:-54px;top:10px;width:180px;height:auto;"><g fill="rgba(0,0,0,.12)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+          <div style="padding:44px 20px 24px;background:linear-gradient(160deg,#E8426A 0%,#C4284E 42%,#8B1A35 100%);color:#fff;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 240 520" style="position:absolute;left:-52px;top:60px;width:160px;height:auto;transform:scaleX(-1);pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.3)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg viewBox="0 0 240 520" style="position:absolute;right:-54px;top:10px;width:180px;height:auto;"><g fill="rgba(180,20,55,.25)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
             <div style="position:absolute;bottom:-20px;right:-14px;font-size:120px;opacity:.2;">📅</div>
             <div style="position:relative;z-index:2;margin-bottom:14px;"><img src="assets/logo-clean-512.png" style="height:32px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions"></div>
             <div style="font-family:var(--f-num);letter-spacing:.22em;font-size:13px;color:rgba(255,255,255,.85);">EVENTS &amp; CLASSES</div>
@@ -958,7 +975,8 @@
         <!-- ===================== PRIZES PAGE ===================== -->
         <sc-if value="{{ isPrizes }}" hint-placeholder-val="{{ false }}">
         <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
-          <div style="padding:44px 20px 24px;background:linear-gradient(160deg,#FF8A3D 0%,#FF6B35 42%,#FF3D80 100%);color:#fff;position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;">
+          <div style="padding:44px 20px 24px;background:linear-gradient(160deg,#E8426A 0%,#C4284E 42%,#8B1A35 100%);color:#fff;position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;">
+            <svg viewBox="0 0 240 520" style="position:absolute;left:-52px;top:60px;width:160px;height:auto;transform:scaleX(-1);pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.3)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
             <div style="position:absolute;bottom:-20px;right:-14px;font-size:120px;opacity:.2;">🏆</div>
             <button onClick="{{ back }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);flex:0 0 40px;">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -1003,11 +1021,13 @@
         <div style="animation:floatIn .35s ease both;min-height:100dvh;padding-bottom:40px;">
           <!-- LOGIN -->
           <sc-if value="{{ adminIsLogin }}" hint-placeholder-val="{{ true }}">
-          <div style="min-height:100dvh;display:flex;flex-direction:column;background:var(--teal-ink);color:#fff;">
-            <div style="padding:60px 24px 30px;text-align:center;background:rgba(0,0,0,.2);">
-              <div style="font-size:48px;margin-bottom:12px;">🔐</div>
-              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;letter-spacing:-.02em;">Pour Decisions Admin</div>
-              <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;">Authorized personnel only</div>
+          <div style="min-height:100dvh;display:flex;flex-direction:column;background:var(--navy);color:#fff;">
+            <div style="padding:60px 24px 30px;text-align:center;background:linear-gradient(160deg,#E8426A 0%,#C4284E 60%,#8B1A35 100%);position:relative;overflow:hidden;">
+              <svg viewBox="0 0 240 520" style="position:absolute;left:-52px;top:60px;width:160px;height:auto;transform:scaleX(-1);pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.3)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg viewBox="0 0 240 520" style="position:absolute;right:-58px;top:20px;width:220px;height:auto;pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <div style="position:relative;z-index:2;font-size:48px;margin-bottom:12px;">🔐</div>
+              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;letter-spacing:-.02em;position:relative;z-index:2;">Pour Decisions Admin</div>
+              <div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:4px;position:relative;z-index:2;">Authorized personnel only</div>
             </div>
             <div style="padding:30px 24px;flex:1;">
               <input value="{{ adminEmail }}" onInput="{{ onAdminEmail }}" placeholder="Admin email" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:12px;">
@@ -1023,8 +1043,11 @@
 
           <!-- DASHBOARD -->
           <sc-if value="{{ adminIsDash }}" hint-placeholder-val="{{ false }}">
-          <div style="background:var(--teal-ink);min-height:100dvh;">
-            <div style="padding:44px 20px 16px;background:var(--teal-deep);display:flex;align-items:center;gap:10px;">
+          <div style="background:var(--navy);min-height:100dvh;">
+            <div style="padding:44px 20px 16px;background:linear-gradient(160deg,#E8426A 0%,#C4284E 60%,#8B1A35 100%);display:flex;align-items:center;gap:10px;position:relative;overflow:hidden;">
+              <svg viewBox="0 0 240 520" style="position:absolute;left:-52px;top:60px;width:160px;height:auto;transform:scaleX(-1);pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.3)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg viewBox="0 0 240 520" style="position:absolute;right:-58px;top:20px;width:220px;height:auto;pointer-events:none;" aria-hidden="true"><g fill="rgba(180,20,55,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            
               <div style="flex:1;">
                 <div style="font-family:var(--f-num);letter-spacing:.15em;font-size:12px;color:var(--gold-glow);">ADMIN</div>
                 <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;color:#fff;">Dashboard</div>
@@ -1033,7 +1056,7 @@
               <button onClick="{{ doAdminSignOut }}" class="tap" style="background:rgba(255,255,255,.1);color:#fff;font-weight:700;font-size:12px;padding:8px 14px;border-radius:99px;border:0;">Sign out</button>
             </div>
             <!-- Admin tabs -->
-            <div class="noscroll" style="display:flex;gap:0;overflow-x:auto;background:var(--teal-deep);border-bottom:1px solid rgba(255,255,255,.08);padding:0 16px;">
+            <div class="noscroll" style="display:flex;gap:0;overflow-x:auto;background:var(--navy-mid);border-bottom:1px solid rgba(255,255,255,.08);padding:0 16px;">
               <button onClick="{{ setAdminDash }}" class="tap" style="flex:0 0 auto;background:transparent;color:{{ isAdminDash?'var(--gold)':'rgba(255,255,255,.5)' }};font-weight:{{ isAdminDash?800:700 }};font-size:13px;padding:12px 14px;border:0;border-bottom:2px solid {{ isAdminDash?'var(--gold)':'transparent' }};">Dashboard</button>
               <button onClick="{{ setAdminEvents }}" class="tap" style="flex:0 0 auto;background:transparent;color:{{ isAdminEvents?'var(--gold)':'rgba(255,255,255,.5)' }};font-weight:{{ isAdminEvents?800:700 }};font-size:13px;padding:12px 14px;border:0;border-bottom:2px solid {{ isAdminEvents?'var(--gold)':'transparent' }};">Events</button>
               <button onClick="{{ setAdminVenue }}" class="tap" style="flex:0 0 auto;background:transparent;color:{{ isAdminVenue?'var(--gold)':'rgba(255,255,255,.5)' }};font-weight:{{ isAdminVenue?800:700 }};font-size:13px;padding:12px 14px;border:0;border-bottom:2px solid {{ isAdminVenue?'var(--gold)':'transparent' }};">Venue</button>
@@ -1158,7 +1181,7 @@
       <!-- BOTTOM NAV — hidden on desktop via CSS -->
       <div class="pd-bottom-nav-wrap">
       <sc-if value="{{ showNav }}" hint-placeholder-val="{{ false }}">
-      <div style="position:relative;z-index:85;display:grid;grid-template-columns:repeat(5,1fr);padding:10px 8px 22px;background:rgba(14,32,41,.92);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08);">
+      <div style="position:relative;z-index:85;display:grid;grid-template-columns:repeat(5,1fr);padding:10px 8px 22px;background:rgba(28,31,46,.96);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08);">
         <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
           <div onClick="{{ n.go }}" class="tap" style="display:flex;flex-direction:column;align-items:center;gap:3px;color:{{ n.color }};font-size:10px;font-weight:{{ n.weight }};">
             <span style="font-size:19px;">{{ n.icon }}</span><span>{{ n.label }}</span>
@@ -1395,9 +1418,9 @@ class Component extends DCLogic {
   fmt(n){ return '$' + n.toFixed(n % 1 === 0 ? 0 : 2); }
   themeGrad(){
     const t = {
-      Sunset:'linear-gradient(160deg,#FF8A3D 0%,#FF6B35 32%,#FF3D80 78%,#E32B6A 100%)',
-      Citrus:'linear-gradient(160deg,#FFC64D 0%,#FF8A3D 42%,#FF6B35 100%)',
-      Berry:'linear-gradient(160deg,#FF6FA0 0%,#FF3D80 45%,#7C3AED 112%)'
+      Sunset:'linear-gradient(160deg,#E8426A 0%,#C4284E 55%,#8B1A35 100%)',
+      Citrus:'linear-gradient(160deg,#E8426A 0%,#FF6B35 55%,#E8B547 100%)',
+      Berry:'linear-gradient(160deg,#9B2D6E 0%,#E8426A 50%,#C4284E 100%)'
     };
     return t[this.props.splashTheme ?? this.state.theme] || t.Sunset;
   }
@@ -1837,7 +1860,7 @@ class Component extends DCLogic {
       points:S.points, memberSince:'since ’24', ordersCount:23,
       stamps: Array.from({length:9}, (_,i)=>({ bg: i<filled ? 'var(--gold)' : 'rgba(255,255,255,.14)' })),
       rewards: [
-        { emoji:'🥤', title:'Free 16oz juice', cost:900, grad:'linear-gradient(150deg,#22D3EE,#0EA5C4)', ready:false },
+        { emoji:'🥤', title:'Free 16oz juice', cost:900, grad:'linear-gradient(150deg,#E8426A,#C4284E)', ready:false },
         { emoji:'🫚', title:'Free wellness shot', cost:400, grad:'linear-gradient(150deg,#FFE27A,#E8B547)', ready:true },
         { emoji:'🍓', title:'$3 off any smoothie', cost:250, grad:'linear-gradient(150deg,#FF8FB8,#FF3D80)', ready:true }
       ].map(r=>({ ...r, btnLabel: S.points>=r.cost?'Redeem':'Locked', btnBg: S.points>=r.cost?'var(--gold)':'rgba(255,255,255,.1)', btnFg: S.points>=r.cost?'var(--teal-deep)':'rgba(255,255,255,.4)' })),
