@@ -5,6 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pour Decisions — Cold-Pressed Juice · Albany NY</title>
 <script src="./support.js"></script>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GOOGLE SIGN-IN (Google Identity Services)
+       ─────────────────────────────────────────────────────────
+       SETUP REQUIRED:
+       1. Go to https://console.cloud.google.com/apis/credentials
+       2. Create an OAuth 2.0 Client ID (Web application type)
+       3. Add https://pourdecisionsjuicebar.com to Authorized JavaScript origins
+       4. Replace YOUR_GOOGLE_CLIENT_ID below with your actual Client ID
+  ═══════════════════════════════════════════════════════════ -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       APPLE SIGN IN (Sign in with Apple JS)
+       ─────────────────────────────────────────────────────────
+       SETUP REQUIRED:
+       1. Go to https://developer.apple.com/account/resources/identifiers
+       2. Register a Services ID (not an App ID)
+       3. Enable "Sign In with Apple" and add pourdecisionsjuicebar.com as domain
+       4. Replace YOUR_APPLE_SERVICE_ID below with your actual Services ID
+  ═══════════════════════════════════════════════════════════ -->
+  <script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js" async defer></script>
+
 </head>
 <body>
 <x-dc>
@@ -79,8 +102,16 @@
             <div style="display:flex;align-items:center;gap:12px;margin:20px 0;"><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span><span style="font-size:11px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.08em;">OR</span><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span></div>
 
             <div style="display:flex;gap:10px;">
-              <button onClick="{{ signIn }}" class="tap" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px;color:#fff;font-weight:700;font-size:13px;"><span style="font-size:17px;">🍎</span>Apple</button>
-              <button onClick="{{ signIn }}" class="tap" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px;color:#fff;font-weight:700;font-size:13px;"><span style="font-size:17px;">🟢</span>Google</button>
+              <!-- Apple Sign In — real OAuth via AppleID.auth.signIn() -->
+              <button onClick="{{ doAppleSignIn }}" class="tap" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#000;border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:14px;color:#fff;font-weight:700;font-size:13px;">
+                <svg width="16" height="19" viewBox="0 0 814 1000" fill="#fff"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105.2-58.4-155.5-127.4C46 373.5 38.4 342.7 38.4 342.3 38.4 232.8 107.4 106 279.3 106c75.3 0 139.5 50.1 184.9 50.1 43.4 0 113.4-52.3 198.9-52.3zm-115.3-107.7C614.9 174.5 591 135.1 591 95.6c0-13.2 1.9-26.4 2.6-38.3 63.4-2.6 139.3 35.8 184.3 96.3 41.4 53.2 54.9 112.9 54.9 163.2 0 11.5-2.6 23-2.6 38.3-67.9-2.6-148.1-44.3-148.4-121.9z"></path></svg>
+                Sign in with Apple
+              </button>
+              <!-- Google Sign In — real OAuth via Google Identity Services -->
+              <button onClick="{{ doGoogleSignIn }}" class="tap" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:14px;color:#1f2937;font-weight:700;font-size:13px;">
+                <svg width="17" height="17" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+                Sign in with Google
+              </button>
             </div>
 
             <div onClick="{{ toggleAuthMode }}" class="tap" style="text-align:center;color:var(--gold-glow);font-weight:700;font-size:13.5px;margin-top:22px;">{{ authToggleText }}</div>
@@ -474,20 +505,99 @@
             </div>
           </div>
           <div style="padding:18px 16px 0;">
-            <div style="display:flex;gap:12px;margin-bottom:18px;">
-              <div style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;text-align:center;"><div style="font-family:var(--f-num);font-size:32px;color:var(--gold-glow);line-height:1;">{{ ordersCount }}</div><div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:4px;">Orders</div></div>
-              <div style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;text-align:center;"><div style="font-family:var(--f-num);font-size:32px;color:var(--gold-glow);line-height:1;">{{ passFilled }}</div><div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:4px;">Pours</div></div>
-              <div style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;text-align:center;"><div style="font-family:var(--f-num);font-size:32px;color:var(--gold-glow);line-height:1;">4</div><div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:4px;">Faves</div></div>
+            <!-- Tab bar -->
+            <div style="display:flex;gap:8px;margin-bottom:16px;">
+              <button onClick="{{ setTabOverview }}" class="tap" style="flex:1;background:{{ tabOverviewBg }};color:{{ tabOverviewFg }};font-weight:800;font-size:13px;padding:10px 6px;border-radius:99px;border:0;">Overview</button>
+              <button onClick="{{ setTabTransactions }}" class="tap" style="flex:1;background:{{ tabTxBg }};color:{{ tabTxFg }};font-weight:800;font-size:13px;padding:10px 6px;border-radius:99px;border:0;">Transactions</button>
+              <button onClick="{{ setTabPrizes }}" class="tap" style="flex:1;background:{{ tabPrBg }};color:{{ tabPrFg }};font-weight:800;font-size:13px;padding:10px 6px;border-radius:99px;border:0;">Prizes</button>
             </div>
-            <div style="display:flex;flex-direction:column;gap:2px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;">
-              <sc-for list="{{ accountRows }}" as="a" hint-placeholder-count="5">
-                <div onClick="{{ a.go }}" class="tap" style="display:flex;align-items:center;gap:13px;padding:16px;border-bottom:1px solid rgba(255,255,255,.05);">
-                  <span style="font-size:20px;width:26px;text-align:center;">{{ a.icon }}</span>
-                  <span style="flex:1;font-weight:700;color:#fff;font-size:14px;">{{ a.label }}</span>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.4)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+            <!-- OVERVIEW TAB -->
+            <sc-if value="{{ isAccountOverview }}" hint-placeholder-val="{{ true }}">
+            <div>
+              <div style="display:flex;gap:12px;margin-bottom:18px;">
+                <div style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;text-align:center;"><div style="font-family:var(--f-num);font-size:32px;color:var(--gold-glow);line-height:1;">{{ ordersCount }}</div><div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:4px;">Orders</div></div>
+                <div style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;text-align:center;"><div style="font-family:var(--f-num);font-size:32px;color:var(--gold-glow);line-height:1;">{{ passFilled }}</div><div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:4px;">Pours</div></div>
+                <div style="flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px;text-align:center;"><div style="font-family:var(--f-num);font-size:32px;color:var(--gold-glow);line-height:1;">{{ points }}</div><div style="font-size:11px;color:rgba(255,255,255,.55);font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-top:4px;">Points</div></div>
+              </div>
+              <!-- Mini Pour Pass progress -->
+              <div onClick="{{ goPass }}" class="tap" style="background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);border-radius:18px;padding:14px 16px;margin-bottom:14px;">
+                <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;margin-bottom:8px;"><span style="color:#fff;">Pour Pass: {{ passFilled }}/9 pours</span><span style="color:var(--gold-glow);">Free at 9 →</span></div>
+                <div style="display:flex;gap:4px;">
+                  <span style="flex:{{ passFilled }};height:7px;border-radius:99px;background:var(--gold);"></span>
+                  <span style="flex:{{ passEmpty }};height:7px;border-radius:99px;background:rgba(255,255,255,.15);"></span>
                 </div>
-              </sc-for>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:2px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;">
+                <sc-for list="{{ accountRows }}" as="a" hint-placeholder-count="5">
+                  <div onClick="{{ a.go }}" class="tap" style="display:flex;align-items:center;gap:13px;padding:16px;border-bottom:1px solid rgba(255,255,255,.05);">
+                    <span style="font-size:20px;width:26px;text-align:center;">{{ a.icon }}</span>
+                    <span style="flex:1;font-weight:700;color:#fff;font-size:14px;">{{ a.label }}</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="rgba(255,255,255,.4)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                  </div>
+                </sc-for>
+              </div>
             </div>
+            </sc-if>
+
+            <!-- TRANSACTIONS TAB -->
+            <sc-if value="{{ isAccountTransactions }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <sc-if value="{{ hasOrders }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <sc-for list="{{ orderHistory }}" as="o" hint-placeholder-count="3">
+                  <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 16px;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+                      <span style="font-family:var(--f-num);font-size:18px;color:var(--gold-glow);">{{ o.idLabel }}</span>
+                      <span style="font-size:11px;color:rgba(255,255,255,.5);font-weight:600;">{{ o.dateLabel }}</span>
+                    </div>
+                    <div style="font-size:13px;color:rgba(255,255,255,.7);font-weight:500;margin-bottom:6px;">{{ o.itemSummary }}</div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                      <span style="font-family:var(--f-num);font-size:22px;color:#fff;">{{ o.totalLabel }}</span>
+                      <span style="font-size:11px;font-weight:700;color:#A3E635;background:rgba(163,230,53,.12);padding:4px 10px;border-radius:99px;">{{ o.pointsLabel }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+              <sc-if value="{{ noOrders }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:40px 20px;color:rgba(255,255,255,.6);">
+                <div style="font-size:54px;margin-bottom:12px;">🧾</div>
+                <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;color:#fff;margin-bottom:8px;">No orders yet</div>
+                <p style="font-size:13px;margin:0 0 16px;">Place your first order to see history here.</p>
+                <button onClick="{{ goMenu }}" class="tap" style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:12px 24px;border-radius:99px;border:0;">Browse menu</button>
+              </div>
+              </sc-if>
+            </div>
+            </sc-if>
+
+            <!-- PRIZES TAB -->
+            <sc-if value="{{ isAccountPrizes }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <sc-if value="{{ hasPrizes }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:12px;">
+                <sc-for list="{{ userPrizes }}" as="p" hint-placeholder-count="2">
+                  <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:13px;">
+                    <div style="width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:30px;flex:0 0 52px;">{{ p.emoji }}</div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="font-weight:800;color:#fff;font-size:15px;">{{ p.name }}</div>
+                      <div style="font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;">Won {{ p.wonDateLabel }}</div>
+                      <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;background:{{ p.statusBg }};color:{{ p.statusFg }};display:inline-block;margin-top:4px;">{{ p.statusLabel }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+              <sc-if value="{{ noPrizes }}" hint-placeholder-val="{{ true }}">
+              <div style="text-align:center;padding:40px 20px;color:rgba(255,255,255,.6);">
+                <div style="font-size:54px;margin-bottom:12px;">🏆</div>
+                <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;color:#fff;margin-bottom:8px;">No prizes yet</div>
+                <p style="font-size:13px;margin:0 0 16px;">Spin the wheel to win free pours!</p>
+                <button onClick="{{ goWheel }}" class="tap" style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:12px 24px;border-radius:99px;border:0;">Spin now 🎡</button>
+              </div>
+              </sc-if>
+            </div>
+            </sc-if>
           </div>
         </div>
         </sc-if>
@@ -596,6 +706,274 @@
         </div>
         </sc-if>
 
+        <!-- ===================== EVENTS + VENUE RENTAL ===================== -->
+        <sc-if value="{{ isEvents }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
+          <div style="padding:44px 20px 24px;background:linear-gradient(160deg,#22D3EE 0%,#0EA5C4 42%,#0E7490 100%);color:#fff;position:relative;overflow:hidden;">
+            <div style="position:absolute;bottom:-20px;right:-14px;font-size:120px;opacity:.2;">📅</div>
+            <div style="position:relative;z-index:2;margin-bottom:14px;"><img src="assets/logo-clean-512.png" style="height:32px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions"></div>
+            <div style="font-family:var(--f-num);letter-spacing:.22em;font-size:13px;color:rgba(255,255,255,.85);">EVENTS &amp; CLASSES</div>
+            <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:36px;line-height:.92;margin:8px 0 0;letter-spacing:-.03em;">What's on<br>this month</h2>
+          </div>
+          <div style="padding:20px 16px 0;">
+            <div style="font-family:var(--f-num);letter-spacing:.16em;font-size:13px;color:var(--gold-glow);margin-bottom:12px;">UPCOMING EVENTS</div>
+            <sc-if value="{{ hasEvents }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <sc-for list="{{ upcomingEvents }}" as="ev" hint-placeholder-count="3">
+                <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:16px;">
+                  <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">
+                    <div style="width:54px;height:54px;border-radius:16px;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:28px;flex:0 0 54px;">{{ ev.emoji }}</div>
+                    <div style="flex:1;">
+                      <div style="font-weight:800;color:#fff;font-size:15px;line-height:1.2;">{{ ev.title }}</div>
+                      <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;">{{ ev.dateLabel }} · {{ ev.time }}</div>
+                    </div>
+                    <span style="font-size:12px;font-weight:800;color:var(--gold-glow);background:rgba(232,181,71,.12);padding:5px 10px;border-radius:99px;">{{ ev.priceLabel }}</span>
+                  </div>
+                  <p style="font-size:13px;color:rgba(255,255,255,.65);margin:0 0 12px;line-height:1.5;">{{ ev.desc }}</p>
+                  <button onClick="{{ ev.rsvpFn }}" class="tap" style="width:100%;background:{{ ev.rsvpBg }};color:{{ ev.rsvpFg }};font-weight:800;font-size:14px;padding:12px;border-radius:99px;border:0;">{{ ev.rsvpLabel }}</button>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+            <sc-if value="{{ noEvents }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;padding:30px 20px;color:rgba(255,255,255,.6);">
+              <div style="font-size:54px;margin-bottom:12px;">📅</div>
+              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;color:#fff;">No events coming up</div>
+              <p style="font-size:13px;margin-top:8px;">Check back soon for workshops, pop-ups and more.</p>
+            </div>
+            </sc-if>
+
+            <!-- VENUE RENTAL -->
+            <div style="margin-top:28px;">
+              <div style="font-family:var(--f-num);letter-spacing:.16em;font-size:13px;color:var(--gold-glow);margin-bottom:4px;">RENT OUR SPACE</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:12px;">275 Lark St · Up to 30 guests · Albany NY</div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+                <sc-for list="{{ venueSlots }}" as="vs" hint-placeholder-count="3">
+                  <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px 16px;display:flex;align-items:center;gap:10px;">
+                    <div style="flex:1;">
+                      <div style="font-weight:800;color:#fff;font-size:14px;">{{ vs.dateLabel }}</div>
+                      <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;">{{ vs.time }} · {{ vs.capacity }} guests max</div>
+                      <div style="display:flex;align-items:center;gap:8px;margin-top:6px;">
+                        <span style="font-family:var(--f-num);font-size:18px;color:var(--gold-glow);">{{ vs.priceLabel }}</span>
+                        <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;background:{{ vs.statusBg }};color:{{ vs.statusFg }};">{{ vs.statusLabel }}</span>
+                      </div>
+                    </div>
+                    <sc-if value="{{ vs.isAvail }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ vs.inquireFn }}" class="tap" style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:12px;padding:10px 16px;border-radius:99px;border:0;flex:0 0 auto;">Inquire</button>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+
+              <!-- Rental inquiry form -->
+              <div id="pd-rental-form" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:18px;">
+                <div style="font-weight:800;color:#fff;font-size:15px;margin-bottom:14px;">Inquire about a rental</div>
+                <sc-if value="{{ rentalSent }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center;padding:20px;color:#A3E635;font-weight:700;font-size:15px;">We'll be in touch within 24 hours! 🌿</div>
+                </sc-if>
+                <sc-if value="{{ rentalNotSent }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                  <input value="{{ rentalName }}" onInput="{{ onRentalName }}" placeholder="Your name" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 16px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;">
+                  <input value="{{ rentalEmail }}" onInput="{{ onRentalEmail }}" placeholder="Email address" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 16px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;">
+                  <input type="date" value="{{ rentalDate }}" onInput="{{ onRentalDate }}" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 16px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;">
+                  <textarea value="{{ rentalNote }}" onInput="{{ onRentalNote }}" placeholder="Notes or questions…" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:13px 16px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;resize:none;min-height:80px;"></textarea>
+                  <button onClick="{{ submitRental }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:14px;border-radius:99px;border:0;opacity:{{ rentalFormReady ? 1 : 0.45 }};">Send Inquiry</button>
+                </div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ===================== PRIZES PAGE ===================== -->
+        <sc-if value="{{ isPrizes }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
+          <div style="padding:44px 20px 24px;background:linear-gradient(160deg,#FF8A3D 0%,#FF6B35 42%,#FF3D80 100%);color:#fff;position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;">
+            <div style="position:absolute;bottom:-20px;right:-14px;font-size:120px;opacity:.2;">🏆</div>
+            <button onClick="{{ back }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);flex:0 0 40px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </button>
+            <img src="assets/logo-clean-512.png" style="height:32px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions">
+            <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:26px;color:#fff;margin:0;letter-spacing:-.02em;position:relative;z-index:2;">Your Prizes</h2>
+          </div>
+          <div style="padding:20px 16px 0;">
+            <sc-if value="{{ hasPrizes }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <sc-for list="{{ userPrizes }}" as="p" hint-placeholder-count="2">
+                <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:16px;">
+                  <div style="display:flex;align-items:center;gap:14px;">
+                    <div style="width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.1);display:grid;place-items:center;font-size:36px;flex:0 0 64px;">{{ p.emoji }}</div>
+                    <div style="flex:1;">
+                      <div style="font-weight:800;color:#fff;font-size:16px;">{{ p.name }}</div>
+                      <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:2px;">Won {{ p.wonDateLabel }}</div>
+                      <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;background:{{ p.statusBg }};color:{{ p.statusFg }};display:inline-block;margin-top:5px;">{{ p.statusLabel }}</span>
+                    </div>
+                    <sc-if value="{{ p.isUnclaimed }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ p.claimFn }}" class="tap" style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:12px;padding:10px 14px;border-radius:99px;border:0;flex:0 0 auto;">Claim →</button>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            </sc-if>
+            <sc-if value="{{ noPrizes }}" hint-placeholder-val="{{ true }}">
+            <div style="text-align:center;padding:60px 20px;color:rgba(255,255,255,.6);">
+              <div style="font-size:72px;margin-bottom:16px;">🏆</div>
+              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:26px;color:#fff;margin-bottom:8px;">No prizes yet</div>
+              <p style="font-size:14px;margin:0 0 20px;max-width:22ch;margin-left:auto;margin-right:auto;">Spin the daily prize wheel to win free pours</p>
+              <button onClick="{{ goWheel }}" class="tap" style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:14px 28px;border-radius:99px;border:0;">🎡 Spin the wheel</button>
+            </div>
+            </sc-if>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ===================== ADMIN PANEL ===================== -->
+        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:floatIn .35s ease both;min-height:100dvh;padding-bottom:40px;">
+          <!-- LOGIN -->
+          <sc-if value="{{ adminIsLogin }}" hint-placeholder-val="{{ true }}">
+          <div style="min-height:100dvh;display:flex;flex-direction:column;background:var(--teal-ink);color:#fff;">
+            <div style="padding:60px 24px 30px;text-align:center;background:rgba(0,0,0,.2);">
+              <div style="font-size:48px;margin-bottom:12px;">🔐</div>
+              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;letter-spacing:-.02em;">Pour Decisions Admin</div>
+              <div style="font-size:13px;color:rgba(255,255,255,.5);margin-top:4px;">Authorized personnel only</div>
+            </div>
+            <div style="padding:30px 24px;flex:1;">
+              <input value="{{ adminEmail }}" onInput="{{ onAdminEmail }}" placeholder="Admin email" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:12px;">
+              <input type="password" value="{{ adminPassword }}" onInput="{{ onAdminPassword }}" placeholder="Password" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:8px;">
+              <sc-if value="{{ adminLoginError }}" hint-placeholder-val="{{ false }}">
+              <div style="color:#FF7A8A;font-size:13px;font-weight:600;margin-bottom:12px;">{{ adminLoginError }}</div>
+              </sc-if>
+              <button onClick="{{ doAdminSignIn }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;margin-top:8px;box-shadow:0 10px 24px rgba(232,181,71,.35);">Sign in</button>
+              <button onClick="{{ back }}" class="tap" style="width:100%;background:transparent;color:rgba(255,255,255,.5);font-weight:700;font-size:14px;padding:14px;border-radius:99px;border:0;margin-top:8px;">← Back</button>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- DASHBOARD -->
+          <sc-if value="{{ adminIsDash }}" hint-placeholder-val="{{ false }}">
+          <div style="background:var(--teal-ink);min-height:100dvh;">
+            <div style="padding:44px 20px 16px;background:var(--teal-deep);display:flex;align-items:center;gap:10px;">
+              <div style="flex:1;">
+                <div style="font-family:var(--f-num);letter-spacing:.15em;font-size:12px;color:var(--gold-glow);">ADMIN</div>
+                <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;color:#fff;">Dashboard</div>
+              </div>
+              <img src="assets/logo-clean-512.png" style="height:28px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions">
+              <button onClick="{{ doAdminSignOut }}" class="tap" style="background:rgba(255,255,255,.1);color:#fff;font-weight:700;font-size:12px;padding:8px 14px;border-radius:99px;border:0;">Sign out</button>
+            </div>
+            <!-- Admin tabs -->
+            <div class="noscroll" style="display:flex;gap:0;overflow-x:auto;background:var(--teal-deep);border-bottom:1px solid rgba(255,255,255,.08);padding:0 16px;">
+              <button onClick="{{ setAdminDash }}" class="tap" style="flex:0 0 auto;background:transparent;color:{{ isAdminDash?'var(--gold)':'rgba(255,255,255,.5)' }};font-weight:{{ isAdminDash?800:700 }};font-size:13px;padding:12px 14px;border:0;border-bottom:2px solid {{ isAdminDash?'var(--gold)':'transparent' }};">Dashboard</button>
+              <button onClick="{{ setAdminEvents }}" class="tap" style="flex:0 0 auto;background:transparent;color:{{ isAdminEvents?'var(--gold)':'rgba(255,255,255,.5)' }};font-weight:{{ isAdminEvents?800:700 }};font-size:13px;padding:12px 14px;border:0;border-bottom:2px solid {{ isAdminEvents?'var(--gold)':'transparent' }};">Events</button>
+              <button onClick="{{ setAdminVenue }}" class="tap" style="flex:0 0 auto;background:transparent;color:{{ isAdminVenue?'var(--gold)':'rgba(255,255,255,.5)' }};font-weight:{{ isAdminVenue?800:700 }};font-size:13px;padding:12px 14px;border:0;border-bottom:2px solid {{ isAdminVenue?'var(--gold)':'transparent' }};">Venue</button>
+              <button onClick="{{ setAdminPrizes }}" class="tap" style="flex:0 0 auto;background:transparent;color:{{ isAdminPrizes?'var(--gold)':'rgba(255,255,255,.5)' }};font-weight:{{ isAdminPrizes?800:700 }};font-size:13px;padding:12px 14px;border:0;border-bottom:2px solid {{ isAdminPrizes?'var(--gold)':'transparent' }};">Prizes</button>
+              <button onClick="{{ setAdminOrders }}" class="tap" style="flex:0 0 auto;background:transparent;color:{{ isAdminOrders?'var(--gold)':'rgba(255,255,255,.5)' }};font-weight:{{ isAdminOrders?800:700 }};font-size:13px;padding:12px 14px;border:0;border-bottom:2px solid {{ isAdminOrders?'var(--gold)':'transparent' }};">Orders</button>
+            </div>
+            <div style="padding:16px;">
+              <!-- Dashboard tab -->
+              <sc-if value="{{ isAdminDash }}" hint-placeholder-val="{{ true }}">
+              <div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+                  <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;text-align:center;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);">{{ adminTotalOrders }}</div><div style="font-size:11px;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">Total Orders</div></div>
+                  <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;text-align:center;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);">{{ points }}</div><div style="font-size:11px;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">Points Issued</div></div>
+                  <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;text-align:center;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);">{{ adminUnclaimedPrizes }}</div><div style="font-size:11px;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">Unclaimed Prizes</div></div>
+                  <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px;text-align:center;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);">{{ adminTotalEvents }}</div><div style="font-size:11px;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;">Events</div></div>
+                </div>
+                <div style="font-family:var(--f-num);letter-spacing:.14em;font-size:12px;color:var(--gold-glow);margin-bottom:10px;">RECENT ORDERS</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="3">
+                    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
+                      <span style="font-family:var(--f-num);font-size:16px;color:var(--gold-glow);flex:0 0 auto;">{{ o.idLabel }}</span>
+                      <span style="flex:1;font-size:12px;color:rgba(255,255,255,.6);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ o.itemSummary }}</span>
+                      <span style="font-family:var(--f-num);font-size:16px;color:#fff;flex:0 0 auto;">{{ o.totalLabel }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              </sc-if>
+              <!-- Events tab -->
+              <sc-if value="{{ isAdminEvents }}" hint-placeholder-val="{{ false }}">
+              <div>
+                <button onClick="{{ showAddEventForm }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;margin-bottom:14px;">+ Add Event</button>
+                <sc-if value="{{ showAdminEventForm }}" hint-placeholder-val="{{ false }}">
+                <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:16px;margin-bottom:14px;display:flex;flex-direction:column;gap:10px;">
+                  <input value="{{ adminEventForm.title }}" onInput="{{ onAdminEvTitle }}" placeholder="Event title" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:#fff;font-size:13px;font-family:var(--f-body);outline:none;">
+                  <input type="date" value="{{ adminEventForm.date }}" onInput="{{ onAdminEvDate }}" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:#fff;font-size:13px;font-family:var(--f-body);outline:none;">
+                  <input value="{{ adminEventForm.time }}" onInput="{{ onAdminEvTime }}" placeholder="Time (e.g. 11:00 AM)" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:#fff;font-size:13px;font-family:var(--f-body);outline:none;">
+                  <textarea value="{{ adminEventForm.desc }}" onInput="{{ onAdminEvDesc }}" placeholder="Description" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:#fff;font-size:13px;font-family:var(--f-body);outline:none;resize:none;min-height:70px;"></textarea>
+                  <input type="number" value="{{ adminEventForm.price }}" onInput="{{ onAdminEvPrice }}" placeholder="Price (0 for free)" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:#fff;font-size:13px;font-family:var(--f-body);outline:none;">
+                  <input value="{{ adminEventForm.emoji }}" onInput="{{ onAdminEvEmoji }}" placeholder="Emoji" style="width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:#fff;font-size:13px;font-family:var(--f-body);outline:none;">
+                  <div style="display:flex;gap:10px;">
+                    <button onClick="{{ saveAdminEvent }}" class="tap" style="flex:1;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:12px;border-radius:99px;border:0;">Save</button>
+                    <button onClick="{{ cancelAdminEvent }}" class="tap" style="flex:1;background:rgba(255,255,255,.08);color:#fff;font-weight:700;font-size:14px;padding:12px;border-radius:99px;border:0;">Cancel</button>
+                  </div>
+                </div>
+                </sc-if>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                  <sc-for list="{{ adminEvents }}" as="ev" hint-placeholder-count="3">
+                    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:10px;">
+                      <span style="font-size:26px;flex:0 0 auto;">{{ ev.emoji }}</span>
+                      <div style="flex:1;min-width:0;">
+                        <div style="font-weight:800;color:#fff;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ ev.title }}</div>
+                        <div style="font-size:11px;color:rgba(255,255,255,.5);">{{ ev.date }} · {{ ev.priceLabel }}</div>
+                      </div>
+                      <button onClick="{{ ev.deleteAdminEvent }}" class="tap" style="background:rgba(255,61,128,.15);color:#FF3D80;font-weight:700;font-size:11px;padding:7px 12px;border-radius:99px;border:0;flex:0 0 auto;">Delete</button>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              </sc-if>
+              <!-- Venue tab -->
+              <sc-if value="{{ isAdminVenue }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ adminVenue }}" as="v" hint-placeholder-count="3">
+                  <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:10px;">
+                    <div style="flex:1;">
+                      <div style="font-weight:800;color:#fff;font-size:14px;">{{ v.date }}</div>
+                      <div style="font-size:12px;color:rgba(255,255,255,.5);">{{ v.time }} · ${{ v.price }}</div>
+                    </div>
+                    <button onClick="{{ v.toggleFn }}" class="tap" style="background:{{ v.status==='available'?'rgba(163,230,53,.15)':'rgba(255,61,128,.15)' }};color:{{ v.status==='available'?'#A3E635':'#FF3D80' }};font-weight:700;font-size:11px;padding:7px 12px;border-radius:99px;border:0;flex:0 0 auto;">{{ v.status }}</button>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+              <!-- Prizes tab -->
+              <sc-if value="{{ isAdminPrizes }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ adminPrizes }}" as="p" hint-placeholder-count="2">
+                  <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:13px 14px;display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:24px;flex:0 0 auto;">{{ p.emoji }}</span>
+                    <div style="flex:1;">
+                      <div style="font-weight:800;color:#fff;font-size:14px;">{{ p.name }}</div>
+                      <div style="font-size:11px;color:rgba(255,255,255,.5);">{{ p.wonDate }}</div>
+                    </div>
+                    <span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:99px;background:{{ p.statusBg }};color:{{ p.statusFg }};">{{ p.statusLabel }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+              <!-- Orders tab -->
+              <sc-if value="{{ isAdminOrders }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ adminOrders }}" as="o" hint-placeholder-count="3">
+                  <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:13px 14px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                      <span style="font-family:var(--f-num);font-size:17px;color:var(--gold-glow);">{{ o.idLabel }}</span>
+                      <span style="font-family:var(--f-num);font-size:17px;color:#fff;">{{ o.totalLabel }}</span>
+                    </div>
+                    <div style="font-size:12px;color:rgba(255,255,255,.5);">{{ o.itemSummary }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+            </div>
+          </div>
+          </sc-if>
+        </div>
+        </sc-if>
+
       </div>
 
       <!-- Floating Piña button -->
@@ -621,30 +999,65 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:1000},&quot;splashTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sunset&quot;,&quot;Citrus&quot;,&quot;Berry&quot;],&quot;default&quot;:&quot;Berry&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;showFruitStickers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;menuCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Juices&quot;,&quot;Smoothies&quot;,&quot;Bowls&quot;,&quot;Shots&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Menu&quot;}}">
 class Component extends DCLogic {
-  state = {
-    screen: 'auth',
-    prev: 'home',
-    signedIn: false,
-    user: { name:'Maya R.', initial:'M', email:'maya@pourdecisions.co' },
-    authMode: 'in',
-    authName: '',
-    authEmail: '',
-    activeId: null,
-    qty: 1,
-    cart: [],
-    theme: 'Sunset',
-    points: 640,
-    filled: 7,
-    pina: [
-      { role: 'bot', text: "Hey! I'm Piña 🍍 Tell me your mood and I'll pour you something perfect." }
-    ],
-    pinaInput: '',
-    typing: false,
-    orderNo: 4827,
-    rotation: 0,
-    spinning: false,
-    wonId: null
-  };
+  state = (() => {
+    const ls = (k, d) => { try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : d; } catch(e) { return d; } };
+    return {
+      screen: 'home',
+      prev: 'home',
+      signedIn: ls('pd_signedIn', false),
+      user: ls('pd_user', { name:'Maya R.', initial:'M', email:'maya@pourdecisions.co' }),
+      authMode: 'in',
+      authName: '',
+      authEmail: '',
+      activeId: null,
+      qty: 1,
+      cart: ls('pd_cart', []),
+      theme: 'Sunset',
+      points: ls('pd_points', 640),
+      filled: ls('pd_filled', 7),
+      pina: [
+        { role: 'bot', text: "Hey! I'm Piña 🍍 Tell me your mood and I'll pour you something perfect." }
+      ],
+      pinaInput: '',
+      typing: false,
+      orderNo: ls('pd_orderNo', 4827),
+      rotation: 0,
+      spinning: false,
+      wonId: null,
+      prizes: ls('pd_prizes', []),
+      orders: ls('pd_orders', [
+        { id:4825, date:'2026-06-28', items:[{name:'Green Machine',qty:1},{name:'Ginger Shot',qty:2}], total:17, points:170 },
+        { id:4820, date:'2026-06-22', items:[{name:'Berry Bloom',qty:1},{name:'Açaí Bowl',qty:1}], total:22, points:220 },
+        { id:4815, date:'2026-06-15', items:[{name:'Citrus Sunrise',qty:2}], total:16, points:160 }
+      ]),
+      events: ls('pd_events', [
+        { id:1, title:'Cold Press Workshop', date:'2026-07-12', time:'11:00 AM', desc:'Learn how we cold-press every juice fresh daily. Hands-on demo included.', price:0, emoji:'🥬', rsvpd:false },
+        { id:2, title:'Smoothie Bowl Pop-Up', date:'2026-07-19', time:'10:00 AM', desc:'Build your own bowl at our Saturday pop-up. All toppings included.', price:15, emoji:'🍇', rsvpd:false },
+        { id:3, title:'Wellness Wednesday', date:'2026-07-23', time:'6:00 PM', desc:'Live yoga + complimentary wellness shot for all attendees.', price:0, emoji:'🧘', rsvpd:false },
+        { id:4, title:'VIP Tasting Night', date:'2026-08-02', time:'7:00 PM', desc:'Members-only tasting of our new seasonal fall menu. Limited to 20 spots.', price:25, emoji:'🥂', rsvpd:false }
+      ]),
+      venueSlots: ls('pd_venue', [
+        { id:1, date:'2026-07-14', time:'Morning (9am–12pm)', capacity:30, status:'available', price:150 },
+        { id:2, date:'2026-07-14', time:'Afternoon (1pm–5pm)', capacity:30, status:'available', price:200 },
+        { id:3, date:'2026-07-21', time:'Morning (9am–12pm)', capacity:30, status:'booked', price:150 },
+        { id:4, date:'2026-07-28', time:'Full Day (9am–5pm)', capacity:30, status:'available', price:350 }
+      ]),
+      accountTab: 'overview',
+      rentalName: '',
+      rentalEmail: '',
+      rentalDate: '',
+      rentalNote: '',
+      rentalSent: false,
+      adminSignedIn: false,
+      adminEmail: '',
+      adminPassword: '',
+      adminLoginError: '',
+      adminTab: 'dashboard',
+      showAdminEventForm: false,
+      adminEventForm: { title:'', date:'', time:'', desc:'', price:'0', emoji:'🥤' },
+      selectedPayment: 0
+    };
+  })();
 
   MENU = [
     { id:'green', name:'Green Machine', cat:'Detox', kind:'Juices', price:9, cal:120, emoji:'🥬',
@@ -768,6 +1181,9 @@ class Component extends DCLogic {
   CATS = ['All','Juices','Smoothies','Shots','Bowls','Breakfast','Eats','Salads & Soup','Coffee & Tea'];
   WHEEL = ['green','berry','citrus','tropic','purple','melon','acai','ginger'];
 
+  _ls(k, d){ try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : d; } catch(e) { return d; } }
+  _sv(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+
   BENEFITS = {
     green:['Detox & digestion','Iron + vitamin K','Low sugar'],
     berry:['Antioxidant-rich','Heart health','Natural energy'],
@@ -809,15 +1225,113 @@ class Component extends DCLogic {
   }
 
   go(screen){ this.setState(s => ({ prev: s.screen, screen })); }
+  // ─── Internal: complete OAuth sign-in with name/email from any provider ───
+  _handleOAuthSignIn(name, email) {
+    const displayName = (name || 'Guest').trim();
+    const user = { name: displayName, initial: displayName[0].toUpperCase(), email: email || '' };
+    this._sv('pd_signedIn', true);
+    this._sv('pd_user', user);
+    this.setState({ signedIn: true, prev: 'auth', screen: 'home', user, authName: '', authEmail: '' });
+  }
+
+  // ─── Google Sign-In via Google Identity Services ───────────────────────
+  // SETUP: Replace YOUR_GOOGLE_CLIENT_ID with your real Client ID from
+  //        https://console.cloud.google.com/apis/credentials
+  doGoogleSignIn() {
+    if (typeof google === 'undefined' || !google.accounts) {
+      // SDK not yet loaded — try again in 1 second
+      setTimeout(() => this.doGoogleSignIn(), 1000);
+      return;
+    }
+    google.accounts.id.initialize({
+      client_id: 'YOUR_GOOGLE_CLIENT_ID', // ← replace with real Client ID
+      callback: (response) => {
+        try {
+          // Decode the JWT credential to extract user profile
+          const payload = JSON.parse(atob(response.credential.split('.')[1]));
+          const name = payload.name || payload.given_name || 'Google User';
+          const email = payload.email || '';
+          this._handleOAuthSignIn(name, email);
+        } catch (e) {
+          console.error('[Pour Decisions] Google sign-in decode error:', e);
+          alert('Google sign-in failed. Please try again.');
+        }
+      },
+      context: 'signin',
+      ux_mode: 'popup'
+    });
+    // Trigger the Google One Tap / sign-in popup
+    google.accounts.id.prompt((notification) => {
+      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+        // One Tap suppressed — fall back to renderButton approach
+        const container = document.createElement('div');
+        container.style.display = 'none';
+        document.body.appendChild(container);
+        google.accounts.id.renderButton(container, { type: 'standard' });
+        container.querySelector('[role="button"]')?.click();
+        setTimeout(() => document.body.removeChild(container), 500);
+      }
+    });
+  }
+
+  // ─── Apple Sign In via Sign in with Apple JS ───────────────────────────
+  // SETUP: Replace YOUR_APPLE_SERVICE_ID with your real Apple Services ID from
+  //        https://developer.apple.com/account/resources/identifiers
+  doAppleSignIn() {
+    if (typeof AppleID === 'undefined' || !AppleID.auth) {
+      setTimeout(() => this.doAppleSignIn(), 1000);
+      return;
+    }
+    AppleID.auth.init({
+      clientId: 'YOUR_APPLE_SERVICE_ID', // ← replace with real Services ID
+      scope: 'name email',
+      redirectURI: window.location.origin + window.location.pathname,
+      usePopup: true
+    });
+    AppleID.auth.signIn()
+      .then((response) => {
+        // Apple only returns user info on the very first sign-in
+        // Store it in localStorage so we have it for future logins
+        let name = 'Apple User';
+        let email = '';
+        if (response.user) {
+          const fn = response.user.name?.firstName || '';
+          const ln = response.user.name?.lastName || '';
+          name = (fn + ' ' + ln).trim() || 'Apple User';
+          email = response.user.email || '';
+          // Persist name for future logins (Apple only sends it once)
+          try { localStorage.setItem('pd_apple_name', name); } catch(e) {}
+          try { localStorage.setItem('pd_apple_email', email); } catch(e) {}
+        } else {
+          // Returning user — reuse stored name if available
+          try { name = localStorage.getItem('pd_apple_name') || 'Apple User'; } catch(e) {}
+          try { email = localStorage.getItem('pd_apple_email') || ''; } catch(e) {}
+        }
+        this._handleOAuthSignIn(name, email);
+      })
+      .catch((err) => {
+        if (err?.error !== 'popup_closed_by_user' && err?.error !== 'user_cancelled_authorize') {
+          console.error('[Pour Decisions] Apple sign-in error:', err);
+          alert('Apple Sign-In failed. Please try again.');
+        }
+      });
+  }
+
   signIn(){
     this.setState(s => {
       const name = (s.authName || '').trim() || 'Maya R.';
       const email = (s.authEmail || '').trim() || 'maya@pourdecisions.co';
-      return { signedIn:true, prev:'auth', screen:'home', authName:'', authEmail:'',
-        user:{ name, initial: name[0].toUpperCase(), email } };
+      const user = { name, initial: name[0].toUpperCase(), email };
+      this._sv('pd_signedIn', true);
+      this._sv('pd_user', user);
+      return { signedIn:true, prev:'auth', screen:'home', authName:'', authEmail:'', user };
     });
   }
-  signOut(){ this.setState({ signedIn:false, screen:'auth', cart:[] }); }
+  signOut(){
+    this._sv('pd_signedIn', false);
+    this._sv('pd_cart', []);
+    this.setState({ signedIn:false, screen:'auth', cart:[] });
+  }
   openItem(it){ this.setState(s => ({ prev: s.screen, screen:'detail', activeId: it.id, qty: 1 })); }
 
   addToCart(it, q, free){
@@ -890,6 +1404,111 @@ class Component extends DCLogic {
   }
   sendPina(){ const t = this.state.pinaInput.trim(); if (t) this.submit(t); }
 
+  placeOrderNow(){
+    const sub = this.subtotal();
+    const earned = Math.max(10, Math.round(sub * 10));
+    this.setState(s => {
+      const newOrderNo = s.orderNo + 1;
+      const today = new Date().toISOString().slice(0,10);
+      const items = this.cartDetailed().map(ci => ({ name: ci.name, qty: ci.qty }));
+      const newOrder = { id: newOrderNo, date: today, items, total: Math.round(sub*100)/100, points: earned };
+      const orders = [newOrder, ...s.orders];
+      const newPoints = s.points + earned;
+      const newFilled = Math.min(9, s.filled + 1);
+      this._sv('pd_orders', orders);
+      this._sv('pd_points', newPoints);
+      this._sv('pd_filled', newFilled);
+      this._sv('pd_orderNo', newOrderNo);
+      this._sv('pd_cart', []);
+      return { prev:'checkout', screen:'confirm', orderNo: newOrderNo, cart:[], points: newPoints, filled: newFilled, orders };
+    });
+  }
+
+  doCheckout(){
+    const S = this.state;
+    const payOpts = [
+      { id:'apple', label:'Apple Pay' },
+      { id:'cash', label:'Cash App Pay' },
+      { id:'card', label:'Card ···· 4827' },
+      { id:'points', label:'Pour Pass Points' }
+    ];
+    const sel = payOpts[S.selectedPayment || 0];
+    if (sel && sel.id === 'apple' && window.PaymentRequest) {
+      try {
+        const totalAmt = String(Math.round((this.subtotal()*1.08)*100)/100);
+        const details = { total:{ label:'Pour Decisions', amount:{ currency:'USD', value: totalAmt } } };
+        const req = new PaymentRequest([{ supportedMethods:'https://apple.com/apple-pay', data:{ version:3, merchantIdentifier:'merchant.com.pourdecisions', merchantCapabilities:['supports3DS'], supportedNetworks:['visa','masterCard','amex'], countryCode:'US' } }], details);
+        req.show().then(() => this.placeOrderNow()).catch(() => this.placeOrderNow());
+        return;
+      } catch(e) {}
+    }
+    this.placeOrderNow();
+  }
+
+  rsvpEvent(id){
+    this.setState(s => {
+      const events = s.events.map(e => e.id === id ? { ...e, rsvpd: !e.rsvpd } : e);
+      this._sv('pd_events', events);
+      return { events };
+    });
+  }
+
+  submitRental(){
+    const s = this.state;
+    if (!s.rentalName.trim() || !s.rentalEmail.trim() || !s.rentalDate) return;
+    this.setState({ rentalSent: true });
+  }
+
+  adminSignIn(){
+    const s = this.state;
+    if (s.adminEmail === 'admin@pourdecisions.com' && s.adminPassword === 'PourAdmin2026!') {
+      this.setState({ adminSignedIn: true, adminLoginError: '' });
+    } else {
+      this.setState({ adminLoginError: 'Invalid credentials. Try again.' });
+    }
+  }
+
+  deleteAdminEvent(id){
+    this.setState(s => {
+      const events = s.events.filter(e => e.id !== id);
+      this._sv('pd_events', events);
+      return { events };
+    });
+  }
+
+  toggleVenueSlot(id){
+    this.setState(s => {
+      const venueSlots = s.venueSlots.map(v => v.id === id ? { ...v, status: v.status === 'available' ? 'booked' : 'available' } : v);
+      this._sv('pd_venue', venueSlots);
+      return { venueSlots };
+    });
+  }
+
+  saveAdminEvent(){
+    const s = this.state;
+    const f = s.adminEventForm;
+    if (!f.title.trim() || !f.date) return;
+    const newEv = { id: Date.now(), title:f.title, date:f.date, time:f.time, desc:f.desc, price:parseFloat(f.price)||0, emoji:f.emoji||'🥤', rsvpd:false };
+    this.setState(st => {
+      const events = [newEv, ...st.events];
+      this._sv('pd_events', events);
+      return { events, showAdminEventForm: false, adminEventForm:{ title:'', date:'', time:'', desc:'', price:'0', emoji:'🥤' } };
+    });
+  }
+
+  claimPrize(id){
+    this.setState(s => {
+      const prize = s.prizes.find(p => p.id === id);
+      if (!prize || prize.claimed) return {};
+      const item = this.MENU.find(m => m.id === prize.itemId);
+      if (item) this.addToCart(item, 1, true);
+      const prizes = s.prizes.map(p => p.id === id ? { ...p, claimed: true } : p);
+      this._sv('pd_prizes', prizes);
+      return { prizes };
+    });
+    this.go('cart');
+  }
+
   renderVals(){
     const S = this.state;
     const active = this.MENU.find(m => m.id === S.activeId) || this.MENU[0];
@@ -908,10 +1527,10 @@ class Component extends DCLogic {
       { key:'home', icon:'🏠', label:'Home' },
       { key:'menu', icon:'🥗', label:'Menu' },
       { key:'cart', icon:'🧺', label:'Order' },
-      { key:'pass', icon:'🎟️', label:'Pass' },
+      { key:'events', icon:'📅', label:'Events' },
       { key:'account', icon:'🙂', label:'You' }
     ];
-    const activeTab = ({ detail:'menu', checkout:'cart', confirm:'cart', notifications:'home', pina:'home' })[S.screen] || S.screen;
+    const activeTab = ({ detail:'menu', checkout:'cart', confirm:'cart', notifications:'home', pina:'home', prizes:'account', admin:'account', pass:'account' })[S.screen] || S.screen;
 
     const cardFields = it => ({
       ...it, priceLabel: this.fmt(it.price), calLabel: it.cal + ' cal',
@@ -926,8 +1545,8 @@ class Component extends DCLogic {
       isCart:S.screen==='cart', isCheckout:S.screen==='checkout', isConfirm:S.screen==='confirm',
       isPass:S.screen==='pass', isNotif:S.screen==='notifications', isAccount:S.screen==='account', isPina:S.screen==='pina',
       isWheel:S.screen==='wheel',
-      isAuth:S.screen==='auth', showNav:S.screen!=='auth',
-      showPinaFab: !['pina','confirm','wheel','cart','checkout','auth'].includes(S.screen),
+      isAuth:S.screen==='auth', showNav:!['auth','admin'].includes(S.screen),
+      showPinaFab: !['pina','confirm','wheel','cart','checkout','auth','prizes','admin'].includes(S.screen),
       userName:S.user.name, userInitial:S.user.initial, userEmail:S.user.email,
       authMode:S.authMode, authModeIn:S.authMode==='in', authModeUp:S.authMode==='up',
       authTitle:S.authMode==='in'?'Welcome back':'Join the club',
@@ -939,6 +1558,8 @@ class Component extends DCLogic {
       onAuthEmail:(e)=>this.setState({authEmail:e.target.value}),
       toggleAuthMode:()=>this.setState(s=>({authMode:s.authMode==='in'?'up':'in'})),
       signIn:()=>this.signIn(), signOut:()=>this.signOut(),
+      doGoogleSignIn:()=>this.doGoogleSignIn(),
+      doAppleSignIn:()=>this.doAppleSignIn(),
 
       goHome:()=>this.go('home'), goMenu:()=>this.go('menu'), goCart:()=>this.go('cart'),
       goCheckout:()=>this.go('checkout'), goPass:()=>this.go('pass'), goNotif:()=>this.go('notifications'),
@@ -949,8 +1570,18 @@ class Component extends DCLogic {
       spinLabel: S.spinning ? '···' : 'SPIN',
       won: !!S.wonId && S.screen==='wheel',
       wonItem: (()=>{ const w=this.MENU.find(m=>m.id===S.wonId)||this.MENU[0]; return { name:w.name, emoji:w.emoji, cat:w.cat, grad:w.grad }; })(),
-      claimFree:()=>{ const w=this.MENU.find(m=>m.id===S.wonId); if(w){ this.addToCart(w,1,true); } this.setState({wonId:null}); this.go('cart'); },
-      dismissWin:()=>this.setState({wonId:null}),
+      claimFree:()=>{
+        const w=this.MENU.find(m=>m.id===S.wonId);
+        if(w){ this.addToCart(w,1,true); }
+        const prize = { id:Date.now(), itemId:S.wonId, name:w?w.name:'Prize', emoji:w?w.emoji:'🏆', cat:w?w.cat:'Juice', wonDate:new Date().toISOString().slice(0,10), claimed:true };
+        this.setState(st=>{ const prizes=[...st.prizes,prize]; this._sv('pd_prizes',prizes); return {prizes,wonId:null}; });
+        this.go('cart');
+      },
+      dismissWin:()=>{
+        const w=this.MENU.find(m=>m.id===S.wonId);
+        const prize = { id:Date.now(), itemId:S.wonId, name:w?w.name:'Prize', emoji:w?w.emoji:'🏆', cat:w?w.cat:'Juice', wonDate:new Date().toISOString().slice(0,10), claimed:false };
+        this.setState(st=>{ const prizes=[...st.prizes,prize]; this._sv('pd_prizes',prizes); return {prizes,wonId:null}; });
+      },
       toggleTheme:()=>{ const o=['Sunset','Citrus','Berry']; this.setState(s=>({theme:o[(o.indexOf(s.theme)+1)%3]})); },
 
       hasCart: cartCount>0, cartEmpty: cartCount===0, cartCount,
@@ -997,15 +1628,23 @@ class Component extends DCLogic {
         { title:'ASAP', sub:'~12 min', bg:'var(--gold)', border:'var(--gold)', select:()=>{} , active:true},
         { title:'Schedule', sub:'Pick a time', bg:'rgba(255,255,255,.05)', border:'rgba(255,255,255,.12)', select:()=>{} }
       ].map((p,i)=>({ ...p, bg: i===0?'rgba(232,181,71,.16)':'rgba(255,255,255,.05)', border: i===0?'var(--gold)':'rgba(255,255,255,.12)' })),
-      payOptions: [
-        { icon:'🍎', label:'Apple Pay', sel:true },
-        { icon:'💳', label:'•••• 4827', sel:false },
-        { icon:'🎟️', label:'Pour Pass points', sel:false }
-      ].map(pm => ({ ...pm, select:()=>{},
-        bg: pm.sel?'rgba(232,181,71,.14)':'rgba(255,255,255,.04)', border: pm.sel?'var(--gold)':'rgba(255,255,255,.1)',
-        dot: pm.sel?'var(--gold)':'rgba(255,255,255,.3)', dotFill: pm.sel?'var(--gold)':'transparent' })),
+      payOptions: (() => {
+        const opts = [
+          { id:'apple', icon:'⬛', label:'Apple Pay' + (typeof window!=='undefined'&&window.ApplePaySession?' ✓':''), sel:S.selectedPayment===0 },
+          { id:'cash', icon:'💚', label:'Cash App Pay', sel:S.selectedPayment===1 },
+          { id:'card', icon:'💳', label:'Card ···· 4827', sel:S.selectedPayment===2 },
+          { id:'points', icon:'🎟️', label:'Pour Pass (' + S.points + ' pts)', sel:S.selectedPayment===3 }
+        ];
+        return opts.map((pm,i) => ({ ...pm,
+          select:()=>this.setState({selectedPayment:i}),
+          bg: pm.sel?'rgba(232,181,71,.14)':'rgba(255,255,255,.04)',
+          border: pm.sel?'var(--gold)':'rgba(255,255,255,.1)',
+          dot: pm.sel?'var(--gold)':'rgba(255,255,255,.3)',
+          dotFill: pm.sel?'var(--gold)':'transparent'
+        }));
+      })(),
 
-      placeOrder:()=>{ this.setState(s=>({ prev:'checkout', screen:'confirm', orderNo:s.orderNo+1, cart:[], points:s.points+Math.round(this.subtotal()*10), filled:Math.min(9,s.filled+1) })); },
+      placeOrder:()=>this.doCheckout(),
       orderNo:S.orderNo, pointsEarned:Math.max(10, Math.round(sub*10)),
 
       passRemaining:remaining, passFilled:filled, passEmpty:9-filled,
@@ -1026,11 +1665,13 @@ class Component extends DCLogic {
 
       accountRows: [
         { icon:'🎡', label:'Daily prize spin', go:()=>this.go('wheel') },
-        { icon:'🧾', label:'Order history', go:()=>this.go('notifications') },
+        { icon:'📅', label:'Events & Classes', go:()=>this.go('events') },
+        { icon:'🏆', label:'My Prizes', go:()=>this.go('prizes') },
         { icon:'🎟️', label:'Pour Pass', go:()=>this.go('pass') },
         { icon:'❤️', label:'Favorites', go:()=>this.go('menu') },
         { icon:'🔔', label:'Notifications', go:()=>this.go('notifications') },
         { icon:'💳', label:'Payment methods', go:()=>this.go('checkout') },
+        { icon:'🔐', label:'Admin Panel', go:()=>this.go('admin') },
         { icon:'📸', label:'Instagram · @pourdecisions.albany', go:()=>window.open('https://instagram.com/pourdecisions.albany','_blank') },
         { icon:'⚙️', label:'Settings', go:()=>{} },
         { icon:'🚪', label:'Sign out', go:()=>this.signOut() }
@@ -1050,6 +1691,127 @@ class Component extends DCLogic {
       onPinaInput:(e)=>this.setState({pinaInput:e.target.value}),
       onPinaKey:(e)=>{ if(e.key==='Enter'){ e.preventDefault(); this.sendPina(); } },
       sendPina:()=>this.sendPina(),
+
+      isEvents:S.screen==='events', isPrizes:S.screen==='prizes', isAdmin:S.screen==='admin',
+      goEvents:()=>this.go('events'), goPrizes:()=>this.go('prizes'), goAdmin:()=>this.go('admin'),
+      goAccount:()=>this.go('account'), goWheel2:()=>this.go('wheel'),
+
+      // Account tabs
+      accountTab:S.accountTab,
+      isAccountOverview:S.accountTab==='overview',
+      isAccountTransactions:S.accountTab==='transactions',
+      isAccountPrizes:S.accountTab==='prizes',
+      tabOverviewBg:S.accountTab==='overview'?'var(--gold)':'rgba(255,255,255,.08)',
+      tabOverviewFg:S.accountTab==='overview'?'var(--teal-deep)':'rgba(255,255,255,.6)',
+      tabTxBg:S.accountTab==='transactions'?'var(--gold)':'rgba(255,255,255,.08)',
+      tabTxFg:S.accountTab==='transactions'?'var(--teal-deep)':'rgba(255,255,255,.6)',
+      tabPrBg:S.accountTab==='prizes'?'var(--gold)':'rgba(255,255,255,.08)',
+      tabPrFg:S.accountTab==='prizes'?'var(--teal-deep)':'rgba(255,255,255,.6)',
+      setTabOverview:()=>this.setState({accountTab:'overview'}),
+      setTabTransactions:()=>this.setState({accountTab:'transactions'}),
+      setTabPrizes:()=>this.setState({accountTab:'prizes'}),
+
+      // Order history
+      orderHistory: S.orders.map(o => ({
+        ...o,
+        idLabel:'#' + o.id,
+        dateLabel:(()=>{ try{ return new Date(o.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }catch(e){ return o.date; } })(),
+        itemSummary: o.items.map(i=>i.qty+'× '+i.name).join(', '),
+        totalLabel:'$'+o.total.toFixed(2),
+        pointsLabel:'+'+o.points+' pts'
+      })),
+      hasOrders:S.orders.length>0, noOrders:S.orders.length===0,
+
+      // Prizes
+      userPrizes: S.prizes.map(p => ({
+        ...p,
+        wonDateLabel:(()=>{ try{ return new Date(p.wonDate).toLocaleDateString('en-US',{month:'short',day:'numeric'}); }catch(e){ return p.wonDate; } })(),
+        statusLabel: p.claimed?'Claimed':'Unclaimed',
+        statusBg: p.claimed?'rgba(163,230,53,.15)':'rgba(232,181,71,.15)',
+        statusFg: p.claimed?'#A3E635':'var(--gold-glow)',
+        isUnclaimed: !p.claimed,
+        claimFn:()=>this.claimPrize(p.id)
+      })),
+      hasPrizes:S.prizes.length>0, noPrizes:S.prizes.length===0,
+
+      // Events
+      upcomingEvents: S.events.map(ev => ({
+        ...ev,
+        dateLabel:(()=>{ try{ return new Date(ev.date).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}); }catch(e){ return ev.date; } })(),
+        priceLabel: ev.price===0?'Free':'$'+ev.price,
+        rsvpLabel: ev.rsvpd?'RSVP'd ✓':'RSVP',
+        rsvpBg: ev.rsvpd?'rgba(163,230,53,.15)':'var(--gold)',
+        rsvpFg: ev.rsvpd?'#A3E635':'var(--teal-deep)',
+        isRsvpd: ev.rsvpd,
+        rsvpFn:()=>this.rsvpEvent(ev.id)
+      })),
+      hasEvents:S.events.length>0, noEvents:S.events.length===0,
+
+      // Venue slots
+      venueSlots: S.venueSlots.map(v => ({
+        ...v,
+        dateLabel:(()=>{ try{ return new Date(v.date).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}); }catch(e){ return v.date; } })(),
+        priceLabel:'$'+v.price,
+        statusLabel: v.status==='available'?'Available':'Booked',
+        statusBg: v.status==='available'?'rgba(163,230,53,.15)':'rgba(255,61,128,.15)',
+        statusFg: v.status==='available'?'#A3E635':'#FF3D80',
+        isAvail: v.status==='available',
+        inquireFn:()=>this.setState({rentalDate:v.date,rentalSent:false}),
+        toggleFn:()=>this.toggleVenueSlot(v.id)
+      })),
+
+      // Rental form
+      rentalName:S.rentalName, rentalEmail:S.rentalEmail, rentalDate:S.rentalDate, rentalNote:S.rentalNote,
+      rentalSent:S.rentalSent,
+      rentalFormReady:S.rentalName.trim().length>0&&S.rentalEmail.trim().length>0&&S.rentalDate.length>0,
+      rentalNotSent:!S.rentalSent,
+      onRentalName:(e)=>this.setState({rentalName:e.target.value}),
+      onRentalEmail:(e)=>this.setState({rentalEmail:e.target.value}),
+      onRentalDate:(e)=>this.setState({rentalDate:e.target.value}),
+      onRentalNote:(e)=>this.setState({rentalNote:e.target.value}),
+      submitRental:()=>this.submitRental(),
+
+      // Admin
+      adminSignedIn:S.adminSignedIn,
+      adminIsLogin:!S.adminSignedIn,
+      adminIsDash:S.adminSignedIn,
+      adminEmail:S.adminEmail, adminPassword:S.adminPassword, adminLoginError:S.adminLoginError,
+      onAdminEmail:(e)=>this.setState({adminEmail:e.target.value}),
+      onAdminPassword:(e)=>this.setState({adminPassword:e.target.value}),
+      doAdminSignIn:()=>this.adminSignIn(),
+      doAdminSignOut:()=>this.setState({adminSignedIn:false,adminEmail:'',adminPassword:''}),
+      adminTab:S.adminTab,
+      isAdminDash:S.adminTab==='dashboard',
+      isAdminEvents:S.adminTab==='events',
+      isAdminVenue:S.adminTab==='venue',
+      isAdminPrizes:S.adminTab==='prizes',
+      isAdminOrders:S.adminTab==='orders',
+      setAdminDash:()=>this.setState({adminTab:'dashboard'}),
+      setAdminEvents:()=>this.setState({adminTab:'events'}),
+      setAdminVenue:()=>this.setState({adminTab:'venue'}),
+      setAdminPrizes:()=>this.setState({adminTab:'prizes'}),
+      setAdminOrders:()=>this.setState({adminTab:'orders'}),
+      showAdminEventForm:S.showAdminEventForm,
+      adminEventForm:S.adminEventForm,
+      onAdminEvTitle:(e)=>this.setState(st=>({adminEventForm:{...st.adminEventForm,title:e.target.value}})),
+      onAdminEvDate:(e)=>this.setState(st=>({adminEventForm:{...st.adminEventForm,date:e.target.value}})),
+      onAdminEvTime:(e)=>this.setState(st=>({adminEventForm:{...st.adminEventForm,time:e.target.value}})),
+      onAdminEvDesc:(e)=>this.setState(st=>({adminEventForm:{...st.adminEventForm,desc:e.target.value}})),
+      onAdminEvPrice:(e)=>this.setState(st=>({adminEventForm:{...st.adminEventForm,price:e.target.value}})),
+      onAdminEvEmoji:(e)=>this.setState(st=>({adminEventForm:{...st.adminEventForm,emoji:e.target.value}})),
+      saveAdminEvent:()=>this.saveAdminEvent(),
+      cancelAdminEvent:()=>this.setState({showAdminEventForm:false}),
+      showAddEventForm:()=>this.setState({showAdminEventForm:true,adminEventForm:{title:'',date:'',time:'',desc:'',price:'0',emoji:'🥤'}}),
+      editAdminEvent:(ev)=>this.setState({showAdminEventForm:true,adminEventForm:{title:ev.title,date:ev.date,time:ev.time,desc:ev.desc,price:String(ev.price),emoji:ev.emoji}}),
+      deleteAdminEvent:(id)=>this.deleteAdminEvent(id),
+      toggleVenueSlot:(id)=>this.toggleVenueSlot(id),
+      adminOrders: S.orders.map(o=>({...o,idLabel:'#'+o.id,itemSummary:o.items.map(i=>i.qty+'× '+i.name).join(', '),totalLabel:'$'+o.total.toFixed(2)})),
+      adminPrizes: S.prizes.map(p=>({...p,statusLabel:p.claimed?'Claimed':'Unclaimed',statusBg:p.claimed?'rgba(163,230,53,.2)':'rgba(232,181,71,.2)',statusFg:p.claimed?'#A3E635':'var(--gold-glow)'})),
+      adminEvents: S.events.map(ev=>({...ev,priceLabel:ev.price===0?'Free':'$'+ev.price,deleteAdminEvent:()=>this.deleteAdminEvent(ev.id)})),
+      adminVenue: S.venueSlots.map(v=>({...v,toggleFn:()=>this.toggleVenueSlot(v.id)})),
+      adminTotalOrders:S.orders.length,
+      adminUnclaimedPrizes:S.prizes.filter(p=>!p.claimed).length,
+      adminTotalEvents:S.events.length,
 
       navItems: nav.map(n => ({
         icon:n.icon, label:n.label, go:()=>this.go(n.key),
