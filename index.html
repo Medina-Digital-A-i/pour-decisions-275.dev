@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pour Decisions — Cold-Pressed Juice · Albany NY</title>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -33,28 +34,25 @@
   .noscroll{scrollbar-width:none}
   .tap{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
   .tap:active{transform:scale(.96)}
+  html,body{margin:0;padding:0;height:100%;background:var(--teal-ink)}
+  .pd-app{width:100%;max-width:480px;margin:0 auto;min-height:100dvh;background:var(--teal-deep);position:relative;display:flex;flex-direction:column;overflow:hidden}
+  @media(min-width:480px){
+    body{display:flex;justify-content:center;align-items:flex-start}
+    .pd-app{box-shadow:0 0 80px rgba(0,0,0,.45)}
+  }
 </style>
 </helmet>
 
-<div class="pdbody" style="min-height:100vh;padding:52px 24px 80px;display:flex;flex-direction:column;align-items:center;gap:26px;">
+<div class="pdbody">
 
-  <header style="text-align:center;max-width:640px;">
-    <div style="font-family:var(--f-num);letter-spacing:.32em;font-size:13px;color:#8a7f68;">POUR DECISIONS · SPLASH · INTERACTIVE PROTOTYPE</div>
-    <h1 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:34px;letter-spacing:-.02em;color:var(--teal-deep);margin:6px 0 0;">Juice o'clock, all the way through.</h1>
-    <p style="color:#6f6650;margin:8px auto 0;font-size:14px;line-height:1.55;">Tap around — the nav, menu, cart, checkout, Pour Pass and Piña all work. Use the tabs at the bottom.</p>
-  </header>
-
-  <!-- ======================= PHONE ======================= -->
-  <div style="width:392px;height:836px;border-radius:52px;background:var(--teal-ink);padding:11px;box-shadow:0 46px 100px -34px rgba(20,50,65,.6),0 8px 24px rgba(20,50,65,.28);position:relative;flex:0 0 auto;">
-    <div class="noscroll" style="width:100%;height:100%;border-radius:41px;overflow:hidden;background:var(--teal-deep);position:relative;display:flex;flex-direction:column;">
-      <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:130px;height:30px;background:var(--teal-ink);border-radius:0 0 18px 18px;z-index:90;"></div>
+  <div class="pd-app noscroll">
 
       <!-- SCROLL AREA -->
       <div class="noscroll" style="flex:1;overflow-y:auto;overflow-x:hidden;position:relative;">
 
         <!-- ===================== AUTH ===================== -->
         <sc-if value="{{ isAuth }}" hint-placeholder-val="{{ true }}">
-        <div style="min-height:836px;display:flex;flex-direction:column;background:{{ splashGrad }};color:#fff;position:relative;overflow:hidden;animation:floatIn .35s ease both;">
+        <div style="min-height:100dvh;display:flex;flex-direction:column;background:{{ splashGrad }};color:#fff;position:relative;overflow:hidden;animation:floatIn .35s ease both;">
           <svg viewBox="0 0 240 520" style="position:absolute;right:-58px;top:64px;width:225px;height:auto;"><g fill="rgba(0,0,0,.16)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
           <svg viewBox="0 0 240 520" style="position:absolute;left:-52px;top:150px;width:135px;height:auto;transform:scaleX(-1);"><g fill="rgba(0,0,0,.11)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
           <div style="position:absolute;top:70px;left:-10px;font-size:58px;animation:bobYr 7s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.25));">🍓</div>
@@ -618,10 +616,7 @@
         </sc-for>
       </div>
       </sc-if>
-    </div>
   </div>
-
-  <p style="color:#8a7f68;font-size:12px;text-align:center;max-width:420px;">Everything's live — tabs, menu, cart math, checkout, Pour Pass and Piña. This is the Splash direction rolled across the whole app.</p>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:1000},&quot;splashTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sunset&quot;,&quot;Citrus&quot;,&quot;Berry&quot;],&quot;default&quot;:&quot;Berry&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;showFruitStickers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;menuCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Juices&quot;,&quot;Smoothies&quot;,&quot;Bowls&quot;,&quot;Shots&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Menu&quot;}}">
