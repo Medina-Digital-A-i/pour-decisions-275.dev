@@ -74,6 +74,11 @@
   .pd-hero-body{text-align:center;}
   .pd-hero-nav{position:relative;display:flex;align-items:center;}
   .pd-hero-logo{position:absolute;left:50%;transform:translateX(-50%);}
+  /* ── Site-wide consistency ──────────────────────────────── */
+  .pd-section-title{font-family:var(--f-display);font-style:italic;font-weight:900;letter-spacing:-.025em;margin:0;}
+  .pd-card-pad{padding:16px;border-radius:20px;}
+  .pd-btn-cta{font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;border:0;cursor:pointer;}
+  @media(min-width:1024px){.pd-card-pad{padding:24px;}}
   @media(min-width:768px) and (max-width:1023px){
     .pd-app{max-width:none}
     .pd-main-content-wrap{max-width:680px;margin:0 auto;width:100%}
@@ -115,17 +120,24 @@
       z-index:2;
     }
     .pd-hero-title{
-      font-size:clamp(72px,9vw,130px) !important;
-      line-height:.86 !important;
+      font-size:clamp(48px,6vw,88px) !important;
+      line-height:.9 !important;
+    }
+    .pd-hero-logo{
+      height:76px !important;
+      width:162px !important;
     }
     .pd-hero-cup{ display:none }
     /* Scale palm SVGs inside hero */
     .pd-hero .pd-palm-l{width:380px !important;left:-100px !important;bottom:-60px !important}
     .pd-hero .pd-palm-r{width:320px !important;right:-90px !important;bottom:-30px !important}
-    /* Reposition floating fruit to corners */
-    .pd-fruit-orange{font-size:160px !important;top:5% !important;right:3% !important}
-    .pd-fruit-strawberry{font-size:140px !important;top:5% !important;left:3% !important}
-    .pd-fruit-kiwi{font-size:110px !important;bottom:12% !important;left:6% !important}
+    /* Reposition floating fruit + veg to corners on desktop */
+    .pd-fruit-orange{font-size:140px !important;top:6% !important;right:3% !important}
+    .pd-fruit-strawberry{font-size:120px !important;top:6% !important;left:3% !important}
+    .pd-fruit-kiwi{font-size:90px !important;bottom:14% !important;left:5% !important}
+    .pd-veg-lemon{font-size:100px !important;bottom:10% !important;right:5% !important}
+    .pd-veg-broccoli{font-size:80px !important;top:42% !important;left:2% !important}
+    .pd-veg-carrot{font-size:75px !important;top:38% !important;right:2% !important}
   }
 </style>
 </helmet>
@@ -225,12 +237,17 @@
             <div class="pd-fruit-orange" style="position:absolute;top:98px;right:-6px;font-size:76px;animation:bobY 6s ease-in-out infinite;--r:-10deg;filter:drop-shadow(0 10px 16px rgba(0,0,0,.25));display:{{ stickerDisplay }};">🍊</div>
             <div class="pd-fruit-strawberry" style="position:absolute;top:212px;left:-10px;font-size:62px;animation:bobYr 7s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.25));display:{{ stickerDisplay }};">🍓</div>
             <div class="pd-fruit-kiwi" style="position:absolute;bottom:118px;right:40px;font-size:44px;animation:bobY 8s ease-in-out infinite;--r:12deg;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2));display:{{ stickerDisplay }};">🥝</div>
+            <div class="pd-veg-lemon" style="position:absolute;bottom:60px;left:28px;font-size:52px;animation:bobYr 10s ease-in-out infinite;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));display:{{ stickerDisplay }};">🍋</div>
+            <div class="pd-veg-broccoli" style="position:absolute;top:80px;left:18px;font-size:36px;animation:bobY 12s ease-in-out infinite;--r:8deg;filter:drop-shadow(0 6px 10px rgba(0,0,0,.16));display:{{ stickerDisplay }};">🥦</div>
+            <div class="pd-veg-carrot" style="position:absolute;top:72px;right:26px;font-size:34px;animation:bobYr 9s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(0,0,0,.16));display:{{ stickerDisplay }};">🥕</div>
+            <!-- gradient fade into navy panel below -->
+            <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to bottom,transparent,rgba(28,31,46,.55));z-index:1;pointer-events:none;"></div>
 
             <div class="pd-hero-nav" style="display:flex;align-items:center;gap:10px;position:relative;z-index:2;">
               <button onClick="{{ toggleTheme }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.22);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);">
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
               </button>
-              <img class="pd-hero-logo" src="assets/logo-clean-512.png" style="height: 53px; width: 113px; display: block; filter: drop-shadow(0 3px 10px rgba(0,0,0,.35))" alt="Pour Decisions">
+              <img class="pd-hero-logo" src="assets/logo-clean-512.png" style="height:64px;width:136px;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.38))" alt="Pour Decisions">
               <span style="margin-left:auto;display:flex;gap:8px;">
                 <button onClick="{{ goNotif }}" class="tap" style="position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.22);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -259,7 +276,7 @@
             </div>
           </div>
 
-          <div style="background:var(--navy);border-radius:32px 32px 0 0;margin-top:-26px;position:relative;z-index:3;padding:26px 0 0;">
+          <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:28px 0 0;">
             <div class="noscroll" style="display:flex;gap:9px;overflow-x:auto;padding:0 18px 6px;">
               <sc-for list="{{ homeChips }}" as="c" hint-placeholder-count="4">
                 <span onClick="{{ c.go }}" class="tap" style="flex:0 0 auto;background:{{ c.bg }};color:{{ c.fg }};font-weight:{{ c.fw }};font-size:13px;padding:10px 18px;border-radius:99px;display:inline-flex;align-items:center;gap:6px;">{{ c.label }}</span>
