@@ -1739,7 +1739,7 @@ class Component extends DCLogic {
         ...ev,
         dateLabel:(()=>{ try{ return new Date(ev.date).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}); }catch(e){ return ev.date; } })(),
         priceLabel: ev.price===0?'Free':'$'+ev.price,
-        rsvpLabel: ev.rsvpd?'RSVP'd ✓':'RSVP',
+        rsvpLabel: ev.rsvpd?"RSVP'd ✓":'RSVP',
         rsvpBg: ev.rsvpd?'rgba(163,230,53,.15)':'var(--gold)',
         rsvpFg: ev.rsvpd?'#A3E635':'var(--teal-deep)',
         isRsvpd: ev.rsvpd,
