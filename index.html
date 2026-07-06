@@ -58,10 +58,21 @@
   .tap{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
   .tap:active{transform:scale(.96)}
   html,body{margin:0;padding:0;height:100%;background:var(--teal-ink)}
-  .pd-app{width:100%;max-width:480px;margin:0 auto;min-height:100dvh;background:var(--teal-deep);position:relative;display:flex;flex-direction:column;overflow:hidden}
-  @media(min-width:480px){
-    body{display:flex;justify-content:center;align-items:flex-start}
-    .pd-app{box-shadow:0 0 80px rgba(0,0,0,.45)}
+  .pd-app{width:100%;min-height:100dvh;background:var(--teal-deep);position:relative;display:flex;flex-direction:column;overflow:hidden}
+  .pd-sidebar{display:none}
+  .pd-bottom-nav-wrap{position:relative;z-index:85}
+  @media(min-width:768px) and (max-width:1023px){
+    .pd-app{max-width:none}
+    .pd-main-content-wrap{max-width:680px;margin:0 auto;width:100%}
+  }
+  @media(min-width:1024px){
+    body{display:flex;background:var(--teal-ink)}
+    .pd-app{flex-direction:row;max-width:none;width:100vw;height:100dvh;overflow:hidden}
+    .pd-sidebar{display:flex !important;flex-direction:column;width:220px;flex:0 0 220px;background:var(--teal-deep);height:100dvh;position:sticky;top:0;border-right:1px solid rgba(255,255,255,.08);z-index:50;overflow-y:auto}
+    .pd-bottom-nav-wrap{display:none !important}
+    .pd-main-scroll{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;height:100dvh}
+    .pd-pina-fab{position:fixed !important;right:24px !important;bottom:24px !important}
+    .menu-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
   }
 </style>
 </helmet>
@@ -69,6 +80,39 @@
 <div class="pdbody">
 
   <div class="pd-app noscroll">
+
+      <!-- SIDEBAR — hidden on mobile via CSS -->
+      <aside class="pd-sidebar">
+        <!-- Logo -->
+        <div style="padding:28px 20px 20px;border-bottom:1px solid rgba(255,255,255,.08);">
+          <img src="assets/logo-clean-512.png" style="height:44px;width:auto;" alt="Pour Decisions">
+          <div style="font-size:11px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-top:6px;">275 Lark St · Albany NY</div>
+        </div>
+        <!-- Nav items (vertical) -->
+        <nav style="flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:4px;">
+          <sc-for list="{{ sidebarNav }}" as="sn">
+            <button onClick="{{ sn.go }}" class="tap" style="display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:14px;border:0;background:{{ sn.activeBg }};color:{{ sn.color }};font-weight:{{ sn.weight }};font-size:14px;text-align:left;width:100%;cursor:pointer;">
+              <span style="font-size:20px;width:26px;text-align:center;">{{ sn.icon }}</span>
+              <span style="flex:1;">{{ sn.label }}</span>
+            </button>
+          </sc-for>
+        </nav>
+        <!-- User info at bottom -->
+        <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:16px;border-top:1px solid rgba(255,255,255,.08);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:grid;place-items:center;font-weight:900;color:var(--teal-deep);font-size:15px;">{{ userInitial }}</div>
+            <div>
+              <div style="font-weight:700;color:#fff;font-size:13px;">{{ userName }}</div>
+              <div style="font-size:11px;color:var(--gold-glow);">{{ points }} pts</div>
+            </div>
+          </div>
+        </div>
+        </sc-if>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <div class="pd-main-scroll noscroll" style="flex:1;overflow-y:auto;overflow-x:hidden;position:relative;">
 
       <!-- SCROLL AREA -->
       <div class="noscroll" style="flex:1;overflow-y:auto;overflow-x:hidden;position:relative;">
@@ -188,6 +232,20 @@
               </div>
             </div>
 
+            <sc-if value="{{ showInstallBanner }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:20px 16px 0;background:linear-gradient(135deg,rgba(14,84,84,.9),rgba(10,61,61,.95));border:1px solid rgba(232,181,71,.3);border-radius:20px;padding:16px;display:flex;gap:14px;align-items:center;">
+              <div style="font-size:36px;flex:0 0 auto;">📲</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:800;color:#fff;font-size:14px;margin-bottom:3px;">Add to Home Screen</div>
+                <div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.4;">Save Pour Decisions for quick ordering — no browser needed.</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;flex:0 0 auto;">
+                <button onClick="{{ doInstall }}" class="tap" style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:12px;padding:8px 14px;border-radius:99px;border:0;white-space:nowrap;">Install</button>
+                <button onClick="{{ dismissInstall }}" class="tap" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-weight:600;font-size:11px;padding:6px 10px;border-radius:99px;border:0;white-space:nowrap;">Not now</button>
+              </div>
+            </div>
+            </sc-if>
+
             <div onClick="{{ goWheel }}" class="tap" style="margin:20px 16px 0;border-radius:26px;padding:22px;background:linear-gradient(135deg,#FF6B35,#FF3D80 55%,#7C3AED);color:#fff;position:relative;overflow:hidden;box-shadow:0 16px 34px rgba(255,61,128,.35);display:flex;align-items:center;gap:16px;">
               <div style="position:absolute;top:-16px;right:-10px;font-size:96px;opacity:.25;">🎡</div>
               <div style="flex:0 0 auto;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:34px;backdrop-filter:blur(4px);">🎡</div>
@@ -207,6 +265,19 @@
                 <span style="flex:{{ passEmpty }};height:9px;border-radius:99px;background:rgba(20,50,65,.25);"></span>
               </div>
             </div>
+            <sc-if value="{{ showSignInCta }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:16px 16px 0;" onClick="{{ goAuth }}" class="tap">
+              <div style="background:linear-gradient(135deg,rgba(232,181,71,.18),rgba(232,181,71,.06));border:1px solid rgba(232,181,71,.35);border-radius:22px;padding:18px 20px;display:flex;align-items:center;gap:14px;">
+                <div style="font-size:38px;flex:0 0 auto;">🥤</div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-weight:800;color:var(--gold-glow);font-size:15px;margin-bottom:4px;">Unlock Pour Pass Rewards</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.4;">Sign in to earn points, spin the wheel &amp; compete for monthly prizes.</div>
+                </div>
+                <button style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:13px;padding:10px 16px;border-radius:99px;border:0;flex:0 0 auto;white-space:nowrap;">Sign In</button>
+              </div>
+            </div>
+            </sc-if>
+
             <div style="height:118px;"></div>
           </div>
         </div>
@@ -227,21 +298,51 @@
               </sc-for>
             </div>
           </div>
-          <div style="padding:18px 16px 0;display:flex;flex-direction:column;gap:14px;">
-            <sc-for list="{{ menu }}" as="it" hint-placeholder-count="6">
-              <div onClick="{{ it.open }}" class="tap" style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:12px;">
-                <div style="flex:0 0 78px;width:78px;height:78px;border-radius:18px;background:{{ it.grad }};display:grid;place-items:center;font-size:40px;box-shadow:0 8px 18px {{ it.shadow }};">{{ it.emoji }}</div>
-                <div style="flex:1;min-width:0;">
-                  <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-glow);">{{ it.cat }}</span><span style="font-size:11px;color:rgba(255,255,255,.5);font-weight:600;">{{ it.calLabel }}</span></div>
-                  <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:20px;color:#fff;line-height:1.05;margin-top:2px;">{{ it.name }}</div>
-                  <div style="font-size:11.5px;color:rgba(255,255,255,.6);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ it.ingredients }}</div>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-                  <span style="font-family:var(--f-num);font-size:26px;color:var(--gold-glow);line-height:1;">{{ it.priceLabel }}</span>
-                  <button onClick="{{ it.add }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:22px;font-weight:800;display:grid;place-items:center;line-height:1;box-shadow:0 6px 14px rgba(232,181,71,.4);">+</button>
-                </div>
+          <div style="padding:18px 16px 0;" class="menu-columns">
+            <!-- DRINKS SECTION -->
+            <div>
+              <sc-if value="{{ hasDrinkItems }}" hint-placeholder-val="{{ true }}">
+              <div style="font-family:var(--f-num);letter-spacing:.14em;font-size:12px;color:var(--gold-glow);margin-bottom:12px;">🥤 DRINKS</div>
+              <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
+                <sc-for list="{{ menuDrinks }}" as="it" hint-placeholder-count="4">
+                  <div onClick="{{ it.open }}" class="tap" style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:12px;">
+                    <div style="flex:0 0 78px;width:78px;height:78px;border-radius:18px;background:{{ it.grad }};display:grid;place-items:center;font-size:40px;box-shadow:0 8px 18px {{ it.shadow }};">{{ it.emoji }}</div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-glow);">{{ it.cat }}</span><span style="font-size:11px;color:rgba(255,255,255,.5);font-weight:600;">{{ it.calLabel }}</span></div>
+                      <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:20px;color:#fff;line-height:1.05;margin-top:2px;">{{ it.name }}</div>
+                      <div style="font-size:11.5px;color:rgba(255,255,255,.6);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ it.ingredients }}</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                      <span style="font-family:var(--f-num);font-size:26px;color:var(--gold-glow);line-height:1;">{{ it.priceLabel }}</span>
+                      <button onClick="{{ it.add }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:22px;font-weight:800;display:grid;place-items:center;line-height:1;box-shadow:0 6px 14px rgba(232,181,71,.4);">+</button>
+                    </div>
+                  </div>
+                </sc-for>
               </div>
-            </sc-for>
+              </sc-if>
+            </div>
+            <!-- FOOD SECTION -->
+            <div>
+              <sc-if value="{{ hasFoodItems }}" hint-placeholder-val="{{ false }}">
+              <div style="font-family:var(--f-num);letter-spacing:.14em;font-size:12px;color:var(--gold-glow);margin-bottom:12px;">🍽️ FOOD</div>
+              <div style="display:flex;flex-direction:column;gap:14px;">
+                <sc-for list="{{ menuFood }}" as="it" hint-placeholder-count="2">
+                  <div onClick="{{ it.open }}" class="tap" style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:12px;">
+                    <div style="flex:0 0 78px;width:78px;height:78px;border-radius:18px;background:{{ it.grad }};display:grid;place-items:center;font-size:40px;box-shadow:0 8px 18px {{ it.shadow }};">{{ it.emoji }}</div>
+                    <div style="flex:1;min-width:0;">
+                      <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-glow);">{{ it.cat }}</span><span style="font-size:11px;color:rgba(255,255,255,.5);font-weight:600;">{{ it.calLabel }}</span></div>
+                      <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:20px;color:#fff;line-height:1.05;margin-top:2px;">{{ it.name }}</div>
+                      <div style="font-size:11.5px;color:rgba(255,255,255,.6);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ it.ingredients }}</div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                      <span style="font-family:var(--f-num);font-size:26px;color:var(--gold-glow);line-height:1;">{{ it.priceLabel }}</span>
+                      <button onClick="{{ it.add }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:22px;font-weight:800;display:grid;place-items:center;line-height:1;box-shadow:0 6px 14px rgba(232,181,71,.4);">+</button>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+            </div>
           </div>
         </div>
         </sc-if>
@@ -628,15 +729,17 @@
             <!-- rim -->
             <div style="position:absolute;inset:0;border-radius:50%;background:var(--cream);box-shadow:0 20px 50px rgba(0,0,0,.35),inset 0 0 0 6px rgba(18,48,60,.15);padding:12px;">
               <!-- rotating wheel -->
-              <div style="position:relative;width:100%;height:100%;border-radius:50%;transition:transform 4.2s cubic-bezier(.16,.84,.3,1);transform:{{ wheelTransform }};background:conic-gradient(from -22.5deg,#84CC16 0deg 45deg,#FF3D80 45deg 90deg,#FF8A3D 90deg 135deg,#FFC64D 135deg 180deg,#7C3AED 180deg 225deg,#FF7A8A 225deg 270deg,#6D28D9 270deg 315deg,#E8B547 315deg 360deg);box-shadow:inset 0 0 0 3px rgba(255,255,255,.5);">
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(0deg) translateY(-96px);font-size:32px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🥬</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(45deg) translateY(-96px);font-size:32px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍓</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(90deg) translateY(-96px);font-size:32px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍊</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(135deg) translateY(-96px);font-size:32px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🥭</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(180deg) translateY(-96px);font-size:32px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🫐</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(225deg) translateY(-96px);font-size:32px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍉</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(270deg) translateY(-96px);font-size:32px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍇</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(315deg) translateY(-96px);font-size:32px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🫚</div>
+              <div style="position:relative;width:100%;height:100%;border-radius:50%;transition:transform 4.2s cubic-bezier(.16,.84,.3,1);transform:{{ wheelTransform }};background:conic-gradient(from -18deg,#84CC16 0deg 36deg,#FF3D80 36deg 72deg,#555 72deg 108deg,#FF8A3D 108deg 144deg,#FFC64D 144deg 180deg,#7C3AED 180deg 216deg,#FF7A8A 216deg 252deg,#555 252deg 288deg,#6D28D9 288deg 324deg,#E8B547 324deg 360deg);box-shadow:inset 0 0 0 3px rgba(255,255,255,.5);">
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(0deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🥬</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(36deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍓</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(72deg) translateY(-96px);font-size:24px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">😔</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(108deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍊</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(144deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🥭</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(180deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🫐</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(216deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍉</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(252deg) translateY(-96px);font-size:24px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">😔</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(288deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍇</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(324deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🫚</div>
               </div>
             </div>
             <!-- center hub -->
@@ -648,8 +751,8 @@
             <p style="color:rgba(255,255,255,.82);font-size:12px;font-weight:600;margin:14px 0 0;">1 free spin every day · come back tomorrow for more</p>
           </div>
 
-          <!-- WIN OVERLAY -->
-          <sc-if value="{{ won }}" hint-placeholder-val="{{ false }}">
+          <!-- WIN OVERLAY: Signed-in + won a prize -->
+          <sc-if value="{{ showWinClaim }}" hint-placeholder-val="{{ false }}">
           <div style="position:absolute;inset:0;z-index:20;background:rgba(9,22,28,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:30px;animation:floatIn .3s ease both;">
             <div style="width:100%;max-width:320px;background:var(--teal-deep);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;position:relative;overflow:hidden;">
               <div style="position:absolute;top:-30px;left:-10px;font-size:50px;opacity:.5;">🎉</div>
@@ -660,6 +763,35 @@
               <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">A free {{ wonItem.cat }}, on us 🍹</div>
               <button onClick="{{ claimFree }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;margin-top:22px;box-shadow:0 10px 24px rgba(232,181,71,.4);">Claim it free →</button>
               <div onClick="{{ dismissWin }}" class="tap" style="color:rgba(255,255,255,.6);font-weight:700;font-size:13px;margin-top:14px;">Maybe later</div>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- WIN OVERLAY: Not signed in + won — prompt to sign in -->
+          <sc-if value="{{ showWinSignInPrompt }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;z-index:20;background:rgba(9,22,28,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:30px;animation:floatIn .3s ease both;">
+            <div style="width:100%;max-width:320px;background:var(--teal-deep);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;position:relative;overflow:hidden;">
+              <div style="position:absolute;top:-30px;left:-10px;font-size:50px;opacity:.5;">🎉</div>
+              <div style="position:absolute;top:-24px;right:-6px;font-size:44px;opacity:.5;">✨</div>
+              <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:{{ wonItem.grad }};display:grid;place-items:center;font-size:60px;box-shadow:0 14px 30px rgba(0,0,0,.3);">{{ wonItem.emoji }}</div>
+              <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:14px;color:var(--gold-glow);margin-top:18px;">YOU WON!</div>
+              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;line-height:1;margin-top:4px;">{{ wonItem.name }}</div>
+              <div style="font-size:13px;color:rgba(255,255,255,.75);font-weight:600;margin-top:10px;line-height:1.5;">Sign in to claim your prize and compete for monthly rewards!</div>
+              <button onClick="{{ signInFromWheel }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;margin-top:22px;box-shadow:0 10px 24px rgba(232,181,71,.4);">Sign in to claim →</button>
+              <div onClick="{{ dismissWin }}" class="tap" style="color:rgba(255,255,255,.6);font-weight:700;font-size:13px;margin-top:14px;">Maybe later</div>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- LOSE OVERLAY -->
+          <sc-if value="{{ showLoseResult }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;z-index:20;background:rgba(9,22,28,.72);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:30px;animation:floatIn .3s ease both;">
+            <div style="width:100%;max-width:320px;background:var(--teal-deep);border-radius:30px;padding:30px 26px;text-align:center;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 70px rgba(0,0,0,.5);animation:popIn .4s ease both;">
+              <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:60px;">😔</div>
+              <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:14px;color:rgba(255,255,255,.5);margin-top:18px;">BETTER LUCK NEXT TIME</div>
+              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;line-height:1;margin-top:4px;">Try again!</div>
+              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">Spin again tomorrow for another chance 🍹</div>
+              <button onClick="{{ dismissLose }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;margin-top:22px;">OK, I'll be back!</button>
             </div>
           </div>
           </sc-if>
@@ -710,12 +842,48 @@
         <sc-if value="{{ isEvents }}" hint-placeholder-val="{{ false }}">
         <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
           <div style="padding:44px 20px 24px;background:linear-gradient(160deg,#22D3EE 0%,#0EA5C4 42%,#0E7490 100%);color:#fff;position:relative;overflow:hidden;">
+            <svg viewBox="0 0 240 520" style="position:absolute;right:-54px;top:10px;width:180px;height:auto;"><g fill="rgba(0,0,0,.12)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
             <div style="position:absolute;bottom:-20px;right:-14px;font-size:120px;opacity:.2;">📅</div>
             <div style="position:relative;z-index:2;margin-bottom:14px;"><img src="assets/logo-clean-512.png" style="height:32px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions"></div>
             <div style="font-family:var(--f-num);letter-spacing:.22em;font-size:13px;color:rgba(255,255,255,.85);">EVENTS &amp; CLASSES</div>
             <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:36px;line-height:.92;margin:8px 0 0;letter-spacing:-.03em;">What's on<br>this month</h2>
           </div>
-          <div style="padding:20px 16px 0;">
+
+          <!-- View toggle -->
+          <div style="display:flex;gap:8px;margin:18px 16px 0;">
+            <button onClick="{{ setEventsListView }}" class="tap" style="flex:1;padding:10px;border-radius:99px;border:0;background:{{ eventsListViewBg }};color:{{ eventsListViewFg }};font-weight:800;font-size:13px;cursor:pointer;">☰ List</button>
+            <button onClick="{{ setEventsCalView }}" class="tap" style="flex:1;padding:10px;border-radius:99px;border:0;background:{{ eventsCalViewBg }};color:{{ eventsCalViewFg }};font-weight:800;font-size:13px;cursor:pointer;">📅 Calendar</button>
+          </div>
+
+          <!-- Calendar view -->
+          <sc-if value="{{ isEventsCalView }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:16px 16px 0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;">
+            <div style="text-align:center;font-weight:800;color:#fff;font-size:16px;margin-bottom:14px;">{{ calendarMonthLabel }}</div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;">
+              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">S</div>
+              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">M</div>
+              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">T</div>
+              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">W</div>
+              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">T</div>
+              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">F</div>
+              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">S</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">
+              <sc-for list="{{ calendarDays }}" as="cd">
+                <div style="text-align:center;padding:6px 2px;border-radius:10px;position:relative;background:{{ cd.hasEvent ? 'rgba(232,181,71,.15)' : 'transparent' }};">
+                  <span style="font-size:13px;font-weight:{{ cd.isToday ? 800 : 500 }};color:{{ cd.isToday ? 'var(--gold)' : cd.empty ? 'transparent' : 'rgba(255,255,255,.75)' }};">{{ cd.label }}</span>
+                  <sc-if value="{{ cd.hasEvent }}" hint-placeholder-val="{{ false }}">
+                    <div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin:2px auto 0;"></div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- List view -->
+          <sc-if value="{{ isEventsListView }}" hint-placeholder-val="{{ true }}">
+          <div style="padding:16px 16px 0;">
             <div style="font-family:var(--f-num);letter-spacing:.16em;font-size:13px;color:var(--gold-glow);margin-bottom:12px;">UPCOMING EVENTS</div>
             <sc-if value="{{ hasEvents }}" hint-placeholder-val="{{ true }}">
             <div style="display:flex;flex-direction:column;gap:14px;">
@@ -783,6 +951,7 @@
               </div>
             </div>
           </div>
+          </sc-if><!-- end isEventsListView -->
         </div>
         </sc-if>
 
@@ -978,13 +1147,16 @@
 
       <!-- Floating Piña button -->
       <sc-if value="{{ showPinaFab }}" hint-placeholder-val="{{ true }}">
-      <button onClick="{{ goPina }}" class="tap" style="position:absolute;right:14px;bottom:92px;z-index:80;display:flex;align-items:center;gap:8px;background:var(--cream);border:0;border-radius:999px;padding:7px 15px 7px 7px;box-shadow:0 10px 26px rgba(14,32,41,.38),0 2px 8px rgba(14,32,41,.18);">
+      <button onClick="{{ goPina }}" class="tap pd-pina-fab" style="position:absolute;right:14px;bottom:92px;z-index:80;display:flex;align-items:center;gap:8px;background:var(--cream);border:0;border-radius:999px;padding:7px 15px 7px 7px;box-shadow:0 10px 26px rgba(14,32,41,.38),0 2px 8px rgba(14,32,41,.18);">
         <span style="position:relative;width:32px;height:32px;border-radius:50%;background:var(--teal-deep);display:grid;place-items:center;font-size:16px;">🍍<span style="position:absolute;bottom:0;right:-1px;width:9px;height:9px;border-radius:50%;background:var(--lime);border:2px solid var(--cream);"></span></span>
         <span style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:15px;color:var(--teal-deep);letter-spacing:-.01em;">Ask Piña</span>
       </button>
       </sc-if>
 
-      <!-- BOTTOM NAV -->
+      </div><!-- end pd-main-scroll -->
+
+      <!-- BOTTOM NAV — hidden on desktop via CSS -->
+      <div class="pd-bottom-nav-wrap">
       <sc-if value="{{ showNav }}" hint-placeholder-val="{{ false }}">
       <div style="position:relative;z-index:85;display:grid;grid-template-columns:repeat(5,1fr);padding:10px 8px 22px;background:rgba(14,32,41,.92);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.08);">
         <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="5">
@@ -994,6 +1166,7 @@
         </sc-for>
       </div>
       </sc-if>
+      </div><!-- end pd-bottom-nav-wrap -->
   </div>
 </div>
 </x-dc>
@@ -1055,7 +1228,12 @@ class Component extends DCLogic {
       adminTab: 'dashboard',
       showAdminEventForm: false,
       adminEventForm: { title:'', date:'', time:'', desc:'', price:'0', emoji:'🥤' },
-      selectedPayment: 0
+      selectedPayment: 0,
+      installPrompt: null,
+      showInstallBanner: false,
+      installDismissed: ls('pd_install_dismissed', false),
+      eventsView: 'list',
+      monthlySpins: ls('pd_monthly_spins', [])
     };
   })();
 
@@ -1179,7 +1357,7 @@ class Component extends DCLogic {
   ];
 
   CATS = ['All','Juices','Smoothies','Shots','Bowls','Breakfast','Eats','Salads & Soup','Coffee & Tea'];
-  WHEEL = ['green','berry','citrus','tropic','purple','melon','acai','ginger'];
+  WHEEL = ['green','berry','lose','citrus','tropic','purple','melon','lose','acai','ginger'];
 
   _ls(k, d){ try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : d; } catch(e) { return d; } }
   _sv(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
@@ -1363,7 +1541,15 @@ class Component extends DCLogic {
     const delta = (desired - mod + 360) % 360;
     const rotation = cur + 360 * 5 + delta;
     this.setState({ spinning: true, wonId: null, rotation });
-    setTimeout(() => this.setState({ spinning: false, wonId: this.WHEEL[winner] }), 4300);
+    setTimeout(() => {
+      const wonId = this.WHEEL[winner];
+      const spinRecord = { date: new Date().toISOString(), result: wonId === 'lose' ? 'lose' : 'win', wonId };
+      this.setState(s => {
+        const monthlySpins = [...(s.monthlySpins || []), spinRecord];
+        this._sv('pd_monthly_spins', monthlySpins);
+        return { spinning: false, wonId, monthlySpins };
+      });
+    }, 4300);
   }
 
   botReply(q){
@@ -1547,7 +1733,7 @@ class Component extends DCLogic {
       isWheel:S.screen==='wheel',
       isAuth:S.screen==='auth', showNav:!['auth','admin'].includes(S.screen),
       showPinaFab: !['pina','confirm','wheel','cart','checkout','auth','prizes','admin'].includes(S.screen),
-      userName:S.user.name, userInitial:S.user.initial, userEmail:S.user.email,
+      userEmail:S.user ? (S.user.email || '') : '',
       authMode:S.authMode, authModeIn:S.authMode==='in', authModeUp:S.authMode==='up',
       authTitle:S.authMode==='in'?'Welcome back':'Join the club',
       authSub:S.authMode==='in'?'Sign in to reorder, earn points and spin the wheel.':'Create an account to save your pours, points and payment.',
@@ -1569,7 +1755,7 @@ class Component extends DCLogic {
       spinning:S.spinning, spin:()=>this.spin(),
       spinLabel: S.spinning ? '···' : 'SPIN',
       won: !!S.wonId && S.screen==='wheel',
-      wonItem: (()=>{ const w=this.MENU.find(m=>m.id===S.wonId)||this.MENU[0]; return { name:w.name, emoji:w.emoji, cat:w.cat, grad:w.grad }; })(),
+      wonItem: (()=>{ const wId = (S.wonId && S.wonId !== 'lose') ? S.wonId : null; const w = wId ? (this.MENU.find(m=>m.id===wId)||this.MENU[0]) : this.MENU[0]; return { name:w.name, emoji:w.emoji, cat:w.cat, grad:w.grad }; })(),
       claimFree:()=>{
         const w=this.MENU.find(m=>m.id===S.wonId);
         if(w){ this.addToCart(w,1,true); }
@@ -1817,10 +2003,96 @@ class Component extends DCLogic {
         icon:n.icon, label:n.label, go:()=>this.go(n.key),
         color: activeTab===n.key ? 'var(--gold)' : 'rgba(255,255,255,.5)',
         weight: activeTab===n.key ? 800 : 700
-      }))
+      })),
+
+      // Desktop sidebar nav
+      sidebarNav: nav.map(n => ({
+        icon: n.icon, label: n.label, go: ()=>this.go(n.key),
+        activeBg: activeTab===n.key ? 'rgba(232,181,71,.15)' : 'transparent',
+        color: activeTab===n.key ? 'var(--gold)' : 'rgba(255,255,255,.65)',
+        weight: activeTab===n.key ? 800 : 600
+      })),
+      userInitial: S.user ? (S.user.initial || (S.user.name ? S.user.name[0].toUpperCase() : 'G')) : 'G',
+      userName: S.user ? (S.user.name || 'Guest') : 'Guest',
+      signedIn: S.signedIn,
+
+      // PWA install banner
+      showInstallBanner: S.showInstallBanner && !S.installDismissed,
+      doInstall: () => {
+        if (S.installPrompt) {
+          S.installPrompt.prompt();
+          S.installPrompt.userChoice.then(() => this.setState({ showInstallBanner: false, installPrompt: null }));
+        }
+      },
+      dismissInstall: () => {
+        this._sv('pd_install_dismissed', true);
+        this.setState({ showInstallBanner: false, installDismissed: true });
+      },
+
+      // Sign-in CTA
+      showSignInCta: !S.signedIn,
+      goAuth: () => this.go('auth'),
+
+      // Wheel — win/lose states
+      showWinClaim: S.signedIn && !!S.wonId && S.wonId !== 'lose' && S.screen === 'wheel',
+      showWinSignInPrompt: !S.signedIn && !!S.wonId && S.wonId !== 'lose' && S.screen === 'wheel',
+      showLoseResult: S.wonId === 'lose' && S.screen === 'wheel',
+      isLoseResult: S.wonId === 'lose',
+      isWinResult: !!S.wonId && S.wonId !== 'lose',
+      dismissLose: () => this.setState({ wonId: null }),
+      signInFromWheel: () => { this.setState({ wonId: null }); this.go('auth'); },
+      wonName: S.wonId && S.wonId !== 'lose' ? ((this.MENU.find(m=>m.id===S.wonId)||{name:'a prize'}).name) : '',
+      wonEmoji: S.wonId && S.wonId !== 'lose' ? ((this.MENU.find(m=>m.id===S.wonId)||{emoji:'🎁'}).emoji) : '😔',
+
+      // Events calendar
+      eventsView: S.eventsView || 'list',
+      isEventsListView: (S.eventsView || 'list') === 'list',
+      isEventsCalView: S.eventsView === 'calendar',
+      setEventsListView: () => this.setState({ eventsView: 'list' }),
+      setEventsCalView: () => this.setState({ eventsView: 'calendar' }),
+      eventsListViewBg: (S.eventsView||'list')==='list' ? 'var(--gold)' : 'rgba(255,255,255,.1)',
+      eventsListViewFg: (S.eventsView||'list')==='list' ? 'var(--teal-deep)' : '#fff',
+      eventsCalViewBg: S.eventsView==='calendar' ? 'var(--gold)' : 'rgba(255,255,255,.1)',
+      eventsCalViewFg: S.eventsView==='calendar' ? 'var(--teal-deep)' : '#fff',
+      calendarMonthLabel: (()=>{ try{ return new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'}); }catch(e){ return ''; } })(),
+      calendarDays: (()=>{
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth();
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month+1, 0).getDate();
+        const eventDates = new Set((S.events||[]).map(ev => ev.date));
+        const days = [];
+        for (let i = 0; i < firstDay; i++) days.push({ label:'', empty:true, hasEvent:false, isToday:false });
+        for (let d = 1; d <= daysInMonth; d++) {
+          const dateStr = year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+          days.push({ label:String(d), empty:false, hasEvent:eventDates.has(dateStr), isToday:d===now.getDate() });
+        }
+        return days;
+      })(),
+
+      // Menu drinks/food split
+      menuDrinks: menu.filter(m => ['Juices','Smoothies','Shots','Coffee & Tea','Bowls'].includes(m.kind)),
+      menuFood: menu.filter(m => ['Breakfast','Eats','Salads & Soup'].includes(m.kind)),
+      hasDrinkItems: menu.some(m => ['Juices','Smoothies','Shots','Coffee & Tea','Bowls'].includes(m.kind)),
+      hasFoodItems: menu.some(m => ['Breakfast','Eats','Salads & Soup'].includes(m.kind))
     };
   }
 }
+</script>
+<script>
+// PWA install prompt handler
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  var dismissed = false;
+  try { dismissed = JSON.parse(localStorage.getItem('pd_install_dismissed') || 'false'); } catch(err) {}
+  if (!dismissed) {
+    setTimeout(function() {
+      var comp = document.querySelector('x-dc') && document.querySelector('x-dc').__dcInstance;
+      if (comp) comp.setState({ installPrompt: e, showInstallBanner: true });
+    }, 3000);
+  }
+});
 </script>
 </body>
 </html>
