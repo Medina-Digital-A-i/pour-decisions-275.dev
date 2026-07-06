@@ -56,7 +56,19 @@
   }
   *{box-sizing:border-box}
   .pdbody{margin:0;background:#EBE3D2;font-family:var(--f-body);color:var(--ink);-webkit-font-smoothing:antialiased}
-  @keyframes bobY{50%{transform:translateY(-9px) rotate(var(--r,0deg))}}
+  /* ── Piña Chat Modal ───────────────────────── */
+  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .pd-pina-backdrop{position:fixed;inset:0;z-index:220;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);display:flex;flex-direction:column;justify-content:flex-end;}
+  .pd-pina-sheet{background:var(--navy);border-radius:24px 24px 0 0;display:flex;flex-direction:column;max-height:88dvh;animation:slideUp .32s cubic-bezier(.22,.68,0,1.2) both;}
+  @media(min-width:768px){.pd-pina-backdrop{justify-content:center;align-items:center;}.pd-pina-sheet{border-radius:24px;max-height:80dvh;width:440px;animation:popIn .25s ease both;}}
+  /* ── Bigger floaters ─────────────────────── */
+  .pd-floater-xl{font-size:110px !important;filter:drop-shadow(0 14px 24px rgba(0,0,0,.28)) !important;}
+  .pd-floater-lg{font-size:88px !important;filter:drop-shadow(0 12px 20px rgba(0,0,0,.24)) !important;}
+  @media(min-width:1024px){
+    .pd-floater-xl{font-size:160px !important;}
+    .pd-floater-lg{font-size:130px !important;}
+  }
+    @keyframes bobY{50%{transform:translateY(-9px) rotate(var(--r,0deg))}}
   @keyframes bobYr{50%{transform:translateY(-7px) rotate(-6deg)}}
   @keyframes wobble{50%{transform:translateY(3px) scaleX(1.06)}}
   @keyframes pulseDot{50%{transform:scale(1.5)}}
@@ -233,14 +245,17 @@
         <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
         <div style="animation:floatIn .35s ease both;">
           <div class="pd-hero" style="position:relative;min-height:428px;overflow:hidden;padding:44px 20px 34px;color:#fff;background:{{ splashGrad }};">
-            <svg class="pd-palm-l" viewBox="0 0 240 520" style="position:absolute;left:-48px;bottom:-36px;width:215px;height:auto;"><g fill="rgba(0,0,0,.16)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
-            <svg class="pd-palm-r" viewBox="0 0 240 520" style="position:absolute;right:-58px;bottom:-16px;width:150px;height:auto;transform:scaleX(-1);"><g fill="rgba(0,0,0,.11)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
-            <div class="pd-fruit-orange" style="position:absolute;top:98px;right:-6px;font-size:76px;animation:bobY 6s ease-in-out infinite;--r:-10deg;filter:drop-shadow(0 10px 16px rgba(0,0,0,.25));display:{{ stickerDisplay }};">🍊</div>
-            <div class="pd-fruit-strawberry" style="position:absolute;top:212px;left:-10px;font-size:62px;animation:bobYr 7s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.25));display:{{ stickerDisplay }};">🍓</div>
-            <div class="pd-fruit-kiwi" style="position:absolute;bottom:118px;right:40px;font-size:44px;animation:bobY 8s ease-in-out infinite;--r:12deg;filter:drop-shadow(0 8px 12px rgba(0,0,0,.2));display:{{ stickerDisplay }};">🥝</div>
-            <div class="pd-veg-lemon" style="position:absolute;bottom:60px;left:28px;font-size:52px;animation:bobYr 10s ease-in-out infinite;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));display:{{ stickerDisplay }};">🍋</div>
-            <div class="pd-veg-broccoli" style="position:absolute;top:80px;left:18px;font-size:36px;animation:bobY 12s ease-in-out infinite;--r:8deg;filter:drop-shadow(0 6px 10px rgba(0,0,0,.16));display:{{ stickerDisplay }};">🥦</div>
-            <div class="pd-veg-carrot" style="position:absolute;top:72px;right:26px;font-size:34px;animation:bobYr 9s ease-in-out infinite;filter:drop-shadow(0 6px 10px rgba(0,0,0,.16));display:{{ stickerDisplay }};">🥕</div>
+            <svg class="pd-palm-l" viewBox="0 0 240 520" style="position:absolute;left:-48px;bottom:-36px;width:215px;height:auto;pointer-events:none;"><g fill="rgba(0,0,0,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg style="position:absolute;left:37%;bottom:-50px;width:170px;height:auto;transform:scaleX(-1);pointer-events:none;" viewBox="0 0 240 520"><g fill="rgba(0,0,0,.17)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg class="pd-palm-r" viewBox="0 0 240 520" style="position:absolute;right:-58px;bottom:-16px;width:150px;height:auto;transform:scaleX(-1);pointer-events:none;"><g fill="rgba(0,0,0,.15)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <div class="pd-fruit-orange pd-floater-xl" style="position:absolute;top:82px;right:-8px;font-size:108px;animation:bobY 6s ease-in-out infinite;--r:-10deg;display:{{ stickerDisplay }};">🍊</div>
+            <div class="pd-fruit-strawberry pd-floater-xl" style="position:absolute;top:190px;left:-14px;font-size:98px;animation:bobYr 7s ease-in-out infinite;display:{{ stickerDisplay }};">🍓</div>
+            <div class="pd-fruit-kiwi pd-floater-lg" style="position:absolute;bottom:100px;right:36px;font-size:82px;animation:bobY 8s ease-in-out infinite;--r:12deg;display:{{ stickerDisplay }};">🥝</div>
+            <div class="pd-veg-lemon pd-floater-lg" style="position:absolute;bottom:50px;left:20px;font-size:88px;animation:bobYr 10s ease-in-out infinite;display:{{ stickerDisplay }};">🍋</div>
+            <div class="pd-veg-broccoli pd-floater-lg" style="position:absolute;top:68px;left:14px;font-size:74px;animation:bobY 12s ease-in-out infinite;--r:8deg;display:{{ stickerDisplay }};">🥦</div>
+            <div class="pd-veg-carrot pd-floater-lg" style="position:absolute;top:60px;right:22px;font-size:72px;animation:bobYr 9s ease-in-out infinite;display:{{ stickerDisplay }};">🥕</div>
+            <div style="position:absolute;top:48%;left:6px;font-size:66px;animation:bobY 14s ease-in-out infinite;--r:15deg;filter:drop-shadow(0 8px 14px rgba(0,0,0,.18));pointer-events:none;display:{{ stickerDisplay }};">🍍</div>
+            <div style="position:absolute;top:42%;right:6px;font-size:62px;animation:bobYr 11s ease-in-out infinite;filter:drop-shadow(0 8px 14px rgba(0,0,0,.16));pointer-events:none;display:{{ stickerDisplay }};">🍉</div>
             <!-- gradient fade into navy panel below -->
             <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to bottom,transparent,rgba(28,31,46,.55));z-index:1;pointer-events:none;"></div>
 
@@ -250,12 +265,12 @@
               </button>
               <img class="pd-hero-logo" src="assets/logo-clean-512.png" style="height:64px;width:136px;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.38))" alt="Pour Decisions">
               <span style="margin-left:auto;display:flex;gap:8px;">
-                <button onClick="{{ goNotif }}" class="tap" style="position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.22);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                <button onClick="{{ goNotif }}" class="tap" style="position:relative;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.95);border:2px solid var(--pink);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.2);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" stroke="var(--pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                   <span style="position:absolute;top:-2px;right:-2px;width:11px;height:11px;border-radius:50%;background:var(--lime);border:2px solid var(--orange);"></span>
                 </button>
-                <button onClick="{{ goCart }}" class="tap" style="position:relative;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.22);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.5 12.5A2 2 0 0 0 9.5 18h8.5l2-9H6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="10" cy="21" r="1.4" fill="#fff"></circle><circle cx="17" cy="21" r="1.4" fill="#fff"></circle></svg>
+                <button onClick="{{ goCart }}" class="tap" style="position:relative;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.95);border:2px solid var(--pink);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.2);">
+                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.5 12.5A2 2 0 0 0 9.5 18h8.5l2-9H6" stroke="var(--pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="10" cy="21" r="1.4" fill="var(--pink)"></circle><circle cx="17" cy="21" r="1.4" fill="var(--pink)"></circle></svg>
                   <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:-3px;right:-3px;background:var(--lime);color:var(--teal-deep);font-size:11px;font-weight:800;min-width:19px;height:19px;border-radius:99px;display:grid;place-items:center;border:2px solid var(--orange);">{{ cartCount }}</span></sc-if>
                 </button>
               </span>
@@ -349,6 +364,15 @@
             </div>
             </sc-if>
 
+            <!-- Instagram banner -->
+            <div onClick="{{ () => window.open('https://www.instagram.com/pourdecisionsjuicebar/','_blank') }}" class="tap" style="margin:20px 16px 0;background:linear-gradient(135deg,rgba(131,58,180,.18),rgba(232,66,106,.18));border:1px solid rgba(232,66,106,.3);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex:0 0 28px;"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/></svg>
+              <div style="flex:1;">
+                <div style="font-weight:800;color:#fff;font-size:14px;">Follow us on Instagram</div>
+                <div style="font-size:12px;color:rgba(255,255,255,.6);">@pourdecisionsjuicebar</div>
+              </div>
+              <span style="color:rgba(255,255,255,.5);font-size:20px;">↗</span>
+            </div>
             <div style="height:118px;"></div>
           </div>
         </div>
@@ -884,42 +908,48 @@
         </div>
         </sc-if>
 
-        <!-- ===================== PIÑA CHAT ===================== -->
-        <sc-if value="{{ isPina }}" hint-placeholder-val="{{ false }}">
-        <div style="animation:floatIn .35s ease both;min-height:100%;display:flex;flex-direction:column;">
-          <div style="padding:44px 20px 16px;background:linear-gradient(150deg,#FFC64D,#FF8A3D 60%,#FF6B35);color:#fff;display:flex;align-items:center;gap:12px;position:relative;overflow:hidden;">
-            <div style="position:absolute;top:-14px;right:-6px;font-size:90px;opacity:.3;">🍍</div>
-            <button onClick="{{ back }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-            </button>
-            <div style="width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:26px;box-shadow:0 6px 14px rgba(0,0,0,.15);">🍍</div>
-            <div style="position:relative;z-index:2;"><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;line-height:1;">Piña</div><div style="font-size:12px;color:rgba(255,255,255,.9);font-weight:600;display:flex;align-items:center;gap:5px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(163,230,53,.4);animation:pulseDot 1.6s infinite;"></span>your juice guide</div></div>
-            <img src="assets/logo-clean-512.png" style="margin-left:auto;position:relative;z-index:2;height:28px;width:auto;display:block;filter:drop-shadow(0 3px 10px rgba(0,0,0,.35));" alt="Pour Decisions">
-          </div>
-          <div class="noscroll" style="flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px;">
-            <sc-for list="{{ pinaMessages }}" as="m" hint-placeholder-count="2">
-              <div style="align-self:{{ m.align }};max-width:80%;background:{{ m.bg }};color:{{ m.fg }};padding:13px 16px;border-radius:{{ m.radius }};font-size:14px;line-height:1.5;font-weight:500;box-shadow:0 4px 14px rgba(0,0,0,.14);">{{ m.text }}</div>
-            </sc-for>
-            <sc-if value="{{ typing }}" hint-placeholder-val="{{ false }}">
-              <div style="align-self:flex-start;display:flex;gap:5px;background:rgba(255,255,255,.08);padding:15px 18px;border-radius:20px 20px 20px 6px;">
-                <span style="width:7px;height:7px;border-radius:50%;background:var(--gold-glow);animation:pulseDot 1s ease-in-out infinite;"></span>
-                <span style="width:7px;height:7px;border-radius:50%;background:var(--gold-glow);animation:pulseDot 1s ease-in-out .2s infinite;"></span>
-                <span style="width:7px;height:7px;border-radius:50%;background:var(--gold-glow);animation:pulseDot 1s ease-in-out .4s infinite;"></span>
+        <!-- ===================== PIÑA CHAT MODAL (overlay) ===================== -->
+        <sc-if value="{{ isPinaOpen }}" hint-placeholder-val="{{ false }}">
+        <div class="pd-pina-backdrop" onClick="{{ closePinaModal }}">
+          <div class="pd-pina-sheet" onClick="{{ stopProp }}">
+            <!-- Pink header -->
+            <div style="background:linear-gradient(135deg,var(--pink) 0%,#C41B50 100%);padding:16px 18px;display:flex;align-items:center;gap:12px;flex-shrink:0;border-radius:24px 24px 0 0;position:relative;overflow:hidden;">
+              <div style="position:absolute;top:-10px;right:-8px;font-size:80px;opacity:.2;pointer-events:none;">🍍</div>
+              <div style="width:48px;height:48px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:28px;box-shadow:0 6px 16px rgba(0,0,0,.2);flex:0 0 48px;">🍍</div>
+              <div style="flex:1;position:relative;z-index:1;">
+                <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;line-height:1;">Piña · Your Juice Guide</div>
+                <div style="font-size:12px;color:rgba(255,255,255,.88);font-weight:600;display:flex;align-items:center;gap:6px;margin-top:3px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(163,230,53,.4);animation:pulseDot 1.6s infinite;flex:0 0 8px;"></span>Online now</div>
               </div>
-            </sc-if>
-          </div>
-          <div style="padding:8px 14px 4px;">
-            <div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;">
-              <sc-for list="{{ pinaSuggestions }}" as="q" hint-placeholder-count="3">
-                <span onClick="{{ q.ask }}" class="tap" style="flex:0 0 auto;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:99px;">{{ q.label }}</span>
-              </sc-for>
+              <button onClick="{{ closePinaModal }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.2);border:0;color:#fff;font-size:24px;font-weight:300;display:grid;place-items:center;cursor:pointer;flex:0 0 36px;line-height:1;padding:0;">×</button>
             </div>
-          </div>
-          <div style="padding:4px 14px 22px;display:flex;gap:10px;align-items:center;">
-            <input value="{{ pinaInput }}" onInput="{{ onPinaInput }}" onKeyDown="{{ onPinaKey }}" placeholder="Ask Piña anything…" style="flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:99px;padding:14px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;">
-            <button onClick="{{ sendPina }}" class="tap" style="width:48px;height:48px;border-radius:50%;background:var(--gold);border:0;display:grid;place-items:center;box-shadow:0 8px 18px rgba(232,181,71,.4);flex:0 0 auto;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z" fill="#12303C"></path></svg>
-            </button>
+            <!-- Messages -->
+            <div class="noscroll" style="flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px;min-height:160px;">
+              <sc-for list="{{ pinaMessages }}" as="m" hint-placeholder-count="2">
+                <div style="align-self:{{ m.align }};max-width:82%;background:{{ m.bg }};color:{{ m.fg }};padding:13px 16px;border-radius:{{ m.radius }};border:{{ m.border }};font-size:16px;line-height:1.55;font-weight:500;box-shadow:0 4px 14px rgba(0,0,0,.14);">{{ m.text }}</div>
+              </sc-for>
+              <sc-if value="{{ typing }}" hint-placeholder-val="{{ false }}">
+                <div style="align-self:flex-start;display:flex;gap:5px;background:var(--pink);padding:15px 18px;border-radius:20px 20px 20px 6px;opacity:.75;">
+                  <span style="width:8px;height:8px;border-radius:50%;background:#fff;animation:pulseDot 1s ease-in-out infinite;"></span>
+                  <span style="width:8px;height:8px;border-radius:50%;background:#fff;animation:pulseDot 1s ease-in-out .2s infinite;"></span>
+                  <span style="width:8px;height:8px;border-radius:50%;background:#fff;animation:pulseDot 1s ease-in-out .4s infinite;"></span>
+                </div>
+              </sc-if>
+            </div>
+            <!-- Pill suggestions -->
+            <div style="padding:8px 14px 6px;flex-shrink:0;border-top:1px solid rgba(255,255,255,.07);">
+              <div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;">
+                <sc-for list="{{ pinaSuggestions }}" as="q" hint-placeholder-count="4">
+                  <span onClick="{{ q.ask }}" class="tap" style="flex:0 0 auto;background:rgba(232,66,106,.18);border:1px solid rgba(232,66,106,.4);color:#fff;font-size:13px;font-weight:700;padding:9px 14px;border-radius:99px;white-space:nowrap;">{{ q.label }}</span>
+                </sc-for>
+              </div>
+            </div>
+            <!-- Input row -->
+            <div style="padding:10px 14px 28px;display:flex;gap:10px;align-items:center;flex-shrink:0;">
+              <input value="{{ pinaInput }}" onInput="{{ onPinaInput }}" onKeyDown="{{ onPinaKey }}" placeholder="Ask Piña anything…" style="flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:14px 18px;color:#fff;font-size:16px;font-family:var(--f-body);outline:none;">
+              <button onClick="{{ sendPina }}" class="tap" style="width:50px;height:50px;border-radius:50%;background:var(--pink);border:0;display:grid;place-items:center;box-shadow:0 8px 20px rgba(232,66,106,.45);flex:0 0 50px;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z" fill="#fff"></path></svg>
+              </button>
+            </div>
           </div>
         </div>
         </sc-if>
@@ -936,29 +966,54 @@
             <button onClick="{{ setEventsCalView }}" class="tap" style="flex:1;padding:10px;border-radius:99px;border:0;background:{{ eventsCalViewBg }};color:{{ eventsCalViewFg }};font-weight:800;font-size:13px;cursor:pointer;">📅 Calendar</button>
           </div>
 
-          <!-- Calendar view -->
-          <sc-if value="{{ isEventsCalView }}" hint-placeholder-val="{{ false }}">
-          <div style="margin:16px 16px 0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px;">
-            <div style="text-align:center;font-weight:800;color:#fff;font-size:16px;margin-bottom:14px;">{{ calendarMonthLabel }}</div>
-            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;">
-              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">S</div>
-              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">M</div>
-              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">T</div>
-              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">W</div>
-              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">T</div>
-              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">F</div>
-              <div style="text-align:center;font-size:11px;color:rgba(255,255,255,.4);font-weight:700;padding:4px;">S</div>
+          <!-- Calendar view — Google Calendar style -->
+          <sc-if value="{{ isEventsCalView }}" hint-placeholder-val="{{ true }}">
+          <div style="margin:16px 16px 0;">
+            <!-- Month nav -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <button onClick="{{ prevCalMonth }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:0;color:#fff;font-size:22px;display:grid;place-items:center;padding:0;">‹</button>
+              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;color:#fff;">{{ calendarMonthLabel }}</div>
+              <button onClick="{{ nextCalMonth }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:0;color:#fff;font-size:22px;display:grid;place-items:center;padding:0;">›</button>
             </div>
-            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">
+            <!-- Day headers -->
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;">
+              <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.4);font-weight:700;padding:3px 0;">Sun</div>
+              <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.4);font-weight:700;padding:3px 0;">Mon</div>
+              <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.4);font-weight:700;padding:3px 0;">Tue</div>
+              <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.4);font-weight:700;padding:3px 0;">Wed</div>
+              <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.4);font-weight:700;padding:3px 0;">Thu</div>
+              <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.4);font-weight:700;padding:3px 0;">Fri</div>
+              <div style="text-align:center;font-size:10px;color:rgba(255,255,255,.4);font-weight:700;padding:3px 0;">Sat</div>
+            </div>
+            <!-- Day cells -->
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">
               <sc-for list="{{ calendarDays }}" as="cd">
-                <div style="text-align:center;padding:6px 2px;border-radius:10px;position:relative;background:{{ cd.hasEvent ? 'rgba(232,181,71,.15)' : 'transparent' }};">
-                  <span style="font-size:13px;font-weight:{{ cd.isToday ? 800 : 500 }};color:{{ cd.isToday ? 'var(--gold)' : cd.empty ? 'transparent' : 'rgba(255,255,255,.75)' }};">{{ cd.label }}</span>
+                <div onClick="{{ cd.selectFn }}" class="{{ cd.empty ? '' : 'tap' }}" style="min-height:50px;padding:4px 3px;border-radius:9px;position:relative;background:{{ cd.isSelected ? 'rgba(232,66,106,.25)' : cd.isToday ? 'rgba(232,181,71,.18)' : cd.hasEvent ? 'rgba(255,255,255,.06)' : 'transparent' }};border:{{ cd.isSelected ? '1.5px solid rgba(232,66,106,.65)' : cd.isToday ? '1.5px solid rgba(232,181,71,.45)' : '1.5px solid transparent' }};">
+                  <div style="font-size:12px;font-weight:{{ cd.isToday ? '800' : '500' }};color:{{ cd.isToday ? 'var(--gold)' : cd.empty ? 'transparent' : 'rgba(255,255,255,.85)' }};text-align:center;line-height:1;margin-bottom:3px;">{{ cd.label }}</div>
                   <sc-if value="{{ cd.hasEvent }}" hint-placeholder-val="{{ false }}">
-                    <div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin:2px auto 0;"></div>
+                    <div style="font-size:8.5px;font-weight:800;padding:2px 3px;border-radius:4px;background:{{ cd.eventColor }};color:#fff;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ cd.eventTitle }}</div>
                   </sc-if>
                 </div>
               </sc-for>
             </div>
+            <!-- Selected day events -->
+            <sc-if value="{{ hasSelectedDayEvents }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;border-top:1px solid rgba(255,255,255,.08);padding-top:14px;">
+              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:18px;color:#fff;margin-bottom:10px;">{{ selectedDayLabel }}</div>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <sc-for list="{{ selectedDayEvents }}" as="sde">
+                  <div style="display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px 14px;">
+                    <div style="font-size:28px;flex:0 0 auto;">{{ sde.emoji }}</div>
+                    <div style="flex:1;">
+                      <div style="font-weight:800;color:#fff;font-size:14px;">{{ sde.title }}</div>
+                      <div style="font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;">{{ sde.time }} · {{ sde.priceLabel }}</div>
+                    </div>
+                    <button onClick="{{ sde.rsvpFn }}" class="tap" style="background:{{ sde.rsvpBg }};color:{{ sde.rsvpFg }};font-weight:800;font-size:12px;padding:8px 14px;border-radius:99px;border:0;white-space:nowrap;">{{ sde.rsvpLabel }}</button>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            </sc-if>
           </div>
           </sc-if>
 
@@ -1069,6 +1124,117 @@
               <button onClick="{{ goWheel }}" class="tap" style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:14px 28px;border-radius:99px;border:0;">🎡 Spin the wheel</button>
             </div>
             </sc-if>
+          </div>
+        </div>
+        </sc-if>
+
+
+        <!-- ===================== PACKAGES & SUBSCRIPTIONS ===================== -->
+        <sc-if value="{{ isPackages }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
+          <div style="background:{{ splashGrad }};color:#fff;position:relative;overflow:hidden;padding:40px 20px 44px;">
+            <svg class="pd-palm-l" viewBox="0 0 240 520" style="position:absolute;left:-48px;bottom:-36px;width:215px;height:auto;pointer-events:none;" aria-hidden="true"><g fill="rgba(0,0,0,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg style="position:absolute;left:37%;bottom:-50px;width:165px;height:auto;transform:scaleX(-1);pointer-events:none;" viewBox="0 0 240 520"><g fill="rgba(0,0,0,.16)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <svg class="pd-palm-r" viewBox="0 0 240 520" style="position:absolute;right:-58px;bottom:-16px;width:150px;height:auto;transform:scaleX(-1);pointer-events:none;" aria-hidden="true"><g fill="rgba(0,0,0,.14)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
+            <div style="position:absolute;top:10px;right:-4px;font-size:100px;animation:bobY 8s ease-in-out infinite;--r:-10deg;filter:drop-shadow(0 12px 20px rgba(0,0,0,.24));pointer-events:none;z-index:1;">🍍</div>
+            <div style="position:absolute;bottom:60px;left:-4px;font-size:90px;animation:bobYr 10s ease-in-out infinite;filter:drop-shadow(0 12px 20px rgba(0,0,0,.22));pointer-events:none;z-index:1;">🥭</div>
+            <div style="position:absolute;top:10px;left:30%;font-size:78px;animation:bobY 13s ease-in-out infinite;--r:6deg;filter:drop-shadow(0 10px 16px rgba(0,0,0,.18));pointer-events:none;z-index:1;">🍌</div>
+            <div style="position:absolute;bottom:55px;right:10px;font-size:74px;animation:bobYr 11s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.2));pointer-events:none;z-index:1;">🍇</div>
+            <div class="pd-hero-nav" style="position:relative;z-index:2;display:flex;align-items:center;gap:10px;min-height:72px;">
+              <button onClick="{{ back }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);flex:0 0 40px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+              <img class="pd-hero-logo" src="assets/logo-clean-512.png" style="position:absolute;left:50%;transform:translateX(-50%);height:64px;width:136px;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.38));" alt="Pour Decisions">
+              <span style="margin-left:auto;width:40px;flex:0 0 40px;"></span>
+            </div>
+            <div class="pd-hero-body" style="position:relative;z-index:2;margin-top:20px;text-align:center;">
+              <h2 class="pd-hero-title" style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:52px;line-height:.9;letter-spacing:-.035em;margin:0;text-shadow:0 4px 18px rgba(0,0,0,.22);">Juice Plans.</h2>
+            </div>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to bottom,transparent,rgba(28,31,46,.55));z-index:1;pointer-events:none;"></div>
+          </div>
+          <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:26px 16px 0;">
+
+            <!-- CLEANSES -->
+            <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:11px;color:var(--gold-glow);margin-bottom:12px;">🧃 COLD PRESS CLEANSES</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;">
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                  <div><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;">1-Day Cleanse</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;">6 cold-pressed juices · 1-day reset</div></div>
+                  <div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$45</div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">✦ 6 seasonal cold-pressed juices &nbsp;✦ Morning, midday &amp; afternoon blends &nbsp;✦ Pickup from 348 Loudon Plaza</div>
+                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Choose Plan · $45</button>
+              </div>
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                  <div><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;">3-Day Cleanse</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;">18 juices (6/day) · full cleanse</div></div>
+                  <div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$120</div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">✦ 18 cold-pressed juices over 3 days &nbsp;✦ Nutrition guide included &nbsp;✦ Scheduled pickup each morning</div>
+                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Choose Plan · $120</button>
+              </div>
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                  <div><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;">5-Day Cleanse</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;">30 juices (6/day) · deep reset</div></div>
+                  <div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$185</div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">✦ 30 cold-pressed juices over 5 days &nbsp;✦ Personalized blend selection &nbsp;✦ Progress check-in on day 3</div>
+                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Choose Plan · $185</button>
+              </div>
+            </div>
+
+            <!-- WEEKLY SUBSCRIPTIONS -->
+            <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:11px;color:var(--gold-glow);margin-bottom:12px;">📅 WEEKLY SUBSCRIPTIONS</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;">
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                  <div><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;">The Daily</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;">1 juice/day · 5 days/week</div></div>
+                  <div style="text-align:right;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$35</div><div style="font-size:10px;color:rgba(255,255,255,.4);">/week</div></div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">✦ 1 fresh-pressed juice each weekday &nbsp;✦ Pick your blend or rotate &nbsp;✦ Ready by 8am</div>
+                <button class="tap" style="margin-top:14px;width:100%;background:rgba(255,255,255,.1);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Choose Plan · $35/wk</button>
+              </div>
+              <div style="background:linear-gradient(135deg,rgba(232,66,106,.12),rgba(232,181,71,.08));border:1.5px solid rgba(232,66,106,.45);border-radius:22px;padding:18px;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:12px;right:12px;background:var(--pink);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:99px;letter-spacing:.06em;">MOST POPULAR</div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;padding-right:95px;">
+                  <div><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;">The Booster</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;">2 juices/day · 5 days/week</div></div>
+                  <div style="text-align:right;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$60</div><div style="font-size:10px;color:rgba(255,255,255,.4);">/week</div></div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">✦ Morning &amp; afternoon juice each day &nbsp;✦ Wellness + energy combo &nbsp;✦ Priority pickup queue</div>
+                <button class="tap" style="margin-top:14px;width:100%;background:var(--pink);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;box-shadow:0 8px 20px rgba(232,66,106,.4);">Choose Plan · $60/wk</button>
+              </div>
+              <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                  <div><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;">The Full Press</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;">3 juices/day · 5 days/week</div></div>
+                  <div style="text-align:right;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$85</div><div style="font-size:10px;color:rgba(255,255,255,.4);">/week</div></div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">✦ Morning, midday &amp; evening juices &nbsp;✦ Customizable daily rotation &nbsp;✦ Dedicated nutrition notes</div>
+                <button class="tap" style="margin-top:14px;width:100%;background:rgba(255,255,255,.1);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Choose Plan · $85/wk</button>
+              </div>
+            </div>
+
+            <!-- MONTHLY MEMBERSHIPS -->
+            <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:11px;color:var(--gold-glow);margin-bottom:12px;">🥇 MONTHLY MEMBERSHIPS</div>
+            <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+              <div style="background:linear-gradient(135deg,rgba(232,66,106,.1),rgba(232,181,71,.08));border:1.5px solid rgba(232,181,71,.4);border-radius:22px;padding:18px;position:relative;overflow:hidden;">
+                <div style="position:absolute;top:12px;right:12px;background:var(--gold);color:var(--teal-deep);font-size:10px;font-weight:800;padding:4px 10px;border-radius:99px;letter-spacing:.06em;">MOST POPULAR</div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;padding-right:95px;">
+                  <div><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;">Pour Pass Gold</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;">10 juices/month + 20% off all</div></div>
+                  <div style="text-align:right;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$75</div><div style="font-size:10px;color:rgba(255,255,255,.4);">/mo</div></div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">✦ 10 cold-pressed juices/month &nbsp;✦ 20% off all purchases &nbsp;✦ Wheel spin 2×/week &nbsp;✦ Member-only events</div>
+                <button onClick="{{ goPass }}" class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;box-shadow:0 8px 20px rgba(232,181,71,.35);">Get Pour Pass Gold · $75/mo</button>
+              </div>
+              <div style="background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(232,66,106,.1));border:1.5px solid rgba(124,58,237,.45);border-radius:22px;padding:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+                  <div><div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:21px;color:#fff;">Pour Pass Platinum</div><div style="font-size:12px;color:rgba(255,255,255,.55);margin-top:3px;">20 juices/month + 30% off everything</div></div>
+                  <div style="text-align:right;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$130</div><div style="font-size:10px;color:rgba(255,255,255,.4);">/mo</div></div>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">✦ 20 cold-pressed juices/month &nbsp;✦ 30% off all purchases &nbsp;✦ Priority ordering · skip the line &nbsp;✦ Free monthly cleanse add-on</div>
+                <button onClick="{{ goPass }}" class="tap" style="margin-top:14px;width:100%;background:linear-gradient(135deg,#7C3AED,var(--pink));color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;box-shadow:0 8px 20px rgba(124,58,237,.4);">Get Platinum · $130/mo</button>
+              </div>
+            </div>
+
+            <div style="text-align:center;padding:4px 0 12px;font-size:12px;color:rgba(255,255,255,.35);">Questions? Stop in or call us — 348 Loudon Plaza, Albany NY 12211</div>
+            <div style="height:60px;"></div>
           </div>
         </div>
         </sc-if>
@@ -1318,7 +1484,11 @@ class Component extends DCLogic {
       installPrompt: null,
       showInstallBanner: false,
       installDismissed: ls('pd_install_dismissed', false),
-      eventsView: 'list',
+      eventsView: 'calendar',
+      pinaOpen: false,
+      calYear: undefined,
+      calMonth: undefined,
+      selectedCalDay: null,
       monthlySpins: ls('pd_monthly_spins', [])
     };
   })();
@@ -1798,11 +1968,11 @@ class Component extends DCLogic {
     const nav = [
       { key:'home', icon:'🏠', label:'Home' },
       { key:'menu', icon:'🥗', label:'Menu' },
-      { key:'cart', icon:'🧺', label:'Order' },
+      { key:'packages', icon:'📦', label:'Plans' },
       { key:'events', icon:'📅', label:'Events' },
       { key:'account', icon:'🙂', label:'You' }
     ];
-    const activeTab = ({ detail:'menu', checkout:'cart', confirm:'cart', notifications:'home', pina:'home', prizes:'account', admin:'account', pass:'account' })[S.screen] || S.screen;
+    const activeTab = ({ detail:'menu', checkout:'cart', confirm:'cart', notifications:'home', pina:'home', prizes:'account', admin:'account', pass:'account', packages:'packages' })[S.screen] || S.screen;
 
     const cardFields = it => ({
       ...it, priceLabel: this.fmt(it.price), calLabel: it.cal + ' cal',
@@ -1817,8 +1987,13 @@ class Component extends DCLogic {
       isCart:S.screen==='cart', isCheckout:S.screen==='checkout', isConfirm:S.screen==='confirm',
       isPass:S.screen==='pass', isNotif:S.screen==='notifications', isAccount:S.screen==='account', isPina:S.screen==='pina',
       isWheel:S.screen==='wheel',
+      isPackages:S.screen==='packages',
+      goPackages:()=>this.go('packages'),
+      isPinaOpen:S.pinaOpen,
+      closePinaModal:()=>this.setState({pinaOpen:false}),
+      stopProp:(e)=>{ if(e&&e.stopPropagation) e.stopPropagation(); },
       isAuth:S.screen==='auth', showNav:!['auth','admin'].includes(S.screen),
-      showPinaFab: !['pina','confirm','wheel','cart','checkout','auth','prizes','admin'].includes(S.screen),
+      showPinaFab: !['auth','admin'].includes(S.screen),
       userEmail:S.user ? (S.user.email || '') : '',
       authMode:S.authMode, authModeIn:S.authMode==='in', authModeUp:S.authMode==='up',
       authTitle:S.authMode==='in'?'Welcome back':'Join the club',
@@ -1835,7 +2010,7 @@ class Component extends DCLogic {
 
       goHome:()=>this.go('home'), goMenu:()=>this.go('menu'), goCart:()=>this.go('cart'),
       goCheckout:()=>this.go('checkout'), goPass:()=>this.go('pass'), goNotif:()=>this.go('notifications'),
-      goPina:()=>this.go('pina'), goWheel:()=>this.go('wheel'), back:()=>this.go(S.prev || 'home'),
+      goPina:()=>this.setState({pinaOpen:true}), goWheel:()=>this.go('wheel'), back:()=>this.go(S.prev || 'home'),
 
       wheelTransform:'rotate(' + S.rotation + 'deg)',
       spinning:S.spinning, spin:()=>this.spin(),
@@ -1944,20 +2119,21 @@ class Component extends DCLogic {
         { icon:'🔔', label:'Notifications', go:()=>this.go('notifications') },
         { icon:'💳', label:'Payment methods', go:()=>this.go('checkout') },
         { icon:'🔐', label:'Admin Panel', go:()=>this.go('admin') },
-        { icon:'📸', label:'Instagram · @pourdecisions.albany', go:()=>window.open('https://instagram.com/pourdecisions.albany','_blank') },
+        { icon:'📸', label:'@pourdecisionsjuicebar  ↗', go:()=>window.open('https://www.instagram.com/pourdecisionsjuicebar/','_blank') },
         { icon:'⚙️', label:'Settings', go:()=>{} },
         { icon:'🚪', label:'Sign out', go:()=>this.signOut() }
       ],
 
       pinaMessages: S.pina.map(m => ({
         text:m.text, align: m.role==='user'?'flex-end':'flex-start',
-        bg: m.role==='user'?'var(--gold)':'rgba(255,255,255,.08)',
-        fg: m.role==='user'?'#12303C':'#fff',
-        radius: m.role==='user'?'20px 20px 6px 20px':'20px 20px 20px 6px'
+        bg: m.role==='user'?'rgba(28,31,46,1)':'var(--pink)',
+        fg: '#fff',
+        radius: m.role==='user'?'20px 20px 6px 20px':'20px 20px 20px 6px',
+        border: m.role==='user'?'1px solid rgba(232,66,106,.4)':'none'
       })),
       typing:S.typing,
       pinaSuggestions: [
-        { label:'Most energizing?' }, { label:'Something filling' }, { label:'Something sweet' }, { label:'What\'s popular?' }
+        { label:'What\'s good for energy?' }, { label:'Best detox juice?' }, { label:'What\'s fresh today?' }, { label:'Recommend something for me' }
       ].map(q => ({ ...q, ask:()=>this.submit(q.label) })),
       pinaInput:S.pinaInput,
       onPinaInput:(e)=>this.setState({pinaInput:e.target.value}),
@@ -2131,28 +2307,38 @@ class Component extends DCLogic {
       wonEmoji: S.wonId && S.wonId !== 'lose' ? ((this.MENU.find(m=>m.id===S.wonId)||{emoji:'🎁'}).emoji) : '😔',
 
       // Events calendar
-      eventsView: S.eventsView || 'list',
-      isEventsListView: (S.eventsView || 'list') === 'list',
-      isEventsCalView: S.eventsView === 'calendar',
+      eventsView: S.eventsView || 'calendar',
+      isEventsListView: (S.eventsView || 'calendar') === 'list',
+      isEventsCalView: (S.eventsView || 'calendar') === 'calendar',
       setEventsListView: () => this.setState({ eventsView: 'list' }),
       setEventsCalView: () => this.setState({ eventsView: 'calendar' }),
-      eventsListViewBg: (S.eventsView||'list')==='list' ? 'var(--gold)' : 'rgba(255,255,255,.1)',
-      eventsListViewFg: (S.eventsView||'list')==='list' ? 'var(--teal-deep)' : '#fff',
-      eventsCalViewBg: S.eventsView==='calendar' ? 'var(--gold)' : 'rgba(255,255,255,.1)',
-      eventsCalViewFg: S.eventsView==='calendar' ? 'var(--teal-deep)' : '#fff',
-      calendarMonthLabel: (()=>{ try{ return new Date().toLocaleDateString('en-US',{month:'long',year:'numeric'}); }catch(e){ return ''; } })(),
+      eventsListViewBg: (S.eventsView||'calendar')==='list' ? 'var(--gold)' : 'rgba(255,255,255,.1)',
+      eventsListViewFg: (S.eventsView||'calendar')==='list' ? 'var(--teal-deep)' : '#fff',
+      eventsCalViewBg: (S.eventsView||'calendar')==='calendar' ? 'var(--gold)' : 'rgba(255,255,255,.1)',
+      eventsCalViewFg: (S.eventsView||'calendar')==='calendar' ? 'var(--teal-deep)' : '#fff',
+      calendarMonthLabel: (()=>{ try{ const d=new Date(S.calYear||new Date().getFullYear(),S.calMonth!==undefined?S.calMonth:new Date().getMonth(),1); return d.toLocaleDateString('en-US',{month:'long',year:'numeric'}); }catch(e){ return ''; } })(),
+      prevCalMonth:()=>{ const now=new Date(); const y=S.calYear||now.getFullYear(); const m=S.calMonth!==undefined?S.calMonth:now.getMonth(); if(m===0)this.setState({calYear:y-1,calMonth:11}); else this.setState({calMonth:m-1}); },
+      nextCalMonth:()=>{ const now=new Date(); const y=S.calYear||now.getFullYear(); const m=S.calMonth!==undefined?S.calMonth:now.getMonth(); if(m===11)this.setState({calYear:y+1,calMonth:0}); else this.setState({calMonth:m+1}); },
+      selectedDayLabel:(()=>{ if(!S.selectedCalDay) return ''; try{ return new Date(S.selectedCalDay+'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}); }catch(e){ return S.selectedCalDay||''; } })(),
+      selectedDayEvents: (()=>{ if(!S.selectedCalDay) return []; return (S.events||[]).filter(ev=>ev.date===S.selectedCalDay).map(ev=>({ ...ev, priceLabel:ev.price===0?'Free':'$'+ev.price, rsvpLabel:(S.rsvps||[]).includes(ev.id)?"RSVP'd ✓":'RSVP', rsvpBg:(S.rsvps||[]).includes(ev.id)?'rgba(163,230,53,.15)':'var(--gold)', rsvpFg:(S.rsvps||[]).includes(ev.id)?'#A3E635':'var(--teal-deep)', rsvpFn:()=>this.rsvpEvent(ev.id) })); })(),
+      hasSelectedDayEvents: !!(S.selectedCalDay && (S.events||[]).some(ev=>ev.date===S.selectedCalDay)),
       calendarDays: (()=>{
         const now = new Date();
-        const year = now.getFullYear();
-        const month = now.getMonth();
+        const year = S.calYear||now.getFullYear();
+        const month = S.calMonth!==undefined?S.calMonth:now.getMonth();
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month+1, 0).getDate();
-        const eventDates = new Set((S.events||[]).map(ev => ev.date));
+        const evs = S.events||[];
+        const eventMap = {};
+        evs.forEach(ev=>{ if(!eventMap[ev.date]) eventMap[ev.date]=ev; });
+        const typeColor = {class:'#22C55E',workshop:'#22C55E','pop-up':'#F97316',tasting:'#A855F7',rental:'#3B82F6'};
+        const getType = (ev) => ev.type || (ev.title.toLowerCase().includes('class')||ev.title.toLowerCase().includes('workshop')?'class':ev.title.toLowerCase().includes('tasting')?'tasting':ev.title.toLowerCase().includes('pop')?'pop-up':'class');
         const days = [];
-        for (let i = 0; i < firstDay; i++) days.push({ label:'', empty:true, hasEvent:false, isToday:false });
+        for (let i = 0; i < firstDay; i++) days.push({ label:'', empty:true, hasEvent:false, isToday:false, isSelected:false, eventColor:'', eventTitle:'', selectFn:()=>{} });
         for (let d = 1; d <= daysInMonth; d++) {
           const dateStr = year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-          days.push({ label:String(d), empty:false, hasEvent:eventDates.has(dateStr), isToday:d===now.getDate() });
+          const ev = eventMap[dateStr];
+          days.push({ label:String(d), empty:false, hasEvent:!!ev, isToday:d===now.getDate()&&month===now.getMonth()&&year===now.getFullYear(), isSelected:S.selectedCalDay===dateStr, eventColor:ev?typeColor[getType(ev)]||'var(--pink)':'', eventTitle:ev?ev.title:'', selectFn:()=>this.setState({selectedCalDay:dateStr}) });
         }
         return days;
       })(),
