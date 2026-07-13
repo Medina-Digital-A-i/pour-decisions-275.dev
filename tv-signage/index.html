@@ -1,0 +1,185 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+  html,body{margin:0;padding:0;background:#000;overflow:hidden}
+  canvas{display:block}
+</style></head><body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+const W=1920, H=1080, TAU=Math.PI*2;
+const cv=document.getElementById('c'), ctx=cv.getContext('2d');
+const TEAL_DEEP='#143241', TEAL='#1F4860', GOLD='#E8B547', CREAM='#FFF8EC';
+
+// Palm silhouette sub-paths (viewBox 0 0 100 180): [0]=trunk, [1..7]=fronds.
+const PARTS=[
+ "M48 180 C46 155 43 128 44 105 C45 88 46 72 50 55 C51 44 53 35 55 25 C56 18 58 14 60 14 C62 14 64 18 65 25 C67 35 69 44 70 55 C74 72 75 88 76 105 C77 128 74 155 72 180Z",
+ "M58 28 C48 20 32 10 12 16 C16 24 32 30 50 32Z",
+ "M57 22 C46 8 38 -6 20 0 C28 14 42 22 56 26Z",
+ "M56 18 C50 4 50 -10 62 -14 C64 2 62 14 60 22Z",
+ "M62 26 C74 18 90 10 108 16 C104 24 88 30 70 32Z",
+ "M63 22 C74 8 82 -6 100 0 C92 14 78 22 64 26Z",
+ "M55 30 C38 28 22 34 8 44 C20 46 38 38 54 34Z",
+ "M65 30 C82 28 98 34 112 44 C100 46 82 38 66 34Z"
+];
+const TRUNK=new Path2D(PARTS[0]);
+const FRONDS=new Path2D(PARTS.slice(1).join(' '));
+
+const logo=new Image(); let logoReady=false;
+logo.onload=()=>{logoReady=true;}; logo.src='logo.png';
+
+function rnd(i){ const x=Math.sin(i*127.1+31.7)*43758.5453; return x-Math.floor(x); }
+function tri(u){ u=((u%1)+1)%1; return u<0.5? u*2 : 2-u*2; } // triangle wave 0..1..0 (period 1)
+
+// ---- grassy base + texture ----
+function drawGrass(){
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#bfe86a'); g.addColorStop(0.42,'#7cb83f');
+  g.addColorStop(0.78,'#4a7d24'); g.addColorStop(1,'#295011');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  // speckle texture across the whole field (static, deterministic)
+  ctx.save();
+  for(let i=0;i<1400;i++){
+    const x=rnd(i*1.3)*W, y=rnd(i*2.7)*H;
+    const s=0.5+rnd(i*3.9)*1.6;
+    ctx.globalAlpha=0.05+rnd(i*4.4)*0.06;
+    ctx.fillStyle=(i%2)?'#ffffff':'#1c3a12';
+    ctx.fillRect(x,y,s,s*3);
+  }
+  ctx.restore();
+}
+function drawBlades(p, layer){
+  const back = layer==='back';
+  const cfg = back
+    ? {n:210, base:H*0.60, seed:11, cols:['#3c6a1c','#325c16'], wind:16, hMin:90, hMax:230}
+    : {n:340, base:H*0.78, seed:71, cols:['#6fae37','#579027','#82c043'], wind:22, hMin:70, hMax:190};
+  for(let i=0;i<cfg.n;i++){
+    const x=rnd(i*2.1+cfg.seed)*W;
+    const by=cfg.base + rnd(i*3.7+cfg.seed)*(H-cfg.base)*0.95;
+    const grow=0.55+0.6*(by-cfg.base)/(H-cfg.base);
+    const h=(cfg.hMin+rnd(i*1.9+cfg.seed)*(cfg.hMax-cfg.hMin))*grow;
+    const w=3+rnd(i*5.3+cfg.seed)*5;
+    const wind=Math.sin(TAU*p + x*0.004)*cfg.wind;          // seamless (1 cycle)
+    const trem=Math.sin(TAU*p*9 + i*1.7)*6;                 // trembling (9 cycles)
+    const lean=(rnd(i*6.1+cfg.seed)-0.5)*40;
+    const tipx=x+lean+wind+trem, tipy=by-h;
+    ctx.beginPath();
+    ctx.moveTo(x-w/2,by);
+    ctx.quadraticCurveTo((x+tipx)/2, by-h*0.55, tipx, tipy);
+    ctx.quadraticCurveTo((x+tipx)/2, by-h*0.5,  x+w/2, by);
+    ctx.closePath();
+    ctx.fillStyle=cfg.cols[i%cfg.cols.length];
+    ctx.fill();
+  }
+}
+
+function drawGlow(p){
+  const pulse=0.5+0.5*Math.sin(TAU*p);
+  const cx=W/2, cy=H*0.42, r=620+50*pulse;
+  const g=ctx.createRadialGradient(cx,cy,40,cx,cy,r);
+  g.addColorStop(0,`rgba(232,181,71,${0.36+0.10*pulse})`);
+  g.addColorStop(0.55,'rgba(232,181,71,0.10)');
+  g.addColorStop(1,'rgba(232,181,71,0)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+}
+
+function drawPalm(baseX, baseY, scale, flip, sway, tremble, alpha){
+  ctx.save();
+  ctx.translate(baseX,baseY); ctx.rotate(sway); ctx.scale(flip?-scale:scale,scale);
+  ctx.translate(-60,-180);
+  ctx.fillStyle=TEAL_DEEP; ctx.globalAlpha=alpha;
+  ctx.shadowColor='rgba(10,26,14,0.35)'; ctx.shadowBlur=30; ctx.shadowOffsetY=8;
+  ctx.fill(TRUNK);
+  ctx.save();                                   // fronds tremble about the crown (~60,20)
+  ctx.translate(60,20); ctx.rotate(tremble); ctx.translate(-60,-20);
+  ctx.fill(FRONDS);
+  ctx.restore();
+  ctx.restore();
+}
+
+// ---- signs bouncing off the walls (seamless via triangle waves) ----
+const SIGNS=[
+ {t:'FRESH',      ic:'🥤', bg:GOLD,      fg:TEAL_DEEP, nx:1, ny:1, o:0.00},
+ {t:'TROPICAL',   ic:'🍍', bg:TEAL,      fg:CREAM,     nx:1, ny:2, o:0.37},
+ {t:'VITAMIN C',  ic:'🍊', bg:'#FF6B35', fg:CREAM,     nx:2, ny:1, o:0.61},
+ {t:'GREENS',     ic:'🍃', bg:'#4a7d24', fg:CREAM,     nx:1, ny:2, o:0.14},
+ {t:'COLD-PRESSED',ic:'🍋',bg:CREAM,     fg:TEAL_DEEP, nx:2, ny:1, o:0.83}
+];
+function roundRect(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+function drawSigns(p){
+  ctx.textBaseline='middle';
+  SIGNS.forEach((s,i)=>{
+    ctx.font='700 30px Helvetica, Arial, sans-serif';
+    const tw=ctx.measureText(s.t).width;
+    const w=tw+118, h=76, r=38, margin=26;
+    const x=margin + (W-2*margin-w)*tri(s.nx*p + s.o);
+    const y=margin + (H-2*margin-h)*tri(s.ny*p + s.o*1.7+0.13);
+    const wob=Math.sin(TAU*p*2 + i)*0.05;
+    ctx.save();
+    ctx.translate(x+w/2, y+h/2); ctx.rotate(wob); ctx.translate(-w/2,-h/2);
+    ctx.shadowColor='rgba(10,26,14,0.35)'; ctx.shadowBlur=18; ctx.shadowOffsetY=6;
+    ctx.fillStyle=s.bg; roundRect(0,0,w,h,r); ctx.fill();
+    ctx.shadowColor='transparent';
+    ctx.strokeStyle='rgba(255,255,255,0.7)'; ctx.lineWidth=3; roundRect(3,3,w-6,h-6,r-3); ctx.stroke();
+    ctx.font='40px "Apple Color Emoji", sans-serif'; ctx.textAlign='center';
+    ctx.fillText(s.ic, 44, h/2+1);
+    ctx.font='700 30px Helvetica, Arial, sans-serif'; ctx.textAlign='left';
+    ctx.fillStyle=s.fg; ctx.fillText(s.t, 78, h/2+1);
+    ctx.restore();
+  });
+}
+
+function drawParticles(p){
+  ctx.save();
+  for(let i=0;i<46;i++){
+    const speed=0.5+rnd(i)*0.9, phase=(p*speed+rnd(i+99));
+    const y=H*1.05-(phase%1)*(H*1.15);
+    const x=rnd(i+7)*W+Math.sin(TAU*(phase+rnd(i)))*26;
+    const tw=0.35+0.65*Math.abs(Math.sin(TAU*(phase*2+rnd(i+3))));
+    ctx.globalAlpha=0.5*tw*Math.sin(Math.PI*(phase%1));
+    ctx.fillStyle=(i%3===0)?CREAM:GOLD;
+    ctx.beginPath(); ctx.arc(x,y,2+rnd(i+11)*3.2,0,TAU); ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawLogo(p){
+  if(!logoReady) return;
+  const bob=Math.sin(TAU*p)*12, breathe=1+0.016*Math.sin(TAU*p+0.6);
+  const w=960*breathe, h=w*(logo.height/logo.width);
+  const x=W/2-w/2, y=H*0.42-h/2+bob;
+  ctx.save();
+  ctx.shadowColor='rgba(12,30,16,0.5)'; ctx.shadowBlur=46; ctx.shadowOffsetY=16;
+  ctx.drawImage(logo,x,y,w,h);
+  ctx.restore();
+  ctx.save();
+  ctx.globalAlpha=0.94; ctx.fillStyle=CREAM; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.font='600 36px Helvetica, Arial, sans-serif';
+  ctx.shadowColor='rgba(10,26,14,0.55)'; ctx.shadowBlur=12; ctx.shadowOffsetY=3;
+  ctx.fillText('C O L D - P R E S S E D   ·   A L B A N Y   N Y', W/2, y+h+52+bob*0.3);
+  ctx.restore();
+}
+function vignette(){
+  const g=ctx.createRadialGradient(W/2,H/2,H*0.35,W/2,H/2,H*0.85);
+  g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(8,22,10,0.42)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+}
+
+window.drawFrame=function(i,Ntot){
+  const p=(i%Ntot)/Ntot;
+  const s=Math.sin(TAU*p), s2=Math.sin(TAU*p+1.9), s3=Math.sin(TAU*p+3.3), s4=Math.sin(TAU*p+0.7);
+  drawGrass();
+  drawGlow(p);
+  drawBlades(p,'back');
+  drawPalm(W*0.30,H*1.02,3.1,false,0.05*s2, 0.045*Math.sin(TAU*p*7+1), 0.16);
+  drawPalm(W*0.70,H*1.02,3.1,true, 0.05*s3, 0.045*Math.sin(TAU*p*7+3), 0.16);
+  drawPalm(W*0.085,H*1.06,5.0,false,0.055*s,  0.05*Math.sin(TAU*p*8),    0.24);
+  drawPalm(W*0.915,H*1.06,5.0,true, 0.055*s2, 0.05*Math.sin(TAU*p*8+2),  0.24);
+  drawBlades(p,'front');
+  drawParticles(p);
+  drawLogo(p);
+  vignette();
+  return true;
+};
+window.__ready=()=>logoReady;
+</script>
+</body></html>
