@@ -27,6 +27,7 @@ logo.onload=()=>{logoReady=true;}; logo.src='logo.png';
 
 function rnd(i){ const x=Math.sin(i*127.1+31.7)*43758.5453; return x-Math.floor(x); }
 function tri(u){ u=((u%1)+1)%1; return u<0.5? u*2 : 2-u*2; } // triangle wave 0..1..0 (period 1)
+function frac(u){ return u-Math.floor(u); }
 
 // ---- grassy base + texture ----
 function drawGrass(){
@@ -142,15 +143,62 @@ function drawParticles(p){
   ctx.restore();
 }
 
+// Animated juice rising inside the cup (aligned to the logo art). Fractions
+// measured from the logo image; always covers the static juice so no double edge.
+function drawCupJuice(x,y,w,h,p){
+  const cl=x+w*0.092, cr=x+w*0.245, ctop=y+h*0.378, cbot=y+h*0.575;
+  const iw=cr-cl, span=cbot-ctop, ins=iw*0.17;   // taper: cup is narrower at the base
+  const lvl=0.5-0.5*Math.cos(TAU*p);      // 0..1..0 seamless — fills up then settles
+  const fill=0.60+0.32*lvl;               // 60%..92% (static juice ≈ 59%, always covered)
+  const levelY=cbot-span*fill, seg=12;
+  const surfW=(i)=>Math.sin(TAU*p*2+i*0.8)*4 + Math.sin(TAU*p*3+i*1.6)*2.2;
+  ctx.save();
+  ctx.beginPath(); ctx.moveTo(cl,ctop); ctx.lineTo(cr,ctop); ctx.lineTo(cr-ins,cbot); ctx.lineTo(cl+ins,cbot); ctx.closePath(); ctx.clip();
+  const g=ctx.createLinearGradient(0,levelY,0,cbot);
+  g.addColorStop(0,'#F0C25A'); g.addColorStop(1,'#D89226');
+  ctx.fillStyle=g;
+  ctx.beginPath(); ctx.moveTo(cl-4,cbot+6); ctx.lineTo(cl-4,levelY);
+  for(let i=0;i<=seg;i++) ctx.lineTo(cl+iw*(i/seg), levelY+surfW(i));
+  ctx.lineTo(cr+4,cbot+6); ctx.closePath(); ctx.fill();
+  ctx.globalAlpha=0.5; ctx.strokeStyle='#FBE6A8'; ctx.lineWidth=2; ctx.beginPath();
+  for(let i=0;i<=seg;i++){ const xx=cl+iw*(i/seg), yy=levelY+surfW(i); i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy); }
+  ctx.stroke(); ctx.globalAlpha=1;
+  for(let i=0;i<6;i++){ const bp=frac(p*(1.1+i*0.12)+i*0.17); const by=cbot-4-(cbot-levelY-8)*bp; const bx=cl+iw*(0.18+0.64*rnd(i+40)); ctx.globalAlpha=Math.sin(Math.PI*bp)*0.55; ctx.fillStyle='#FBE6A8'; ctx.beginPath(); ctx.arc(bx,by,1.6+rnd(i+5)*1.6,0,TAU); ctx.fill(); }
+  ctx.globalAlpha=1; ctx.restore();
+}
+// Droplets squirting up out of the squeezed lemon — seamless continuous spray.
+function drawLemonSquirt(x,y,w,h,p){
+  const ex=x+w*0.088, ey=y+h*0.81, N=10, G=0.30;
+  ctx.save();
+  for(let i=0;i<N;i++){
+    const u=frac(p*3+i/N); if(u<0.05) continue;        // let them clear the lemon first
+    const ang=-Math.PI*0.82+(rnd(i*1.7+2)-0.5)*0.7;   // spray up & out to the LEFT only (away from "D")
+    const spd=0.17+rnd(i*2.3+8)*0.16;
+    const px=ex+Math.cos(ang)*spd*u*w;
+    const py=ey+(Math.sin(ang)*spd*u+0.5*G*u*u)*h;
+    const a=Math.sin(Math.PI*u); if(a<=0.03) continue;
+    const r=(2.8+rnd(i+1)*3.2)*(0.5+0.5*a);
+    ctx.globalAlpha=a;
+    ctx.shadowColor='rgba(150,90,10,0.35)'; ctx.shadowBlur=4; ctx.shadowOffsetY=1;
+    ctx.fillStyle=(i%3===0)?'#F7D98A':'#EDA82F';
+    ctx.beginPath(); ctx.arc(px,py,r,0,TAU); ctx.fill();
+    ctx.shadowColor='transparent'; ctx.globalAlpha=a*0.6; ctx.fillStyle='#FFF3D0';
+    ctx.beginPath(); ctx.arc(px-r*0.3,py-r*0.3,r*0.35,0,TAU); ctx.fill();
+  }
+  ctx.restore();
+}
 function drawLogo(p){
   if(!logoReady) return;
   const bob=Math.sin(TAU*p)*12, breathe=1+0.016*Math.sin(TAU*p+0.6);
   const w=960*breathe, h=w*(logo.height/logo.width);
   const x=W/2-w/2, y=H*0.42-h/2+bob;
   ctx.save();
+  ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
   ctx.shadowColor='rgba(12,30,16,0.5)'; ctx.shadowBlur=46; ctx.shadowOffsetY=16;
   ctx.drawImage(logo,x,y,w,h);
   ctx.restore();
+  drawCupJuice(x,y,w,h,p);
+  drawLemonSquirt(x,y,w,h,p);
   ctx.save();
   ctx.globalAlpha=0.94; ctx.fillStyle=CREAM; ctx.textAlign='center'; ctx.textBaseline='middle';
   ctx.font='600 36px Helvetica, Arial, sans-serif';
