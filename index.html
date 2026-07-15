@@ -80,6 +80,11 @@
   @keyframes pulseDot{50%{transform:scale(1.5)}}
   @keyframes floatIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
   @keyframes popIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+  /* ── Screensaver / attract mode ─────────────────────────── */
+  @keyframes ssPop{from{opacity:0;transform:scale(.7) translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes ssPulse{0%,100%{opacity:.75;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+  @keyframes ssFade{from{opacity:0}to{opacity:1}}
+  .pd-ss{-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;}
   .noscroll::-webkit-scrollbar{display:none}
   .noscroll{scrollbar-width:none}
   .tap{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
@@ -1580,6 +1585,46 @@
       </div>
       </sc-if>
       </div><!-- end pd-bottom-nav-wrap -->
+
+      <!-- ===================== SCREENSAVER / ATTRACT MODE ===================== -->
+      <sc-if value="{{ screensaver }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ wakeScreensaver }}" class="pd-ss" style="position:fixed;inset:0;z-index:300;background:{{ ssDrink.grad }};color:#fff;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;animation:floatIn .5s ease both;">
+        <!-- legibility veil over the drink gradient -->
+        <div style="position:absolute;inset:0;background:linear-gradient(165deg,rgba(28,31,46,.24),rgba(28,31,46,.74));z-index:0;pointer-events:none;"></div>
+
+        <!-- floating fruit -->
+        <div style="position:absolute;inset:0;z-index:1;pointer-events:none;">
+          <div style="position:absolute;top:5%;right:-14px;font-size:120px;animation:bobY 7s ease-in-out infinite;filter:drop-shadow(0 14px 24px rgba(0,0,0,.3));opacity:.9;">🍍</div>
+          <div style="position:absolute;top:7%;left:-10px;font-size:94px;animation:bobYr 9s ease-in-out infinite;filter:drop-shadow(0 12px 20px rgba(0,0,0,.26));opacity:.85;">🍋</div>
+          <div style="position:absolute;top:43%;right:6px;font-size:86px;animation:bobY 11s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.24));opacity:.8;">🥝</div>
+          <div style="position:absolute;top:45%;left:4px;font-size:82px;animation:bobYr 13s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.22));opacity:.8;">🍊</div>
+          <div style="position:absolute;bottom:11%;right:12px;font-size:104px;animation:bobY 10s ease-in-out infinite;filter:drop-shadow(0 12px 20px rgba(0,0,0,.26));opacity:.85;">🫐</div>
+          <div style="position:absolute;bottom:13%;left:10px;font-size:90px;animation:bobYr 12s ease-in-out infinite;filter:drop-shadow(0 12px 20px rgba(0,0,0,.24));opacity:.85;">🍓</div>
+        </div>
+
+        <!-- top: logo + live clock -->
+        <div style="position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;padding:30px 32px 0;">
+          <img src="assets/logo-clean-512.png" style="height:60px;width:auto;filter:drop-shadow(0 4px 14px rgba(0,0,0,.4));" alt="Pour Decisions">
+          <div style="font-family:var(--f-num);font-size:32px;letter-spacing:.05em;color:var(--gold-glow);text-shadow:0 3px 12px rgba(0,0,0,.4);">{{ ssClock }}</div>
+        </div>
+
+        <!-- center: rotating featured pour -->
+        <div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 32px;">
+          <div style="font-size:150px;line-height:1;filter:drop-shadow(0 22px 40px rgba(0,0,0,.4));animation:ssPop .7s cubic-bezier(.22,.68,0,1.2) both;">{{ ssDrink.emoji }}</div>
+          <div style="margin-top:8px;font-size:12px;font-weight:800;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-glow);">Today's Pour · {{ ssDrink.cat }}</div>
+          <h1 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:56px;line-height:.92;letter-spacing:-.03em;margin:8px 0 0;text-shadow:0 6px 22px rgba(0,0,0,.35);animation:ssFade .8s ease both;">{{ ssDrink.name }}</h1>
+          <div style="margin-top:12px;max-width:420px;font-size:15px;line-height:1.5;color:rgba(255,255,255,.9);">{{ ssDrink.blurb }}</div>
+          <div style="margin-top:18px;display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy);font-family:var(--f-num);font-size:28px;letter-spacing:.03em;padding:5px 22px;border-radius:999px;box-shadow:0 10px 26px rgba(0,0,0,.3);">{{ ssDrink.priceLabel }}</div>
+        </div>
+
+        <!-- bottom: tap prompt + address -->
+        <div style="position:relative;z-index:2;text-align:center;padding:0 32px 42px;">
+          <div style="display:inline-flex;align-items:center;gap:10px;font-family:var(--f-display);font-style:italic;font-weight:900;font-size:23px;animation:ssPulse 2.4s ease-in-out infinite;">👆 Tap anywhere to order</div>
+          <div style="margin-top:12px;font-size:12px;font-weight:600;letter-spacing:.05em;color:rgba(255,255,255,.72);">348 Loudon Plaza · Albany, NY · Cold-pressed fresh daily</div>
+        </div>
+      </div>
+      </sc-if>
+
   </div>
 </div>
 </x-dc>
@@ -1666,7 +1711,11 @@ class Component extends DCLogic {
       calYear: undefined,
       calMonth: undefined,
       selectedCalDay: null,
-      monthlySpins: ls('pd_monthly_spins', [])
+      monthlySpins: ls('pd_monthly_spins', []),
+      // ── Screensaver / attract mode ──
+      screensaver: false,
+      ssIndex: 0,
+      ssClock: ''
     };
   })();
 
@@ -1843,6 +1892,63 @@ class Component extends DCLogic {
   try{ document.querySelector('.pd-scroll-root')?.scrollTop && (document.querySelector('.pd-scroll-root').scrollTop = 0); }catch(e){}
   try{ [...document.querySelectorAll('*')].filter(el=>el.scrollTop>0).forEach(el=>el.scrollTop=0); }catch(e){}
 }
+
+  // ─── Screensaver / attract mode ───────────────────────────────────────
+  // After SS_IDLE_MS of no interaction the app drops into a full-screen,
+  // self-rotating brand loop (tuned for the counter kiosk / display screen).
+  // Any tap, key, scroll or pointer move wakes it and re-arms the idle timer.
+  SS_IDLE_MS = 45000;   // idle time before the screensaver appears
+  SS_ROTATE_MS = 5000;  // how long each featured pour holds on screen
+  SS_DRINK_IDS = ['green','berry','tropic','citrus','purple','melon','acai'];
+
+  _ssClockStr(){
+    try { return new Date().toLocaleTimeString([], { hour:'numeric', minute:'2-digit' }); }
+    catch(e){ return ''; }
+  }
+  _ssArm(){
+    clearTimeout(this._ssIdleTimer);
+    this._ssIdleTimer = setTimeout(() => this.startScreensaver(), this.SS_IDLE_MS);
+  }
+  _ssOnActivity(){
+    if (this.state.screensaver) this.wakeScreensaver();
+    else this._ssArm();
+  }
+  startScreensaver(){
+    if (this.state.screensaver) return;
+    clearInterval(this._ssRotTimer);
+    clearInterval(this._ssClockTimer);
+    this.setState({ screensaver:true, ssIndex:0, ssClock:this._ssClockStr() });
+    // advance the featured pour
+    this._ssRotTimer = setInterval(() => {
+      if (!this.state.screensaver) return;
+      this.setState(s => ({ ssIndex: (s.ssIndex + 1) % this.SS_DRINK_IDS.length }));
+    }, this.SS_ROTATE_MS);
+    // keep the clock fresh
+    this._ssClockTimer = setInterval(() => {
+      if (this.state.screensaver) this.setState({ ssClock:this._ssClockStr() });
+    }, 15000);
+  }
+  wakeScreensaver(){
+    clearInterval(this._ssRotTimer);
+    clearInterval(this._ssClockTimer);
+    if (this.state.screensaver) this.setState({ screensaver:false });
+    this._ssArm();
+  }
+  componentDidMount(){
+    this._ssEvents = ['pointerdown','mousemove','keydown','touchstart','touchmove','scroll','wheel'];
+    this._ssHandler = () => this._ssOnActivity();
+    this._ssEvents.forEach(ev => window.addEventListener(ev, this._ssHandler, { passive:true }));
+    this._ssArm();
+  }
+  componentWillUnmount(){
+    clearTimeout(this._ssIdleTimer);
+    clearInterval(this._ssRotTimer);
+    clearInterval(this._ssClockTimer);
+    if (this._ssHandler && this._ssEvents){
+      this._ssEvents.forEach(ev => window.removeEventListener(ev, this._ssHandler));
+    }
+  }
+
   // ─── Internal: complete OAuth sign-in with name/email from any provider ───
   _handleOAuthSignIn(name, email) {
     const displayName = (name || 'Guest').trim();
@@ -2226,6 +2332,10 @@ class Component extends DCLogic {
     const filled = S.filled;
     const remaining = Math.max(0, 9 - filled);
 
+    // Screensaver: current featured pour in the rotation
+    const ssList = this.SS_DRINK_IDS.map(id => this.MENU.find(m => m.id === id)).filter(Boolean);
+    const ssD = ssList[S.ssIndex % (ssList.length || 1)] || this.MENU[0];
+
     const nav = [
       { key:'home', icon:'🏠', label:'Home' },
       { key:'menu', icon:'🥗', label:'Menu' },
@@ -2244,6 +2354,15 @@ class Component extends DCLogic {
     return {
       splashGrad: this.themeGrad(),
       stickerDisplay: (this.props.showFruitStickers ?? true) ? 'block' : 'none',
+
+      // ── Screensaver / attract mode ──
+      screensaver: S.screensaver,
+      wakeScreensaver: () => this.wakeScreensaver(),
+      ssClock: S.ssClock,
+      ssDrink: {
+        name: ssD.name, emoji: ssD.emoji, grad: ssD.grad,
+        blurb: ssD.blurb, priceLabel: this.fmt(ssD.price), cat: ssD.cat
+      },
 
       isHome:S.screen==='home', isMenu:S.screen==='menu', isDetail:S.screen==='detail',
       isCart:S.screen==='cart', isCheckout:S.screen==='checkout', isConfirm:S.screen==='confirm',
