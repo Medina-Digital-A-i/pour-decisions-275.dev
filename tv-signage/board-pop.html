@@ -37,7 +37,7 @@ html,body{margin:0;height:100%;background:#0d1b1a;overflow:hidden}
 .note.out{animation:catout .4s ease-in forwards}
 /* grid */
 .grid{position:absolute;left:80px;right:80px;top:390px;bottom:60px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:26px}
-.grid.two{grid-template-columns:repeat(2,1fr)}
+.grid.two{grid-template-columns:repeat(2,1fr)}.grid.four{grid-template-columns:repeat(4,1fr)}.grid.four .card{padding-left:120px}.grid.four .tile{width:100px}.grid.four .tile i{width:62px;height:62px}.grid.four .nm{font-size:34px}.grid.four .ing{font-size:19px}.grid.four .pr{font-size:21px;padding:7px 11px}.grid.four .tag{display:none}
 .card{position:relative;background:#fff;border-radius:28px;padding:22px 28px 22px 150px;box-shadow:0 18px 40px rgba(20,97,93,.12);opacity:0;display:flex;flex-direction:column;justify-content:center;gap:8px;overflow:hidden}
 .card.on{animation:pop .75s cubic-bezier(.2,1.5,.4,1) forwards}
 .card.out{animation:fly .45s ease-in forwards}
@@ -50,7 +50,7 @@ html,body{margin:0;height:100%;background:#0d1b1a;overflow:hidden}
 .nm{font-family:Fraunces,serif;font-weight:800;font-size:40px;line-height:1;color:var(--ink)}
 .ing{font-size:21px;color:var(--muted);font-weight:600;line-height:1.3}
 .tag{display:inline-block;white-space:nowrap;align-self:flex-start;font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--deep);background:#E4F6F4;border-radius:999px;padding:5px 12px}
-.prices{display:flex;gap:10px;margin-top:4px}.pr{white-space:nowrap;background:var(--gold);color:#fff;font-weight:800;font-size:24px;padding:8px 14px;border-radius:14px;line-height:1;display:flex;align-items:baseline;gap:6px;transform:scale(0);transform-origin:left center}
+.prices{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}.pr{white-space:nowrap;background:var(--gold);color:#fff;font-weight:800;font-size:24px;padding:8px 14px;border-radius:14px;line-height:1;display:flex;align-items:baseline;gap:6px;transform:scale(0);transform-origin:left center}
 .card.on .pr{animation:tag .6s cubic-bezier(.2,1.5,.4,1) .4s forwards}
 @keyframes tag{to{transform:scale(1)}}
 .pr small{font-size:14px;opacity:.9}.pr2{background:var(--deep)}
@@ -78,23 +78,31 @@ html,body{margin:0;height:100%;background:#0d1b1a;overflow:hidden}
 const MENU = MENUJSON;
 const COLORS = {'the-regular':'#F25C7A','happy-hour':'#FF9A3C','green-light':'#4CB96B','nightcap':'#6B4FBB','designated-driver':'#FFE08A','last-call':'#FF4FA3','liquid-courage':'#8B5A2B','open-tab':'#B8336A','morning-shift':'#5C4033','heavy-pour':'#7A4A1E','early-bird':'#F47C8C','green-room':'#3E9E5E','carrot-cake':'#F28C28'};
 const money=n=>'$'+(Number.isInteger(n)?n:n.toFixed(2));
-const cats = MENU.categories.filter(c=>['smoothies','protein-oats'].includes(c.key));
+const ORDER=['smoothies','juices','shots','protein-oats','salads','wraps-paninis','bowls-breakfast'];
+const cats = ORDER.map(k=>MENU.categories.find(c=>c.key===k)).filter(Boolean);
+const FOODC={'southwest-black-bean':'#E0703A','mediterranean-chickpea':'#7BAE5C','cucumber-crunch':'#5BC48A','strawberry-spinach':'#E14C6A','apple-walnut-cranberry':'#B23B3B','southwest-wrap':'#D9822B','mediterranean-wrap':'#8AAE4C','ballistic-shrimp-burrito':'#F25C3B','pesto-panini':'#4F9A4B','chipotle-panini':'#C0392B','veggie-panini':'#6DA544','acai-bowl':'#5E3A8C','grits-bowl':'#E7C36A','oatmeal':'#C9A66B','soup':'#D9773B','avocado-toast':'#7CB342','innerg-elevator':'#F28C28','sober-up':'#5CB85C','ase':'#F2C230','red-eye':'#C2185B','hair-of-the-dog':'#B03060','skinny-dip':'#A8D8B9','sunday-brunch':'#FF5C7A','watermelon-lemon':'#FF6B6B','on-the-rocks':'#7FD6C2','clean-slate':'#8BC34A','flu-shot':'#F5A623','double-shot':'#F7D774','the-bouncer':'#6A4C93'};
+Object.assign(COLORS,FOODC);
 const $=s=>document.querySelector(s);
 function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);$('#stage').style.transform=`translate(-50%,-50%) scale(${s})`}
 addEventListener('resize',fit);fit();
 function card(it,i){
-  const sz=MENU.sizes[it.size]||[]; const base=sz[0]?money(sz[0].price):''; const big=sz[1]?money(sz[1].price):'';
+  const sz=MENU.sizes[it.size]||[];
+  let chips='';
+  if(sz.length){ chips=sz.map((z,k)=>`<div class="pr ${k?'pr2':''}" style="animation-delay:${.4+i*.13+k*.1}s">${money(z.price)}<small>${z.oz} oz</small></div>`).join(''); }
+  else if(it.prices){ chips=Object.entries(it.prices).map(([k,v],j)=>`<div class="pr ${j%2?'pr2':''}" style="animation-delay:${.4+i*.13+j*.1}s">${money(v)}<small>${k}</small></div>`).join(''); }
+  else if(it.price!=null){ chips=`<div class="pr" style="animation-delay:${.4+i*.13}s">${money(it.price)}</div>`; }
   return `<div class="card" style="animation-delay:${i*.13}s"><div class="tile"><i style="--c:${COLORS[it.id]||'#29B7AF'}"></i></div>
-  <div class="nm">${it.name}</div><div class="ing">${it.ingredients.join(' · ')}</div><div class="prices"><div class="pr" style="animation-delay:${.4+i*.13}s">${base}<small>16 oz</small></div><div class="pr pr2" style="animation-delay:${.5+i*.13}s">${big}<small>24 oz</small></div>${it.tag?`<span class="tag" style="align-self:center;margin-left:auto">${it.tag}</span>`:''}</div></div>`;
+  <div class="nm">${it.name}</div><div class="ing">${it.ingredients.join(' · ')}</div><div class="prices">${chips}${it.tag?`<span class="tag" style="align-self:center;margin-left:auto">${it.tag}</span>`:''}</div></div>`;
 }
 let idx=0;
 function show(){
   const c=cats[idx]; const cat=$('#cat'),note=$('#note'),grid=$('#grid');
   cat.className='cat';note.className='note';void cat.offsetWidth;
   cat.textContent=c.title; note.textContent=c.note.split(' · make')[0]; cat.classList.add('on'); note.classList.add('on');
-  grid.className='grid'+(c.items.length<=4?' two':''); grid.innerHTML=c.items.map(card).join('');
+  grid.className='grid'+(c.items.length<=4?' two':'')+(c.items.length>9?' four':'');
+  const pz=c.items[0]&&c.items[0].size?MENU.sizes[c.items[0].size]:null; document.querySelector('.pill').innerHTML = pz? pz.map(z=>`<span style="animation-delay:.2s">${z.oz} oz <b>${money(z.price)}</b></span>`).join('') : (c.proteins? `<span style="animation-delay:.2s">Add protein <b>${c.proteins.map(p=>p.name.split(' ').pop()+' +'+money(p.price)).join(' · ')}</b></span>`:''); grid.innerHTML=c.items.map(card).join('');
   requestAnimationFrame(()=>grid.querySelectorAll('.card').forEach(el=>el.classList.add('on')));
-  const hold = 4000 + c.items.length*130 + 14000;
+  const hold = 3000 + c.items.length*130 + (c.items.length>6?14000:9000);
   setTimeout(()=>{ cat.classList.add('out'); note.classList.add('out'); grid.querySelectorAll('.card').forEach((el,i)=>{el.style.animationDelay=(i*.04)+'s'; el.classList.add('out')});
     setTimeout(()=>{ idx=(idx+1)%cats.length; show(); }, 700); }, hold);
 }
