@@ -71,7 +71,7 @@ export default async (req) => {
   if (path === 'notify-status') {
     const env = { GMAIL_USER: !!process.env.GMAIL_USER, GMAIL_APP_PASSWORD: !!process.env.GMAIL_APP_PASSWORD, NOTIFY_TO: !!process.env.NOTIFY_TO, OWNER_EMAILS: !!process.env.OWNER_EMAILS };
     if (req.method === 'POST') {
-      try { const r = await notifyOwners({ subject: 'Test alert — email is working', text: 'This is the test alert from the Pour Decisions site. New-member emails will look like this.\n\nSent ' + new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }) }); return json({ env, result: r }); }
+      try { const r = await notifyOwners({ origin: url.origin, subject: 'Test alert — email is working', text: 'This is the test alert from the Pour Decisions site. New-member emails will look like this.\n\nSent ' + new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }) }); return json({ env, result: r }); }
       catch (e) { return json({ env, error: String(e && e.message || e).slice(0, 300) }, 500); }
     }
     return json({ env });
@@ -87,6 +87,7 @@ export default async (req) => {
     const m = { name, email, phone: String(body.phone || '').slice(0, 30), marketing: body.marketing !== false, birthday: body.birthday || '', salt, hash: await hash(pw, salt), points: 0, filled: 0, orders: [], prizes: [], created: new Date().toISOString(), fails: 0 };
     await saveMember(st, m);
     notifyOwners({
+      origin: url.origin,
       subject: `New Pour Pass member: ${name}`,
       text: `${name} just created an account.\n\nEmail: ${email}\nPhone: ${m.phone || '—'}\nDeals opt-in: ${m.marketing ? 'yes' : 'no'}\nBirthday: ${m.birthday || '—'}\nWhen: ${new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })}\n\nOwner dashboard: ${process.env.URL || ''}/admin.html`,
     }).catch(() => {});
@@ -122,7 +123,7 @@ export default async (req) => {
     const order = { id: Date.now(), date: new Date().toISOString().slice(0, 10), items, total, points: 0, status: 'unpaid' };
     m.orders = [order, ...(m.orders || [])].slice(0, 100);
     await saveMember(st, m);
-    if (process.env.NOTIFY_ORDERS === '1') notifyOwners({ subject: `Order request from ${m.name} — $${total.toFixed(2)}`, text: items.map((i) => `${i.qty} × ${i.name}`).join('\n') + `\n\nTotal $${total.toFixed(2)} (pay at pickup)\n${m.name} · ${m.email} · ${m.phone || ''}` }).catch(() => {});
+    if (process.env.NOTIFY_ORDERS === '1') notifyOwners({ origin: url.origin, subject: `Order request from ${m.name} — $${total.toFixed(2)}`, text: items.map((i) => `${i.qty} × ${i.name}`).join('\n') + `\n\nTotal $${total.toFixed(2)} (pay at pickup)\n${m.name} · ${m.email} · ${m.phone || ''}` }).catch(() => {});
     return json({ member: pub(m), order });
   }
   if (path === 'profile' && req.method === 'POST') {
