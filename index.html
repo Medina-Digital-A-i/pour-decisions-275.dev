@@ -2147,6 +2147,7 @@ class Component extends DCLogic {
   this.setState(s => ({ prev: s.screen, screen })); 
   this._syncHash(screen);
   this._track(screen);
+  if (screen === 'events') this.loadEvents();
   try{ window.scrollTo({top:0,behavior:'instant'}); }catch(e){}
   try{ document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }catch(e){}
   try{ document.querySelector('#pd-app').scrollTop = 0; }catch(e){}
@@ -2320,6 +2321,7 @@ class Component extends DCLogic {
     }
     this.setState(s => ({ prev: s.screen, ...patch }));
     this._track(screen);
+    if (screen === 'events') this.loadEvents();
     try { window.scrollTo({top:0,behavior:'instant'}); } catch(e) {}
   }
   loadEvents(){
