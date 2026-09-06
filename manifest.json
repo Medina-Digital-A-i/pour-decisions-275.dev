@@ -1,16 +1,40 @@
 {
   "name": "Pour Decisions Juice Bar",
   "short_name": "Pour Decisions",
-  "description": "Fresh cold-pressed juices, smoothies & wellness shots. 275 Lark St, Albany NY.",
+  "description": "Fresh cold-pressed juices, smoothies & wellness shots. 359 Northern Blvd, Albany NY.",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#E8426A",
-  "theme_color": "#E8426A",
-  "categories": ["food", "lifestyle"],
+  "background_color": "#FAF7F0",
+  "theme_color": "#3E9DB5",
+  "categories": [
+    "food",
+    "lifestyle"
+  ],
   "icons": [
-    { "src": "assets/pd-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
-    { "src": "assets/logo-clean-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "assets/logo-clean-512.png", "sizes": "192x192", "type": "image/png" }
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

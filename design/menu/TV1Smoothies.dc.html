@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@500;600;700;800&display=swap">
+  <style>
+:root{--cream:#FAF7F0;--paper:#FFFFFF;--ink:#14615D;--text:#2B2B26;--muted:#7C776A;--teal:#29B7AF;--teal-soft:#E4F6F4;--gold:#EF8A00;--gold-soft:#FFF1DC;--line:#E3D7C2;--sand:#F3EEE2}
+body{margin:0;background:var(--cream);color:var(--text);font-family:"Manrope","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--ink)} a:hover{color:var(--teal)}
+.cat{font-family:"Bebas Neue","Oswald","Impact",sans-serif;color:var(--ink);letter-spacing:.04em;line-height:.95;margin:0}
+.catnote{font-weight:700;color:var(--gold);letter-spacing:.02em}
+.it{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:.9em;align-items:baseline;border-bottom:1px solid var(--line)}
+.it:last-child{border-bottom:0}
+.it.multi{grid-template-columns:minmax(0,1fr)}.it.multi .pr{text-align:left;margin-top:.15em;font-size:.85em;white-space:normal}
+.nm{font-family:"Fraunces","Georgia",serif;font-weight:700;color:var(--text);line-height:1.1;display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
+.tag{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--ink);background:var(--teal-soft);border-radius:999px;white-space:nowrap}
+.tag.house{color:var(--gold);background:var(--gold-soft)}
+.ing{color:var(--muted);font-weight:500;line-height:1.35}
+.pr{font-weight:800;color:var(--gold);white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;line-height:1.2}
+.pr small{font-weight:700;color:var(--muted)}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:.6em}
+.box h4{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin:0}
+.box p{margin:0;font-weight:600;line-height:1.5}
+.box b{color:var(--gold)}
+.band{background:var(--ink);color:#fff;display:flex;align-items:center}
+.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#DDF3F1}
+.sz{display:inline-flex;align-items:center;gap:.4em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:700;color:#fff;white-space:nowrap}
+.sz b{color:#FFBE66}
+.shots{margin-top:1.1em}
+
+.page{width:1920px;height:1080px;background:var(--cream);display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden}
+.band{padding:22px 70px;gap:44px}
+.logo{height:104px}
+.band .tg{font-size:32px;flex:1}
+.pills{display:flex;gap:14px;font-size:24px}
+.sz{padding:10px 24px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 70px;padding:34px 70px 0;flex:1}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 56px;padding:34px 70px 0;flex:1}
+.cat{font-size:64px}
+.sech{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;min-height:96px}
+.catnote{font-size:22px}
+.it{padding:8px 0}
+.nm{font-size:33px}
+.tag{font-size:15px;padding:5px 12px}
+.ing{font-size:20px;margin-top:3px}
+.pr{font-size:28px}.pr small{font-size:18px}
+.box{padding:14px 22px;margin-top:16px}
+.box h4{font-size:16px;margin-bottom:6px}
+.box p{font-size:20px;line-height:1.45}
+.shots .cat{font-size:46px}.shots .it{padding:8px 0}.shots .nm{font-size:30px}.shots .ing{font-size:19px}.shots .pr{font-size:26px}.shots .sech{min-height:0;margin-bottom:8px}.shots{margin-top:0}
+.stack{display:flex;flex-direction:column}
+.cols3 .nm{font-size:26px}.cols3 .ing{font-size:16px}.cols3 .pr{font-size:23px}.cols3 .cat{font-size:54px}.cols3 .it{padding:7px 0}.cols3 .box{padding:14px 20px;margin-top:16px}.cols3 .box p{font-size:19px}.cols3 .sech{min-height:80px}
+</style>
+</helmet>
+
+<div class="page">
+  <div class="band" ><img src="logo-white.png" alt="Pour Decisions" class="logo"><div class="tg">Cold-pressed juice · smoothies · good food</div><div class="pills"><span class="sz">Smoothies <b>$9.50</b> 16 oz <b>$12.50</b> 24 oz</span><span class="sz">Juices <b>$9.50</b> 16 oz <b>$12.50</b> 24 oz</span></div></div>
+  <div class="cols">
+    <div class="stack"><div class="sec "><div class="sech"><h2 class="cat">Smoothies</h2><div class="catnote">16 oz $9.50 · 24 oz $12.50 · protein blends +$1</div></div><div class="it"><div><div class="nm">The Regular<span class="tag ">classic</span></div><div class="ing">strawberry · banana · oat milk · agave</div></div></div><div class="it"><div><div class="nm">Happy Hour<span class="tag ">tropical</span></div><div class="ing">strawberry · pineapple · mango · orange juice</div></div></div><div class="it"><div><div class="nm">Green Light<span class="tag ">no added sugar</span></div><div class="ing">spinach · kale · mango · pineapple · banana · ginger</div></div></div><div class="it"><div><div class="nm">Nightcap<span class="tag ">antioxidant</span></div><div class="ing">açaí · blueberry · strawberry · banana · almond milk</div></div></div><div class="it"><div><div class="nm">Designated Driver<span class="tag ">piña colada, no rum</span></div><div class="ing">pineapple · banana · coconut cream · coconut water</div></div></div><div class="it"><div><div class="nm">Last Call<span class="tag ">the pink one</span></div><div class="ing">pitaya · strawberry · pineapple · coconut water</div></div></div><div class="it"><div><div class="nm">Malibu<span class="tag ">beach day</span></div><div class="ing">orange · strawberry · ginger · pineapple · coconut water</div></div></div><div class="it"><div><div class="nm">Liquid Courage<span class="tag ">protein</span></div><div class="ing">peanut butter · banana · cacao · chocolate protein · almond milk</div></div><div class="pr">+$1</div></div><div class="it"><div><div class="nm">Open Tab<span class="tag ">PB&amp;J</span></div><div class="ing">peanut butter · strawberry · blueberry · banana · oat milk</div></div><div class="pr">+$1</div></div><div class="it"><div><div class="nm">Morning Shift<span class="tag ">coffee</span></div><div class="ing">cold brew · banana · peanut butter · cacao nibs · oat milk</div></div><div class="pr">+$1</div></div></div></div>
+    <div class="stack"><div class="sech"></div><div class="sec shots"><div class="sech"><h2 class="cat">Protein &amp; Oats</h2><div class="catnote">16 oz $11 · 24 oz $14 · oats + 20g protein</div></div><div class="it"><div><div class="nm">Heavy Pour<span class="tag ">post-workout</span></div><div class="ing">oats · peanut butter · banana · chocolate protein · cacao · cinnamon · almond milk</div></div></div><div class="it"><div><div class="nm">Early Bird<span class="tag ">breakfast</span></div><div class="ing">oats · strawberry · banana · vanilla protein · honey · oat milk</div></div></div><div class="it"><div><div class="nm">Green Room<span class="tag ">greens + protein</span></div><div class="ing">oats · spinach · banana · mango · vanilla protein · flax · almond milk</div></div></div><div class="it"><div><div class="nm">Carrot Cake<span class="tag ">dessert, but not</span></div><div class="ing">oats · carrot · banana · vanilla protein · walnut · cinnamon · oat milk</div></div></div></div><div class="box"><h4>Add-ins</h4><p>Protein (whey or plant) <b>+$2</b> · Oats <b>+$1</b> · Peanut butter <b>+$1.50</b> · Sea moss <b>+$2</b> · Collagen <b>+$2</b> · Chia / flax <b>+$1</b> · Spirulina <b>+$1.50</b> · Espresso shot <b>+$1.50</b> · Extra greens <b>+$1</b> · Extra fruit <b>+$1</b> · Fresh ginger or turmeric <b>+$0.50</b><br>Build Your Own — Pick up to 4 — same price as the menu</p></div></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -2,7 +2,7 @@
    v1.1 · stale-while-revalidate for shell, cache-first for assets,
    offline fallback to offline.html, network-only for cross-origin POSTs. */
 
-const VERSION = 'pd-v2.6.2';
+const VERSION = 'pd-v2.9.2';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -11,6 +11,7 @@ const SHELL_ASSETS = [
   './index.html',
   './offline.html',
   './manifest.json',
+  './menu.json',
   './assets/favicon.ico',
   './assets/favicon-16.png',
   './assets/favicon-32.png',
@@ -63,6 +64,20 @@ self.addEventListener('fetch', (event) => {
   // Skip cross-origin requests except CDN scripts/styles we want to cache
   const isCdn = /unpkg\.com|cdn\.tailwindcss\.com|fonts\.googleapis\.com|fonts\.gstatic\.com/.test(url.host);
   const isSameOrigin = url.origin === self.location.origin;
+
+  // menu.json is the menu's source of truth: network-first so an edit shows up on
+  // the next load, cached copy only when offline.
+  if (isSameOrigin && /\/menu\.json$/.test(url.pathname)) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res && res.status === 200) { const copy = res.clone(); caches.open(RUNTIME_CACHE).then((c) => c.put(req, copy)).catch(() => {}); }
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
 
   // Navigation requests: network-first, fall back to cached index, then offline page
   if (req.mode === 'navigate') {

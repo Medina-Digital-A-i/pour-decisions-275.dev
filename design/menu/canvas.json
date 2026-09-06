@@ -1,0 +1,34 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "Print \u00b7 Drinks (Letter)",
+      "x": 0,
+      "y": 0,
+      "w": 816,
+      "h": 1056,
+      "print": "fixed"
+    },
+    {
+      "file": "PrintFood.dc.html",
+      "title": "Print \u00b7 Food (Letter)",
+      "x": 900,
+      "y": 0,
+      "w": 816,
+      "h": 1056,
+      "print": "fixed"
+    },
+    {
+      "file": "Phone.dc.html",
+      "title": "Phone \u00b7 Full menu",
+      "x": 1800,
+      "y": 0,
+      "w": 390,
+      "h": 4400,
+      "print": "flow"
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}

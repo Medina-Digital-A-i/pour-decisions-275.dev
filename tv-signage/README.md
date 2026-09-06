@@ -37,3 +37,14 @@ Tweak the look by editing `index.html`:
 
 Everything is driven by a phase `p = frame / totalFrames`, using integer-cycle
 sines / triangle waves, so any speed value stays a **seamless loop**.
+
+## Digital menu board (`menu-board.html`)
+The in-store menu for the TVs. Reads `../menu.json` (falls back to an embedded copy),
+renders three 1920×1080 screens — Smoothies · Juices + Shots · Food — and rotates
+every 14 s. Open it in any browser on the TV (Chromecast, Fire Stick browser, or a
+mini PC in kiosk mode) at:
+
+    https://pourdecisionsjuicebar.com/tv-signage/menu-board.html
+
+Options: `?screen=2` pins one screen (one TV per category); `?secs=20` changes the
+rotation. It reloads itself every 6 hours so menu.json edits show up on their own.
