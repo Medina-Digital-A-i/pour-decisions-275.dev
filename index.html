@@ -2150,7 +2150,7 @@ class Component extends DCLogic {
         ? await this._api('signup', 'POST', { name, email, password, marketing: s.authMarketing !== false })
         : await this._api('signin', 'POST', { email, password });
       const patch = this._applyMember(data.member, data.token);
-      this.setState({ ...patch, authBusy:false, prev:'auth', screen:'home', authName:'', authEmail:'', authPassword:'', authError:'' });
+      this.setState({ ...patch, authBusy:false, prev:'auth', screen:'home', authName:'', authEmail:'', authPassword:'', authError:'' }); this._syncHash('home');
     } catch(e) {
       const patch = { authBusy:false, authError: e.message || 'Something went wrong. Try again.' };
       if (e.code === 'NO_ACCOUNT') patch.authMode = 'up';
