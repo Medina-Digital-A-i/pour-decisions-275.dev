@@ -161,25 +161,25 @@ print_food = doc('food', PRINT_FOOD_CSS, f'''
 # ---------- TV: 1920x1080 ----------
 TV_CSS = """
 .page{width:1920px;height:1080px;background:var(--cream);display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden}
-.band{padding:28px 70px;gap:44px}
-.logo{height:120px}
+.band{padding:22px 70px;gap:44px}
+.logo{height:104px}
 .band .tg{font-size:32px;flex:1}
 .pills{display:flex;gap:14px;font-size:24px}
 .sz{padding:10px 24px}
 .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 70px;padding:34px 70px 0;flex:1}
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 56px;padding:34px 70px 0;flex:1}
-.cat{font-size:66px}
-.sech{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;min-height:96px}
+.cat{font-size:64px}
+.sech{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;min-height:96px}
 .catnote{font-size:22px}
-.it{padding:12px 0}
-.nm{font-size:36px}
+.it{padding:8px 0}
+.nm{font-size:33px}
 .tag{font-size:15px;padding:5px 12px}
-.ing{font-size:21px;margin-top:4px}
-.pr{font-size:30px}.pr small{font-size:18px}
-.box{padding:18px 26px;margin-top:22px}
-.box h4{font-size:17px;margin-bottom:8px}
-.box p{font-size:22px}
-.shots .cat{font-size:44px}.shots .it{padding:7px 0}.shots .nm{font-size:29px}.shots .ing{font-size:18px}.shots .pr{font-size:26px}.shots .sech{min-height:0;margin-bottom:8px}
+.ing{font-size:20px;margin-top:3px}
+.pr{font-size:28px}.pr small{font-size:18px}
+.box{padding:14px 22px;margin-top:16px}
+.box h4{font-size:16px;margin-bottom:6px}
+.box p{font-size:20px;line-height:1.45}
+.shots .cat{font-size:46px}.shots .it{padding:8px 0}.shots .nm{font-size:30px}.shots .ing{font-size:19px}.shots .pr{font-size:26px}.shots .sech{min-height:0;margin-bottom:8px}.shots{margin-top:0}
 .stack{display:flex;flex-direction:column}
 .cols3 .nm{font-size:26px}.cols3 .ing{font-size:16px}.cols3 .pr{font-size:23px}.cols3 .cat{font-size:54px}.cols3 .it{padding:7px 0}.cols3 .box{padding:14px 20px;margin-top:16px}.cols3 .box p{font-size:19px}.cols3 .sech{min-height:80px}
 """
@@ -187,16 +187,16 @@ tv1 = doc('tv1', TV_CSS, f'''
 <div class="page">
   {band('logo-white.png')}
   <div class="cols">
-    <div class="stack">{section(sm, sm['items'][:5], note=smoothie_note)}</div>
-    <div class="stack"><div class="sech"></div>{''.join(item(i) for i in sm['items'][5:])}{box('Add-ins', addons_body)}</div>
+    <div class="stack">{section(sm, note=smoothie_note)}</div>
+    <div class="stack"><div class="sech"></div>{section(mo, cls='shots')}{box('Add-ins', addons_body)}</div>
   </div>
 </div>''')
-tv2 = doc('tv2', TV_CSS, f'''
-<div class="page">
+tv2 = doc('tv2', TV_CSS + '.page.tv2 .cols>.stack:first-child .it{padding:6px 0}.page.tv2 .cols>.stack:first-child .nm{font-size:31px}.page.tv2 .cols>.stack:first-child .ing{font-size:19px}', f'''
+<div class="page tv2">
   {band('logo-white.png')}
   <div class="cols">
-    <div class="stack">{section(ju, ju['items'][:5], note=juice_note)}{box(pk['title'], pack_body)}</div>
-    <div class="stack"><div class="sech"></div>{''.join(item(i) for i in ju['items'][5:])}{section(sh, note=shot_note, cls='shots')}</div>
+    <div class="stack">{section(ju, note=juice_note)}</div>
+    <div class="stack"><div class="sech"></div>{section(sh, note=shot_note, cls='shots')}{box(pk['title'], pack_body + '<br><span style="color:var(--muted)">' + juice_add + '</span>')}</div>
   </div>
 </div>''')
 tv3 = doc('tv3', TV_CSS, f'''
