@@ -42,6 +42,72 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600;1,9..144,900&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet">
 <style>
 .pd-menu-qr{display:none} @media(min-width:768px){.pd-menu-qr{position:relative;z-index:2;display:inline-flex;align-items:center;gap:12px;margin:18px auto 0;background:#fff;border-radius:16px;padding:8px 16px 8px 8px;color:#14403D;text-align:left;box-shadow:0 10px 24px rgba(0,0,0,.18)} .pd-menu-qr svg{width:76px;height:76px;display:block} .pd-menu-qr b{display:block;font-size:13px;line-height:1.2} .pd-menu-qr span{font-size:12px;font-weight:700;color:var(--gold)}}
+
+  /* ── Home (rebuilt Sep 2026) ───────────────────────────────── */
+  .hm{background:#FAF7F0;color:#2B2B26}
+  .hm-top{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 0}
+  .hm-logo{height:56px;width:auto;display:block}
+  .hm-top-right{display:flex;align-items:center;gap:8px}
+  .hm-status{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.04em;padding:7px 11px;border-radius:99px;white-space:nowrap}
+  .hm-status i{width:7px;height:7px;border-radius:50%;display:inline-block}
+  .hm-ico{position:relative;width:40px;height:40px;border-radius:50%;background:#fff;border:1.5px solid #E3D7C2;display:grid;place-items:center;color:#14615D}
+  .hm-ico b{position:absolute;top:-4px;right:-4px;background:#E07E00;color:#fff;font-size:10px;font-weight:800;min-width:18px;height:18px;border-radius:99px;display:grid;place-items:center;padding:0 4px}
+  .hm-avatar{background:#14615D;color:#fff;border-color:#14615D;font-weight:800;font-size:15px}
+  .hm-hero{padding:26px 20px 8px;text-align:left}
+  .hm-eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#E07E00}
+  .hm-h1{font-size:40px;line-height:.98;letter-spacing:-.035em;margin:8px 0 10px;color:#14615D;font-weight:800;text-wrap:balance}
+  .hm-lede{font-size:15px;line-height:1.5;color:#5C6B67;margin:0 0 16px;max-width:36ch;font-weight:500}
+  .hm-ctas{display:flex;gap:10px;flex-wrap:wrap}
+  .hm-btn{border:0;border-radius:999px;padding:14px 22px;font-weight:800;font-size:14.5px;font-family:inherit}
+  .hm-btn-gold{background:#E07E00;color:#fff;box-shadow:0 10px 24px rgba(224,126,0,.28)}
+  .hm-btn-ghost{background:#fff;color:#14615D;border:2px solid #E3D7C2}
+  .hm-sec{padding:22px 16px 0}
+  .hm-sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .hm-h2{font-size:22px;letter-spacing:-.02em;margin:0;color:#14615D;font-weight:800}
+  .hm-link{font-size:13px;font-weight:800;color:#14615D;text-decoration:none;white-space:nowrap}
+  .hm-linkish{text-decoration:none;color:#14615D}
+  .hm-chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+  .hm-chip{flex:0 0 auto;background:#fff;border:1.5px solid #E3D7C2;border-radius:99px;padding:9px 14px;font-weight:800;font-size:13px;color:#2B2B26;font-family:inherit}
+  .hm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .hm-tile{position:relative;border-radius:20px;padding:14px;min-height:172px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;box-shadow:0 8px 20px rgba(80,70,50,.10)}
+  .hm-tile-img{position:absolute;top:-4px;right:-8px;width:92px;height:92px;opacity:.95;filter:drop-shadow(0 6px 10px rgba(0,0,0,.18));pointer-events:none}
+  .hm-tile-kind{position:absolute;top:12px;left:12px;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:99px}
+  .hm-tile-body{position:relative;z-index:1}
+  .hm-tile-name{font-size:18px;font-weight:800;line-height:1.05;letter-spacing:-.02em}
+  .hm-tile-ing{font-size:11px;opacity:.85;margin-top:4px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .hm-tile-price{font-size:16px;font-weight:800;margin-top:8px}
+  .hm-tile-price small{font-size:10px;font-weight:700;opacity:.8;margin-left:2px}
+  .hm-tile-add{position:absolute;right:10px;bottom:10px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.95);color:#14615D;border:0;font-size:20px;line-height:1;font-weight:800;display:grid;place-items:center;z-index:2;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+  .hm-pass{display:flex;align-items:center;gap:14px;background:linear-gradient(150deg,#29B7AF,#1E8F89);color:#fff;border-radius:22px;padding:18px}
+  .hm-pass *{color:#fff}
+  .hm-pass-l{flex:1;min-width:0}.hm-pass-r{flex:0 0 auto}
+  .hm-kicker{font-size:11px;letter-spacing:.16em;font-weight:800;color:#FFBE66}
+  .hm-pass .hm-kicker{color:rgba(255,255,255,.85)}
+  .hm-pass-title{font-size:19px;font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-top:4px}
+  .hm-pass-sub{font-size:12.5px;opacity:.9;margin-top:6px;line-height:1.4}
+  .hm-stamps{display:flex;gap:5px;margin-top:10px}.hm-stamps i{flex:1;height:8px;border-radius:4px;display:block}
+  .hm-pill{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.55);padding:8px 12px;border-radius:99px;font-size:12px;font-weight:800;white-space:nowrap}
+  .hm-pill-gold{background:#E07E00;border-color:#E07E00}
+  .hm-promo{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#14615D;color:#fff;border-radius:22px;padding:18px}
+  .hm-promo *{color:#fff}.hm-promo .hm-kicker{color:#FFBE66}
+  .hm-promo-title{font-size:18px;font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-top:4px}
+  .hm-promo-sub{font-size:12px;opacity:.85;margin-top:6px}
+  .hm-event{display:flex;align-items:center;gap:14px;background:#fff;border:1.5px solid #E3D7C2;border-radius:22px;padding:14px 16px}
+  .hm-event-date{flex:0 0 56px;text-align:center;background:#FFF1DE;border-radius:14px;padding:8px 4px}
+  .hm-event-date b{display:block;font-size:22px;line-height:1;color:#E07E00}.hm-event-date span{font-size:10px;font-weight:800;letter-spacing:.1em;color:#B5631A}
+  .hm-event-title{font-size:16px;font-weight:800;color:#2B2B26;margin-top:2px}.hm-event-sub{font-size:12px;color:#8A8578;margin-top:2px}
+  .hm-visit{display:grid;grid-template-columns:1fr;gap:16px;background:#fff;border:1.5px solid #E3D7C2;border-radius:22px;padding:18px}
+  .hm-visit-big{font-size:15px;font-weight:800;color:#2B2B26;line-height:1.35;margin:4px 0 6px;display:block}
+  .hm-visit-sub{font-size:12px;color:#8A8578;font-weight:700}
+  .hm-venue{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#0A2725;color:#fff;border-radius:22px;padding:18px;flex-wrap:wrap}
+  .hm-venue *{color:#fff}
+  @media(min-width:768px){
+    .hm-h1{font-size:56px}.hm-hero{padding:40px 24px 12px}
+    .hm-grid{grid-template-columns:repeat(3,1fr);gap:14px}.hm-tile{min-height:196px}
+    .hm-visit{grid-template-columns:1fr 1fr 1fr}
+    .hm-sec{padding:26px 24px 0}.hm-top{padding:18px 24px 0}
+  }
+  @media(min-width:1024px){.hm-logo{display:none}.hm-top{justify-content:flex-end}}
   /* Menu screen — category sections + TV-board style tiles / price chips */
   .menu-section{margin-bottom:26px}
   .menu-section-head{padding:2px 4px 12px}
@@ -243,164 +309,137 @@
 
         <!-- ===================== HOME ===================== -->
         <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
-        <div style="animation:floatIn .35s ease both;">
-          <div class="pd-grove pd-hero" style="position:relative;min-height:428px;overflow:hidden;padding:20px 20px 34px;color:#fff;background:{{ splashGrad }};">
-            <svg class="pd-palm-l" viewBox="0 0 240 520" style="position:absolute;left:-48px;bottom:-36px;width:215px;height:auto;pointer-events:none;"><g fill="rgba(0,0,0,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
-            <svg style="position:absolute;left:37%;bottom:-50px;width:170px;height:auto;transform:scaleX(-1);pointer-events:none;" viewBox="0 0 240 520"><g fill="rgba(0,0,0,.17)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
-            <svg class="pd-palm-r" viewBox="0 0 240 520" style="position:absolute;right:-58px;bottom:-16px;width:150px;height:auto;transform:scaleX(-1);pointer-events:none;"><g fill="rgba(0,0,0,.15)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
-            <div style="position:absolute;top:12%;left:5%;font-size:80px;animation:bobY 8s ease-in-out infinite;filter:drop-shadow(0 10px 18px rgba(0,0,0,.22));pointer-events:none;z-index:1;opacity:.88;"></div>
-            <div style="position:absolute;top:10%;right:6%;font-size:80px;animation:bobYr 10s ease-in-out infinite;filter:drop-shadow(0 10px 18px rgba(0,0,0,.22));pointer-events:none;z-index:1;opacity:.88;"></div>
-            <div style="position:absolute;top:55%;left:3%;font-size:85px;animation:bobY 12s ease-in-out infinite;filter:drop-shadow(0 10px 18px rgba(0,0,0,.2));pointer-events:none;z-index:1;opacity:.88;"></div>
-            <div style="position:absolute;top:60%;right:4%;font-size:85px;animation:bobYr 9s ease-in-out infinite;filter:drop-shadow(0 10px 18px rgba(0,0,0,.2));pointer-events:none;z-index:1;opacity:.88;"></div>
-            <div style="position:absolute;bottom:8%;left:30%;font-size:75px;animation:bobY 11s ease-in-out infinite;filter:drop-shadow(0 8px 14px rgba(0,0,0,.18));pointer-events:none;z-index:1;opacity:.85;"></div>
-            <div style="position:absolute;bottom:10%;right:28%;font-size:75px;animation:bobYr 13s ease-in-out infinite;filter:drop-shadow(0 8px 14px rgba(0,0,0,.18));pointer-events:none;z-index:1;opacity:.85;"></div>
-            <!-- gradient fade into navy panel below -->
-            <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to bottom,transparent,rgba(20,64,61,.55));z-index:1;pointer-events:none;"></div>
+        <div class="hm" style="animation:floatIn .35s ease both;padding-bottom:120px;">
 
-            <div class="pd-hero-nav" style="display:flex;align-items:center;gap:10px;position:relative;z-index:2;min-height:88px;padding:16px 0 8px;">
-              <button onClick="{{ openDrawer }}" class="tap" aria-label="Menu" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.22);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);">
-                <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
-              </button>
-              <img class="pd-hero-logo" src="assets/logo-v3-512.png" style="height:76px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.38))" alt="Pour Decisions">
-              <span style="margin-left:auto;display:flex;gap:8px;">
-                <button onClick="{{ goNotif }}" class="tap" style="position:relative;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.95);border:2px solid var(--pink);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.2);">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" stroke="var(--pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-                  <span style="position:absolute;top:-2px;right:-2px;width:11px;height:11px;border-radius:50%;background:var(--lime);border:2px solid var(--orange);"></span>
-                </button>
-                <button onClick="{{ goCart }}" class="tap" style="position:relative;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.95);border:2px solid var(--pink);display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.2);">
-                  <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.5 12.5A2 2 0 0 0 9.5 18h8.5l2-9H6" stroke="var(--pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="10" cy="21" r="1.4" fill="var(--pink)"></circle><circle cx="17" cy="21" r="1.4" fill="var(--pink)"></circle></svg>
-                  <sc-if value="{{ hasCart }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:-3px;right:-3px;background:var(--lime);color:var(--teal-deep);font-size:11px;font-weight:800;min-width:19px;height:19px;border-radius:99px;display:grid;place-items:center;border:2px solid var(--orange);">{{ cartCount }}</span></sc-if>
-                </button>
-              </span>
-            </div>
-
-            <div class="pd-hero-body" style="position:relative;z-index:2;margin-top:28px;text-align:center;">
-              <span style="font-family:var(--f-num);letter-spacing:.22em;font-size:14px;color:#fff;background:rgba(0,0,0,.16);padding:4px 12px;border-radius:99px;">FRESH TODAY · ALBANY</span>
-              <h2 class="pd-hero-title" style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:52px;line-height:.9;letter-spacing:-.035em;margin:14px 0 0;text-shadow:0 4px 18px rgba(0,0,0,.22);">Pressed fresh,<br>every day.</h2>
-              <p style="font-family:var(--f-display);font-style:italic;font-size:16px;color:rgba(255,255,255,.8);margin:10px 0 0;font-weight:600;letter-spacing:.01em;">Albany's Freshest Cold-Pressed Juice Bar</p>
-              <button onClick="{{ goMenu }}" class="tap" style="margin-top:20px;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:14px 26px;border-radius:999px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.5);">Order ahead →</button>
-            </div>
-
-            <div class="pd-hero-cup" style="position:absolute;right:22px;bottom:26px;z-index:2;">
-              <div style="width:96px;height:132px;border:3px solid #fff;border-top:0;border-radius:8px 8px 26px 26px;overflow:hidden;background:rgba(255,255,255,.12);position:relative;box-shadow:0 12px 26px rgba(0,0,0,.2);">
-                <div style="position:absolute;left:0;right:0;bottom:0;height:74%;background:linear-gradient(180deg,#FFC978,#FF8A3D 60%,#2FC4BC);">
-                  <div style="position:absolute;top:-7px;left:0;right:0;height:13px;background:var(--gold-glow);border-radius:50%;animation:wobble 2.6s ease-in-out infinite;"></div>
-                </div>
-                <div style="position:absolute;top:-20px;left:22px;width:8px;height:44px;background:#fff;border-radius:99px;transform:rotate(12deg);"></div>
-              </div>
+          <!-- top bar: logo · status · account -->
+          <div class="hm-top">
+            <img src="assets/logo-v3-512.png" alt="Pour Decisions" class="hm-logo">
+            <div class="hm-top-right">
+              <span class="hm-status" style="background:{{ openBg }};color:{{ openFg }};"><i style="background:{{ openDot }}"></i>{{ openLabel }}</span>
+              <button onClick="{{ goCart }}" class="tap hm-ico" title="Cart"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.4 11.2a2 2 0 002 1.6h8.6a2 2 0 002-1.6L21.5 8H6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1.4" fill="currentColor"/><circle cx="17" cy="20" r="1.4" fill="currentColor"/></svg><sc-if value="{{ hasCartCount }}" hint-placeholder-val="{{ false }}"><b>{{ cartCount }}</b></sc-if></button>
+              <button onClick="{{ goAccountOrAuth }}" class="tap hm-ico hm-avatar" title="Account">{{ userInitial }}</button>
             </div>
           </div>
 
-          <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:28px 0 0;">
-            <div class="noscroll" style="display:flex;gap:9px;overflow-x:auto;padding:0 18px 6px;">
-              <sc-for list="{{ homeChips }}" as="c" hint-placeholder-count="4">
-                <span onClick="{{ c.go }}" class="tap" style="flex:0 0 auto;background:{{ c.bg }};color:{{ c.fg }};font-weight:{{ c.fw }};font-size:13px;padding:10px 18px;border-radius:99px;display:inline-flex;align-items:center;gap:6px;">{{ c.label }}</span>
+          <!-- hero -->
+          <div class="hm-hero">
+            <div class="hm-eyebrow">Cold-pressed in Albany · 359 Northern Blvd</div>
+            <h1 class="hm-h1">Pressed fresh, every day.</h1>
+            <p class="hm-lede">Cold-pressed juices, smoothies, wellness shots and good food — made here, made today.</p>
+            <div class="hm-ctas">
+              <button onClick="{{ goMenu }}" class="tap hm-btn hm-btn-gold">Order ahead</button>
+              <button onClick="{{ goPackages }}" class="tap hm-btn hm-btn-ghost">Build a juice pack</button>
+            </div>
+          </div>
+
+          <!-- menu grid -->
+          <div class="hm-sec">
+            <div class="hm-sec-head">
+              <h2 class="hm-h2">The menu</h2>
+              <span onClick="{{ goMenu }}" class="tap hm-link">See everything →</span>
+            </div>
+            <div class="hm-chips noscroll">
+              <sc-for list="{{ homeChips }}" as="c" hint-placeholder-count="5">
+                <button onClick="{{ c.go }}" class="tap hm-chip">{{ c.label }}</button>
               </sc-for>
             </div>
-
-            <div style="padding:20px 16px 6px;">
-              <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:12px;">
-                <h3 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:26px;color:#fff;margin:0;letter-spacing:-.02em;">Today's pours</h3>
-                <span onClick="{{ goMenu }}" class="tap" style="font-family:var(--f-num);letter-spacing:.14em;font-size:12px;color:var(--gold-glow);">SEE ALL</span>
-              </div>
-              <div class="noscroll" style="display:flex;gap:14px;overflow-x:auto;padding-bottom:4px;">
-                <sc-for list="{{ featured }}" as="it" hint-placeholder-count="3">
-                  <div onClick="{{ it.open }}" class="tap" style="flex:0 0 210px;border-radius:24px;padding:18px;min-height:250px;display:flex;flex-direction:column;justify-content:space-between;background:{{ it.grad }};color:{{ it.text }};position:relative;overflow:hidden;box-shadow:0 14px 30px {{ it.shadow }};">
-                    <img src="{{ it.icon }}" alt="" style="position:absolute;top:-6px;right:-10px;width:112px;height:112px;opacity:.9;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));pointer-events:none;">
-                    <span style="align-self:flex-start;background:{{ it.tagBg }};color:{{ it.tagFg }};font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:99px;position:relative;">{{ it.cat }}</span>
-                    <div style="position:relative;">
-                      <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:24px;line-height:.95;">{{ it.name }}</div>
-                      <div style="display:flex;align-items:center;gap:8px;margin-top:6px;"><span style="font-family:var(--f-num);font-size:30px;">{{ it.priceLabel }}</span><span style="font-size:11px;font-weight:700;opacity:.78;">{{ it.fromLabel }}</span></div>
-                    </div>
+            <div class="hm-grid">
+              <sc-for list="{{ homeItems }}" as="it" hint-placeholder-count="6">
+                <div onClick="{{ it.open }}" class="tap hm-tile" style="background:{{ it.grad }};color:{{ it.text }};">
+                  <img src="{{ it.icon }}" alt="" class="hm-tile-img">
+                  <span class="hm-tile-kind" style="background:{{ it.tagBg }};color:{{ it.tagFg }};">{{ it.cat }}</span>
+                  <div class="hm-tile-body">
+                    <div class="hm-tile-name">{{ it.name }}</div>
+                    <div class="hm-tile-ing">{{ it.ingredients }}</div>
+                    <div class="hm-tile-price">{{ it.priceLabel }} <small>{{ it.fromLabel }}</small></div>
                   </div>
-                </sc-for>
-              </div>
-            </div>
-
-            <sc-if value="{{ showInstallBanner }}" hint-placeholder-val="{{ false }}">
-            <div style="margin:20px 16px 0;background:linear-gradient(135deg,rgba(20,64,61,.95),rgba(26,78,74,.95));border:1px solid rgba(239,138,0,.3);border-radius:20px;padding:16px;display:flex;gap:14px;align-items:center;">
-              <div style="font-size:36px;flex:0 0 auto;"></div>
-              <div style="flex:1;min-width:0;">
-                <div style="font-weight:800;color:#fff;font-size:14px;margin-bottom:3px;">Add to Home Screen</div>
-                <div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.4;">Save Pour Decisions for quick ordering — no browser needed.</div>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:6px;flex:0 0 auto;">
-                <button onClick="{{ doInstall }}" class="tap" style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:12px;padding:8px 14px;border-radius:99px;border:0;white-space:nowrap;">Install</button>
-                <button onClick="{{ dismissInstall }}" class="tap" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-weight:600;font-size:11px;padding:6px 10px;border-radius:99px;border:0;white-space:nowrap;">Not now</button>
-              </div>
-            </div>
-            </sc-if>
-
-            <div onClick="{{ goWheel }}" class="tap" style="margin:20px 16px 0;border-radius:26px;padding:22px;background:linear-gradient(135deg,#FF6B35,#2FC4BC 55%,#7C3AED);color:#fff;position:relative;overflow:hidden;box-shadow:0 16px 34px rgba(47,196,188,.35);display:flex;align-items:center;gap:16px;">
-              <div style="position:absolute;top:-16px;right:-10px;font-size:96px;opacity:.25;"></div>
-              <div style="flex:0 0 auto;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:34px;backdrop-filter:blur(4px);"></div>
-              <div style="position:relative;flex:1;">
-                <div style="font-family:var(--f-num);letter-spacing:.18em;font-size:12px;color:var(--gold-glow);">FREE MONTHLY SPIN</div>
-                <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;line-height:1;margin:3px 0 2px;">Spin to win a free pour</div>
-                <div style="font-size:12px;color:rgba(255,255,255,.85);font-weight:600;">{{ spinSub }}</div>
-              </div>
-            </div>
-
-            <div style="margin:16px 16px 0;">
-              <div class="vq-promo">
-                <div class="vq-promo-tag">RENT THE SPACE</div>
-                <div class="vq-promo-h">Event space.</div>
-                <p class="vq-promo-p">Birthdays, parties, meetings and pop-ups &mdash; the whole bar, yours for the night.</p>
-                <button onClick="{{ goVenue }}" class="tap vq-promo-btn">Email for inquiries &rarr;</button>
-              </div>
-            </div>
-
-            <div onClick="{{ goPass }}" class="tap" style="margin:16px 16px 0;border-radius:26px;padding:26px 22px;background:linear-gradient(150deg,#29B7AF,#1E8F89);color:#fff;position:relative;overflow:hidden;box-shadow:0 16px 34px rgba(41,183,175,.3);">
-              <div style="position:absolute;bottom:-30px;right:-10px;font-size:120px;opacity:.28;"></div>
-              <div style="font-family:var(--f-num);letter-spacing:.18em;font-size:12px;color:rgba(255,255,255,.85);">POUR PASS</div>
-              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:26px;line-height:.98;margin:6px 0 12px;max-width:14ch;">{{ passRemaining }} pours from a free juice</div>
-              <div style="display:flex;gap:5px;">
-                <span style="flex:{{ passFilled }};height:9px;border-radius:99px;background:var(--teal-deep);"></span>
-                <span style="flex:{{ passEmpty }};height:9px;border-radius:99px;background:rgba(255,255,255,.25);"></span>
-              </div>
-            </div>
-            <sc-if value="{{ showSignInCta }}" hint-placeholder-val="{{ false }}">
-            <div style="margin:16px 16px 0;" onClick="{{ goAuth }}" class="tap">
-              <div style="background:linear-gradient(135deg,rgba(239,138,0,.18),rgba(239,138,0,.06));border:1px solid rgba(239,138,0,.35);border-radius:22px;padding:18px 20px;display:flex;align-items:center;gap:14px;">
-                <div style="font-size:38px;flex:0 0 auto;"></div>
-                <div style="flex:1;min-width:0;">
-                  <div style="font-weight:800;color:var(--gold-glow);font-size:15px;margin-bottom:4px;">Unlock Pour Pass Rewards</div>
-                  <div style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.4;">Sign in to earn points, spin the wheel &amp; compete for monthly prizes.</div>
+                  <button onClick="{{ it.add }}" class="tap hm-tile-add" title="Add to cart">+</button>
                 </div>
-                <button style="background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:13px;padding:10px 16px;border-radius:99px;border:0;flex:0 0 auto;white-space:nowrap;">Sign In</button>
-              </div>
+              </sc-for>
             </div>
-            </sc-if>
-
-            <div onClick="{{ goEvents }}" class="tap" style="margin:16px 16px 0;background:linear-gradient(135deg,rgba(20,64,61,.95),rgba(26,78,74,.9));border:1px solid rgba(41,183,175,.3);border-radius:20px;padding:14px 18px;display:flex;align-items:center;gap:14px;">
-              <span style="font-size:30px;flex:0 0 auto;"></span>
-              <div style="flex:1;">
-                <div style="font-weight:800;color:#fff;font-size:14px;margin-bottom:2px;">Private Events Available</div>
-                <div style="font-size:12px;color:rgba(255,255,255,.6);">Book our space for your next gathering → </div>
-              </div>
-            </div>
-            <!-- Instagram banner -->
-            <div onClick="{{ () =>window.open('https://www.instagram.com/pourdecisions_juicebar/','_blank') }}" class="tap" style="margin:20px 16px 0;background:linear-gradient(135deg,rgba(131,58,180,.18),rgba(41,183,175,.18));border:1px solid rgba(41,183,175,.3);border-radius:20px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex:0 0 28px;"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="4.5" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.3" fill="#fff"/></svg>
-              <div style="flex:1;">
-                <div style="font-weight:800;color:#fff;font-size:14px;">Follow us on Instagram</div>
-                <div style="font-size:12px;color:rgba(255,255,255,.6);">@pourdecisions_juicebar</div>
-              </div>
-              <span style="color:rgba(255,255,255,.5);font-size:20px;"></span>
-            </div>
-            <div style="height:118px;"></div>
           </div>
-          <!-- address + map -->
-          <div style="margin:0 0 0;background:#0A2725;padding:0;">
-            <div style="padding:20px 20px 10px;display:flex;align-items:center;gap:10px;">
-              <span style="font-size:18px;"></span>
+
+          <!-- Pour Pass -->
+          <div class="hm-sec">
+            <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ goPass }}" class="tap hm-pass">
+                <div class="hm-pass-l">
+                  <div class="hm-kicker">POUR PASS · {{ userName }}</div>
+                  <div class="hm-pass-title">{{ passRemaining }} pours from a free juice</div>
+                  <div class="hm-stamps"><sc-for list="{{ stamps }}" as="st" hint-placeholder-count="9"><i style="background:{{ st.bg }}"></i></sc-for></div>
+                </div>
+                <div class="hm-pass-r"><span class="hm-pill">{{ spinSubShort }}</span></div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
+              <div onClick="{{ goAuth }}" class="tap hm-pass">
+                <div class="hm-pass-l">
+                  <div class="hm-kicker">POUR PASS · FREE TO JOIN</div>
+                  <div class="hm-pass-title">Every pour earns a stamp. Nine stamps, the tenth's on us.</div>
+                  <div class="hm-pass-sub">Plus one free spin a month — shots, upgrades, points and the occasional free drink.</div>
+                </div>
+                <div class="hm-pass-r"><span class="hm-pill hm-pill-gold">Join free →</span></div>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- Build your own pack -->
+          <div class="hm-sec">
+            <div onClick="{{ goPackages }}" class="tap hm-promo">
               <div>
-                <div style="font-weight:700;color:#fff;font-size:14px;">359 Northern Blvd, Albany NY 12204</div>
-                <a href="https://maps.google.com/?q=359+Northern+Blvd+Albany+NY+12204" target="_blank" style="font-size:12px;color:var(--pink);text-decoration:none;font-weight:600;">Get Directions →</a>
+                <div class="hm-kicker" style="color:#FFBE66">BUILD YOUR OWN PACK</div>
+                <div class="hm-promo-title">Pick your juices and shots. The bigger the pack, the less you pay.</div>
+                <div class="hm-promo-sub">4+ items 5% off · 6+ 12% · 12+ 17% · 24+ 22% off</div>
+              </div>
+              <span class="hm-pill">Start a pack →</span>
+            </div>
+          </div>
+
+          <!-- Next event (only when there is one) -->
+          <sc-if value="{{ hasNextEvent }}" hint-placeholder-val="{{ false }}">
+          <div class="hm-sec">
+            <div onClick="{{ goEvents }}" class="tap hm-event">
+              <div class="hm-event-date"><b>{{ nextEventDay }}</b><span>{{ nextEventMon }}</span></div>
+              <div style="flex:1;min-width:0;">
+                <div class="hm-kicker">NEXT AT POUR DECISIONS</div>
+                <div class="hm-event-title">{{ nextEventTitle }}</div>
+                <div class="hm-event-sub">{{ nextEventSub }}</div>
+              </div>
+              <span class="hm-link">Events →</span>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- Visit -->
+          <div class="hm-sec">
+            <div class="hm-visit">
+              <div class="hm-visit-col">
+                <div class="hm-kicker">VISIT</div>
+                <div class="hm-visit-big">359 Northern Blvd<br>Albany, NY 12204</div>
+                <a href="https://maps.google.com/?q=359+Northern+Blvd+Albany+NY+12204" target="_blank" rel="noopener" class="hm-link">Get directions →</a>
+              </div>
+              <div class="hm-visit-col">
+                <div class="hm-kicker">HOURS</div>
+                <div class="hm-visit-big">{{ hoursLabel }}</div>
+                <div class="hm-visit-sub">{{ openLabel }}</div>
+              </div>
+              <div class="hm-visit-col">
+                <div class="hm-kicker">SAY HI</div>
+                <sc-if value="{{ hasPhone }}" hint-placeholder-val="{{ false }}"><a href="tel:{{ phoneTel }}" class="hm-visit-big hm-linkish">{{ phone }}</a></sc-if>
+                <a href="mailto:pourdecisionsalb@gmail.com" class="hm-link">pourdecisionsalb@gmail.com</a><br>
+                <a href="https://www.instagram.com/pourdecisions_juicebar/" target="_blank" rel="noopener" class="hm-link">@pourdecisions_juicebar</a>
               </div>
             </div>
-            <div style="height:160px;overflow:hidden;">
-              <iframe src="https://www.google.com/maps?q=359+Northern+Blvd+Albany+NY+12204&output=embed" width="100%" height="160" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <!-- Event space -->
+          <div class="hm-sec">
+            <div class="hm-venue">
+              <div>
+                <div class="hm-kicker" style="color:#FFBE66">THE SPACE</div>
+                <div class="hm-promo-title">Birthdays, pop-ups, meetings — the whole bar, yours.</div>
+              </div>
+              <button onClick="{{ goVenue }}" class="tap hm-btn hm-btn-gold" style="flex:0 0 auto">Book the space</button>
             </div>
           </div>
 
@@ -1407,7 +1446,7 @@
                   <div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$45</div>
                 </div>
                 <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">· 6 seasonal cold-pressed juices &nbsp;· Morning, midday &amp; afternoon blends &nbsp;· Pickup from 359 Northern Blvd</div>
-                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;" onClick="{{ goPass }}">Choose Plan · $45</button>
+                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;" onClick="{{ emailToOrder }}">Order · $45 (email us)</button>
               </div>
               <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
@@ -1415,7 +1454,7 @@
                   <div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$120</div>
                 </div>
                 <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">· 18 cold-pressed juices over 3 days &nbsp;· Nutrition guide included &nbsp;· Scheduled pickup each morning</div>
-                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;" onClick="{{ goPass }}">Choose Plan · $120</button>
+                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;" onClick="{{ emailToOrder }}">Order · $120 (email us)</button>
               </div>
               <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
@@ -1423,7 +1462,7 @@
                   <div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$185</div>
                 </div>
                 <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">· 30 cold-pressed juices over 5 days &nbsp;· Personalized blend selection &nbsp;· Progress check-in on day 3</div>
-                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;" onClick="{{ goPass }}">Choose Plan · $185</button>
+                <button class="tap" style="margin-top:14px;width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;" onClick="{{ emailToOrder }}">Order · $185 (email us)</button>
               </div>
             </div>
 
@@ -1436,7 +1475,7 @@
                   <div style="text-align:right;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$35</div><div style="font-size:10px;color:rgba(255,255,255,.4);">/week</div></div>
                 </div>
                 <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">· 1 fresh-pressed juice each weekday &nbsp;· Pick your blend or rotate &nbsp;· Ready by 8am</div>
-                <button class="tap" style="margin-top:14px;width:100%;background:rgba(255,255,255,.1);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Choose Plan · $35/wk</button>
+                <button onClick="{{ emailToOrder }}" class="tap" style="margin-top:14px;width:100%;background:rgba(255,255,255,.1);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Start · $35/wk (email us)</button>
               </div>
               <div style="background:linear-gradient(135deg,rgba(41,183,175,.12),rgba(239,138,0,.08));border:1.5px solid rgba(41,183,175,.45);border-radius:22px;padding:18px;position:relative;overflow:hidden;">
                 <div style="position:absolute;top:12px;right:12px;background:var(--pink);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:99px;letter-spacing:.06em;">MOST POPULAR</div>
@@ -1445,7 +1484,7 @@
                   <div style="text-align:right;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$60</div><div style="font-size:10px;color:rgba(255,255,255,.4);">/week</div></div>
                 </div>
                 <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">· Morning &amp; afternoon juice each day &nbsp;· Wellness + energy combo &nbsp;· Priority pickup queue</div>
-                <button class="tap" style="margin-top:14px;width:100%;background:var(--pink);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;box-shadow:0 8px 20px rgba(41,183,175,.4);">Choose Plan · $60/wk</button>
+                <button onClick="{{ emailToOrder }}" class="tap" style="margin-top:14px;width:100%;background:var(--pink);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;box-shadow:0 8px 20px rgba(41,183,175,.4);">Start · $60/wk (email us)</button>
               </div>
               <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
@@ -1453,7 +1492,7 @@
                   <div style="text-align:right;"><div style="font-family:var(--f-num);font-size:30px;color:var(--gold-glow);line-height:1;">$85</div><div style="font-size:10px;color:rgba(255,255,255,.4);">/week</div></div>
                 </div>
                 <div style="font-size:12px;color:rgba(255,255,255,.45);line-height:1.75;">· Morning, midday &amp; evening juices &nbsp;· Customizable daily rotation &nbsp;· Dedicated nutrition notes</div>
-                <button class="tap" style="margin-top:14px;width:100%;background:rgba(255,255,255,.1);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Choose Plan · $85/wk</button>
+                <button onClick="{{ emailToOrder }}" class="tap" style="margin-top:14px;width:100%;background:rgba(255,255,255,.1);color:#fff;font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">Start · $85/wk (email us)</button>
               </div>
             </div>
 
@@ -1936,12 +1975,7 @@ class Component extends DCLogic {
       wonId: null,
       prizes: ls('pd_prizes', []),
       orders: ls('pd_orders', []),
-      events: ls('pd_events', [
-        { id:1, title:'Cold Press Workshop', date:'2026-08-15', time:'11:00 AM', desc:'Learn how we cold-press every juice fresh daily. Hands-on demo included.', price:0, emoji:'', rsvpd:false },
-        { id:2, title:'Smoothie Bowl Pop-Up', date:'2026-08-22', time:'10:00 AM', desc:'Build your own bowl at our Saturday pop-up. All toppings included.', price:15, emoji:'', rsvpd:false },
-        { id:3, title:'Wellness Wednesday', date:'2026-08-26', time:'6:00 PM', desc:'Live yoga + complimentary wellness shot for all attendees.', price:0, emoji:'', rsvpd:false },
-        { id:4, title:'VIP Tasting Night', date:'2026-09-05', time:'7:00 PM', desc:'Members-only tasting of our new seasonal fall menu. Limited to 20 spots.', price:25, emoji:'', rsvpd:false }
-      ]),
+      events: [],
       venueSlots: ls('pd_venue', [
         { id:1, date:'2026-08-17', time:'Morning (9am–12pm)', capacity:30, status:'available', price:150 },
         { id:2, date:'2026-08-17', time:'Afternoon (1pm–5pm)', capacity:30, status:'available', price:200 },
@@ -2183,7 +2217,7 @@ class Component extends DCLogic {
   }
   _applyMember(m, token){
     const name = m.name || (m.email || '').split('@')[0] || 'Guest';
-    const user = { name, initial: name[0].toUpperCase(), email: m.email || '', phone: m.phone || '', marketing: !!m.marketing, role: m.role || 'member', birthday: m.birthday || '' };
+    const user = { name, initial: name[0].toUpperCase(), email: m.email || '', phone: m.phone || '', marketing: !!m.marketing, role: m.role || 'member', birthday: m.birthday || '', rsvps: m.rsvps || [] };
     const patch = { signedIn:true, user, points: m.points || 0, filled: m.filled || 0, orders: m.orders || [], canSpin: m.canSpin !== false, prizes: (m.prizes || []).map(p => ({ ...p, name: p.label, emoji: '', cat: 'Show code ' + p.code + ' at the counter', wonDate: p.wonDate })) };
     if (token) { patch.token = token; this._sv('pd_token', token); }
     this._sv('pd_signedIn', true); this._sv('pd_user', user); this._sv('pd_points', patch.points); this._sv('pd_filled', patch.filled); this._sv('pd_orders', patch.orders);
@@ -2216,7 +2250,7 @@ class Component extends DCLogic {
   // On load, refresh the menu from ./menu.json (the source of truth). The embedded
   // MENU_DATA copy already rendered, so this only re-renders if the file loaded.
   // ─── Hash routing: pourdecisionsjuicebar.com/#/menu, /#/menu/juices, /#/events … ───
-  get ROUTES(){ return ['home','menu','pass','events','packages','gallery','venue','wheel','prizes','account','cart','pina','auth']; }
+  get ROUTES(){ return ['home','menu','pass','events','packages','venue','wheel','prizes','account','cart','pina','auth']; }
   _slug(c){ return String(c||'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
   _syncHash(screen){
     if (!this.ROUTES.includes(screen)) return;
@@ -2249,7 +2283,15 @@ class Component extends DCLogic {
     this._track(screen);
     try { window.scrollTo({top:0,behavior:'instant'}); } catch(e) {}
   }
+  loadEvents(){
+    fetch('/api/events', { cache:'no-store' }).then(r => r.ok ? r.json() : null).then(d => {
+      if (!d || !Array.isArray(d.events)) return;
+      const mine = new Set((this.state.user && this.state.user.rsvps) || []);
+      this.setState({ events: d.events.map(e => ({ ...e, rsvpd: mine.has(e.id) })) });
+    }).catch(() => {});
+  }
   componentDidMount(){
+    this.loadEvents();
     if (this.state.token) { this._api('me').then(d => this.setState(this._applyMember(d.member))).catch(e => { if (e.status === 401) this.signOut(); }); }
     setTimeout(() => this._track(this.state.screen), 800);
     try { this._routeFromHash(); window.addEventListener('hashchange', () => this._routeFromHash()); } catch(e) {}
@@ -2263,6 +2305,7 @@ class Component extends DCLogic {
   applyMenuData(data){
     const b = buildMenu(data);
     this.ORDER_URL = (data && data.business && data.business.order_url) || '';
+    this.BIZ = (data && data.business) || this.BIZ || {};
     this.PACK_RULES = (data && data.packages && data.packages.byo && Array.isArray(data.packages.byo.tiers)) ? data.packages.byo : (this.PACK_RULES || { min: 4, tiers: [], kinds: ['juice','shot'] });
     this.WHEEL_PRIZES = (data && Array.isArray(data.wheel) && data.wheel.length) ? data.wheel : (this.WHEEL_PRIZES || []);
     this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured; this.SECTIONS = b.sections;
@@ -2671,11 +2714,9 @@ class Component extends DCLogic {
   }
 
   rsvpEvent(id){
-    this.setState(s => {
-      const events = s.events.map(e =>e.id === id ? { ...e, rsvpd: !e.rsvpd } : e);
-      this._sv('pd_events', events);
-      return { events };
-    });
+    if (!this.state.token) { this.go('auth'); return; }
+    this.setState(s => ({ events: s.events.map(e => e.id === id ? { ...e, rsvpd: !e.rsvpd } : e) }));
+    this._api('rsvp', 'POST', { eventId: id }).then(d => { this.setState(this._applyMember(d.member)); this.loadEvents(); }).catch(() => {});
   }
 
   submitRental(){
@@ -2834,12 +2875,34 @@ class Component extends DCLogic {
       subtotalLabel:this.fmt(sub), taxLabel:this.fmt(tax), totalLabel:this.fmt(total), placeLabel: this.ORDER_URL ? 'Continue to secure checkout' : 'Place order · ' + this.fmt(total),
 
       featured: this.FEATURED.map(id =>this.MENU.find(m =>m.id === id)).filter(Boolean).map(cardFields),
+      homeItems: (() => { const picked = this.FEATURED.map(id => this.MENU.find(m => m.id === id)).filter(Boolean); for (const m of this.MENU) { if (picked.length >= 6) break; if (m.drink && !picked.includes(m)) picked.push(m); } return picked.slice(0, 6).map(cardFields); })(),
+      ...(() => {
+        const B = (this.BIZ || {}); const open = B.open || '07:30', close = B.close || '17:00';
+        const now = new Date(); const et = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+        const mins = et.getHours() * 60 + et.getMinutes(); const toM = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+        const fmtT = t => { const [h, m] = t.split(':').map(Number); const hh = ((h + 11) % 12) + 1; return hh + (m ? ':' + String(m).padStart(2, '0') : '') + (h < 12 ? ' AM' : ' PM'); };
+        const isOpen = mins >= toM(open) && mins < toM(close);
+        const phone = B.phone || '';
+        return {
+          openLabel: isOpen ? 'Open now · closes ' + fmtT(close) : 'Closed · opens ' + fmtT(open), openBg: isOpen ? '#DDF3F1' : '#F3EEE2', openFg: isOpen ? '#14615D' : '#6E7470', openDot: isOpen ? '#29B7AF' : '#B5631A',
+          hoursLabel: B.hours || (fmtT(open) + ' – ' + fmtT(close) + ' daily'), phone, phoneTel: phone.replace(/[^\d+]/g, ''), hasPhone: !!phone,
+          signedOut: !S.signedIn, userInitial: (S.signedIn && S.user && S.user.initial) ? S.user.initial : '·',
+          goAccountOrAuth: () => this.go(S.signedIn ? 'account' : 'auth'),
+          emailToOrder: () => { location.href = 'mailto:pourdecisionsalb@gmail.com?subject=' + encodeURIComponent('Cleanse / subscription order') + '&body=' + encodeURIComponent('Hi Pour Decisions — I would like to order: \n\nName: \nPickup date: \n'); },
+          cartCount: (S.cart || []).reduce((a, c) => a + (c.qty || 1), 0), hasCartCount: (S.cart || []).length > 0,
+          spinSubShort: S.canSpin === false ? 'Spun this month' : 'Spin ready →',
+        };
+      })(),
+      ...(() => {
+        const today = new Date().toISOString().slice(0, 10);
+        const ev = (S.events || []).filter(e => e.date >= today).sort((a, b) => a.date < b.date ? -1 : 1)[0];
+        if (!ev) return { hasNextEvent: false, nextEventDay: '', nextEventMon: '', nextEventTitle: '', nextEventSub: '' };
+        const d = new Date(ev.date + 'T12:00:00');
+        return { hasNextEvent: true, nextEventDay: d.getDate(), nextEventMon: d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase(), nextEventTitle: ev.title, nextEventSub: (ev.time || '') + (ev.price ? ' · $' + ev.price : ' · Free') };
+      })(),
       menu: menu.map(cardFields),
 
-      homeChips: MENU_KINDS.filter(k =>this.CATS.includes(k.kind)).map((k, i) => ({
-        label:k.chip, cat:k.kind,
-        bg: i === 0 ? 'var(--gold)' : 'rgba(255,255,255,.1)', fg: i === 0 ? 'var(--teal-deep)' : '#fff', fw: i === 0 ? 800 : 700
-      })).map(c => ({ ...c, go:()=>{ this.setState({cat:c.cat}); this.go('menu'); } })),
+      homeChips: MENU_KINDS.filter(k =>this.CATS.includes(k.kind)).map((k, i) => ({ label:k.chip, cat:k.kind })).map(c => ({ ...c, go:()=>{ this.setState({cat:c.cat}); this.go('menu'); } })),
 
       benefitChips: [{key:'',icon:'',label:'All'}].concat(
         this.BENEFIT_ORDER.map(k => ({ key:k, icon:this.BENEFIT_TAGS[k].icon, label:this.BENEFIT_TAGS[k].label }))
@@ -2938,12 +3001,7 @@ class Component extends DCLogic {
         { emoji:'', title:'$3 off any smoothie', cost:250, grad:'linear-gradient(150deg,#8FE0DA,#2FC4BC)', ready:true }
       ].map(r=>({ ...r, btnLabel: S.points>=r.cost?'Redeem':'Locked', btnBg: S.points>=r.cost?'var(--gold)':'rgba(255,255,255,.1)', btnFg: S.points>=r.cost?'var(--teal-deep)':'rgba(255,255,255,.4)' })),
 
-      notifications: [
-        { emoji:'', title:'Your Pour Pass leveled up', time:'2m', body:'You hit Gold! Enjoy double points every Friday this month.', grad:'linear-gradient(150deg,#FFC978,#EF8A00)', bg:'rgba(239,138,0,.1)', border:'rgba(239,138,0,.3)' },
-        { emoji:'', title:'New: Sunday Brunch', time:'1h', body:'Watermelon, strawberry, apple — the summer pour just dropped.', grad:'linear-gradient(150deg,#63CFC8,#2FC4BC)', bg:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.08)' },
-        { emoji:'', title:'Order #4826 is ready', time:'3h', body:'Grab it at the 359 Northern Blvd pickup shelf — your name\'s on it.', grad:'linear-gradient(150deg,#22D3EE,#0EA5C4)', bg:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.08)' },
-        { emoji:'', title:'Happy Hour, 20% off', time:'1d', body:'Beat the heat — today only, tap to order ahead.', grad:'linear-gradient(150deg,#FFD54D,#FF8A3D)', bg:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.08)' }
-      ],
+      notifications: [],
 
       accountRows: [
         { icon:'', label:'Daily prize spin', go:()=>this.go('wheel') },
@@ -2997,8 +3055,7 @@ class Component extends DCLogic {
         { icon:'', label:'Plans',       sub:'Cleanses & subscriptions',  key:'packages' },
         { icon:'', label:'Events',      sub:'What\u2019s on this month', key:'events' },
         { icon:'', label:'Event Space', sub:'Rent the whole bar',        key:'venue' },
-        { icon:'', label:'Gallery',     sub:'See the shop',              key:'gallery' },
-        { icon:'', label:'Pour Pass',   sub:'9 pours = 1 free',          key:'pass' },
+                { icon:'', label:'Pour Pass',   sub:'9 pours = 1 free',          key:'pass' },
         { icon:'', label:'Daily Spin',  sub:'Free spin every day',       key:'wheel' },
         { icon:'', label:'My Prizes',   sub:'What you\u2019ve won',      key:'prizes' },
         { icon:'', label:'Account',     sub:'Points & orders',           key:'account' }

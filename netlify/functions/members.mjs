@@ -26,7 +26,7 @@ export const pub = (m) => ({
   name: m.name, email: m.email, phone: m.phone || '', marketing: !!m.marketing, birthday: m.birthday || '',
   points: m.points || 0, filled: m.filled || 0, orders: m.orders || [], prizes: m.prizes || [],
   lastSpinMonth: m.lastSpinMonth || '', canSpin: (m.lastSpinMonth || '') !== monthKey(),
-  role: isOwner(m.email) ? 'owner' : 'member', created: m.created,
+  role: isOwner(m.email) ? 'owner' : 'member', created: m.created, rsvps: m.rsvps || [],
 });
 export async function saveMember(st, m) {
   await st.setJSON('member:' + m.email, m);
@@ -153,6 +153,19 @@ export default async (req) => {
     if (win && /^\+(\d+) points$/i.test(w.label)) m.points = (m.points || 0) + +w.label.match(/\d+/)[0];
     await saveMember(st, m);
     return json({ index, win, prize, member: pub(m) });
+  }
+  if (path === 'rsvp' && req.method === 'POST') {
+    const id = String(body.eventId || '');
+    const ev = getStore({ name: 'content', consistency: 'strong' });
+    const events = (await ev.get('events', { type: 'json' })) || [];
+    const e = events.find(x => String(x.id) === id);
+    if (!e) return json({ error: 'That event is gone.' }, 404);
+    const has = (m.rsvps || []).includes(e.id);
+    m.rsvps = has ? m.rsvps.filter(x => x !== e.id) : [...(m.rsvps || []), e.id];
+    e.rsvps = Math.max(0, (e.rsvps || 0) + (has ? -1 : 1));
+    e.guests = (e.guests || []).filter(g => g.email !== m.email); if (!has) e.guests.push({ name: m.name, email: m.email, at: new Date().toISOString() });
+    await ev.setJSON('events', events); await saveMember(st, m);
+    return json({ member: pub(m), rsvpd: !has });
   }
   if (path === 'claim' && req.method === 'POST') {
     m.prizes = (m.prizes || []).map((p) => (p.id === +body.prizeId ? { ...p, claimed: true, claimedAt: new Date().toISOString() } : p));

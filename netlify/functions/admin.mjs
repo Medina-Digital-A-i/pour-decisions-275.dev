@@ -94,6 +94,26 @@ export default async (req) => {
     await saveMember(st, m);
     return json({ member: pub(m) });
   }
+  if (path === 'events') {
+    const ev = getStore({ name: 'content', consistency: 'strong' });
+    let events = (await ev.get('events', { type: 'json' })) || [];
+    if (req.method === 'GET') return json({ events: events.sort((a, b) => (a.date < b.date ? -1 : 1)) });
+    let b = {}; try { b = await req.json(); } catch {}
+    if (b.delete) { events = events.filter(e => String(e.id) !== String(b.id)); await ev.setJSON('events', events); return json({ events }); }
+    const clean = { title: String(b.title || '').trim().slice(0, 120), date: String(b.date || '').slice(0, 10), time: String(b.time || '').slice(0, 40), desc: String(b.desc || '').slice(0, 600), price: Math.max(0, +b.price || 0), link: String(b.link || '').slice(0, 300), hidden: !!b.hidden };
+    if (!clean.title || !/^\d{4}-\d{2}-\d{2}$/.test(clean.date)) return json({ error: 'Title and a date (YYYY-MM-DD) are required.' }, 400);
+    if (clean.link && !/^https?:\/\//.test(clean.link)) return json({ error: 'Link must start with http:// or https://' }, 400);
+    if (b.id) { const i = events.findIndex(e => String(e.id) === String(b.id)); if (i < 0) return json({ error: 'Not found' }, 404); events[i] = { ...events[i], ...clean }; }
+    else events.push({ id: Date.now(), ...clean, rsvps: 0, guests: [], created: new Date().toISOString() });
+    await ev.setJSON('events', events);
+    return json({ events: events.sort((a, b) => (a.date < b.date ? -1 : 1)) });
+  }
+  if (path === 'purge-test' && req.method === 'POST') {
+    // removes accounts on the internal test domain only
+    const keys = (await listAll(st, 'list:')).filter(k => k.endsWith('@pourdecisions.test'));
+    for (const k of keys) { const email = k.slice(5); await st.delete('list:' + email); await st.delete('member:' + email); }
+    return json({ removed: keys.length });
+  }
   if (path === 'members.csv') {
     const keys = await listAll(st, 'list:');
     const rows = (await Promise.all(keys.map((k) => st.get(k, { type: 'json' })))).filter(Boolean).sort((a, b) => (a.created < b.created ? 1 : -1));
