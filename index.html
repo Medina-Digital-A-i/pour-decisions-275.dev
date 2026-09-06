@@ -586,6 +586,7 @@
                 <div class="menu-tile" style="flex:0 0 62px;width:62px;height:62px;border-radius:16px;display:grid;place-items:center;box-shadow:0 6px 14px {{ ci.shadow }};"><img src="{{ ci.icon }}" alt="" style="width:50px;height:50px;display:block;"></div>
                 <div style="flex:1;min-width:0;">
                   <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:18px;color:#fff;line-height:1;">{{ ci.name }}</div>
+                  <sc-if value="{{ ci.sub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px;line-height:1.35;">{{ ci.sub }}</div></sc-if>
                   <div style="font-family:var(--f-num);font-size:22px;color:var(--gold-glow);margin-top:3px;">{{ ci.lineLabel }}</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border-radius:99px;padding:6px 8px;">
@@ -1349,6 +1350,41 @@
           </div>
           <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:26px 16px 0;">
 
+            <!-- BUILD YOUR OWN PACK (packs come from menu.json → packages.items with byo:true) -->
+            <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:11px;color:var(--gold-glow);margin-bottom:12px;">BUILD YOUR OWN PACK</div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;margin-bottom:28px;">
+              <div style="font-family:var(--f-display);font-weight:900;font-size:21px;color:#fff;line-height:1.1;">Pick your juices. We press them.</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.55);margin:6px 0 14px;line-height:1.5;">Choose a pack, then tap the juices you want — repeat a favorite as many times as you like. Pressed to order; 12 or more, give us a day.</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <sc-for list="{{ byoPacks }}" as="bp" hint-placeholder-count="3">
+                  <button onClick="{{ bp.pick }}" class="tap" style="flex:1 1 30%;min-width:120px;background:{{ bp.bg }};color:{{ bp.fg }};border:0;border-radius:16px;padding:12px 14px;text-align:left;font-family:inherit;">
+                    <div style="font-weight:800;font-size:14px;">{{ bp.name }}</div>
+                    <div style="font-size:11px;opacity:.85;margin-top:2px;">{{ bp.desc }} · {{ bp.priceLabel }}</div>
+                  </button>
+                </sc-for>
+              </div>
+              <sc-if value="{{ byoOpen }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px;">
+                  <div style="font-family:var(--f-num);letter-spacing:.14em;font-size:12px;color:var(--gold-glow);">{{ byoProgress }}</div>
+                  <div onClick="{{ byoCancel }}" class="tap" style="font-size:12px;color:rgba(255,255,255,.55);font-weight:700;">Clear</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ byoItems }}" as="bi" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:8px 10px;">
+                      <img src="{{ bi.icon }}" alt="" style="width:36px;height:36px;flex:0 0 36px;display:block;">
+                      <div style="flex:1;min-width:0;"><div style="font-weight:800;font-size:14px;color:#fff;">{{ bi.name }}</div><div style="font-size:11px;color:rgba(255,255,255,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ bi.ing }}</div></div>
+                      <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border-radius:99px;padding:4px 6px;flex:0 0 auto;">
+                        <button onClick="{{ bi.dec }}" class="tap" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);border:0;color:#fff;font-size:16px;line-height:1;display:grid;place-items:center;">−</button>
+                        <span style="min-width:16px;text-align:center;font-weight:800;color:#fff;font-size:14px;">{{ bi.n }}</span>
+                        <button onClick="{{ bi.inc }}" class="tap" style="width:26px;height:26px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:16px;line-height:1;display:grid;place-items:center;">+</button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+                <button onClick="{{ byoAddToCart }}" class="tap" style="margin-top:14px;width:100%;background:{{ byoCtaBg }};color:{{ byoCtaFg }};font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">{{ byoCta }}</button>
+              </sc-if>
+            </div>
+
             <!-- CLEANSES -->
             <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:11px;color:var(--gold-glow);margin-bottom:12px;">COLD PRESS CLEANSES</div>
             <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px;">
@@ -1883,6 +1919,7 @@ class Component extends DCLogic {
       orderNo: ls('pd_orderNo', 4827),
       rotation: 0,
       spinning: false, wonPrize: null, spinError: '', canSpin: true,
+      byoPack: '', byoPicks: {},
       wonId: null,
       prizes: ls('pd_prizes', []),
       orders: ls('pd_orders', []),
@@ -2213,6 +2250,7 @@ class Component extends DCLogic {
   applyMenuData(data){
     const b = buildMenu(data);
     this.ORDER_URL = (data && data.business && data.business.order_url) || '';
+    this.PACKS = (data && data.packages && Array.isArray(data.packages.items)) ? data.packages.items.filter(p => p.byo && p.id && p.count) : (this.PACKS || []);
     this.WHEEL_PRIZES = (data && Array.isArray(data.wheel) && data.wheel.length) ? data.wheel : (this.WHEEL_PRIZES || []);
     this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured; this.SECTIONS = b.sections;
   }
@@ -2245,11 +2283,32 @@ class Component extends DCLogic {
     // Cart lines carry {id, qty, free, size}. Lines for items no longer on the menu
     // (e.g. a stale localStorage cart after a menu change) are dropped, not crashed on.
     return this.state.cart.map(c => {
+      if (c.pack) {
+        const p = (this.PACKS || []).find(x => x.id === c.pack); if (!p) return null;
+        const names = Object.entries(c.picks || {}).map(([id, n]) => { const mm = this.MENU.find(m => m.id === id); return mm ? (n > 1 ? n + '× ' : '') + mm.name : null; }).filter(Boolean);
+        return { id: 'pack:' + p.id + ':' + (c.key || ''), packId: p.id, qty: c.qty, free: false, size: '', name: p.name, sub: names.join(', '), price: +p.price || 0, icon: 'assets/logo-icon-256.png', shadow: 'rgba(41,183,175,.3)', grad: 'linear-gradient(150deg,#29B7AF,#1E8F89)', kind: 'Pack', cat: 'Pack', emoji: '' };
+      }
       const m = this.MENU.find(m =>m.id === c.id);
       if (!m) return null;
       const sz = this.sizeOf(m, c.size);
-      return { ...m, qty: c.qty, free: c.free, size: sz.key, name: this.labelWithSize(m, sz), price: c.free ? 0 : sz.price };
+      return { ...m, qty: c.qty, free: c.free, size: sz.key, name: this.labelWithSize(m, sz), sub: '', price: c.free ? 0 : sz.price };
     }).filter(Boolean);
+  }
+  byoStart(id){ this.setState(s => ({ byoPack: s.byoPack === id ? '' : id, byoPicks: {} })); }
+  byoAdd(itemId, d){
+    this.setState(s => {
+      const p = (this.PACKS || []).find(x => x.id === s.byoPack); if (!p) return {};
+      const picks = { ...(s.byoPicks || {}) }, total = Object.values(picks).reduce((a, b) => a + b, 0), cur = picks[itemId] || 0;
+      if (d > 0 && total >= p.count) return {};
+      const nv = Math.max(0, cur + d); if (nv) picks[itemId] = nv; else delete picks[itemId];
+      return { byoPicks: picks };
+    });
+  }
+  byoAddToCart(){
+    const s = this.state, p = (this.PACKS || []).find(x => x.id === s.byoPack); if (!p) return;
+    const total = Object.values(s.byoPicks || {}).reduce((a, b) => a + b, 0); if (total !== p.count) return;
+    this.setState(st => { const cart = [...st.cart, { pack: p.id, picks: s.byoPicks, qty: 1, key: Date.now() }]; this._sv('pd_cart', cart); return { cart, byoPack: '', byoPicks: {} }; });
+    this.go('cart');
   }
   subtotal(){ return this.cartDetailed().reduce((a, c) =>a + c.price * c.qty, 0); }
 
@@ -2557,7 +2616,7 @@ class Component extends DCLogic {
 
   placeOrderNow(){
     if (this.state.token) {
-      const items = this.cartDetailed().map(ci => ({ name: ci.name, qty: ci.qty }));
+      const items = this.cartDetailed().map(ci => ({ name: ci.sub ? ci.name + ' — ' + ci.sub : ci.name, qty: ci.qty }));
       const total = Math.round(this.subtotal()*100)/100;
       this._api('order', 'POST', { items, total }).then(d => {
         const patch = this._applyMember(d.member);
@@ -2571,7 +2630,7 @@ class Component extends DCLogic {
     this.setState(s => {
       const newOrderNo = s.orderNo + 1;
       const today = new Date().toISOString().slice(0,10);
-      const items = this.cartDetailed().map(ci => ({ name: ci.name, qty: ci.qty }));
+      const items = this.cartDetailed().map(ci => ({ name: ci.sub ? ci.name + ' — ' + ci.sub : ci.name, qty: ci.qty }));
       const newOrder = { id: newOrderNo, date: today, items, total: Math.round(sub*100)/100, points: earned };
       const orders = [newOrder, ...s.orders];
       const newPoints = s.points + earned;
@@ -2810,6 +2869,19 @@ class Component extends DCLogic {
         inc:()=>this.changeQtyAt(i, 1), dec:()=>this.changeQtyAt(i, -1)
       })),
 
+      byoPacks: (this.PACKS || []).map(p => ({ ...p, priceLabel: this.fmt(+p.price || 0), bg: S.byoPack === p.id ? 'var(--gold)' : 'rgba(255,255,255,.1)', fg: S.byoPack === p.id ? 'var(--teal-deep)' : '#fff', pick: () => this.byoStart(p.id) })),
+      ...(() => {
+        const p = (this.PACKS || []).find(x => x.id === S.byoPack); const picks = S.byoPicks || {}; const n = Object.values(picks).reduce((a, b) => a + b, 0);
+        if (!p) return { byoOpen: false, byoItems: [], byoProgress: '', byoCta: '', byoCtaBg: '', byoCtaFg: '' };
+        const kind = p.kind === 'shot' ? 'Shots' : p.kind === 'smoothie' ? 'Smoothies' : 'Juices';
+        return {
+          byoOpen: true, byoProgress: n + ' of ' + p.count + ' picked' + (n === p.count ? ' — ready' : ''),
+          byoItems: this.MENU.filter(m => m.kind === kind).map(m => ({ id: m.id, name: m.name, ing: m.ingredients, icon: m.icon, n: picks[m.id] || 0, inc: () => this.byoAdd(m.id, 1), dec: () => this.byoAdd(m.id, -1) })),
+          byoCta: n === p.count ? 'Add ' + p.name + ' to cart · ' + this.fmt(+p.price || 0) : 'Pick ' + (p.count - n) + ' more',
+          byoCtaBg: n === p.count ? 'var(--gold)' : 'rgba(255,255,255,.1)', byoCtaFg: n === p.count ? 'var(--teal-deep)' : 'rgba(255,255,255,.7)',
+        };
+      })(),
+      byoAddToCart: () => this.byoAddToCart(), byoCancel: () => this.setState({ byoPack: '', byoPicks: {} }),
       pickupOptions: [
         { title:'ASAP', sub:'~12 min', bg:'var(--gold)', border:'var(--gold)', select:()=>{} , active:true},
         { title:'Schedule', sub:'Pick a time', bg:'rgba(255,255,255,.05)', border:'rgba(255,255,255,.12)', select:()=>{} }

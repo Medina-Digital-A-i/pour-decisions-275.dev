@@ -819,19 +819,31 @@
         "name": "Six Pack",
         "desc": "6 × 16 oz juices",
         "price": 50,
-        "save": "save $7"
+        "save": "save $7",
+        "id": "six-pack",
+        "count": 6,
+        "kind": "juice",
+        "byo": true
       },
       {
         "name": "The Case",
         "desc": "12 × 16 oz juices",
         "price": 95,
-        "save": "save $19"
+        "save": "save $19",
+        "id": "the-case",
+        "count": 12,
+        "kind": "juice",
+        "byo": true
       },
       {
         "name": "Shot Week",
         "desc": "7 × 2 oz wellness shots",
         "price": 26,
-        "save": "save $5.50"
+        "save": "save $5.50",
+        "id": "shot-week",
+        "count": 7,
+        "kind": "shot",
+        "byo": true
       },
       {
         "name": "Day Off",
