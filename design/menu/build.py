@@ -147,7 +147,7 @@ PRINT_FOOD_CSS = PRINT_CSS + """
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 26px;padding:22px 40px 0;flex:1}
 .cols3 .nm{font-size:15px}.cols3 .ing{font-size:11px}.cols3 .pr{font-size:13px}
 .cols3 .cat{font-size:30px}
-.cols3 .it{padding:4px 0}.cols3 .ing{font-size:10px}.cols3 .nm{font-size:14px}.cols3 .box{padding:7px 11px;margin-top:7px}.cols3 .box p{font-size:10.2px;line-height:1.4}.cols3 .box h4{font-size:8.5px}.cols3 .sech{margin-bottom:5px}
+.cols3 .it{padding:3px 0}.cols3 .ing{font-size:9.6px}.cols3 .nm{font-size:13.5px}.cols3 .box{padding:6px 10px;margin-top:6px}.cols3 .box p{font-size:9.8px;line-height:1.35}.cols3 .box h4{font-size:8.5px}.cols3 .sech{margin-bottom:5px}
 """
 print_food = doc('food', PRINT_FOOD_CSS, f'''
 <div class="page">

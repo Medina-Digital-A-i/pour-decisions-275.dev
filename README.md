@@ -1,6 +1,6 @@
 # Pour Decisions — website
 
-The customer-facing site for Pour Decisions juice bar (348 Loudon Plaza, Albany NY).
+The customer-facing site for Pour Decisions juice bar (359 Northern Blvd, Albany NY).
 It is a **static, installable PWA** hosted on **Netlify** at
 **https://pourdecisionsjuicebar.com**. There is no server: everything is in
 this repo, and Netlify publishes whatever is on the `main` branch.
