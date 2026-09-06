@@ -291,6 +291,16 @@
           "size": "juice"
         },
         {
+          "id": "watermelon-lemon",
+          "name": "Watermelon Lemon",
+          "ingredients": [
+            "watermelon",
+            "lemon"
+          ],
+          "tag": "simple",
+          "size": "juice"
+        },
+        {
           "id": "on-the-rocks",
           "name": "On the Rocks",
           "ingredients": [
