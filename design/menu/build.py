@@ -33,6 +33,7 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#DDF3F1}
 .sz{display:inline-flex;align-items:center;gap:.4em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:700;color:#fff;white-space:nowrap}
 .sz b{color:#FFBE66}
+.shots{margin-top:1.1em}
 """
 
 def item(it, show_size=True, food=False):
@@ -45,7 +46,7 @@ def item(it, show_size=True, food=False):
         if it['size'] == 'smoothie_protein':
             pr = f'<div class="pr">+$1</div>'
         elif it['size'] == 'shot':
-            pr = ''
+            pr = f'<div class="pr">{money(sz[0]["price"])}</div>'
         else:
             pr = ''
     elif it.get('prices'):
@@ -122,6 +123,7 @@ PRINT_CSS = """
 .box{padding:10px 14px;margin-top:12px}
 .box h4{font-size:9.5px;margin-bottom:4px}
 .box p{font-size:11.5px}
+.shots .cat{font-size:24px}.shots .sech{margin-top:4px}
 .foot{display:flex;justify-content:space-between;padding:14px 40px;background:var(--sand);font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.02em}
 .stack{display:flex;flex-direction:column;gap:0}
 """
@@ -130,7 +132,7 @@ print_drinks = doc('drinks', PRINT_CSS, f'''
   {band('logo-white.png')}
   <div class="cols">
     <div class="stack">{section(sm, note=smoothie_note)}{box('Add-ons', addons_body)}</div>
-    <div class="stack">{section(ju, note=juice_note)}{box('Cleanses', cleanse_body)}{box('Shots · ' + shot_note, shots_body)}</div>
+    <div class="stack">{section(ju, note=juice_note)}{box('Cleanses', cleanse_body)}{section(sh, note=shot_note, cls='shots')}</div>
   </div>
   {footer()}
 </div>''')
@@ -139,6 +141,7 @@ PRINT_FOOD_CSS = PRINT_CSS + """
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 26px;padding:22px 40px 0;flex:1}
 .cols3 .nm{font-size:15px}.cols3 .ing{font-size:11px}.cols3 .pr{font-size:13px}
 .cols3 .cat{font-size:30px}
+.cols3 .it{padding:5px 0}.cols3 .ing{font-size:10.5px}.cols3 .box{padding:8px 12px;margin-top:8px}
 """
 print_food = doc('food', PRINT_FOOD_CSS, f'''
 <div class="page">
@@ -172,8 +175,9 @@ TV_CSS = """
 .box{padding:18px 26px;margin-top:22px}
 .box h4{font-size:17px;margin-bottom:8px}
 .box p{font-size:22px}
+.shots .cat{font-size:44px}.shots .it{padding:7px 0}.shots .nm{font-size:29px}.shots .ing{font-size:18px}.shots .pr{font-size:26px}.shots .sech{min-height:0;margin-bottom:8px}
 .stack{display:flex;flex-direction:column}
-.cols3 .nm{font-size:28px}.cols3 .ing{font-size:17px}.cols3 .pr{font-size:23px}.cols3 .cat{font-size:54px}.cols3 .it{padding:9px 0}.cols3 .box{padding:14px 20px;margin-top:16px}.cols3 .box p{font-size:19px}.cols3 .sech{min-height:80px}
+.cols3 .nm{font-size:26px}.cols3 .ing{font-size:16px}.cols3 .pr{font-size:23px}.cols3 .cat{font-size:54px}.cols3 .it{padding:7px 0}.cols3 .box{padding:14px 20px;margin-top:16px}.cols3 .box p{font-size:19px}.cols3 .sech{min-height:80px}
 """
 tv1 = doc('tv1', TV_CSS, f'''
 <div class="page">
@@ -187,8 +191,8 @@ tv2 = doc('tv2', TV_CSS, f'''
 <div class="page">
   {band('logo-white.png')}
   <div class="cols">
-    <div class="stack">{section(ju, ju['items'][:5], note=juice_note)}</div>
-    <div class="stack"><div class="sech"></div>{''.join(item(i) for i in ju['items'][5:])}{box('Cleanses', cleanse_body)}{box('Shots · ' + shot_note, shots_body)}</div>
+    <div class="stack">{section(ju, ju['items'][:5], note=juice_note)}{box('Cleanses', cleanse_body)}</div>
+    <div class="stack"><div class="sech"></div>{''.join(item(i) for i in ju['items'][5:])}{section(sh, note=shot_note, cls='shots')}</div>
   </div>
 </div>''')
 tv3 = doc('tv3', TV_CSS, f'''
@@ -221,6 +225,7 @@ PHONE_CSS = """
 .box{padding:12px 16px;margin-top:12px}
 .box h4{font-size:10px;margin-bottom:5px}
 .box p{font-size:13px}
+.shots .cat{font-size:28px}
 .foot{display:flex;flex-direction:column;gap:4px;padding:18px 22px 28px;background:var(--sand);font-size:12px;font-weight:700;color:var(--ink)}
 .stack{display:flex;flex-direction:column}
 """

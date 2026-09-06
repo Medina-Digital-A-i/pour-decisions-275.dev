@@ -331,7 +331,7 @@
     },
     {
       "key": "shots",
-      "title": "Shots",
+      "title": "Wellness Shots",
       "note": "2 oz $4.50 · two for $8",
       "items": [
         {
@@ -507,14 +507,14 @@
           "name": "Ballistic Shrimp Burrito",
           "ingredients": [
             "crispy shrimp",
-            "ballistic sauce (chipotle-lime, kick of cayenne)",
+            "rice",
             "black beans",
-            "corn",
-            "red cabbage",
+            "tomato",
+            "onion",
             "avocado",
-            "cheddar",
+            "lettuce",
             "cilantro",
-            "flour tortilla"
+            "ballistic sauce"
           ],
           "price": 13.5,
           "tag": "spicy"
