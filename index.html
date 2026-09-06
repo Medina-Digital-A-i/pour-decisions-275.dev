@@ -2290,7 +2290,7 @@ class Component extends DCLogic {
   // On load, refresh the menu from ./menu.json (the source of truth). The embedded
   // MENU_DATA copy already rendered, so this only re-renders if the file loaded.
   // ─── Hash routing: pourdecisionsjuicebar.com/#/menu, /#/menu/juices, /#/events … ───
-  get ROUTES(){ return ['home','menu','pass','events','packages','venue','wheel','prizes','account','cart','pina','auth']; }
+  get ROUTES(){ return ['home','menu','pass','events','packages','gallery','venue','wheel','prizes','account','cart','pina','auth']; }
   _slug(c){ return String(c||'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
   _syncHash(screen){
     if (!this.ROUTES.includes(screen)) return;
@@ -2860,6 +2860,7 @@ class Component extends DCLogic {
       { key:'packages', icon:'', label:'Plans' },
       { key:'events', icon:'', label:'Events' },
       { key:'venue', icon:'', label:'Book' },
+      { key:'gallery', icon:'', label:'Gallery' },
       { key:'account', icon:'', label:'You' }
     ];
     const activeTab = ({ detail:'menu', checkout:'cart', confirm:'cart', notifications:'home', pina:'home', prizes:'account', admin:'account', pass:'account', packages:'packages', gallery:'gallery' })[S.screen] || S.screen;
@@ -3099,13 +3100,14 @@ class Component extends DCLogic {
       openDrawer: ()=>this.setState({drawerOpen:true}),
       closeDrawer: ()=>this.setState({drawerOpen:false}),
       drawerItems: [
-        { icon:'', label:'Home',        sub:'Today\u2019s pours',        key:'home' },
+        { icon:'', label:'Home',        sub:'Fresh today',               key:'home' },
         { icon:'', label:'Menu',        sub:'Juices, food & shots',      key:'menu' },
         { icon:'', label:'Plans',       sub:'Cleanses & subscriptions',  key:'packages' },
         { icon:'', label:'Events',      sub:'What\u2019s on this month', key:'events' },
         { icon:'', label:'Event Space', sub:'Rent the whole bar',        key:'venue' },
+        { icon:'', label:'Gallery',     sub:'The bar, the drinks, the people', key:'gallery' },
                 { icon:'', label:'Pour Pass',   sub:'9 pours = 1 free',          key:'pass' },
-        { icon:'', label:'Daily Spin',  sub:'Free spin every day',       key:'wheel' },
+        { icon:'', label:'Monthly Spin', sub:'One free spin a month',    key:'wheel' },
         { icon:'', label:'My Prizes',   sub:'What you\u2019ve won',      key:'prizes' },
         { icon:'', label:'Account',     sub:'Points & orders',           key:'account' }
       ].map(d => ({ ...d, go: ()=>{ this.setState({drawerOpen:false}); this.go(d.key); } })),
