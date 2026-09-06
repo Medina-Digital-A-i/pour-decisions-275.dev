@@ -64,3 +64,28 @@ Code: `netlify/functions/members.mjs`. Passwords are hashed (scrypt); 5 wrong tr
 
 Points: orders placed on the site are **recorded but earn 0 points until they're paid** —
 that switch flips when Clover payment confirmation is wired in (next step).
+
+## 8. Spin wheel odds & prizes
+The wheel has exactly 10 slices, defined in `menu.json → "wheel"`. Each has a `label`, a `short`
+label for the wheel graphic, and a `weight` (the odds — bigger number = more likely). Slices labeled
+"Not this time" are losses. `"+50 points"` style labels credit points automatically. Every member
+gets **one spin per calendar month**; wins get a 6-character code, good for 30 days. Staff verify
+the code in the Owner Dashboard → Members → Mark redeemed.
+
+## 9. Build Your Own Pack
+`menu.json → packages.items` entries with `"byo": true`, an `id`, a `count` and a `kind`
+(`juice` or `shot`) show up as buildable packs. Change the price there; the site, cart and owner
+dashboard follow.
+
+## 10. Owner dashboard — pourdecisionsjuicebar.com/admin.html
+Sign in with your normal site account. Only emails listed in the Netlify env var **OWNER_EMAILS**
+(comma-separated) get in. Shows members, sign-ups per day, visitors per day, order requests,
+purchase history per member, spin prizes to honor, birthdays this month, CSV export.
+
+## 11. New-member email alerts (Gmail, no extra service)
+Netlify → Environment variables:
+- `GMAIL_USER` = the sending Gmail (e.g. pourdecisionsalb@gmail.com)
+- `GMAIL_APP_PASSWORD` = a Gmail **App Password** (Google Account → Security → 2-Step Verification → App passwords; 16 characters)
+- `NOTIFY_TO` = who gets the alerts, comma-separated (Migs, Kendu)
+- optional `NOTIFY_ORDERS=1` to also get an email per order request
+If these aren't set, the site works normally and just doesn't email.
