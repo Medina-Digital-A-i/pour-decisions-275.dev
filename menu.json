@@ -685,6 +685,17 @@
           "price": 12.5
         },
         {
+          "id": "fruit-bowl",
+          "name": "Fruit Bowl",
+          "ingredients": [
+            "mixed fresh fruit",
+            "or all pineapple",
+            "or all watermelon"
+          ],
+          "price": 7,
+          "tag": "fresh cut"
+        },
+        {
           "id": "grits-bowl",
           "name": "Grits Bowl",
           "ingredients": [
