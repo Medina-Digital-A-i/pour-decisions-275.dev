@@ -49,8 +49,8 @@ export async function auth(req, st) {
   const m = await st.get('member:' + s.email, { type: 'json' });
   return m ? { m, token } : null;
 }
-async function loadWheel() {
-  const base = process.env.URL || process.env.DEPLOY_PRIME_URL || '';
+async function loadWheel(req) {
+  const base = new URL(req.url).origin;
   try {
     const r = await fetch(base + '/menu.json', { cache: 'no-store' });
     const menu = await r.json();
@@ -131,7 +131,7 @@ export default async (req) => {
       const next = new Date(); next.setUTCMonth(next.getUTCMonth() + 1, 1);
       return json({ error: 'You already spun this month. Next spin ' + next.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }) + '.', code: 'ALREADY_SPUN', nextSpin: next.toISOString().slice(0, 10) }, 429);
     }
-    const wheel = await loadWheel();
+    const wheel = await loadWheel(req);
     const total = wheel.reduce((s, w) => s + Math.max(0, +w.weight || 0), 0) || 1;
     let r = Math.random() * total, index = wheel.length - 1;
     for (let i = 0; i < wheel.length; i++) { r -= Math.max(0, +wheel[i].weight || 0); if (r < 0) { index = i; break; } }
