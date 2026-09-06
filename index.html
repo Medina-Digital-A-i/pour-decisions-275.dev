@@ -2895,7 +2895,7 @@ class Component extends DCLogic {
         const row = m => ({ id: m.id, name: m.name, ing: m.ingredients, icon: m.icon, n: picks[m.id] || 0, unit: this.fmt(this.sizeOf(m).price || 0), inc: () => this.byoAdd(m.id, 1), dec: () => this.byoAdd(m.id, -1) });
         const kinds = R.kinds || ['juice','shot'];
         return {
-          byoOpen: !!S.byoOpen || pr.count > 0,
+          byoOpen: true,
           byoJuices: kinds.includes('juice') ? this.MENU.filter(m => m.kind === 'Juices').map(row) : [],
           byoShots: kinds.includes('shot') ? this.MENU.filter(m => m.kind === 'Shots').map(row) : [],
           byoSmoothies: kinds.includes('smoothie') ? this.MENU.filter(m => m.kind === 'Smoothies').map(row) : [],
