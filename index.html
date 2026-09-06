@@ -227,9 +227,10 @@
 
             <sc-if value="{{ authModeUp }}" hint-placeholder-val="{{ false }}">
               <input value="{{ authName }}" onInput="{{ onAuthName }}" placeholder="Full name" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:12px;">
+              <div onClick="{{ toggleMarketing }}" class="tap" style="display:flex;align-items:center;gap:10px;margin:-6px 0 14px;color:rgba(255,255,255,.75);font-size:13px;font-weight:600;"><span style="width:20px;height:20px;border-radius:6px;border:2px solid var(--gold);display:grid;place-items:center;color:var(--gold);font-size:13px;font-weight:900;flex:0 0 20px;">{{ authMarketingMark }}</span>Email me new drops, deals &amp; Pour Pass perks</div>
             </sc-if>
             <input value="{{ authEmail }}" onInput="{{ onAuthEmail }}" placeholder="Email address" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:12px;">
-            <input type="password" placeholder="Password" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:18px;">
+            <input type="password" value="{{ authPassword }}" onInput="{{ onAuthPassword }}" placeholder="Password (6+ characters)" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:18px;">
 
             <sc-if value="{{ authError }}" hint-placeholder-val="{{ false }}"><div style="color:#FFBE66;font-size:13px;font-weight:600;margin:-6px 0 12px;">{{ authError }}</div></sc-if>
 
@@ -1857,6 +1858,8 @@ class Component extends DCLogic {
       signedIn: ls('pd_signedIn', false),
       user: ls('pd_user', { name:'Guest', initial:'G', email:'' }),
       authMode: 'in',
+      authPassword: '', authMarketing: true, authBusy: false,
+      token: ls('pd_token', ''),
       authName: '',
       authEmail: '',
       activeId: null,
@@ -1864,8 +1867,8 @@ class Component extends DCLogic {
       sizeKey: '',
       cart: ls('pd_cart', []),
       theme: 'Sunset',
-      points: ls('pd_points', 640),
-      filled: ls('pd_filled', 7),
+      points: ls('pd_points', 0),
+      filled: ls('pd_filled', 0),
       pina: (()=>{
   try{const h=JSON.parse(localStorage.getItem('pd_pina_chat')||'null');if(h&&Array.isArray(h)&&h.length)return h;}catch(e){}
   const prof=ls('pd_pina_profile',null);
@@ -1882,11 +1885,7 @@ class Component extends DCLogic {
       spinning: false,
       wonId: null,
       prizes: ls('pd_prizes', []),
-      orders: ls('pd_orders', [
-        { id:4825, date:'2026-06-28', items:[{name:'Green Light · 16 oz',qty:1},{name:'Double Shot',qty:2}], total:16.5, points:165 },
-        { id:4820, date:'2026-06-22', items:[{name:'The Regular · 16 oz',qty:1},{name:'Açaí Bowl',qty:1}], total:20, points:200 },
-        { id:4815, date:'2026-06-15', items:[{name:'InnerG Elevator · 16 oz',qty:2}], total:19, points:190 }
-      ]),
+      orders: ls('pd_orders', []),
       events: ls('pd_events', [
         { id:1, title:'Cold Press Workshop', date:'2026-08-15', time:'11:00 AM', desc:'Learn how we cold-press every juice fresh daily. Hands-on demo included.', price:0, emoji:'', rsvpd:false },
         { id:2, title:'Smoothie Bowl Pop-Up', date:'2026-08-22', time:'10:00 AM', desc:'Build your own bowl at our Saturday pop-up. All toppings included.', price:15, emoji:'', rsvpd:false },
@@ -2122,21 +2121,46 @@ class Component extends DCLogic {
       });
   }
 
-  signIn(){
-    this.setState(s => {
-      const email = (s.authEmail || '').trim().toLowerCase();
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return { authError: 'Enter a valid email address.' };
-      const name = (s.authName || '').trim() || email.split('@')[0];
-      const user = { name, initial: name[0].toUpperCase(), email };
-      this._sv('pd_signedIn', true);
-      this._sv('pd_user', user);
-      return { signedIn:true, prev:'auth', screen:'home', authName:'', authEmail:'', authError:'', user };
-    });
+  // ─── Accounts API (netlify/functions/members.mjs, data in Netlify Blobs) ───
+  async _api(path, method, body){
+    const headers = { 'content-type':'application/json' };
+    if (this.state.token) headers.authorization = 'Bearer ' + this.state.token;
+    const r = await fetch('/api/members/' + path, { method: method || 'GET', headers, body: body ? JSON.stringify(body) : undefined, cache:'no-store' });
+    let data = {}; try { data = await r.json(); } catch(e) {}
+    if (!r.ok) { const err = new Error(data.error || ('Request failed (' + r.status + ')')); err.status = r.status; err.code = data.code; throw err; }
+    return data;
+  }
+  _applyMember(m, token){
+    const name = m.name || (m.email || '').split('@')[0] || 'Guest';
+    const user = { name, initial: name[0].toUpperCase(), email: m.email || '', phone: m.phone || '', marketing: !!m.marketing };
+    const patch = { signedIn:true, user, points: m.points || 0, filled: m.filled || 0, orders: m.orders || [] };
+    if (token) { patch.token = token; this._sv('pd_token', token); }
+    this._sv('pd_signedIn', true); this._sv('pd_user', user); this._sv('pd_points', patch.points); this._sv('pd_filled', patch.filled); this._sv('pd_orders', patch.orders);
+    return patch;
+  }
+  async signIn(){
+    const s = this.state; if (s.authBusy) return;
+    const email = (s.authEmail || '').trim().toLowerCase(), password = s.authPassword || '', name = (s.authName || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return this.setState({ authError: 'Enter a valid email address.' });
+    if (s.authMode === 'up' && !name) return this.setState({ authError: 'Tell us your name.' });
+    if (password.length < 6) return this.setState({ authError: 'Password needs at least 6 characters.' });
+    this.setState({ authBusy:true, authError:'' });
+    try {
+      const data = s.authMode === 'up'
+        ? await this._api('signup', 'POST', { name, email, password, marketing: s.authMarketing !== false })
+        : await this._api('signin', 'POST', { email, password });
+      const patch = this._applyMember(data.member, data.token);
+      this.setState({ ...patch, authBusy:false, prev:'auth', screen:'home', authName:'', authEmail:'', authPassword:'', authError:'' });
+    } catch(e) {
+      const patch = { authBusy:false, authError: e.message || 'Something went wrong. Try again.' };
+      if (e.code === 'NO_ACCOUNT') patch.authMode = 'up';
+      this.setState(patch);
+    }
   }
   signOut(){
-    this._sv('pd_signedIn', false);
-    this._sv('pd_cart', []);
-    this.setState({ signedIn:false, screen:'auth', cart:[] });
+    if (this.state.token) { try { this._api('signout', 'POST', {}).catch(() => {}); } catch(e) {} }
+    ['pd_signedIn','pd_token','pd_cart','pd_points','pd_filled','pd_orders','pd_user'].forEach(k => { try { localStorage.removeItem(k); } catch(e) {} });
+    this.setState({ signedIn:false, token:'', screen:'auth', cart:[], points:0, filled:0, orders:[], user:{ name:'Guest', initial:'G', email:'' } });
   }
   // On load, refresh the menu from ./menu.json (the source of truth). The embedded
   // MENU_DATA copy already rendered, so this only re-renders if the file loaded.
@@ -2165,6 +2189,7 @@ class Component extends DCLogic {
     try { window.scrollTo({top:0,behavior:'instant'}); } catch(e) {}
   }
   componentDidMount(){
+    if (this.state.token) { this._api('me').then(d => this.setState(this._applyMember(d.member))).catch(e => { if (e.status === 401) this.signOut(); }); }
     try { this._routeFromHash(); window.addEventListener('hashchange', () => this._routeFromHash()); } catch(e) {}
     try {
       fetch('./menu.json', { cache:'no-store' })
@@ -2522,6 +2547,16 @@ class Component extends DCLogic {
   sendPina(){ const t = this.state.pinaInput.trim(); if (t) this.submit(t); }
 
   placeOrderNow(){
+    if (this.state.token) {
+      const items = this.cartDetailed().map(ci => ({ name: ci.name, qty: ci.qty }));
+      const total = Math.round(this.subtotal()*100)/100;
+      this._api('order', 'POST', { items, total }).then(d => {
+        const patch = this._applyMember(d.member);
+        this._sv('pd_cart', []);
+        this.setState({ ...patch, prev:'checkout', screen:'confirm', orderNo: d.order.id % 100000, cart:[] });
+      }).catch(() => this.setState({ authError:'' }));
+      return;
+    }
     const sub = this.subtotal();
     const earned = Math.max(10, Math.round(sub * 10));
     this.setState(s => {
@@ -2680,9 +2715,9 @@ class Component extends DCLogic {
       authMode:S.authMode, authModeIn:S.authMode==='in', authModeUp:S.authMode==='up',
       authTitle:S.authMode==='in'?'Welcome back':'Join the club',
       authSub:S.authMode==='in'?'Sign in to reorder, earn points and spin the wheel.':'Create an account to save your pours, points and payment.',
-      authCta:S.authMode==='in'?'Sign in':'Create account',
+      authCta:S.authBusy?'One sec…':(S.authMode==='in'?'Sign in':'Create account'),
       authToggleText:S.authMode==='in'?"New here? Create an account":'Already have an account? Sign in',
-      authName:S.authName, authEmail:S.authEmail, authError:S.authError||'',
+      authName:S.authName, authEmail:S.authEmail, authError:S.authError||'', authPassword:S.authPassword||'', authMarketing:S.authMarketing!==false, authMarketingMark:S.authMarketing!==false?'✓':'', onAuthPassword:(e)=>this.setState({authPassword:e.target.value, authError:''}), toggleMarketing:()=>this.setState(s=>({authMarketing:s.authMarketing===false})),
       onAuthName:(e)=>this.setState({authName:e.target.value}),
       onAuthEmail:(e)=>this.setState({authEmail:e.target.value, authError:''}),
       toggleAuthMode:()=>this.setState(s=>({authMode:s.authMode==='in'?'up':'in'})),

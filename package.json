@@ -1,0 +1,12 @@
+{
+  "name": "pour-decisions-site",
+  "private": true,
+  "description": "Pour Decisions juice bar — static PWA on Netlify. menu.json is the source of truth. Functions in netlify/functions use Netlify Blobs for member accounts.",
+  "scripts": {
+    "check": "node scripts/check-menu.js",
+    "dev": "npx netlify dev"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^8.2.0"
+  }
+}
