@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@500;600;700;800&display=swap">
+  <style>
+:root{--cream:#FAF7F0;--paper:#FFFFFF;--ink:#14615D;--text:#2B2B26;--muted:#7C776A;--teal:#29B7AF;--teal-soft:#E4F6F4;--gold:#EF8A00;--gold-soft:#FFF1DC;--line:#E3D7C2;--sand:#F3EEE2}
+body{margin:0;background:var(--cream);color:var(--text);font-family:"Manrope","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--ink)} a:hover{color:var(--teal)}
+.cat{font-family:"Bebas Neue","Oswald","Impact",sans-serif;color:var(--ink);letter-spacing:.04em;line-height:.95;margin:0}
+.catnote{font-weight:700;color:var(--gold);letter-spacing:.02em}
+.it{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:.9em;align-items:baseline;border-bottom:1px solid var(--line)}
+.it:last-child{border-bottom:0}
+.nm{font-family:"Fraunces","Georgia",serif;font-weight:700;color:var(--text);line-height:1.1;display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
+.tag{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--ink);background:var(--teal-soft);border-radius:999px;white-space:nowrap}
+.tag.house{color:var(--gold);background:var(--gold-soft)}
+.ing{color:var(--muted);font-weight:500;line-height:1.35}
+.pr{font-weight:800;color:var(--gold);white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;line-height:1.2}
+.pr small{font-weight:700;color:var(--muted)}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:.6em}
+.box h4{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin:0}
+.box p{margin:0;font-weight:600;line-height:1.5}
+.box b{color:var(--gold)}
+.band{background:var(--ink);color:#fff;display:flex;align-items:center}
+.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#DDF3F1}
+.sz{display:inline-flex;align-items:center;gap:.4em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:700;color:#fff;white-space:nowrap}
+.sz b{color:#FFBE66}
+
+.page{width:816px;height:1056px;background:var(--cream);display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden}
+.band{padding:22px 40px;gap:22px}
+.logo{height:64px}
+.band .tg{font-size:17px;flex:1}
+.pills{display:flex;flex-direction:column;gap:6px;font-size:12px}
+.sz{padding:4px 12px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 34px;padding:22px 40px 0;flex:1}
+.cat{font-size:34px}
+.sech{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
+.catnote{font-size:11px}
+.it{padding:7px 0}
+.nm{font-size:16px}
+.tag{font-size:8.5px;padding:2px 7px}
+.ing{font-size:11.5px;margin-top:2px}
+.pr{font-size:15px}.pr small{font-size:10px}
+.box{padding:10px 14px;margin-top:12px}
+.box h4{font-size:9.5px;margin-bottom:4px}
+.box p{font-size:11.5px}
+.foot{display:flex;justify-content:space-between;padding:14px 40px;background:var(--sand);font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.02em}
+.stack{display:flex;flex-direction:column;gap:0}
+
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 26px;padding:22px 40px 0;flex:1}
+.cols3 .nm{font-size:15px}.cols3 .ing{font-size:11px}.cols3 .pr{font-size:13px}
+.cols3 .cat{font-size:30px}
+</style>
+</helmet>
+
+<div class="page">
+  <div class="band" ><img src="logo-white.png" alt="Pour Decisions" class="logo"><div class="tg">Cold-pressed juice · smoothies · good food</div><div class="pills"></div></div>
+  <div class="cols3">
+    <div class="stack"><div class="sec "><div class="sech"><h2 class="cat">Salads</h2><div class="catnote">Meat-free by design</div></div><div class="it"><div><div class="nm">Southwest Black Bean</div><div class="ing">romaine · black beans · corn · tomato · avocado · red onion · cheddar · tortilla strips · chipotle-lime</div></div><div class="pr">$11</div></div><div class="it"><div><div class="nm">Mediterranean Chickpea</div><div class="ing">mixed greens · chickpeas · cucumber · tomato · red onion · kalamata olives · feta · roasted red pepper · lemon-herb</div></div><div class="pr">$11</div></div><div class="it"><div><div class="nm">Cucumber Crunch<span class="tag house">house</span></div><div class="ing">English cucumber · cherry tomato · red cabbage · bell pepper · red onion · cilantro · sesame · feta · lemon-lime</div></div><div class="pr">$9.50</div></div><div class="it"><div><div class="nm">Strawberry Spinach</div><div class="ing">spinach · strawberry · blueberry · walnut · feta · red onion · balsamic</div></div><div class="pr">$11</div></div><div class="it"><div><div class="nm">Apple Walnut Cranberry</div><div class="ing">spring mix · apple · dried cranberry · walnut · cucumber · feta · red onion · honey-mustard</div></div><div class="pr">$11</div></div></div><div class="box"><h4>Add protein</h4><p>Grilled chicken <b>+$5</b> · Albacore tuna <b>+$4</b> · Grilled salmon <b>+$7</b></p></div></div>
+    <div class="stack"><div class="sec "><div class="sech"><h2 class="cat">Wraps &amp; Paninis</h2><div class="catnote">Any wrap or panini + 16 oz smoothie $17</div></div><div class="it"><div><div class="nm">Southwest Wrap</div><div class="ing">the Southwest salad in a wheat tortilla</div></div><div class="pr">$11<small> chicken</small> &nbsp;$14<small> salmon</small> &nbsp;$10.50<small> tuna</small></div></div><div class="it"><div><div class="nm">Mediterranean Wrap</div><div class="ing">the Mediterranean salad in a wheat tortilla</div></div><div class="pr">$11<small> chicken</small> &nbsp;$14<small> salmon</small> &nbsp;$10.50<small> tuna</small></div></div><div class="it"><div><div class="nm">Pesto Panini</div><div class="ing">ciabatta · mozzarella · tomato · basil pesto</div></div><div class="pr">$11.50<small> chicken</small> &nbsp;$14.50<small> salmon</small> &nbsp;$10.50<small> tuna</small></div></div><div class="it"><div><div class="nm">Chipotle Panini</div><div class="ing">ciabatta · cheddar · avocado · chipotle aioli</div></div><div class="pr">$11.50<small> chicken</small> &nbsp;$14.50<small> salmon</small> &nbsp;$10.50<small> tuna</small></div></div><div class="it"><div><div class="nm">Veggie Panini</div><div class="ing">ciabatta · roasted red pepper · mozzarella · spinach · pesto</div></div><div class="pr">$9.50</div></div></div></div>
+    <div class="stack"><div class="sec "><div class="sech"><h2 class="cat">Bowls &amp; Breakfast</h2><div class="catnote"></div></div><div class="it"><div><div class="nm">Açaí Bowl</div><div class="ing">açaí · banana · granola · strawberry · blueberry · honey or PB drizzle</div></div><div class="pr">$12.50</div></div><div class="it"><div><div class="nm">Grits Bowl</div><div class="ing">stone-ground grits · spinach · tomato · egg</div></div><div class="pr">$10<small> veggie</small> &nbsp;$14<small> salmon</small> &nbsp;$15<small> shrimp</small></div></div><div class="it"><div><div class="nm">Oatmeal</div><div class="ing">plain · or loaded: berries, walnuts, honey, cinnamon</div></div><div class="pr">$5<small> plain</small> &nbsp;$8<small> loaded</small></div></div><div class="it"><div><div class="nm">Soup of the Day</div><div class="ing">with sourdough</div></div><div class="pr">$6<small> cup</small> &nbsp;$9<small> bowl</small></div></div><div class="it"><div><div class="nm">Avocado Toast</div><div class="ing">sourdough · smashed avocado · lemon · chili flake · microgreens · +egg $2 · +smoked salmon $5</div></div><div class="pr">$9</div></div></div><div class="box"><h4>Pour Pass</h4><p>Pour Pass Gold <b>$75</b>/month — 10 juices + 20% off<br>Pour Pass Platinum <b>$130</b>/month — 20 juices + 30% off</p></div></div>
+  </div>
+  <div class="foot"><span>348 Loudon Plaza, Albany NY 12211</span><span>@pourdecisions_juicebar</span><span>pourdecisionsjuicebar.com</span></div>
+</div>
+</x-dc>
+</body>
+</html>

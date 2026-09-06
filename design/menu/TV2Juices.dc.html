@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@500;600;700;800&display=swap">
+  <style>
+:root{--cream:#FAF7F0;--paper:#FFFFFF;--ink:#14615D;--text:#2B2B26;--muted:#7C776A;--teal:#29B7AF;--teal-soft:#E4F6F4;--gold:#EF8A00;--gold-soft:#FFF1DC;--line:#E3D7C2;--sand:#F3EEE2}
+body{margin:0;background:var(--cream);color:var(--text);font-family:"Manrope","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--ink)} a:hover{color:var(--teal)}
+.cat{font-family:"Bebas Neue","Oswald","Impact",sans-serif;color:var(--ink);letter-spacing:.04em;line-height:.95;margin:0}
+.catnote{font-weight:700;color:var(--gold);letter-spacing:.02em}
+.it{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:.9em;align-items:baseline;border-bottom:1px solid var(--line)}
+.it:last-child{border-bottom:0}
+.nm{font-family:"Fraunces","Georgia",serif;font-weight:700;color:var(--text);line-height:1.1;display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
+.tag{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--ink);background:var(--teal-soft);border-radius:999px;white-space:nowrap}
+.tag.house{color:var(--gold);background:var(--gold-soft)}
+.ing{color:var(--muted);font-weight:500;line-height:1.35}
+.pr{font-weight:800;color:var(--gold);white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;line-height:1.2}
+.pr small{font-weight:700;color:var(--muted)}
+.box{background:var(--paper);border:1px solid var(--line);border-radius:.6em}
+.box h4{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin:0}
+.box p{margin:0;font-weight:600;line-height:1.5}
+.box b{color:var(--gold)}
+.band{background:var(--ink);color:#fff;display:flex;align-items:center}
+.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#DDF3F1}
+.sz{display:inline-flex;align-items:center;gap:.4em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:700;color:#fff;white-space:nowrap}
+.sz b{color:#FFBE66}
+
+.page{width:1920px;height:1080px;background:var(--cream);display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden}
+.band{padding:28px 70px;gap:44px}
+.logo{height:120px}
+.band .tg{font-size:32px;flex:1}
+.pills{display:flex;gap:14px;font-size:24px}
+.sz{padding:10px 24px}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 70px;padding:34px 70px 0;flex:1}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 56px;padding:34px 70px 0;flex:1}
+.cat{font-size:66px}
+.sech{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;min-height:96px}
+.catnote{font-size:22px}
+.it{padding:12px 0}
+.nm{font-size:36px}
+.tag{font-size:15px;padding:5px 12px}
+.ing{font-size:21px;margin-top:4px}
+.pr{font-size:30px}.pr small{font-size:18px}
+.box{padding:18px 26px;margin-top:22px}
+.box h4{font-size:17px;margin-bottom:8px}
+.box p{font-size:22px}
+.stack{display:flex;flex-direction:column}
+.cols3 .nm{font-size:28px}.cols3 .ing{font-size:17px}.cols3 .pr{font-size:23px}.cols3 .cat{font-size:54px}.cols3 .it{padding:9px 0}.cols3 .box{padding:14px 20px;margin-top:16px}.cols3 .box p{font-size:19px}.cols3 .sech{min-height:80px}
+</style>
+</helmet>
+
+<div class="page">
+  <div class="band" ><img src="logo-white.png" alt="Pour Decisions" class="logo"><div class="tg">Cold-pressed juice · smoothies · good food</div><div class="pills"><span class="sz">Smoothies <b>$9.50</b> 16 oz <b>$12.50</b> 24 oz</span><span class="sz">Juices <b>$9.50</b> 16 oz <b>$12.50</b> 24 oz</span></div></div>
+  <div class="cols">
+    <div class="stack"><div class="sec "><div class="sech"><h2 class="cat">Cold-Pressed Juices</h2><div class="catnote">16 oz $9.50 · 24 oz $12.50 · pressed fresh daily</div></div><div class="it"><div><div class="nm">InnerG Elevator<span class="tag ">immunity</span></div><div class="ing">orange · carrot · ginger · lemon</div></div></div><div class="it"><div><div class="nm">Sober Up<span class="tag ">cleanse</span></div><div class="ing">apple · celery · cucumber · parsley · cilantro · ginger · lemon · cayenne</div></div></div><div class="it"><div><div class="nm">Ase<span class="tag ">gut</span></div><div class="ing">pineapple · ginger · lemon · mint</div></div></div><div class="it"><div><div class="nm">Red Eye<span class="tag ">iron</span></div><div class="ing">beet · pineapple · strawberry</div></div></div><div class="it"><div><div class="nm">Hair of the Dog<span class="tag ">energy</span></div><div class="ing">beet · apple · carrot · lemon · ginger</div></div></div></div></div>
+    <div class="stack"><div class="sech"></div><div class="it"><div><div class="nm">Skinny Dip<span class="tag ">skin &amp; hydration</span></div><div class="ing">pear · pineapple · aloe vera · cucumber · apple · lime</div></div></div><div class="it"><div><div class="nm">Sunday Brunch<span class="tag ">just tastes good</span></div><div class="ing">watermelon · strawberry · apple</div></div></div><div class="it"><div><div class="nm">On the Rocks<span class="tag ">hydration</span></div><div class="ing">watermelon · cucumber · mint · lime · ginger</div></div></div><div class="it"><div><div class="nm">Clean Slate<span class="tag ">reset</span></div><div class="ing">celery · cucumber · cilantro · lime</div></div></div><div class="box"><h4>Cleanses</h4><p>1-Day Cleanse <b>$45</b> <span style="color:var(--muted)">6 juices</span> &nbsp;·&nbsp; 3-Day Cleanse <b>$120</b> <span style="color:var(--muted)">18 juices</span></p></div><div class="box"><h4>Shots · 2 oz $4.50 · two for $8</h4><p><span style="color:var(--text)">Flu Shot</span> <span style="color:var(--muted)">— orange, turmeric, ginger, black pepper, black seed oil, lemon, cayenne</span><br><span style="color:var(--text)">Double Shot</span> <span style="color:var(--muted)">— ginger, lemon, cayenne</span><br><span style="color:var(--text)">The Bouncer</span> <span style="color:var(--muted)">— sea moss, elderberry, lemon, cayenne</span></p></div></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

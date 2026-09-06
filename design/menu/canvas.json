@@ -1,0 +1,58 @@
+{
+  "artboards": [
+    {
+      "file": "Main.dc.html",
+      "title": "Print \u00b7 Drinks (Letter)",
+      "x": 0,
+      "y": 0,
+      "w": 816,
+      "h": 1056,
+      "print": "fixed"
+    },
+    {
+      "file": "PrintFood.dc.html",
+      "title": "Print \u00b7 Food (Letter)",
+      "x": 900,
+      "y": 0,
+      "w": 816,
+      "h": 1056,
+      "print": "fixed"
+    },
+    {
+      "file": "Phone.dc.html",
+      "title": "Phone \u00b7 Full menu",
+      "x": 2020,
+      "y": 0,
+      "w": 390,
+      "h": 4200,
+      "print": "flow"
+    },
+    {
+      "file": "TV1Smoothies.dc.html",
+      "title": "TV 1 \u00b7 Smoothies",
+      "x": 0,
+      "y": 1220,
+      "w": 1920,
+      "h": 1080
+    },
+    {
+      "file": "TV2Juices.dc.html",
+      "title": "TV 2 \u00b7 Juices & Shots",
+      "x": 0,
+      "y": 2440,
+      "w": 1920,
+      "h": 1080
+    },
+    {
+      "file": "TV3Food.dc.html",
+      "title": "TV 3 \u00b7 Food",
+      "x": 0,
+      "y": 3660,
+      "w": 1920,
+      "h": 1080
+    }
+  ],
+  "launch": {
+    "view": "canvas"
+  }
+}
