@@ -30,10 +30,10 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .box h4{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin:0}
 .box p{margin:0;font-weight:600;line-height:1.5}
 .box b{color:var(--gold)}
-.band{background:var(--ink);color:#fff;display:flex;align-items:center}
-.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#DDF3F1}
+.band{background:#34373C;color:#fff;display:flex;align-items:center}
+.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#BFE6DF}
 .sz{display:inline-flex;align-items:center;gap:.4em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:700;color:#fff;white-space:nowrap}
-.sz b{color:#FFBE66}
+.sz b{color:#D9A46F}
 .shots{margin-top:1.1em}
 """
 
