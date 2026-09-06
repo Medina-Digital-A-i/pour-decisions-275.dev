@@ -100,7 +100,7 @@ export default async (req) => {
     if (req.method === 'GET') return json({ events: events.sort((a, b) => (a.date < b.date ? -1 : 1)) });
     let b = {}; try { b = await req.json(); } catch {}
     if (b.delete) { events = events.filter(e => String(e.id) !== String(b.id)); await ev.setJSON('events', events); return json({ events }); }
-    const clean = { title: String(b.title || '').trim().slice(0, 120), date: String(b.date || '').slice(0, 10), time: String(b.time || '').slice(0, 40), desc: String(b.desc || '').slice(0, 600), price: Math.max(0, +b.price || 0), link: String(b.link || '').slice(0, 300), hidden: !!b.hidden };
+    const clean = { kind: ['popup','workshop','tasting','wellness','party','live','other'].includes(b.kind) ? b.kind : 'other', title: String(b.title || '').trim().slice(0, 120), date: String(b.date || '').slice(0, 10), time: String(b.time || '').slice(0, 40), desc: String(b.desc || '').slice(0, 600), price: Math.max(0, +b.price || 0), link: String(b.link || '').slice(0, 300), hidden: !!b.hidden };
     if (!clean.title || !/^\d{4}-\d{2}-\d{2}$/.test(clean.date)) return json({ error: 'Title and a date (YYYY-MM-DD) are required.' }, 400);
     if (clean.link && !/^https?:\/\//.test(clean.link)) return json({ error: 'Link must start with http:// or https://' }, 400);
     if (b.id) { const i = events.findIndex(e => String(e.id) === String(b.id)); if (i < 0) return json({ error: 'Not found' }, 404); events[i] = { ...events[i], ...clean }; }
