@@ -846,5 +846,67 @@
         "save": "save $51"
       }
     ]
-  }
+  },
+  "wheel": [
+    {
+      "id": "free-shot",
+      "label": "Free wellness shot",
+      "short": "FREE SHOT",
+      "weight": 16
+    },
+    {
+      "id": "size-up",
+      "label": "Free size upgrade (16 → 24 oz)",
+      "short": "SIZE UP",
+      "weight": 18
+    },
+    {
+      "id": "points-50",
+      "label": "+50 points",
+      "short": "+50 PTS",
+      "weight": 16
+    },
+    {
+      "id": "try-again",
+      "label": "Not this time",
+      "short": "NEXT MONTH",
+      "weight": 12
+    },
+    {
+      "id": "two-off",
+      "label": "$2 off any drink",
+      "short": "$2 OFF",
+      "weight": 12
+    },
+    {
+      "id": "free-addin",
+      "label": "Free add-in (protein, oats, sea moss…)",
+      "short": "FREE ADD-IN",
+      "weight": 12
+    },
+    {
+      "id": "free-drink",
+      "label": "Free 16 oz juice or smoothie",
+      "short": "FREE DRINK",
+      "weight": 4
+    },
+    {
+      "id": "try-again-2",
+      "label": "Not this time",
+      "short": "NEXT MONTH",
+      "weight": 6
+    },
+    {
+      "id": "points-25",
+      "label": "+25 points",
+      "short": "+25 PTS",
+      "weight": 3
+    },
+    {
+      "id": "bogo",
+      "label": "Buy one, get one 50% off",
+      "short": "BOGO 50%",
+      "weight": 1
+    }
+  ]
 }

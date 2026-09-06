@@ -48,6 +48,10 @@ else {
     for (const list of ['addons', 'proteins']) if (c[list]) c[list].forEach((a, i) => { if (!a.name || !isNum(a.price)) E(`${where}.${list}[${i}]: needs name + numeric price`); });
   });
 }
+if (m.wheel !== undefined) {
+  if (!Array.isArray(m.wheel) || m.wheel.length !== 10) E('wheel must be a list of exactly 10 slices (the wheel graphic has 10 segments)');
+  else m.wheel.forEach((w, i) => { if (!w.id || !w.label) E(`wheel[${i}]: needs id + label`); if (!isNum(w.weight)) E(`wheel[${i}]: weight must be a number (odds)`); if (w.itemId && !m.categories.some((c) => c.items.some((it) => it.id === w.itemId))) E(`wheel[${i}]: itemId "${w.itemId}" is not a menu item`); });
+}
 if (errs.length) { console.error('✖ menu.json has ' + errs.length + ' problem(s):\n  - ' + errs.join('\n  - ')); process.exit(1); }
 const n = m.categories.reduce((a, c) => a + c.items.length, 0);
 console.log(`✔ menu.json OK — ${m.categories.length} categories, ${n} items${m.business.order_url ? ', online ordering → ' + m.business.order_url : ', online ordering not set (pay at pickup)'}`);

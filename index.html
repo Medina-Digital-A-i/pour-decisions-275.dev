@@ -335,9 +335,9 @@
               <div style="position:absolute;top:-16px;right:-10px;font-size:96px;opacity:.25;"></div>
               <div style="flex:0 0 auto;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:34px;backdrop-filter:blur(4px);"></div>
               <div style="position:relative;flex:1;">
-                <div style="font-family:var(--f-num);letter-spacing:.18em;font-size:12px;color:var(--gold-glow);">FREE DAILY SPIN</div>
+                <div style="font-family:var(--f-num);letter-spacing:.18em;font-size:12px;color:var(--gold-glow);">FREE MONTHLY SPIN</div>
                 <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;line-height:1;margin:3px 0 2px;">Spin to win a free pour</div>
-                <div style="font-size:12px;color:rgba(255,255,255,.85);font-weight:600;">Your spin's ready — tap to play →</div>
+                <div style="font-size:12px;color:rgba(255,255,255,.85);font-weight:600;">{{ spinSub }}</div>
               </div>
             </div>
 
@@ -920,7 +920,7 @@
             <div class="pd-hero-nav" style="position:relative;z-index:2;display:flex;align-items:center;gap:10px;min-height:72px;"><div style="display:flex;gap:6px;flex:0 0 auto;"><button onClick="{{ back }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--pink);display:grid;place-items:center;flex:0 0 36px;" title="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="var(--pink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><button onClick="{{ goHome }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--pink);display:grid;place-items:center;flex:0 0 36px;" title="Home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 4l9 8" stroke="var(--pink)" stroke-width="2.2" stroke-linecap="round"/><path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="var(--pink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><img class="pd-hero-logo" src="assets/logo-v3-512.png" style="height:84px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.38));" alt="Pour Decisions"><span style="width:40px;flex:0 0 40px;margin-left:auto;"></span></div>
           </div>
           <div style="position:relative;z-index:3;text-align:center;color:#fff;padding:14px 24px 4px;">
-            <span style="font-family:var(--f-num);letter-spacing:.22em;font-size:14px;background:rgba(0,0,0,.16);padding:4px 14px;border-radius:99px;">FREE DAILY SPIN</span>
+            <span style="font-family:var(--f-num);letter-spacing:.22em;font-size:14px;background:rgba(0,0,0,.16);padding:4px 14px;border-radius:99px;">FREE MONTHLY SPIN</span>
             <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:40px;line-height:.92;letter-spacing:-.03em;margin:14px 0 6px;text-shadow:0 3px 14px rgba(0,0,0,.2);">Spin to win<br>a free pour</h2>
             <p style="font-size:13.5px;font-weight:500;color:rgba(255,255,255,.9);margin:0;">Land a slice, claim it free — on the house. </p>
           </div>
@@ -934,7 +934,7 @@
               <!-- rotating wheel -->
               <div style="position:relative;width:100%;height:100%;border-radius:50%;transition:transform 4.2s cubic-bezier(.16,.84,.3,1);transform:{{ wheelTransform }};background:conic-gradient(from -18deg,#84CC16 0deg 36deg,#2FC4BC 36deg 72deg,#555 72deg 108deg,#FF8A3D 108deg 144deg,#FFC64D 144deg 180deg,#7C3AED 180deg 216deg,#63CFC8 216deg 252deg,#555 252deg 288deg,#6D28D9 288deg 324deg,#EF8A00 324deg 360deg);box-shadow:inset 0 0 0 3px rgba(255,255,255,.5);">
                 <sc-for list="{{ wheelSlices }}" as="s" hint-placeholder-count="10">
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate({{ s.deg }}deg) translateY(-96px);font-size:{{ s.size }}px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">{{ s.emoji }}</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate({{ s.deg }}deg) translateY(-96px);font-size:{{ s.size }}px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);text-align:center;width:72px;line-height:1.05;">{{ s.emoji }}</div>
                 </sc-for>
               </div>
             </div>
@@ -944,7 +944,7 @@
 
           <div style="position:relative;z-index:3;text-align:center;margin-top:22px;">
             <button onClick="{{ spin }}" class="tap" style="background:var(--navy);color:#fff;font-weight:800;font-size:15px;padding:15px 40px;border-radius:99px;border:0;box-shadow:0 12px 28px rgba(0,0,0,.28);">Spin the wheel</button>
-            <p style="color:rgba(255,255,255,.82);font-size:12px;font-weight:600;margin:14px 0 0;">1 free spin every day · come back tomorrow for more</p>
+            <p style="color:rgba(255,255,255,.82);font-size:12px;font-weight:600;margin:14px 0 0;">{{ spinNote }}</p>
           </div>
 
           <!-- WIN OVERLAY: Signed-in + won a prize -->
@@ -956,7 +956,7 @@
               <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:{{ wonItem.grad }};display:grid;place-items:center;font-size:60px;box-shadow:0 14px 30px rgba(0,0,0,.3);">{{ wonItem.emoji }}</div>
               <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:14px;color:var(--gold-glow);margin-top:18px;">YOU WON</div>
               <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;line-height:1;margin-top:4px;">{{ wonItem.name }}</div>
-              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">A free {{ wonItem.cat }}, on us </div>
+              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">{{ wonItem.cat }}</div>
               <button onClick="{{ claimFree }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;margin-top:22px;box-shadow:0 10px 24px rgba(239,138,0,.4);">Claim it free →</button>
               <div onClick="{{ dismissWin }}" class="tap" style="color:rgba(255,255,255,.6);font-weight:700;font-size:13px;margin-top:14px;">Maybe later</div>
             </div>
@@ -986,7 +986,7 @@
               <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:60px;"></div>
               <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:14px;color:rgba(255,255,255,.5);margin-top:18px;">BETTER LUCK NEXT TIME</div>
               <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;line-height:1;margin-top:4px;">Try again!</div>
-              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">Spin again tomorrow for another chance </div>
+              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">Spin again next month — every member gets one free spin a month</div>
               <button onClick="{{ dismissLose }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;margin-top:22px;">OK, I'll be back!</button>
             </div>
           </div>
@@ -1882,7 +1882,7 @@ class Component extends DCLogic {
       pinaTab: 'chat',
       orderNo: ls('pd_orderNo', 4827),
       rotation: 0,
-      spinning: false,
+      spinning: false, wonPrize: null, spinError: '', canSpin: true,
       wonId: null,
       prizes: ls('pd_prizes', []),
       orders: ls('pd_orders', []),
@@ -2023,6 +2023,7 @@ class Component extends DCLogic {
   go(screen){ 
   this.setState(s => ({ prev: s.screen, screen })); 
   this._syncHash(screen);
+  this._track(screen);
   try{ window.scrollTo({top:0,behavior:'instant'}); }catch(e){}
   try{ document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }catch(e){}
   try{ document.querySelector('#pd-app').scrollTop = 0; }catch(e){}
@@ -2132,8 +2133,8 @@ class Component extends DCLogic {
   }
   _applyMember(m, token){
     const name = m.name || (m.email || '').split('@')[0] || 'Guest';
-    const user = { name, initial: name[0].toUpperCase(), email: m.email || '', phone: m.phone || '', marketing: !!m.marketing };
-    const patch = { signedIn:true, user, points: m.points || 0, filled: m.filled || 0, orders: m.orders || [] };
+    const user = { name, initial: name[0].toUpperCase(), email: m.email || '', phone: m.phone || '', marketing: !!m.marketing, role: m.role || 'member', birthday: m.birthday || '' };
+    const patch = { signedIn:true, user, points: m.points || 0, filled: m.filled || 0, orders: m.orders || [], canSpin: m.canSpin !== false, prizes: (m.prizes || []).map(p => ({ ...p, name: p.label, emoji: '', cat: 'Show code ' + p.code + ' at the counter', wonDate: p.wonDate })) };
     if (token) { patch.token = token; this._sv('pd_token', token); }
     this._sv('pd_signedIn', true); this._sv('pd_user', user); this._sv('pd_points', patch.points); this._sv('pd_filled', patch.filled); this._sv('pd_orders', patch.orders);
     return patch;
@@ -2174,6 +2175,15 @@ class Component extends DCLogic {
     try { if (location.hash !== want) history.replaceState(null, '', want); } catch(e) {}
     setTimeout(() => { this._hashLock = false; }, 0);
   }
+  _track(screen){
+    try {
+      if (this._lastTracked === screen) return; this._lastTracked = screen;
+      let vid = localStorage.getItem('pd_vid'); if (!vid) { vid = Math.random().toString(36).slice(2, 12) + Date.now().toString(36); localStorage.setItem('pd_vid', vid); }
+      const body = JSON.stringify({ screen, vid, mobile: window.innerWidth < 768 });
+      if (navigator.sendBeacon) navigator.sendBeacon('/api/track', new Blob([body], { type: 'application/json' }));
+      else fetch('/api/track', { method: 'POST', headers: { 'content-type': 'application/json' }, body, keepalive: true }).catch(() => {});
+    } catch(e) {}
+  }
   _routeFromHash(){
     if (this._hashLock) return;
     const m = /^#\/([a-z-]*)(?:\/([a-z0-9-]+))?/.exec(location.hash || '');
@@ -2186,10 +2196,12 @@ class Component extends DCLogic {
       if (cat) patch.cat = cat;
     }
     this.setState(s => ({ prev: s.screen, ...patch }));
+    this._track(screen);
     try { window.scrollTo({top:0,behavior:'instant'}); } catch(e) {}
   }
   componentDidMount(){
     if (this.state.token) { this._api('me').then(d => this.setState(this._applyMember(d.member))).catch(e => { if (e.status === 401) this.signOut(); }); }
+    setTimeout(() => this._track(this.state.screen), 800);
     try { this._routeFromHash(); window.addEventListener('hashchange', () => this._routeFromHash()); } catch(e) {}
     try {
       fetch('./menu.json', { cache:'no-store' })
@@ -2201,6 +2213,7 @@ class Component extends DCLogic {
   applyMenuData(data){
     const b = buildMenu(data);
     this.ORDER_URL = (data && data.business && data.business.order_url) || '';
+    this.WHEEL_PRIZES = (data && Array.isArray(data.wheel) && data.wheel.length) ? data.wheel : (this.WHEEL_PRIZES || []);
     this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured; this.SECTIONS = b.sections;
   }
 
@@ -2242,23 +2255,19 @@ class Component extends DCLogic {
 
   spin(){
     if (this.state.spinning) return;
-    const n = this.WHEEL.length, seg = 360 / n;
-    const winner = Math.floor(Math.random() * n);
-    const cur = this.state.rotation;
-    const mod = ((cur % 360) + 360) % 360;
-    const desired = ((360 - winner * seg) % 360 + 360) % 360;
-    const delta = (desired - mod + 360) % 360;
-    const rotation = cur + 360 * 5 + delta;
-    this.setState({ spinning: true, wonId: null, rotation });
-    setTimeout(() => {
-      const wonId = this.WHEEL[winner];
-      const spinRecord = { date: new Date().toISOString(), result: wonId === 'lose' ? 'lose' : 'win', wonId };
-      this.setState(s => {
-        const monthlySpins = [...(s.monthlySpins || []), spinRecord];
-        this._sv('pd_monthly_spins', monthlySpins);
-        return { spinning: false, wonId, monthlySpins };
-      });
-    }, 4300);
+    if (!this.state.token) { this.go('auth'); return; }
+    const n = (this.WHEEL_PRIZES || []).length || 10, seg = 360 / n;
+    this.setState({ spinning: true, wonId: null, wonPrize: null, spinError: '' });
+    this._api('spin', 'POST', {}).then(d => {
+      const winner = Math.max(0, Math.min(n - 1, +d.index || 0));
+      const cur = this.state.rotation, mod = ((cur % 360) + 360) % 360;
+      const desired = ((360 - winner * seg) % 360 + 360) % 360, delta = (desired - mod + 360) % 360;
+      this.setState({ rotation: cur + 360 * 5 + delta });
+      setTimeout(() => {
+        const patch = this._applyMember(d.member);
+        this.setState({ ...patch, spinning: false, wonId: d.win ? 'prize' : 'lose', wonPrize: d.prize || null });
+      }, 4300);
+    }).catch(e => this.setState({ spinning: false, spinError: e.message || 'Could not spin right now.' }));
   }
 
   // ══════════════════════════════════════════════════════════════
@@ -2495,7 +2504,7 @@ class Component extends DCLogic {
                chips:['Take me to Plans','Which cleanse should I do?','What do you recommend?'] };
     }
     if (/pour pass|loyalty|reward|points|free|stamp|punch/.test(L)) {
-      return { text:"The Pour Pass is our loyalty card \n\nEvery pour earns a stamp. Nine stamps and the tenth is on us. You also get a free spin every single day — real prizes, free drinks, no catch.",
+      return { text:"The Pour Pass is our loyalty card \n\nEvery pour earns a stamp. Nine stamps and the tenth is on us. You also get one free spin every month — real prizes, no catch.",
                chips:['Take me to my Pass','Spin the wheel','What do you recommend?'] };
     }
     if (/spin|wheel|prize|win|game/.test(L)) {
@@ -2646,16 +2655,12 @@ class Component extends DCLogic {
   }
 
   claimPrize(id){
-    this.setState(s => {
-      const prize = s.prizes.find(p =>p.id === id);
-      if (!prize || prize.claimed) return {};
-      const item = this.MENU.find(m =>m.id === prize.itemId);
-      if (item) this.addToCart(item, 1, true);
-      const prizes = s.prizes.map(p =>p.id === id ? { ...p, claimed: true } : p);
-      this._sv('pd_prizes', prizes);
-      return { prizes };
-    });
-    this.go('cart');
+    const prize = (this.state.prizes || []).find(p => p.id === id);
+    if (!prize || prize.claimed) return;
+    const item = prize.itemId ? this.MENU.find(m => m.id === prize.itemId) : null;
+    if (item) this.addToCart(item, 1, true);
+    this._api('claim', 'POST', { prizeId: id }).then(d => this.setState(this._applyMember(d.member))).catch(() => {});
+    if (item) this.go('cart');
   }
 
   renderVals(){
@@ -2731,22 +2736,18 @@ class Component extends DCLogic {
 
       wheelTransform:'rotate(' + S.rotation + 'deg)',
       spinning:S.spinning, spin:()=>this.spin(),
+      spinSub: !S.signedIn ? 'Sign in to spin — one free spin a month →' : (S.canSpin !== false ? "Your spin's ready — tap to play →" : 'You spun this month — see your prizes →'),
+      spinNote: S.spinError || (S.canSpin === false ? 'You already spun this month — next spin on the 1st' : '1 free spin every month · prizes are good for 30 days'),
       spinLabel: S.spinning ? '···' : 'SPIN',
       won: !!S.wonId && S.screen==='wheel',
-      wonItem: (()=>{ const wId = (S.wonId && S.wonId !== 'lose') ? S.wonId : null; const w = wId ? (this.MENU.find(m=>m.id===wId)||this.MENU[0]) : this.MENU[0]; return { name:w.name, emoji:w.emoji, cat:w.cat, grad:w.grad }; })(),
-      wheelSlices: this.WHEEL.map((id, i) => { const w = id === 'lose' ? null : this.MENU.find(m =>m.id === id); return { deg: i * (360 / this.WHEEL.length), emoji: w ? w.emoji : '', size: w ? 28 : 24 }; }),
+      wonItem: (()=>{ const p = S.wonPrize; return { name: p ? p.label : '', emoji: '', cat: p ? ('Your code: ' + p.code + ' — show it at the counter. Good for 30 days.') : '', grad: 'linear-gradient(150deg,#29B7AF,#1E8F89)' }; })(),
+      wheelSlices: (this.WHEEL_PRIZES || []).map((w, i, arr) => ({ deg: i * (360 / arr.length), emoji: w.short || w.label, size: 10 })),
       claimFree:()=>{
-        const w=this.MENU.find(m=>m.id===S.wonId);
-        if(w){ this.addToCart(w,1,true); }
-        const prize = { id:Date.now(), itemId:S.wonId, name:w?w.name:'Prize', emoji:w?w.emoji:'', cat:w?w.cat:'Juice', wonDate:new Date().toISOString().slice(0,10), claimed:true };
-        this.setState(st=>{ const prizes=[...st.prizes,prize]; this._sv('pd_prizes',prizes); return {prizes,wonId:null}; });
-        this.go('cart');
+        const p = S.wonPrize; const w = p && p.itemId ? this.MENU.find(m=>m.id===p.itemId) : null;
+        if (w) this.addToCart(w,1,true);
+        this.setState({ wonId:null, wonPrize:null }); this.go(w ? 'cart' : 'prizes');
       },
-      dismissWin:()=>{
-        const w=this.MENU.find(m=>m.id===S.wonId);
-        const prize = { id:Date.now(), itemId:S.wonId, name:w?w.name:'Prize', emoji:w?w.emoji:'', cat:w?w.cat:'Juice', wonDate:new Date().toISOString().slice(0,10), claimed:false };
-        this.setState(st=>{ const prizes=[...st.prizes,prize]; this._sv('pd_prizes',prizes); return {prizes,wonId:null}; });
-      },
+      dismissWin:()=>this.setState({ wonId:null, wonPrize:null }),
       toggleTheme:()=>{ const o=['Sunset','Citrus','Berry']; this.setState(s=>({theme:o[(o.indexOf(s.theme)+1)%3]})); },
 
       hasCart: cartCount>0, cartEmpty: cartCount===0, cartCount,
@@ -2855,6 +2856,7 @@ class Component extends DCLogic {
         { icon:'', label:'Payment methods', go:()=>this.go('checkout') },
         { icon:'', label:'Admin Panel', go:()=>this.go('admin') },
         { icon:'', label:'@pourdecisions_juicebar  ', go:()=>window.open('https://www.instagram.com/pourdecisions_juicebar/','_blank') },
+        ...((S.user && S.user.role === 'owner') ? [{ icon:'', label:'Owner dashboard →', go:()=>{ location.href = 'admin.html'; } }] : []),
         { icon:'', label:'Settings', go:()=>{} },
         { icon:'', label:'Sign out', go:()=>this.signOut() }
       ],
