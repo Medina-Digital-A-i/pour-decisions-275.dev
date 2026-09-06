@@ -21,7 +21,6 @@
        3. Add https://pourdecisionsjuicebar.com to Authorized JavaScript origins
        4. Replace YOUR_GOOGLE_CLIENT_ID below with your actual Client ID
   ═══════════════════════════════════════════════════════════ -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <!-- ═══════════════════════════════════════════════════════════
        APPLE SIGN IN (Sign in with Apple JS)
@@ -32,7 +31,6 @@
        3. Enable "Sign In with Apple" and add pourdecisionsjuicebar.com as domain
        4. Replace YOUR_APPLE_SERVICE_ID below with your actual Services ID
   ═══════════════════════════════════════════════════════════ -->
-  <script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js" async defer></script>
 
 <link rel="stylesheet" href="assets/light-theme.css">
 </head>
@@ -233,22 +231,9 @@
             <input value="{{ authEmail }}" onInput="{{ onAuthEmail }}" placeholder="Email address" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:12px;">
             <input type="password" placeholder="Password" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:18px;">
 
+            <sc-if value="{{ authError }}" hint-placeholder-val="{{ false }}"><div style="color:#FFBE66;font-size:13px;font-weight:600;margin:-6px 0 12px;">{{ authError }}</div></sc-if>
+
             <button onClick="{{ signIn }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">{{ authCta }}</button>
-
-            <div style="display:flex;align-items:center;gap:12px;margin:20px 0;"><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span><span style="font-size:11px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.08em;">OR</span><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span></div>
-
-            <div style="display:flex;gap:10px;">
-              <!-- Apple Sign In — real OAuth via AppleID.auth.signIn() -->
-              <button onClick="{{ doAppleSignIn }}" class="tap" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#000;border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:14px;color:#fff;font-weight:700;font-size:13px;">
-                <svg width="16" height="19" viewBox="0 0 814 1000" fill="#fff"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105.2-58.4-155.5-127.4C46 373.5 38.4 342.7 38.4 342.3 38.4 232.8 107.4 106 279.3 106c75.3 0 139.5 50.1 184.9 50.1 43.4 0 113.4-52.3 198.9-52.3zm-115.3-107.7C614.9 174.5 591 135.1 591 95.6c0-13.2 1.9-26.4 2.6-38.3 63.4-2.6 139.3 35.8 184.3 96.3 41.4 53.2 54.9 112.9 54.9 163.2 0 11.5-2.6 23-2.6 38.3-67.9-2.6-148.1-44.3-148.4-121.9z"></path></svg>
-                Sign in with Apple
-              </button>
-              <!-- Google Sign In — real OAuth via Google Identity Services -->
-              <button onClick="{{ doGoogleSignIn }}" class="tap" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:14px;color:#1f2937;font-weight:700;font-size:13px;">
-                <svg width="17" height="17" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-                Sign in with Google
-              </button>
-            </div>
 
             <div onClick="{{ toggleAuthMode }}" class="tap" style="text-align:center;color:var(--gold-glow);font-weight:700;font-size:13.5px;margin-top:22px;">{{ authToggleText }}</div>
           </div>
@@ -1870,7 +1855,7 @@ class Component extends DCLogic {
       screen: 'home',
       prev: 'home',
       signedIn: ls('pd_signedIn', false),
-      user: ls('pd_user', { name:'Maya R.', initial:'M', email:'maya@pourdecisions_juicebar.co' }),
+      user: ls('pd_user', { name:'Guest', initial:'G', email:'' }),
       authMode: 'in',
       authName: '',
       authEmail: '',
@@ -2138,12 +2123,13 @@ class Component extends DCLogic {
 
   signIn(){
     this.setState(s => {
-      const name = (s.authName || '').trim() || 'Maya R.';
-      const email = (s.authEmail || '').trim() || 'maya@pourdecisions_juicebar.co';
+      const email = (s.authEmail || '').trim().toLowerCase();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return { authError: 'Enter a valid email address.' };
+      const name = (s.authName || '').trim() || email.split('@')[0];
       const user = { name, initial: name[0].toUpperCase(), email };
       this._sv('pd_signedIn', true);
       this._sv('pd_user', user);
-      return { signedIn:true, prev:'auth', screen:'home', authName:'', authEmail:'', user };
+      return { signedIn:true, prev:'auth', screen:'home', authName:'', authEmail:'', authError:'', user };
     });
   }
   signOut(){
@@ -2530,22 +2516,6 @@ class Component extends DCLogic {
 
   doCheckout(){
     const S = this.state;
-    const payOpts = [
-      { id:'apple', label:'Apple Pay' },
-      { id:'cash', label:'Cash App Pay' },
-      { id:'card', label:'Card ···· 4827' },
-      { id:'points', label:'Pour Pass Points' }
-    ];
-    const sel = payOpts[S.selectedPayment || 0];
-    if (sel && sel.id === 'apple' && window.PaymentRequest) {
-      try {
-        const totalAmt = String(Math.round((this.subtotal()*1.08)*100)/100);
-        const details = { total:{ label:'Pour Decisions', amount:{ currency:'USD', value: totalAmt } } };
-        const req = new PaymentRequest([{ supportedMethods:'https://apple.com/apple-pay', data:{ version:3, merchantIdentifier:'merchant.com.pourdecisions', merchantCapabilities:['supports3DS'], supportedNetworks:['visa','masterCard','amex'], countryCode:'US' } }], details);
-        req.show().then(() =>this.placeOrderNow()).catch(() =>this.placeOrderNow());
-        return;
-      } catch(e) {}
-    }
     this.placeOrderNow();
   }
 
@@ -2582,11 +2552,7 @@ class Component extends DCLogic {
 
   adminSignIn(){
     const s = this.state;
-    if (s.adminEmail === 'admin@pourdecisions_juicebar.com' && s.adminPassword === 'PourAdmin2026!') {
-      this.setState({ adminSignedIn: true, adminLoginError: '' });
-    } else {
-      this.setState({ adminLoginError: 'Invalid credentials. Try again.' });
-    }
+    this.setState({ adminLoginError: 'Admin tools have moved to the Clover dashboard.' });
   }
 
   deleteAdminEvent(id){
@@ -2689,9 +2655,9 @@ class Component extends DCLogic {
       authSub:S.authMode==='in'?'Sign in to reorder, earn points and spin the wheel.':'Create an account to save your pours, points and payment.',
       authCta:S.authMode==='in'?'Sign in':'Create account',
       authToggleText:S.authMode==='in'?"New here? Create an account":'Already have an account? Sign in',
-      authName:S.authName, authEmail:S.authEmail,
+      authName:S.authName, authEmail:S.authEmail, authError:S.authError||'',
       onAuthName:(e)=>this.setState({authName:e.target.value}),
-      onAuthEmail:(e)=>this.setState({authEmail:e.target.value}),
+      onAuthEmail:(e)=>this.setState({authEmail:e.target.value, authError:''}),
       toggleAuthMode:()=>this.setState(s=>({authMode:s.authMode==='in'?'up':'in'})),
       signIn:()=>this.signIn(), signOut:()=>this.signOut(),
       doGoogleSignIn:()=>this.doGoogleSignIn(),
@@ -2787,10 +2753,7 @@ class Component extends DCLogic {
       ].map((p,i)=>({ ...p, bg: i===0?'rgba(239,138,0,.16)':'rgba(255,255,255,.05)', border: i===0?'var(--gold)':'rgba(255,255,255,.12)' })),
       payOptions: (() => {
         const opts = [
-          { id:'apple', icon:'⬛', label:'Apple Pay' + (typeof window!=='undefined'&&window.ApplePaySession?' ✓':''), sel:S.selectedPayment===0 },
-          { id:'cash', icon:'', label:'Cash App Pay', sel:S.selectedPayment===1 },
-          { id:'card', icon:'', label:'Card ···· 4827', sel:S.selectedPayment===2 },
-          { id:'points', icon:'', label:'Pour Pass (' + S.points + ' pts)', sel:S.selectedPayment===3 }
+          { id:'pickup', icon:'', label:'Pay at pickup — online payment coming soon', sel:true }
         ];
         return opts.map((pm,i) => ({ ...pm,
           select:()=>this.setState({selectedPayment:i}),
