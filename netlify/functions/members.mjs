@@ -68,6 +68,14 @@ export default async (req) => {
   let body = {};
   if (req.method === 'POST') { try { body = await req.json(); } catch { body = {}; } }
 
+  if (path === 'notify-status') {
+    const env = { GMAIL_USER: !!process.env.GMAIL_USER, GMAIL_APP_PASSWORD: !!process.env.GMAIL_APP_PASSWORD, NOTIFY_TO: !!process.env.NOTIFY_TO, OWNER_EMAILS: !!process.env.OWNER_EMAILS };
+    if (req.method === 'POST') {
+      try { const r = await notifyOwners({ subject: 'Test alert — email is working', text: 'This is the test alert from the Pour Decisions site. New-member emails will look like this.\n\nSent ' + new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }) }); return json({ env, result: r }); }
+      catch (e) { return json({ env, error: String(e && e.message || e).slice(0, 300) }, 500); }
+    }
+    return json({ env });
+  }
   if (path === 'signup' && req.method === 'POST') {
     const email = norm(body.email), name = String(body.name || '').trim().slice(0, 80), pw = String(body.password || '');
     if (!okEmail(email)) return json({ error: 'Enter a valid email address.' }, 400);
