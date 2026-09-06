@@ -50,3 +50,17 @@ change run `cd design/menu && python3 build.py` and commit the results.
 - Never upload files in the Netlify dashboard by hand — the next git deploy erases them.
 - Live site is walled behind `coming-soon.html` (`_redirects` on `main`) until launch day.
   To open the doors: delete the `/*  /coming-soon.html  200!` line from `_redirects` on `main`.
+
+## 7. Member accounts & your email list
+Accounts live in **Netlify Blobs** (no outside service, included in the Netlify plan).
+Code: `netlify/functions/members.mjs`. Passwords are hashed (scrypt); 5 wrong tries = 10-minute lock.
+
+**Download the member/email list** (CSV: email, name, phone, opt-in, joined, points, orders):
+1. One-time: Netlify → Site configuration → Environment variables → add `ADMIN_TOKEN`
+   (any long random string, 32+ characters — a password manager can generate one). Redeploy once.
+2. Then, from any terminal:
+   `curl -H "Authorization: Bearer YOUR_ADMIN_TOKEN" https://pourdecisionsjuicebar.com/api/admin/members.csv -o members.csv`
+   Without the token the endpoint answers 403. Nobody else can pull the list.
+
+Points: orders placed on the site are **recorded but earn 0 points until they're paid** —
+that switch flips when Clover payment confirmation is wired in (next step).
