@@ -2,3 +2,9 @@ node_modules/
 *.log
 .DS_Store
 .vercel
+
+# local scratch
+.handoff/
+Claude outputs/
+dist/
+node_modules/

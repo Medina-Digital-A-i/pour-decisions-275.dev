@@ -2,7 +2,7 @@
    v1.1 · stale-while-revalidate for shell, cache-first for assets,
    offline fallback to offline.html, network-only for cross-origin POSTs. */
 
-const VERSION = 'pd-v2.9.6';
+const VERSION = 'pd-v3.3.3';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 
@@ -58,6 +58,9 @@ self.addEventListener('fetch', (event) => {
 
   // Only handle GET requests
   if (req.method !== 'GET') return;
+
+  // Never intercept the accounts API — always live.
+  if (new URL(req.url).pathname.startsWith('/api/')) return;
 
   const url = new URL(req.url);
 

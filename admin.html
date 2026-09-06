@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Pour Decisions — Owner Dashboard</title>
+<link rel="icon" href="assets/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--teal:#29B7AF;--teal-ink:#14615D;--gold:#E07E00;--gold-soft:#FFF1DE;--cream:#FAF7F0;--tan:#EFE7D8;--tan-deep:#E3D7C2;--ink:#2B2B26;--muted:#8A8578;--red:#C0392B;--green:#1E8F89}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font:14px/1.45 Manrope,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--teal-ink)}button{font:inherit;cursor:pointer}
+.top{display:flex;align-items:center;gap:14px;padding:12px 20px;background:#fff;border-bottom:1px solid var(--tan-deep);position:sticky;top:0;z-index:5}
+.top img{height:44px}.top .sp{flex:1}.top .who{font-size:12px;color:var(--muted)}.top nav{display:flex;gap:4px}
+.top nav button{background:transparent;border:0;padding:9px 14px;border-radius:99px;font-weight:800;color:var(--muted)}.top nav button.on{background:var(--gold-soft);color:var(--gold)}
+.btn{background:var(--teal-ink);color:#fff;border:0;border-radius:99px;padding:10px 18px;font-weight:800}.btn.ghost{background:#fff;color:var(--teal-ink);border:2px solid var(--tan)}.btn.gold{background:var(--gold)}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 60px}
+h1{font-size:26px;letter-spacing:-.03em;margin:0 0 4px}h2{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:26px 0 10px}
+.sub{color:var(--muted);margin:0 0 18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi{background:#fff;border:1px solid var(--tan-deep);border-radius:18px;padding:16px}.kpi b{display:block;font-size:28px;letter-spacing:-.03em;color:var(--teal-ink);line-height:1}.kpi span{display:block;font-size:12px;color:var(--muted);margin-top:6px;font-weight:700}.kpi small{display:block;font-size:11px;color:var(--gold);margin-top:4px;font-weight:700}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--tan-deep);border-radius:18px;padding:18px}.card h3{margin:0 0 12px;font-size:15px}
+.chart{display:flex;align-items:flex-end;gap:3px;height:120px}.chart i{flex:1;background:var(--teal);border-radius:4px 4px 0 0;min-height:2px;position:relative}.chart i.g{background:var(--gold)}.chart i:hover::after{content:attr(data-t);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:11px;padding:3px 7px;border-radius:6px;white-space:nowrap;margin-bottom:4px}
+.axis{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--tan)}td{padding:10px;border-bottom:1px solid var(--tan)}tr.row{cursor:pointer}tr.row:hover td{background:var(--cream)}
+.pill{display:inline-block;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:800;background:var(--tan)}.pill.ok{background:#DDF3F1;color:var(--teal-ink)}.pill.warn{background:var(--gold-soft);color:var(--gold)}.pill.paid{background:#E3F6EF;color:#1B6F4F}
+input.search,.login input{width:100%;padding:13px 16px;border:2px solid var(--tan);border-radius:14px;font:inherit;background:#fff;outline:none}input.search:focus,.login input:focus{border-color:var(--teal)}
+.login{max-width:400px;margin:60px auto;background:#fff;border:1px solid var(--tan-deep);border-radius:24px;padding:28px;text-align:center}.login img{height:84px;margin-bottom:10px}.login input{margin:8px 0}.login .err{color:var(--red);font-weight:700;font-size:13px;margin:6px 0}
+.drawer{position:fixed;inset:0;background:rgba(20,45,42,.45);display:flex;justify-content:flex-end;z-index:20}.drawer .pane{width:min(520px,100%);height:100%;background:#fff;overflow:auto;padding:24px}
+.empty{color:var(--muted);text-align:center;padding:24px;font-weight:600}
+.bar{display:flex;align-items:center;gap:10px;font-size:13px;margin:6px 0}.bar i{height:10px;background:var(--teal);border-radius:5px;display:block}.bar span{min-width:110px}.bar b{color:var(--muted);font-weight:700}
+.note{background:var(--gold-soft);border:1px solid #F5D9AE;border-radius:14px;padding:12px 14px;font-size:13px;margin-top:14px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const $=(s,r=document)=>r.querySelector(s);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$'+(+n||0).toFixed(2);const when=s=>s?new Date(s).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'—';const day=s=>s?new Date(s.length===10?s+'T12:00:00':s).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';
+let token=localStorage.getItem('pd_admin_token')||'',me=null,view='overview',data=null,members=[],detail=null,q='';
+async function api(p,opt={}){const r=await fetch(p,{...opt,headers:{'content-type':'application/json',authorization:'Bearer '+token,...(opt.headers||{})},cache:'no-store'});const t=await r.text();let j={};try{j=JSON.parse(t)}catch{j={raw:t}}if(!r.ok){const e=new Error(j.error||('Error '+r.status));e.status=r.status;throw e}return j}
+function renderLogin(err){$('#app').innerHTML=`<div class="login"><img src="assets/logo-v3-512.png" alt="Pour Decisions"><h1>Owner sign-in</h1><p class="sub">Same account you use on the site. Only owner emails get in.</p><form id="f"><input name="email" type="email" placeholder="Email" autocomplete="username" required><input name="pw" type="password" placeholder="Password" autocomplete="current-password" required>${err?`<div class="err">${esc(err)}</div>`:''}<button class="btn gold" style="width:100%;margin-top:8px">Sign in</button></form><p style="font-size:12px;color:var(--muted);margin-top:16px">Not an owner? <a href="./">Back to the site</a></p></div>`;
+ $('#f').onsubmit=async e=>{e.preventDefault();const fd=new FormData(e.target);try{const r=await fetch('/api/members/signin',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:fd.get('email'),password:fd.get('pw')})});const j=await r.json();if(!r.ok)throw new Error(j.error||'Sign-in failed');if(j.member.role!=='owner')throw new Error('That account is not an owner. Add the email to OWNER_EMAILS in Netlify.');token=j.token;me=j.member;localStorage.setItem('pd_admin_token',token);boot()}catch(err){renderLogin(err.message)}}}
+function shell(inner){$('#app').innerHTML=`<div class="top"><img src="assets/logo-v3-512.png" alt=""><div><b>Owner Dashboard</b><div class="who">${esc(me.name)} · ${esc(me.email)}</div></div><div class="sp"></div><nav>${['overview','members'].map(v=>`<button class="${view===v?'on':''}" data-v="${v}">${v[0].toUpperCase()+v.slice(1)}</button>`).join('')}</nav><button class="btn ghost" id="csv">Export CSV</button><a class="btn ghost" href="https://www.clover.com/dashboard" target="_blank" rel="noopener">Clover ↗</a><button class="btn ghost" id="out">Sign out</button></div><div class="wrap">${inner}</div>${detail?drawer():''}`;
+ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{view=b.dataset.v;boot()});$('#out').onclick=()=>{localStorage.removeItem('pd_admin_token');token='';me=null;renderLogin()};
+ $('#csv').onclick=async()=>{const r=await fetch('/api/admin/members.csv',{headers:{authorization:'Bearer '+token}});const b=await r.blob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='pour-decisions-members.csv';a.click()};
+ if(detail){$('#close').onclick=()=>{detail=null;boot(false)};document.querySelectorAll('[data-claim]').forEach(b=>b.onclick=async()=>{await api('/api/admin/prize',{method:'POST',body:JSON.stringify({email:detail.email,prizeId:+b.dataset.claim,claimed:b.dataset.to==='1'})});detail=(await api('/api/admin/member?email='+encodeURIComponent(detail.email))).member;boot(false)})}
+ document.querySelectorAll('tr.row').forEach(tr=>tr.onclick=async()=>{detail=(await api('/api/admin/member?email='+encodeURIComponent(tr.dataset.email))).member;boot(false)});
+ if($('#q')){$('#q').oninput=e=>{q=e.target.value;clearTimeout(window._t);window._t=setTimeout(()=>boot(),250)};$('#q').focus();$('#q').setSelectionRange(q.length,q.length)}}
+function chart(obj,key,gold){const days=Object.keys(obj);const vals=days.map(d=>key?obj[d][key]:obj[d]);const max=Math.max(1,...vals);return `<div class="chart">${days.map((d,i)=>`<i class="${gold?'g':''}" style="height:${Math.round(vals[i]/max*100)}%" data-t="${day(d)}: ${vals[i]}"></i>`).join('')}</div><div class="axis"><span>${day(days[0])}</span><span>${day(days[days.length-1])}</span></div>`}
+function overview(d){const k=d.kpis;return `<h1>Good ${new Date().getHours()<12?'morning':new Date().getHours()<17?'afternoon':'evening'}, ${esc(me.name.split(' ')[0])}.</h1><p class="sub">Last 30 days. Data comes from site accounts; money and tickets live in Clover.</p>
+<div class="kpis">
+ <div class="kpi"><b>${k.members}</b><span>Members</span><small>+${k.newThisWeek} this week · +${k.newThisMonth} this month</small></div>
+ <div class="kpi"><b>${k.optIn}</b><span>Email opt-ins</span><small>${k.members?Math.round(k.optIn/k.members*100):0}% of members</small></div>
+ <div class="kpi"><b>${k.orders}</b><span>Order requests</span><small>${money(k.requested)} requested · ${k.paidOrders} paid</small></div>
+ <div class="kpi"><b>${money(k.revenue)}</b><span>Paid via site</span><small>Flips on with Clover</small></div>
+ <div class="kpi"><b>${k.views30}</b><span>Screen views</span><small>${k.mobileShare}% on phones</small></div>
+ <div class="kpi"><b>${k.openPrizes}</b><span>Unredeemed prizes</span><small>Spin wins to honor in store</small></div>
+</div>
+<div class="grid2" style="margin-top:16px">
+ <div class="card"><h3>New members per day</h3>${chart(d.signups,null,true)}</div>
+ <div class="card"><h3>Visitors per day</h3>${chart(d.traffic,'visitors')}</div>
+</div>
+<div class="grid2" style="margin-top:16px">
+ <div class="card"><h3>What people look at</h3>${d.topScreens.length?d.topScreens.slice(0,8).map(s=>`<div class="bar"><span>${esc(s.screen)}</span><i style="width:${Math.round(s.views/d.topScreens[0].views*60)}%"></i><b>${s.views}</b></div>`).join(''):'<div class="empty">No traffic yet</div>'}</div>
+ <div class="card"><h3>Most requested items</h3>${d.topItems.length?d.topItems.map(s=>`<div class="bar"><span>${esc(s.name)}</span><i style="width:${Math.round(s.qty/d.topItems[0].qty*60)}%"></i><b>${s.qty}</b></div>`).join(''):'<div class="empty">No orders yet</div>'}</div>
+</div>
+<div class="grid2" style="margin-top:16px">
+ <div class="card"><h3>Newest members</h3><table><tr><th>Name</th><th>Email</th><th>Joined</th><th></th></tr>${d.recentMembers.map(m=>`<tr class="row" data-email="${esc(m.email)}"><td><b>${esc(m.name)}</b></td><td>${esc(m.email)}</td><td>${day(m.created)}</td><td>${m.marketing?'<span class="pill ok">opt-in</span>':''}</td></tr>`).join('')||'<tr><td colspan=4 class="empty">Nobody yet</td></tr>'}</table></div>
+ <div class="card"><h3>Recent order requests</h3><table><tr><th>When</th><th>Who</th><th>Items</th><th>Total</th></tr>${d.recentOrders.map(o=>`<tr class="row" data-email="${esc(o.email)}"><td>${day(o.date)}</td><td>${esc(o.name)}</td><td>${o.items.map(i=>i.qty+'× '+esc(i.name)).join(', ')}</td><td>${money(o.total)} <span class="pill ${o.status==='paid'?'paid':'warn'}">${o.status}</span></td></tr>`).join('')||'<tr><td colspan=4 class="empty">No orders yet</td></tr>'}</table></div>
+</div>
+<div class="grid2" style="margin-top:16px">
+ <div class="card"><h3>Spin prizes to honor</h3><table><tr><th>Code</th><th>Prize</th><th>Who</th><th>Won</th><th></th></tr>${d.recentPrizes.map(p=>`<tr class="row" data-email="${esc(p.email)}"><td><b>${esc(p.code)}</b></td><td>${esc(p.label)}</td><td>${esc(p.name)}</td><td>${day(p.wonDate)}</td><td>${p.claimed?'<span class="pill">redeemed</span>':'<span class="pill warn">open</span>'}</td></tr>`).join('')||'<tr><td colspan=5 class="empty">No spins yet</td></tr>'}</table><div class="note">Customer shows the code in their Prizes tab → you open their profile here and tap <b>Mark redeemed</b>.</div></div>
+ <div class="card"><h3>Birthdays this month</h3>${d.birthdaysThisMonth.length?`<table>${d.birthdaysThisMonth.map(b=>`<tr class="row" data-email="${esc(b.email)}"><td><b>${esc(b.name)}</b></td><td>${esc(b.email)}</td><td>${esc(b.birthday)}</td></tr>`).join('')}</table>`:'<div class="empty">No birthdays on file this month — members add theirs on the account screen.</div>'}</div>
+</div>`}
+function membersView(){return `<h1>Members</h1><p class="sub">${members.length} shown. Click a row for purchase history and prizes.</p><div class="tools"><input id="q" class="search" placeholder="Search name, email or phone…" value="${esc(q)}"></div><div class="card" style="padding:0;overflow:auto"><table><tr><th>Name</th><th>Email</th><th>Phone</th><th>Joined</th><th>Orders</th><th>Spent</th><th>Points</th><th>Opt-in</th></tr>${members.map(m=>`<tr class="row" data-email="${esc(m.email)}"><td><b>${esc(m.name)}</b></td><td>${esc(m.email)}</td><td>${esc(m.phone)}</td><td>${day(m.created)}</td><td>${m.orders}</td><td>${money(m.spent)}</td><td>${m.points}</td><td>${m.marketing?'<span class="pill ok">yes</span>':'<span class="pill">no</span>'}</td></tr>`).join('')||'<tr><td colspan=8 class="empty">No members match</td></tr>'}</table></div>`}
+function drawer(){const m=detail;return `<div class="drawer"><div class="pane"><div style="display:flex;justify-content:space-between;align-items:center"><h1 style="margin:0">${esc(m.name)}</h1><button class="btn ghost" id="close">Close</button></div><p class="sub">${esc(m.email)}${m.phone?' · '+esc(m.phone):''}${m.birthday?' · 🎂 '+esc(m.birthday):''}<br>Joined ${when(m.created)} · ${m.marketing?'Email opt-in':'No marketing'} · ${m.points} points · ${m.filled}/9 pours</p>
+<h2>Purchase history</h2>${m.orders.length?`<table><tr><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr>${m.orders.map(o=>`<tr><td>${day(o.date)}</td><td>${o.items.map(i=>i.qty+'× '+esc(i.name)).join('<br>')}</td><td>${money(o.total)}</td><td><span class="pill ${o.status==='paid'?'paid':'warn'}">${o.status}</span></td></tr>`).join('')}</table>`:'<div class="empty">No orders yet</div>'}
+<h2>Prizes</h2>${m.prizes.length?`<table><tr><th>Code</th><th>Prize</th><th>Won</th><th>Expires</th><th></th></tr>${m.prizes.map(p=>`<tr><td><b>${esc(p.code)}</b></td><td>${esc(p.label)}</td><td>${day(p.wonDate)}</td><td>${day(p.expires)}</td><td>${p.claimed?`<span class="pill">redeemed</span> <button class="btn ghost" style="padding:4px 10px;font-size:11px" data-claim="${p.id}" data-to="0">undo</button>`:`<button class="btn" style="padding:6px 12px;font-size:12px" data-claim="${p.id}" data-to="1">Mark redeemed</button>`}</td></tr>`).join('')}</table>`:'<div class="empty">No spins yet</div>'}
+<p style="font-size:12px;color:var(--muted);margin-top:20px">Last spin: ${m.lastSpinMonth||'never'} · ${m.canSpin?'can spin this month':'already spun this month'}</p></div></div>`}
+async function boot(reload=true){if(!token)return renderLogin();try{if(!me){me=(await api('/api/members/me')).member;if(me.role!=='owner')throw Object.assign(new Error('Owners only.'),{status:403})}
+ if(view==='overview'){if(reload||!data)data=await api('/api/admin/overview');shell(overview(data))}else{if(reload)members=(await api('/api/admin/members?q='+encodeURIComponent(q))).members;shell(membersView())}}
+ catch(e){if(e.status===401||e.status===403){localStorage.removeItem('pd_admin_token');token='';me=null;return renderLogin(e.message)}$('#app').innerHTML=`<div class="login"><h1>Hmm.</h1><p class="sub">${esc(e.message)}</p><button class="btn" onclick="location.reload()">Retry</button></div>`}}
+boot();
+</script>
+</body>
+</html>

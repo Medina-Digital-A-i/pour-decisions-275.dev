@@ -4,7 +4,8 @@
     "tagline": "Cold-pressed juice · smoothies · good food",
     "address": "359 Northern Blvd, Albany NY 12204",
     "email": "pourdecisionsalb@gmail.com",
-    "instagram": "pourdecisions_juicebar"
+    "instagram": "pourdecisions_juicebar",
+    "order_url": ""
   },
   "sizes": {
     "smoothie": [
@@ -812,25 +813,25 @@
   ],
   "packages": {
     "title": "Juice Packs",
-    "note": "Any juices, mix and match. Pressed to order — call a day ahead for 12 or more.",
+    "note": "Mix juices and shots, any combo. The bigger the pack, the bigger the discount. Pressed to order — 12 or more, give us a day.",
     "items": [
       {
         "name": "Six Pack",
         "desc": "6 × 16 oz juices",
         "price": 50,
-        "save": "save $7"
+        "save": "12% off"
       },
       {
         "name": "The Case",
         "desc": "12 × 16 oz juices",
-        "price": 95,
-        "save": "save $19"
+        "price": 94.5,
+        "save": "17% off"
       },
       {
         "name": "Shot Week",
         "desc": "7 × 2 oz wellness shots",
-        "price": 26,
-        "save": "save $5.50"
+        "price": 27.5,
+        "save": "12% off"
       },
       {
         "name": "Day Off",
@@ -844,6 +845,102 @@
         "price": 120,
         "save": "save $51"
       }
-    ]
-  }
+    ],
+    "byo": {
+      "min": 4,
+      "kinds": [
+        "juice",
+        "shot"
+      ],
+      "tiers": [
+        {
+          "min": 4,
+          "pct": 5
+        },
+        {
+          "min": 6,
+          "pct": 12
+        },
+        {
+          "min": 9,
+          "pct": 14
+        },
+        {
+          "min": 12,
+          "pct": 17
+        },
+        {
+          "min": 18,
+          "pct": 20
+        },
+        {
+          "min": 24,
+          "pct": 22
+        }
+      ],
+      "note": "Discount ladder by item count. Prices round to the nearest $0.50. Assumed COGS ~ $3.25/16oz juice, ~$1.05/2oz shot → margins stay 56–75% at every tier."
+    }
+  },
+  "wheel": [
+    {
+      "id": "free-shot",
+      "label": "Free wellness shot",
+      "short": "FREE SHOT",
+      "weight": 16
+    },
+    {
+      "id": "size-up",
+      "label": "Free size upgrade (16 → 24 oz)",
+      "short": "SIZE UP",
+      "weight": 18
+    },
+    {
+      "id": "points-50",
+      "label": "+50 points",
+      "short": "+50 PTS",
+      "weight": 16
+    },
+    {
+      "id": "try-again",
+      "label": "Not this time",
+      "short": "NEXT MONTH",
+      "weight": 12
+    },
+    {
+      "id": "two-off",
+      "label": "$2 off any drink",
+      "short": "$2 OFF",
+      "weight": 12
+    },
+    {
+      "id": "free-addin",
+      "label": "Free add-in (protein, oats, sea moss…)",
+      "short": "FREE ADD-IN",
+      "weight": 12
+    },
+    {
+      "id": "free-drink",
+      "label": "Free 16 oz juice or smoothie",
+      "short": "FREE DRINK",
+      "weight": 4
+    },
+    {
+      "id": "try-again-2",
+      "label": "Not this time",
+      "short": "NEXT MONTH",
+      "weight": 6
+    },
+    {
+      "id": "points-25",
+      "label": "+25 points",
+      "short": "+25 PTS",
+      "weight": 3
+    },
+    {
+      "id": "bogo",
+      "label": "Buy one, get one 50% off",
+      "short": "BOGO 50%",
+      "weight": 1
+    }
+  ]
 }

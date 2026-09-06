@@ -1,0 +1,14 @@
+# Netlify build settings. There is no bundler: the "build" validates menu.json and copies
+# the site into dist/ (so node_modules / function source never ship to the public site).
+# If menu.json is broken the build fails and the LIVE SITE KEEPS ITS PREVIOUS VERSION.
+[build]
+  publish = "dist"
+  command = "node scripts/check-menu.js && node scripts/build-site.js"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Member accounts API (netlify/functions/*.mjs) — data lives in Netlify Blobs.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

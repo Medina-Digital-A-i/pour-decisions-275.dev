@@ -21,7 +21,6 @@
        3. Add https://pourdecisionsjuicebar.com to Authorized JavaScript origins
        4. Replace YOUR_GOOGLE_CLIENT_ID below with your actual Client ID
   ═══════════════════════════════════════════════════════════ -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <!-- ═══════════════════════════════════════════════════════════
        APPLE SIGN IN (Sign in with Apple JS)
@@ -32,9 +31,8 @@
        3. Enable "Sign In with Apple" and add pourdecisionsjuicebar.com as domain
        4. Replace YOUR_APPLE_SERVICE_ID below with your actual Services ID
   ═══════════════════════════════════════════════════════════ -->
-  <script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js" async defer></script>
 
-<link rel="stylesheet" href="assets/light-theme.css">
+<link rel="stylesheet" href="assets/light-theme.css?v=5">
 </head>
 <body>
 <x-dc>
@@ -43,7 +41,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600;1,9..144,900&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet">
 <style>
-.pd-menu-qr{display:none} @media(min-width:768px){.pd-menu-qr{position:relative;z-index:2;display:inline-flex;align-items:center;gap:12px;margin:18px auto 0;background:#fff;border-radius:16px;padding:8px 16px 8px 8px;color:var(--teal-deep);text-align:left;box-shadow:0 10px 24px rgba(0,0,0,.18)} .pd-menu-qr svg{width:76px;height:76px;display:block} .pd-menu-qr b{display:block;font-size:13px;line-height:1.2} .pd-menu-qr span{font-size:12px;font-weight:700;color:var(--gold)}}
+.pd-menu-qr{display:none} @media(min-width:768px){.pd-menu-qr{position:relative;z-index:2;display:inline-flex;align-items:center;gap:12px;margin:18px auto 0;background:#fff;border-radius:16px;padding:8px 16px 8px 8px;color:#14403D;text-align:left;box-shadow:0 10px 24px rgba(0,0,0,.18)} .pd-menu-qr svg{width:76px;height:76px;display:block} .pd-menu-qr b{display:block;font-size:13px;line-height:1.2} .pd-menu-qr span{font-size:12px;font-weight:700;color:var(--gold)}}
   /* Menu screen — category sections + TV-board style tiles / price chips */
   .menu-section{margin-bottom:26px}
   .menu-section-head{padding:2px 4px 12px}
@@ -229,26 +227,14 @@
 
             <sc-if value="{{ authModeUp }}" hint-placeholder-val="{{ false }}">
               <input value="{{ authName }}" onInput="{{ onAuthName }}" placeholder="Full name" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:12px;">
+              <div onClick="{{ toggleMarketing }}" class="tap" style="display:flex;align-items:center;gap:10px;margin:-6px 0 14px;color:rgba(255,255,255,.75);font-size:13px;font-weight:600;"><span style="width:20px;height:20px;border-radius:6px;border:2px solid var(--gold);display:grid;place-items:center;color:var(--gold);font-size:13px;font-weight:900;flex:0 0 20px;">{{ authMarketingMark }}</span>Email me new drops, deals &amp; Pour Pass perks</div>
             </sc-if>
             <input value="{{ authEmail }}" onInput="{{ onAuthEmail }}" placeholder="Email address" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:12px;">
-            <input type="password" placeholder="Password" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:18px;">
+            <input type="password" value="{{ authPassword }}" onInput="{{ onAuthPassword }}" placeholder="Password (6+ characters)" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:18px;">
+
+            <sc-if value="{{ authError }}" hint-placeholder-val="{{ false }}"><div style="color:#FFBE66;font-size:13px;font-weight:600;margin:-6px 0 12px;">{{ authError }}</div></sc-if>
 
             <button onClick="{{ signIn }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">{{ authCta }}</button>
-
-            <div style="display:flex;align-items:center;gap:12px;margin:20px 0;"><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span><span style="font-size:11px;color:rgba(255,255,255,.4);font-weight:700;letter-spacing:.08em;">OR</span><span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span></div>
-
-            <div style="display:flex;gap:10px;">
-              <!-- Apple Sign In — real OAuth via AppleID.auth.signIn() -->
-              <button onClick="{{ doAppleSignIn }}" class="tap" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#000;border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:14px;color:#fff;font-weight:700;font-size:13px;">
-                <svg width="16" height="19" viewBox="0 0 814 1000" fill="#fff"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105.2-58.4-155.5-127.4C46 373.5 38.4 342.7 38.4 342.3 38.4 232.8 107.4 106 279.3 106c75.3 0 139.5 50.1 184.9 50.1 43.4 0 113.4-52.3 198.9-52.3zm-115.3-107.7C614.9 174.5 591 135.1 591 95.6c0-13.2 1.9-26.4 2.6-38.3 63.4-2.6 139.3 35.8 184.3 96.3 41.4 53.2 54.9 112.9 54.9 163.2 0 11.5-2.6 23-2.6 38.3-67.9-2.6-148.1-44.3-148.4-121.9z"></path></svg>
-                Sign in with Apple
-              </button>
-              <!-- Google Sign In — real OAuth via Google Identity Services -->
-              <button onClick="{{ doGoogleSignIn }}" class="tap" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;border:1px solid rgba(255,255,255,.2);border-radius:16px;padding:14px;color:#1f2937;font-weight:700;font-size:13px;">
-                <svg width="17" height="17" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-                Sign in with Google
-              </button>
-            </div>
 
             <div onClick="{{ toggleAuthMode }}" class="tap" style="text-align:center;color:var(--gold-glow);font-weight:700;font-size:13.5px;margin-top:22px;">{{ authToggleText }}</div>
           </div>
@@ -349,9 +335,9 @@
               <div style="position:absolute;top:-16px;right:-10px;font-size:96px;opacity:.25;"></div>
               <div style="flex:0 0 auto;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.2);display:grid;place-items:center;font-size:34px;backdrop-filter:blur(4px);"></div>
               <div style="position:relative;flex:1;">
-                <div style="font-family:var(--f-num);letter-spacing:.18em;font-size:12px;color:var(--gold-glow);">FREE DAILY SPIN</div>
+                <div style="font-family:var(--f-num);letter-spacing:.18em;font-size:12px;color:var(--gold-glow);">FREE MONTHLY SPIN</div>
                 <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:22px;line-height:1;margin:3px 0 2px;">Spin to win a free pour</div>
-                <div style="font-size:12px;color:rgba(255,255,255,.85);font-weight:600;">Your spin's ready — tap to play →</div>
+                <div style="font-size:12px;color:rgba(255,255,255,.85);font-weight:600;">{{ spinSub }}</div>
               </div>
             </div>
 
@@ -600,6 +586,7 @@
                 <div class="menu-tile" style="flex:0 0 62px;width:62px;height:62px;border-radius:16px;display:grid;place-items:center;box-shadow:0 6px 14px {{ ci.shadow }};"><img src="{{ ci.icon }}" alt="" style="width:50px;height:50px;display:block;"></div>
                 <div style="flex:1;min-width:0;">
                   <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:18px;color:#fff;line-height:1;">{{ ci.name }}</div>
+                  <sc-if value="{{ ci.sub }}" hint-placeholder-val="{{ false }}"><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:4px;line-height:1.35;">{{ ci.sub }}</div></sc-if>
                   <div style="font-family:var(--f-num);font-size:22px;color:var(--gold-glow);margin-top:3px;">{{ ci.lineLabel }}</div>
                 </div>
                 <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);border-radius:99px;padding:6px 8px;">
@@ -690,7 +677,7 @@
             </div>
           </div>
           <div style="position:sticky;bottom:0;background:linear-gradient(180deg,rgba(20,64,61,0),var(--navy) 34%);padding:18px 20px 26px;z-index:5;">
-            <button onClick="{{ placeOrder }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">Place order · {{ totalLabel }}</button>
+            <button onClick="{{ placeOrder }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">{{ placeLabel }}</button>
           </div>
         </div>
         </sc-if>
@@ -934,7 +921,7 @@
             <div class="pd-hero-nav" style="position:relative;z-index:2;display:flex;align-items:center;gap:10px;min-height:72px;"><div style="display:flex;gap:6px;flex:0 0 auto;"><button onClick="{{ back }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--pink);display:grid;place-items:center;flex:0 0 36px;" title="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="var(--pink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><button onClick="{{ goHome }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--pink);display:grid;place-items:center;flex:0 0 36px;" title="Home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 4l9 8" stroke="var(--pink)" stroke-width="2.2" stroke-linecap="round"/><path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="var(--pink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><img class="pd-hero-logo" src="assets/logo-v3-512.png" style="height:84px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.38));" alt="Pour Decisions"><span style="width:40px;flex:0 0 40px;margin-left:auto;"></span></div>
           </div>
           <div style="position:relative;z-index:3;text-align:center;color:#fff;padding:14px 24px 4px;">
-            <span style="font-family:var(--f-num);letter-spacing:.22em;font-size:14px;background:rgba(0,0,0,.16);padding:4px 14px;border-radius:99px;">FREE DAILY SPIN</span>
+            <span style="font-family:var(--f-num);letter-spacing:.22em;font-size:14px;background:rgba(0,0,0,.16);padding:4px 14px;border-radius:99px;">FREE MONTHLY SPIN</span>
             <h2 style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:40px;line-height:.92;letter-spacing:-.03em;margin:14px 0 6px;text-shadow:0 3px 14px rgba(0,0,0,.2);">Spin to win<br>a free pour</h2>
             <p style="font-size:13.5px;font-weight:500;color:rgba(255,255,255,.9);margin:0;">Land a slice, claim it free — on the house. </p>
           </div>
@@ -948,7 +935,7 @@
               <!-- rotating wheel -->
               <div style="position:relative;width:100%;height:100%;border-radius:50%;transition:transform 4.2s cubic-bezier(.16,.84,.3,1);transform:{{ wheelTransform }};background:conic-gradient(from -18deg,#84CC16 0deg 36deg,#2FC4BC 36deg 72deg,#555 72deg 108deg,#FF8A3D 108deg 144deg,#FFC64D 144deg 180deg,#7C3AED 180deg 216deg,#63CFC8 216deg 252deg,#555 252deg 288deg,#6D28D9 288deg 324deg,#EF8A00 324deg 360deg);box-shadow:inset 0 0 0 3px rgba(255,255,255,.5);">
                 <sc-for list="{{ wheelSlices }}" as="s" hint-placeholder-count="10">
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate({{ s.deg }}deg) translateY(-96px);font-size:{{ s.size }}px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">{{ s.emoji }}</div>
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate({{ s.deg }}deg) translateY(-96px);font-size:{{ s.size }}px;font-weight:800;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.35);text-align:center;width:72px;line-height:1.05;">{{ s.emoji }}</div>
                 </sc-for>
               </div>
             </div>
@@ -958,7 +945,7 @@
 
           <div style="position:relative;z-index:3;text-align:center;margin-top:22px;">
             <button onClick="{{ spin }}" class="tap" style="background:var(--navy);color:#fff;font-weight:800;font-size:15px;padding:15px 40px;border-radius:99px;border:0;box-shadow:0 12px 28px rgba(0,0,0,.28);">Spin the wheel</button>
-            <p style="color:rgba(255,255,255,.82);font-size:12px;font-weight:600;margin:14px 0 0;">1 free spin every day · come back tomorrow for more</p>
+            <p style="color:rgba(255,255,255,.82);font-size:12px;font-weight:600;margin:14px 0 0;">{{ spinNote }}</p>
           </div>
 
           <!-- WIN OVERLAY: Signed-in + won a prize -->
@@ -970,7 +957,7 @@
               <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:{{ wonItem.grad }};display:grid;place-items:center;font-size:60px;box-shadow:0 14px 30px rgba(0,0,0,.3);">{{ wonItem.emoji }}</div>
               <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:14px;color:var(--gold-glow);margin-top:18px;">YOU WON</div>
               <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;line-height:1;margin-top:4px;">{{ wonItem.name }}</div>
-              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">A free {{ wonItem.cat }}, on us </div>
+              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">{{ wonItem.cat }}</div>
               <button onClick="{{ claimFree }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;margin-top:22px;box-shadow:0 10px 24px rgba(239,138,0,.4);">Claim it free →</button>
               <div onClick="{{ dismissWin }}" class="tap" style="color:rgba(255,255,255,.6);font-weight:700;font-size:13px;margin-top:14px;">Maybe later</div>
             </div>
@@ -1000,7 +987,7 @@
               <div style="width:120px;height:120px;border-radius:50%;margin:0 auto;background:rgba(255,255,255,.08);display:grid;place-items:center;font-size:60px;"></div>
               <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:14px;color:rgba(255,255,255,.5);margin-top:18px;">BETTER LUCK NEXT TIME</div>
               <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:30px;color:#fff;line-height:1;margin-top:4px;">Try again!</div>
-              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">Spin again tomorrow for another chance </div>
+              <div style="font-size:13px;color:rgba(255,255,255,.6);font-weight:600;margin-top:6px;">Spin again next month — every member gets one free spin a month</div>
               <button onClick="{{ dismissLose }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;margin-top:22px;">OK, I'll be back!</button>
             </div>
           </div>
@@ -1362,6 +1349,54 @@
             <div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to bottom,transparent,rgba(20,64,61,.55));z-index:1;pointer-events:none;"></div>
           </div>
           <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:26px 16px 0;">
+
+            <!-- BUILD YOUR OWN PACK (rules in menu.json → packages.byo: min items + discount tiers) -->
+            <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:11px;color:var(--gold-glow);margin-bottom:12px;">BUILD YOUR OWN PACK</div>
+            <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:18px;margin-bottom:28px;">
+              <div style="font-family:var(--f-display);font-weight:900;font-size:21px;color:#fff;line-height:1.1;">Pick your juices and shots. The more you pack, the less you pay.</div>
+              <div style="font-size:12px;color:rgba(255,255,255,.55);margin:6px 0 12px;line-height:1.5;">Mix anything, repeat favorites. Pressed to order; 12 or more, give us a day.</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">
+                <sc-for list="{{ byoTiers }}" as="t" hint-placeholder-count="6">
+                  <span style="background:{{ t.bg }};color:{{ t.fg }};font-size:11px;font-weight:800;padding:6px 10px;border-radius:99px;white-space:nowrap;">{{ t.label }} · {{ t.pct }}</span>
+                </sc-for>
+              </div>
+              <sc-if value="{{ byoOpen }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin:4px 0 10px;gap:10px;">
+                  <div style="font-family:var(--f-num);letter-spacing:.08em;font-size:12px;color:var(--gold-glow);line-height:1.4;">{{ byoSummary }}</div>
+                  <div onClick="{{ byoCancel }}" class="tap" style="font-size:12px;color:rgba(255,255,255,.55);font-weight:700;flex:0 0 auto;">Clear</div>
+                </div>
+                <div style="font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);font-weight:800;margin:10px 0 6px;">COLD-PRESSED JUICES · 16 OZ</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ byoJuices }}" as="bi" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:8px 10px;">
+                      <img src="{{ bi.icon }}" alt="" style="width:36px;height:36px;flex:0 0 36px;display:block;">
+                      <div style="flex:1;min-width:0;"><div style="font-weight:800;font-size:14px;color:#fff;">{{ bi.name }} <span style="font-weight:600;font-size:11px;color:rgba(255,255,255,.5);">{{ bi.unit }}</span></div><div style="font-size:11px;color:rgba(255,255,255,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ bi.ing }}</div></div>
+                      <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border-radius:99px;padding:4px 6px;flex:0 0 auto;">
+                        <button onClick="{{ bi.dec }}" class="tap" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);border:0;color:#fff;font-size:16px;line-height:1;display:grid;place-items:center;">−</button>
+                        <span style="min-width:16px;text-align:center;font-weight:800;color:#fff;font-size:14px;">{{ bi.n }}</span>
+                        <button onClick="{{ bi.inc }}" class="tap" style="width:26px;height:26px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:16px;line-height:1;display:grid;place-items:center;">+</button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="font-size:11px;letter-spacing:.14em;color:rgba(255,255,255,.45);font-weight:800;margin:16px 0 6px;">WELLNESS SHOTS · 2 OZ</div>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ byoShots }}" as="bi" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:8px 10px;">
+                      <img src="{{ bi.icon }}" alt="" style="width:36px;height:36px;flex:0 0 36px;display:block;">
+                      <div style="flex:1;min-width:0;"><div style="font-weight:800;font-size:14px;color:#fff;">{{ bi.name }} <span style="font-weight:600;font-size:11px;color:rgba(255,255,255,.5);">{{ bi.unit }}</span></div><div style="font-size:11px;color:rgba(255,255,255,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ bi.ing }}</div></div>
+                      <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border-radius:99px;padding:4px 6px;flex:0 0 auto;">
+                        <button onClick="{{ bi.dec }}" class="tap" style="width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);border:0;color:#fff;font-size:16px;line-height:1;display:grid;place-items:center;">−</button>
+                        <span style="min-width:16px;text-align:center;font-weight:800;color:#fff;font-size:14px;">{{ bi.n }}</span>
+                        <button onClick="{{ bi.inc }}" class="tap" style="width:26px;height:26px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:16px;line-height:1;display:grid;place-items:center;">+</button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="font-size:12px;color:rgba(255,255,255,.6);font-weight:700;margin:14px 0 0;text-align:center;">{{ byoNext }}</div>
+                <button onClick="{{ byoAddToCart }}" class="tap" style="margin-top:10px;width:100%;background:{{ byoCtaBg }};color:{{ byoCtaFg }};font-weight:800;font-size:14px;padding:13px;border-radius:99px;border:0;">{{ byoCta }}</button>
+              </sc-if>
+            </div>
 
             <!-- CLEANSES -->
             <div style="font-family:var(--f-num);letter-spacing:.2em;font-size:11px;color:var(--gold-glow);margin-bottom:12px;">COLD PRESS CLEANSES</div>
@@ -1870,8 +1905,10 @@ class Component extends DCLogic {
       screen: 'home',
       prev: 'home',
       signedIn: ls('pd_signedIn', false),
-      user: ls('pd_user', { name:'Maya R.', initial:'M', email:'maya@pourdecisions_juicebar.co' }),
+      user: ls('pd_user', { name:'Guest', initial:'G', email:'' }),
       authMode: 'in',
+      authPassword: '', authMarketing: true, authBusy: false,
+      token: ls('pd_token', ''),
       authName: '',
       authEmail: '',
       activeId: null,
@@ -1879,8 +1916,8 @@ class Component extends DCLogic {
       sizeKey: '',
       cart: ls('pd_cart', []),
       theme: 'Sunset',
-      points: ls('pd_points', 640),
-      filled: ls('pd_filled', 7),
+      points: ls('pd_points', 0),
+      filled: ls('pd_filled', 0),
       pina: (()=>{
   try{const h=JSON.parse(localStorage.getItem('pd_pina_chat')||'null');if(h&&Array.isArray(h)&&h.length)return h;}catch(e){}
   const prof=ls('pd_pina_profile',null);
@@ -1894,14 +1931,11 @@ class Component extends DCLogic {
       pinaTab: 'chat',
       orderNo: ls('pd_orderNo', 4827),
       rotation: 0,
-      spinning: false,
+      spinning: false, wonPrize: null, spinError: '', canSpin: true,
+      byoOpen: false, byoPicks: {},
       wonId: null,
       prizes: ls('pd_prizes', []),
-      orders: ls('pd_orders', [
-        { id:4825, date:'2026-06-28', items:[{name:'Green Light · 16 oz',qty:1},{name:'Double Shot',qty:2}], total:16.5, points:165 },
-        { id:4820, date:'2026-06-22', items:[{name:'The Regular · 16 oz',qty:1},{name:'Açaí Bowl',qty:1}], total:20, points:200 },
-        { id:4815, date:'2026-06-15', items:[{name:'InnerG Elevator · 16 oz',qty:2}], total:19, points:190 }
-      ]),
+      orders: ls('pd_orders', []),
       events: ls('pd_events', [
         { id:1, title:'Cold Press Workshop', date:'2026-08-15', time:'11:00 AM', desc:'Learn how we cold-press every juice fresh daily. Hands-on demo included.', price:0, emoji:'', rsvpd:false },
         { id:2, title:'Smoothie Bowl Pop-Up', date:'2026-08-22', time:'10:00 AM', desc:'Build your own bowl at our Saturday pop-up. All toppings included.', price:15, emoji:'', rsvpd:false },
@@ -2038,6 +2072,8 @@ class Component extends DCLogic {
 
   go(screen){ 
   this.setState(s => ({ prev: s.screen, screen })); 
+  this._syncHash(screen);
+  this._track(screen);
   try{ window.scrollTo({top:0,behavior:'instant'}); }catch(e){}
   try{ document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }catch(e){}
   try{ document.querySelector('#pd-app').scrollTop = 0; }catch(e){}
@@ -2136,33 +2172,99 @@ class Component extends DCLogic {
       });
   }
 
-  signIn(){
-    this.setState(s => {
-      const name = (s.authName || '').trim() || 'Maya R.';
-      const email = (s.authEmail || '').trim() || 'maya@pourdecisions_juicebar.co';
-      const user = { name, initial: name[0].toUpperCase(), email };
-      this._sv('pd_signedIn', true);
-      this._sv('pd_user', user);
-      return { signedIn:true, prev:'auth', screen:'home', authName:'', authEmail:'', user };
-    });
+  // ─── Accounts API (netlify/functions/members.mjs, data in Netlify Blobs) ───
+  async _api(path, method, body){
+    const headers = { 'content-type':'application/json' };
+    if (this.state.token) headers.authorization = 'Bearer ' + this.state.token;
+    const r = await fetch('/api/members/' + path, { method: method || 'GET', headers, body: body ? JSON.stringify(body) : undefined, cache:'no-store' });
+    let data = {}; try { data = await r.json(); } catch(e) {}
+    if (!r.ok) { const err = new Error(data.error || ('Request failed (' + r.status + ')')); err.status = r.status; err.code = data.code; throw err; }
+    return data;
+  }
+  _applyMember(m, token){
+    const name = m.name || (m.email || '').split('@')[0] || 'Guest';
+    const user = { name, initial: name[0].toUpperCase(), email: m.email || '', phone: m.phone || '', marketing: !!m.marketing, role: m.role || 'member', birthday: m.birthday || '' };
+    const patch = { signedIn:true, user, points: m.points || 0, filled: m.filled || 0, orders: m.orders || [], canSpin: m.canSpin !== false, prizes: (m.prizes || []).map(p => ({ ...p, name: p.label, emoji: '', cat: 'Show code ' + p.code + ' at the counter', wonDate: p.wonDate })) };
+    if (token) { patch.token = token; this._sv('pd_token', token); }
+    this._sv('pd_signedIn', true); this._sv('pd_user', user); this._sv('pd_points', patch.points); this._sv('pd_filled', patch.filled); this._sv('pd_orders', patch.orders);
+    return patch;
+  }
+  async signIn(){
+    const s = this.state; if (s.authBusy) return;
+    const email = (s.authEmail || '').trim().toLowerCase(), password = s.authPassword || '', name = (s.authName || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return this.setState({ authError: 'Enter a valid email address.' });
+    if (s.authMode === 'up' && !name) return this.setState({ authError: 'Tell us your name.' });
+    if (password.length < 6) return this.setState({ authError: 'Password needs at least 6 characters.' });
+    this.setState({ authBusy:true, authError:'' });
+    try {
+      const data = s.authMode === 'up'
+        ? await this._api('signup', 'POST', { name, email, password, marketing: s.authMarketing !== false })
+        : await this._api('signin', 'POST', { email, password });
+      const patch = this._applyMember(data.member, data.token);
+      this.setState({ ...patch, authBusy:false, prev:'auth', screen:'home', authName:'', authEmail:'', authPassword:'', authError:'' }); this._syncHash('home');
+    } catch(e) {
+      const patch = { authBusy:false, authError: e.message || 'Something went wrong. Try again.' };
+      if (e.code === 'NO_ACCOUNT') patch.authMode = 'up';
+      this.setState(patch);
+    }
   }
   signOut(){
-    this._sv('pd_signedIn', false);
-    this._sv('pd_cart', []);
-    this.setState({ signedIn:false, screen:'auth', cart:[] });
+    if (this.state.token) { try { this._api('signout', 'POST', {}).catch(() => {}); } catch(e) {} }
+    ['pd_signedIn','pd_token','pd_cart','pd_points','pd_filled','pd_orders','pd_user'].forEach(k => { try { localStorage.removeItem(k); } catch(e) {} });
+    this.setState({ signedIn:false, token:'', screen:'auth', cart:[], points:0, filled:0, orders:[], user:{ name:'Guest', initial:'G', email:'' } });
   }
   // On load, refresh the menu from ./menu.json (the source of truth). The embedded
   // MENU_DATA copy already rendered, so this only re-renders if the file loaded.
+  // ─── Hash routing: pourdecisionsjuicebar.com/#/menu, /#/menu/juices, /#/events … ───
+  get ROUTES(){ return ['home','menu','pass','events','packages','gallery','venue','wheel','prizes','account','cart','pina','auth']; }
+  _slug(c){ return String(c||'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+  _syncHash(screen){
+    if (!this.ROUTES.includes(screen)) return;
+    const want = screen === 'home' ? '#/' : '#/' + screen;
+    this._hashLock = true;
+    try { if (location.hash !== want) history.replaceState(null, '', want); } catch(e) {}
+    setTimeout(() => { this._hashLock = false; }, 0);
+  }
+  _track(screen){
+    try {
+      if (this._lastTracked === screen) return; this._lastTracked = screen;
+      let vid = localStorage.getItem('pd_vid'); if (!vid) { vid = Math.random().toString(36).slice(2, 12) + Date.now().toString(36); localStorage.setItem('pd_vid', vid); }
+      const body = JSON.stringify({ screen, vid, mobile: window.innerWidth < 768 });
+      if (navigator.sendBeacon) navigator.sendBeacon('/api/track', new Blob([body], { type: 'application/json' }));
+      else fetch('/api/track', { method: 'POST', headers: { 'content-type': 'application/json' }, body, keepalive: true }).catch(() => {});
+    } catch(e) {}
+  }
+  _routeFromHash(){
+    if (this._hashLock) return;
+    const m = /^#\/([a-z-]*)(?:\/([a-z0-9-]+))?/.exec(location.hash || '');
+    if (!m) return;
+    const screen = m[1] || 'home';
+    if (!this.ROUTES.includes(screen)) return;
+    const patch = { screen };
+    if (screen === 'menu' && m[2]) {
+      const cat = (this.CATS || []).find(c => this._slug(c) === m[2]);
+      if (cat) patch.cat = cat;
+    }
+    this.setState(s => ({ prev: s.screen, ...patch }));
+    this._track(screen);
+    try { window.scrollTo({top:0,behavior:'instant'}); } catch(e) {}
+  }
   componentDidMount(){
+    if (this.state.token) { this._api('me').then(d => this.setState(this._applyMember(d.member))).catch(e => { if (e.status === 401) this.signOut(); }); }
+    setTimeout(() => this._track(this.state.screen), 800);
+    try { this._routeFromHash(); window.addEventListener('hashchange', () => this._routeFromHash()); } catch(e) {}
     try {
       fetch('./menu.json', { cache:'no-store' })
         .then(r => (r && r.ok) ? r.json() : null)
-        .then(data => { if (data && Array.isArray(data.categories) && data.categories.length) { this.applyMenuData(data); this.setState({ menuVersion: Date.now() }); } })
+        .then(data => { if (data && Array.isArray(data.categories) && data.categories.length) { this.applyMenuData(data); this.setState({ menuVersion: Date.now() }); if (/^#\/menu\//.test(location.hash||'')) this._routeFromHash(); } })
         .catch(() => {});
     } catch(e) {}
   }
   applyMenuData(data){
     const b = buildMenu(data);
+    this.ORDER_URL = (data && data.business && data.business.order_url) || '';
+    this.PACK_RULES = (data && data.packages && data.packages.byo && Array.isArray(data.packages.byo.tiers)) ? data.packages.byo : (this.PACK_RULES || { min: 4, tiers: [], kinds: ['juice','shot'] });
+    this.WHEEL_PRIZES = (data && Array.isArray(data.wheel) && data.wheel.length) ? data.wheel : (this.WHEEL_PRIZES || []);
     this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured; this.SECTIONS = b.sections;
   }
 
@@ -2194,33 +2296,58 @@ class Component extends DCLogic {
     // Cart lines carry {id, qty, free, size}. Lines for items no longer on the menu
     // (e.g. a stale localStorage cart after a menu change) are dropped, not crashed on.
     return this.state.cart.map(c => {
+      if (c.pack) {
+        const pr = this.packPrice(c.picks); if (!pr.count) return null;
+        const names = Object.entries(c.picks || {}).map(([id, n]) => { const mm = this.MENU.find(m => m.id === id); return mm ? (n > 1 ? n + '× ' : '') + mm.name : null; }).filter(Boolean);
+        return { id: 'pack:' + (c.key || ''), packId: 'custom', qty: c.qty, free: false, size: '', name: 'Your Pack · ' + pr.count + ' items' + (pr.pct ? ' · ' + pr.pct + '% off' : ''), sub: names.join(', '), price: pr.total, icon: 'assets/logo-icon-256.png', shadow: 'rgba(41,183,175,.3)', grad: 'linear-gradient(150deg,#29B7AF,#1E8F89)', kind: 'Pack', cat: 'Pack', emoji: '' };
+      }
       const m = this.MENU.find(m =>m.id === c.id);
       if (!m) return null;
       const sz = this.sizeOf(m, c.size);
-      return { ...m, qty: c.qty, free: c.free, size: sz.key, name: this.labelWithSize(m, sz), price: c.free ? 0 : sz.price };
+      return { ...m, qty: c.qty, free: c.free, size: sz.key, name: this.labelWithSize(m, sz), sub: '', price: c.free ? 0 : sz.price };
     }).filter(Boolean);
+  }
+  // Pack pricing: retail sum of the picks, then a discount tier by item count (menu.json → packages.byo).
+  packPrice(picks){
+    const R = this.PACK_RULES || { min: 4, tiers: [] };
+    let count = 0, retail = 0;
+    for (const [id, n] of Object.entries(picks || {})) { const m = this.MENU.find(x => x.id === id); if (!m) continue; count += n; retail += n * (this.sizeOf(m).price || 0); }
+    let pct = 0, next = null;
+    for (const t of (R.tiers || []).slice().sort((a, b) => a.min - b.min)) { if (count >= t.min) pct = t.pct; else if (!next) next = t; }
+    const total = Math.round(retail * (1 - pct / 100) * 2) / 2;
+    return { count, retail, pct, total, next, min: R.min || 4, ok: count >= (R.min || 4) };
+  }
+  byoToggle(){ this.setState(s => ({ byoOpen: !s.byoOpen })); }
+  byoAdd(itemId, d){
+    this.setState(s => {
+      const picks = { ...(s.byoPicks || {}) }, cur = picks[itemId] || 0;
+      const total = Object.values(picks).reduce((a, b) => a + b, 0); if (d > 0 && total >= 60) return {};
+      const nv = Math.max(0, cur + d); if (nv) picks[itemId] = nv; else delete picks[itemId];
+      return { byoPicks: picks, byoOpen: true };
+    });
+  }
+  byoAddToCart(){
+    const pr = this.packPrice(this.state.byoPicks); if (!pr.ok) return;
+    this.setState(st => { const cart = [...st.cart, { pack: 'custom', picks: st.byoPicks, qty: 1, key: Date.now() }]; this._sv('pd_cart', cart); return { cart, byoOpen: false, byoPicks: {} }; });
+    this.go('cart');
   }
   subtotal(){ return this.cartDetailed().reduce((a, c) =>a + c.price * c.qty, 0); }
 
   spin(){
     if (this.state.spinning) return;
-    const n = this.WHEEL.length, seg = 360 / n;
-    const winner = Math.floor(Math.random() * n);
-    const cur = this.state.rotation;
-    const mod = ((cur % 360) + 360) % 360;
-    const desired = ((360 - winner * seg) % 360 + 360) % 360;
-    const delta = (desired - mod + 360) % 360;
-    const rotation = cur + 360 * 5 + delta;
-    this.setState({ spinning: true, wonId: null, rotation });
-    setTimeout(() => {
-      const wonId = this.WHEEL[winner];
-      const spinRecord = { date: new Date().toISOString(), result: wonId === 'lose' ? 'lose' : 'win', wonId };
-      this.setState(s => {
-        const monthlySpins = [...(s.monthlySpins || []), spinRecord];
-        this._sv('pd_monthly_spins', monthlySpins);
-        return { spinning: false, wonId, monthlySpins };
-      });
-    }, 4300);
+    if (!this.state.token) { this.go('auth'); return; }
+    const n = (this.WHEEL_PRIZES || []).length || 10, seg = 360 / n;
+    this.setState({ spinning: true, wonId: null, wonPrize: null, spinError: '' });
+    this._api('spin', 'POST', {}).then(d => {
+      const winner = Math.max(0, Math.min(n - 1, +d.index || 0));
+      const cur = this.state.rotation, mod = ((cur % 360) + 360) % 360;
+      const desired = ((360 - winner * seg) % 360 + 360) % 360, delta = (desired - mod + 360) % 360;
+      this.setState({ rotation: cur + 360 * 5 + delta });
+      setTimeout(() => {
+        const patch = this._applyMember(d.member);
+        this.setState({ ...patch, spinning: false, wonId: d.win ? 'prize' : 'lose', wonPrize: d.prize || null });
+      }, 4300);
+    }).catch(e => this.setState({ spinning: false, spinError: e.message || 'Could not spin right now.' }));
   }
 
   // ══════════════════════════════════════════════════════════════
@@ -2457,7 +2584,7 @@ class Component extends DCLogic {
                chips:['Take me to Plans','Which cleanse should I do?','What do you recommend?'] };
     }
     if (/pour pass|loyalty|reward|points|free|stamp|punch/.test(L)) {
-      return { text:"The Pour Pass is our loyalty card \n\nEvery pour earns a stamp. Nine stamps and the tenth is on us. You also get a free spin every single day — real prizes, free drinks, no catch.",
+      return { text:"The Pour Pass is our loyalty card \n\nEvery pour earns a stamp. Nine stamps and the tenth is on us. You also get one free spin every month — real prizes, no catch.",
                chips:['Take me to my Pass','Spin the wheel','What do you recommend?'] };
     }
     if (/spin|wheel|prize|win|game/.test(L)) {
@@ -2509,12 +2636,22 @@ class Component extends DCLogic {
   sendPina(){ const t = this.state.pinaInput.trim(); if (t) this.submit(t); }
 
   placeOrderNow(){
+    if (this.state.token) {
+      const items = this.cartDetailed().map(ci => ({ name: ci.sub ? ci.name + ' — ' + ci.sub : ci.name, qty: ci.qty }));
+      const total = Math.round(this.subtotal()*100)/100;
+      this._api('order', 'POST', { items, total }).then(d => {
+        const patch = this._applyMember(d.member);
+        this._sv('pd_cart', []);
+        this.setState({ ...patch, prev:'checkout', screen:'confirm', orderNo: d.order.id % 100000, cart:[] });
+      }).catch(() => this.setState({ authError:'' }));
+      return;
+    }
     const sub = this.subtotal();
     const earned = Math.max(10, Math.round(sub * 10));
     this.setState(s => {
       const newOrderNo = s.orderNo + 1;
       const today = new Date().toISOString().slice(0,10);
-      const items = this.cartDetailed().map(ci => ({ name: ci.name, qty: ci.qty }));
+      const items = this.cartDetailed().map(ci => ({ name: ci.sub ? ci.name + ' — ' + ci.sub : ci.name, qty: ci.qty }));
       const newOrder = { id: newOrderNo, date: today, items, total: Math.round(sub*100)/100, points: earned };
       const orders = [newOrder, ...s.orders];
       const newPoints = s.points + earned;
@@ -2529,23 +2666,7 @@ class Component extends DCLogic {
   }
 
   doCheckout(){
-    const S = this.state;
-    const payOpts = [
-      { id:'apple', label:'Apple Pay' },
-      { id:'cash', label:'Cash App Pay' },
-      { id:'card', label:'Card ···· 4827' },
-      { id:'points', label:'Pour Pass Points' }
-    ];
-    const sel = payOpts[S.selectedPayment || 0];
-    if (sel && sel.id === 'apple' && window.PaymentRequest) {
-      try {
-        const totalAmt = String(Math.round((this.subtotal()*1.08)*100)/100);
-        const details = { total:{ label:'Pour Decisions', amount:{ currency:'USD', value: totalAmt } } };
-        const req = new PaymentRequest([{ supportedMethods:'https://apple.com/apple-pay', data:{ version:3, merchantIdentifier:'merchant.com.pourdecisions', merchantCapabilities:['supports3DS'], supportedNetworks:['visa','masterCard','amex'], countryCode:'US' } }], details);
-        req.show().then(() =>this.placeOrderNow()).catch(() =>this.placeOrderNow());
-        return;
-      } catch(e) {}
-    }
+    if (this.ORDER_URL) { try { window.open(this.ORDER_URL, '_blank', 'noopener'); } catch(e) { location.href = this.ORDER_URL; } return; }
     this.placeOrderNow();
   }
 
@@ -2582,11 +2703,7 @@ class Component extends DCLogic {
 
   adminSignIn(){
     const s = this.state;
-    if (s.adminEmail === 'admin@pourdecisions_juicebar.com' && s.adminPassword === 'PourAdmin2026!') {
-      this.setState({ adminSignedIn: true, adminLoginError: '' });
-    } else {
-      this.setState({ adminLoginError: 'Invalid credentials. Try again.' });
-    }
+    this.setState({ adminLoginError: 'Admin tools have moved to the Clover dashboard.' });
   }
 
   deleteAdminEvent(id){
@@ -2618,16 +2735,12 @@ class Component extends DCLogic {
   }
 
   claimPrize(id){
-    this.setState(s => {
-      const prize = s.prizes.find(p =>p.id === id);
-      if (!prize || prize.claimed) return {};
-      const item = this.MENU.find(m =>m.id === prize.itemId);
-      if (item) this.addToCart(item, 1, true);
-      const prizes = s.prizes.map(p =>p.id === id ? { ...p, claimed: true } : p);
-      this._sv('pd_prizes', prizes);
-      return { prizes };
-    });
-    this.go('cart');
+    const prize = (this.state.prizes || []).find(p => p.id === id);
+    if (!prize || prize.claimed) return;
+    const item = prize.itemId ? this.MENU.find(m => m.id === prize.itemId) : null;
+    if (item) this.addToCart(item, 1, true);
+    this._api('claim', 'POST', { prizeId: id }).then(d => this.setState(this._applyMember(d.member))).catch(() => {});
+    if (item) this.go('cart');
   }
 
   renderVals(){
@@ -2687,11 +2800,11 @@ class Component extends DCLogic {
       authMode:S.authMode, authModeIn:S.authMode==='in', authModeUp:S.authMode==='up',
       authTitle:S.authMode==='in'?'Welcome back':'Join the club',
       authSub:S.authMode==='in'?'Sign in to reorder, earn points and spin the wheel.':'Create an account to save your pours, points and payment.',
-      authCta:S.authMode==='in'?'Sign in':'Create account',
+      authCta:S.authBusy?'One sec…':(S.authMode==='in'?'Sign in':'Create account'),
       authToggleText:S.authMode==='in'?"New here? Create an account":'Already have an account? Sign in',
-      authName:S.authName, authEmail:S.authEmail,
+      authName:S.authName, authEmail:S.authEmail, authError:S.authError||'', authPassword:S.authPassword||'', authMarketing:S.authMarketing!==false, authMarketingMark:S.authMarketing!==false?'✓':'', onAuthPassword:(e)=>this.setState({authPassword:e.target.value, authError:''}), toggleMarketing:()=>this.setState(s=>({authMarketing:s.authMarketing===false})),
       onAuthName:(e)=>this.setState({authName:e.target.value}),
-      onAuthEmail:(e)=>this.setState({authEmail:e.target.value}),
+      onAuthEmail:(e)=>this.setState({authEmail:e.target.value, authError:''}),
       toggleAuthMode:()=>this.setState(s=>({authMode:s.authMode==='in'?'up':'in'})),
       signIn:()=>this.signIn(), signOut:()=>this.signOut(),
       doGoogleSignIn:()=>this.doGoogleSignIn(),
@@ -2703,26 +2816,22 @@ class Component extends DCLogic {
 
       wheelTransform:'rotate(' + S.rotation + 'deg)',
       spinning:S.spinning, spin:()=>this.spin(),
+      spinSub: !S.signedIn ? 'Sign in to spin — one free spin a month →' : (S.canSpin !== false ? "Your spin's ready — tap to play →" : 'You spun this month — see your prizes →'),
+      spinNote: S.spinError || (S.canSpin === false ? 'You already spun this month — next spin on the 1st' : '1 free spin every month · prizes are good for 30 days'),
       spinLabel: S.spinning ? '···' : 'SPIN',
       won: !!S.wonId && S.screen==='wheel',
-      wonItem: (()=>{ const wId = (S.wonId && S.wonId !== 'lose') ? S.wonId : null; const w = wId ? (this.MENU.find(m=>m.id===wId)||this.MENU[0]) : this.MENU[0]; return { name:w.name, emoji:w.emoji, cat:w.cat, grad:w.grad }; })(),
-      wheelSlices: this.WHEEL.map((id, i) => { const w = id === 'lose' ? null : this.MENU.find(m =>m.id === id); return { deg: i * (360 / this.WHEEL.length), emoji: w ? w.emoji : '', size: w ? 28 : 24 }; }),
+      wonItem: (()=>{ const p = S.wonPrize; return { name: p ? p.label : '', emoji: '', cat: p ? ('Your code: ' + p.code + ' — show it at the counter. Good for 30 days.') : '', grad: 'linear-gradient(150deg,#29B7AF,#1E8F89)' }; })(),
+      wheelSlices: (this.WHEEL_PRIZES || []).map((w, i, arr) => ({ deg: i * (360 / arr.length), emoji: w.short || w.label, size: 10 })),
       claimFree:()=>{
-        const w=this.MENU.find(m=>m.id===S.wonId);
-        if(w){ this.addToCart(w,1,true); }
-        const prize = { id:Date.now(), itemId:S.wonId, name:w?w.name:'Prize', emoji:w?w.emoji:'', cat:w?w.cat:'Juice', wonDate:new Date().toISOString().slice(0,10), claimed:true };
-        this.setState(st=>{ const prizes=[...st.prizes,prize]; this._sv('pd_prizes',prizes); return {prizes,wonId:null}; });
-        this.go('cart');
+        const p = S.wonPrize; const w = p && p.itemId ? this.MENU.find(m=>m.id===p.itemId) : null;
+        if (w) this.addToCart(w,1,true);
+        this.setState({ wonId:null, wonPrize:null }); this.go(w ? 'cart' : 'prizes');
       },
-      dismissWin:()=>{
-        const w=this.MENU.find(m=>m.id===S.wonId);
-        const prize = { id:Date.now(), itemId:S.wonId, name:w?w.name:'Prize', emoji:w?w.emoji:'', cat:w?w.cat:'Juice', wonDate:new Date().toISOString().slice(0,10), claimed:false };
-        this.setState(st=>{ const prizes=[...st.prizes,prize]; this._sv('pd_prizes',prizes); return {prizes,wonId:null}; });
-      },
+      dismissWin:()=>this.setState({ wonId:null, wonPrize:null }),
       toggleTheme:()=>{ const o=['Sunset','Citrus','Berry']; this.setState(s=>({theme:o[(o.indexOf(s.theme)+1)%3]})); },
 
       hasCart: cartCount>0, cartEmpty: cartCount===0, cartCount,
-      subtotalLabel:this.fmt(sub), taxLabel:this.fmt(tax), totalLabel:this.fmt(total),
+      subtotalLabel:this.fmt(sub), taxLabel:this.fmt(tax), totalLabel:this.fmt(total), placeLabel: this.ORDER_URL ? 'Continue to secure checkout' : 'Place order · ' + this.fmt(total),
 
       featured: this.FEATURED.map(id =>this.MENU.find(m =>m.id === id)).filter(Boolean).map(cardFields),
       menu: menu.map(cardFields),
@@ -2781,16 +2890,32 @@ class Component extends DCLogic {
         inc:()=>this.changeQtyAt(i, 1), dec:()=>this.changeQtyAt(i, -1)
       })),
 
+      ...(() => {
+        const picks = S.byoPicks || {}, pr = this.packPrice(picks), R = this.PACK_RULES || { tiers: [] };
+        const row = m => ({ id: m.id, name: m.name, ing: m.ingredients, icon: m.icon, n: picks[m.id] || 0, unit: this.fmt(this.sizeOf(m).price || 0), inc: () => this.byoAdd(m.id, 1), dec: () => this.byoAdd(m.id, -1) });
+        const kinds = R.kinds || ['juice','shot'];
+        return {
+          byoOpen: true,
+          byoJuices: kinds.includes('juice') ? this.MENU.filter(m => m.kind === 'Juices').map(row) : [],
+          byoShots: kinds.includes('shot') ? this.MENU.filter(m => m.kind === 'Shots').map(row) : [],
+          byoSmoothies: kinds.includes('smoothie') ? this.MENU.filter(m => m.kind === 'Smoothies').map(row) : [],
+          byoHasSmoothies: kinds.includes('smoothie'),
+          byoTiers: (R.tiers || []).map(t => ({ label: t.min + '+', pct: t.pct + '% off', on: pr.pct === t.pct && pr.count >= t.min, bg: (pr.pct === t.pct && pr.count >= t.min) ? 'var(--gold)' : 'rgba(255,255,255,.08)', fg: (pr.pct === t.pct && pr.count >= t.min) ? 'var(--teal-deep)' : 'rgba(255,255,255,.75)' })),
+          byoCount: pr.count,
+          byoSummary: pr.count ? (pr.count + (pr.count === 1 ? ' item' : ' items') + ' · ' + this.fmt(pr.retail) + (pr.pct ? ' → ' + this.fmt(pr.total) + ' (' + pr.pct + '% off)' : '')) : 'Pick at least ' + pr.min + ' — mix juices and shots any way you like',
+          byoNext: pr.next ? ('Add ' + (pr.next.min - pr.count) + ' more for ' + pr.next.pct + '% off') : (pr.count ? 'Max discount unlocked' : ''),
+          byoCta: pr.ok ? 'Add pack to cart · ' + this.fmt(pr.total) : (pr.count ? 'Pick ' + (pr.min - pr.count) + ' more' : 'Start picking'),
+          byoCtaBg: pr.ok ? 'var(--gold)' : 'rgba(255,255,255,.1)', byoCtaFg: pr.ok ? 'var(--teal-deep)' : 'rgba(255,255,255,.7)',
+        };
+      })(),
+      byoAddToCart: () => this.byoAddToCart(), byoCancel: () => this.setState({ byoOpen: false, byoPicks: {} }), byoToggle: () => this.byoToggle(),
       pickupOptions: [
         { title:'ASAP', sub:'~12 min', bg:'var(--gold)', border:'var(--gold)', select:()=>{} , active:true},
         { title:'Schedule', sub:'Pick a time', bg:'rgba(255,255,255,.05)', border:'rgba(255,255,255,.12)', select:()=>{} }
       ].map((p,i)=>({ ...p, bg: i===0?'rgba(239,138,0,.16)':'rgba(255,255,255,.05)', border: i===0?'var(--gold)':'rgba(255,255,255,.12)' })),
       payOptions: (() => {
         const opts = [
-          { id:'apple', icon:'⬛', label:'Apple Pay' + (typeof window!=='undefined'&&window.ApplePaySession?' ✓':''), sel:S.selectedPayment===0 },
-          { id:'cash', icon:'', label:'Cash App Pay', sel:S.selectedPayment===1 },
-          { id:'card', icon:'', label:'Card ···· 4827', sel:S.selectedPayment===2 },
-          { id:'points', icon:'', label:'Pour Pass (' + S.points + ' pts)', sel:S.selectedPayment===3 }
+          { id:'pickup', icon:'', label: this.ORDER_URL ? 'Secure payment via Clover' : 'Pay at pickup — online payment coming soon', sel:true }
         ];
         return opts.map((pm,i) => ({ ...pm,
           select:()=>this.setState({selectedPayment:i}),
@@ -2830,6 +2955,7 @@ class Component extends DCLogic {
         { icon:'', label:'Payment methods', go:()=>this.go('checkout') },
         { icon:'', label:'Admin Panel', go:()=>this.go('admin') },
         { icon:'', label:'@pourdecisions_juicebar  ', go:()=>window.open('https://www.instagram.com/pourdecisions_juicebar/','_blank') },
+        ...((S.user && S.user.role === 'owner') ? [{ icon:'', label:'Owner dashboard →', go:()=>{ location.href = 'admin.html'; } }] : []),
         { icon:'', label:'Settings', go:()=>{} },
         { icon:'', label:'Sign out', go:()=>this.signOut() }
       ],
@@ -3189,6 +3315,7 @@ window.addEventListener('beforeinstallprompt', function(e) {
         setTimeout(show, 90000);
       })();
       </script>
+<form hidden method='post' name='owner-alert' data-netlify='true'><input type='text' name='subject'/><textarea name='message'></textarea></form>
 <form hidden method='post' name='event-booking'><input type='hidden' name='form-name' value='event-booking' /><input type="text" name="name"/><input type="email" name="email"/><input type="text" name="date"/><textarea name="note"></textarea><input name="bot-field"/></form>
 <form hidden method='post' name='venue-booking'><input type='hidden' name='form-name' value='venue-booking' /><input type="text" name="name"/><input type="email" name="email"/><input type="tel" name="phone"/><input type="text" name="eventType"/><input type="text" name="package"/><input type="text" name="date"/><input type="text" name="timeBlock"/><input type="text" name="guests"/><textarea name="notes"></textarea><input name="bot-field"/></form>
 </body>
