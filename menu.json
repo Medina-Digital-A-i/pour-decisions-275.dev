@@ -4,7 +4,8 @@
     "tagline": "Cold-pressed juice · smoothies · good food",
     "address": "359 Northern Blvd, Albany NY 12204",
     "email": "pourdecisionsalb@gmail.com",
-    "instagram": "pourdecisions_juicebar"
+    "instagram": "pourdecisions_juicebar",
+    "order_url": ""
   },
   "sizes": {
     "smoothie": [

@@ -1,0 +1,9 @@
+# Netlify build settings. The repo IS the site; there is no bundler.
+# The build "command" only validates menu.json — if it fails, the deploy fails and
+# the live site keeps its previous version (a typo can never take the menu down).
+[build]
+  publish = "."
+  command = "node scripts/check-menu.js"
+
+[build.environment]
+  NODE_VERSION = "20"

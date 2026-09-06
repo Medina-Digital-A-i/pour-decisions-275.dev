@@ -675,7 +675,7 @@
             </div>
           </div>
           <div style="position:sticky;bottom:0;background:linear-gradient(180deg,rgba(20,64,61,0),var(--navy) 34%);padding:18px 20px 26px;z-index:5;">
-            <button onClick="{{ placeOrder }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">Place order · {{ totalLabel }}</button>
+            <button onClick="{{ placeOrder }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">{{ placeLabel }}</button>
           </div>
         </div>
         </sc-if>
@@ -2175,6 +2175,7 @@ class Component extends DCLogic {
   }
   applyMenuData(data){
     const b = buildMenu(data);
+    this.ORDER_URL = (data && data.business && data.business.order_url) || '';
     this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured; this.SECTIONS = b.sections;
   }
 
@@ -2541,7 +2542,7 @@ class Component extends DCLogic {
   }
 
   doCheckout(){
-    const S = this.state;
+    if (this.ORDER_URL) { try { window.open(this.ORDER_URL, '_blank', 'noopener'); } catch(e) { location.href = this.ORDER_URL; } return; }
     this.placeOrderNow();
   }
 
@@ -2714,7 +2715,7 @@ class Component extends DCLogic {
       toggleTheme:()=>{ const o=['Sunset','Citrus','Berry']; this.setState(s=>({theme:o[(o.indexOf(s.theme)+1)%3]})); },
 
       hasCart: cartCount>0, cartEmpty: cartCount===0, cartCount,
-      subtotalLabel:this.fmt(sub), taxLabel:this.fmt(tax), totalLabel:this.fmt(total),
+      subtotalLabel:this.fmt(sub), taxLabel:this.fmt(tax), totalLabel:this.fmt(total), placeLabel: this.ORDER_URL ? 'Continue to secure checkout' : 'Place order · ' + this.fmt(total),
 
       featured: this.FEATURED.map(id =>this.MENU.find(m =>m.id === id)).filter(Boolean).map(cardFields),
       menu: menu.map(cardFields),
@@ -2779,7 +2780,7 @@ class Component extends DCLogic {
       ].map((p,i)=>({ ...p, bg: i===0?'rgba(239,138,0,.16)':'rgba(255,255,255,.05)', border: i===0?'var(--gold)':'rgba(255,255,255,.12)' })),
       payOptions: (() => {
         const opts = [
-          { id:'pickup', icon:'', label:'Pay at pickup — online payment coming soon', sel:true }
+          { id:'pickup', icon:'', label: this.ORDER_URL ? 'Secure payment via Clover' : 'Pay at pickup — online payment coming soon', sel:true }
         ];
         return opts.map((pm,i) => ({ ...pm,
           select:()=>this.setState({selectedPayment:i}),
