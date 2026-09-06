@@ -714,21 +714,6 @@
           "tag": "fresh cut"
         },
         {
-          "id": "grits-bowl",
-          "name": "Grits Bowl",
-          "ingredients": [
-            "stone-ground grits",
-            "spinach",
-            "tomato",
-            "egg"
-          ],
-          "prices": {
-            "veggie": 10,
-            "salmon": 14,
-            "shrimp": 15
-          }
-        },
-        {
           "id": "oatmeal",
           "name": "Oatmeal",
           "ingredients": [
