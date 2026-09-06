@@ -85,8 +85,9 @@ def band(logo, size_pills=True, h=''):
     return (f'<div class="band" {h}><img src="{logo}" alt="Pour Decisions" class="logo">'
             f'<div class="tg">{esc(biz["tagline"])}</div><div class="pills">{pills}</div></div>')
 
+QR=open('qr-menu.svg').read()
 def footer():
-    return (f'<div class="foot"><span>{esc(biz["address"])}</span><span>@{esc(biz["instagram"])}</span><span>pourdecisionsjuicebar.com</span></div>')
+    return (f'<div class="foot"><div class="qr">{QR}<div><b>Scan for the menu</b><br>pourdecisionsjuicebar.com</div></div><span>{esc(biz["address"])}</span><span>@{esc(biz["instagram"])}</span></div>')
 
 def doc(title, body_css, body):
     return f'''<!doctype html>
@@ -119,8 +120,8 @@ PRINT_CSS = """
 .cat{font-size:34px}
 .sech{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
 .catnote{font-size:11px}
-.it{padding:6px 0}
-.nm{font-size:15.5px}
+.it{padding:5px 0}
+.nm{font-size:15px}
 .tag{font-size:8.5px;padding:2px 7px}
 .ing{font-size:11.5px;margin-top:2px}
 .pr{font-size:15px}.pr small{font-size:10px}
@@ -128,7 +129,8 @@ PRINT_CSS = """
 .box h4{font-size:9.5px;margin-bottom:4px}
 .box p{font-size:11.5px}
 .shots .cat{font-size:24px}.shots .sech{margin-top:4px}
-.foot{display:flex;justify-content:space-between;padding:14px 40px;background:var(--sand);font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.02em}
+.foot{display:flex;justify-content:space-between;align-items:center;padding:7px 40px;background:var(--sand);font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.02em}
+.qr{display:flex;align-items:center;gap:10px;line-height:1.35}.qr svg{width:50px;height:50px;background:#fff;border-radius:6px;padding:3px;box-sizing:border-box}.qr b{color:var(--ink);font-size:12px}
 .stack{display:flex;flex-direction:column;gap:0}
 """
 print_drinks = doc('drinks', PRINT_CSS, f'''
@@ -230,6 +232,7 @@ PHONE_CSS = """
 .box h4{font-size:10px;margin-bottom:5px}
 .box p{font-size:13px}
 .shots .cat{font-size:28px}
+.qr{display:flex;align-items:center;gap:12px;line-height:1.35;margin-bottom:8px}.qr svg{width:72px;height:72px;background:#fff;border-radius:8px;padding:4px;box-sizing:border-box}
 .foot{display:flex;flex-direction:column;gap:4px;padding:18px 22px 28px;background:var(--sand);font-size:12px;font-weight:700;color:var(--ink)}
 .stack{display:flex;flex-direction:column}
 """

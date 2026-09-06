@@ -136,6 +136,19 @@
           "size": "smoothie"
         },
         {
+          "id": "malibu",
+          "name": "Malibu",
+          "ingredients": [
+            "orange",
+            "strawberry",
+            "ginger",
+            "pineapple",
+            "coconut water"
+          ],
+          "tag": "beach day",
+          "size": "smoothie"
+        },
+        {
           "id": "liquid-courage",
           "name": "Liquid Courage",
           "ingredients": [
