@@ -813,37 +813,25 @@
   ],
   "packages": {
     "title": "Juice Packs",
-    "note": "Any juices, mix and match. Pressed to order — call a day ahead for 12 or more.",
+    "note": "Mix juices and shots, any combo. The bigger the pack, the bigger the discount. Pressed to order — 12 or more, give us a day.",
     "items": [
       {
         "name": "Six Pack",
         "desc": "6 × 16 oz juices",
         "price": 50,
-        "save": "save $7",
-        "id": "six-pack",
-        "count": 6,
-        "kind": "juice",
-        "byo": true
+        "save": "12% off"
       },
       {
         "name": "The Case",
         "desc": "12 × 16 oz juices",
-        "price": 95,
-        "save": "save $19",
-        "id": "the-case",
-        "count": 12,
-        "kind": "juice",
-        "byo": true
+        "price": 94.5,
+        "save": "17% off"
       },
       {
         "name": "Shot Week",
         "desc": "7 × 2 oz wellness shots",
-        "price": 26,
-        "save": "save $5.50",
-        "id": "shot-week",
-        "count": 7,
-        "kind": "shot",
-        "byo": true
+        "price": 27.5,
+        "save": "12% off"
       },
       {
         "name": "Day Off",
@@ -857,7 +845,41 @@
         "price": 120,
         "save": "save $51"
       }
-    ]
+    ],
+    "byo": {
+      "min": 4,
+      "kinds": [
+        "juice",
+        "shot"
+      ],
+      "tiers": [
+        {
+          "min": 4,
+          "pct": 5
+        },
+        {
+          "min": 6,
+          "pct": 12
+        },
+        {
+          "min": 9,
+          "pct": 14
+        },
+        {
+          "min": 12,
+          "pct": 17
+        },
+        {
+          "min": 18,
+          "pct": 20
+        },
+        {
+          "min": 24,
+          "pct": 22
+        }
+      ],
+      "note": "Discount ladder by item count. Prices round to the nearest $0.50. Assumed COGS ~ $3.25/16oz juice, ~$1.05/2oz shot → margins stay 56–75% at every tier."
+    }
   },
   "wheel": [
     {

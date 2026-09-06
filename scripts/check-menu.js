@@ -48,6 +48,12 @@ else {
     for (const list of ['addons', 'proteins']) if (c[list]) c[list].forEach((a, i) => { if (!a.name || !isNum(a.price)) E(`${where}.${list}[${i}]: needs name + numeric price`); });
   });
 }
+if (m.packages && m.packages.byo) {
+  const b = m.packages.byo;
+  if (!isNum(b.min) || b.min < 1) E('packages.byo.min must be a number ≥ 1');
+  if (!Array.isArray(b.tiers) || !b.tiers.length) E('packages.byo.tiers must be a non-empty list of {min, pct}');
+  else b.tiers.forEach((t, i) => { if (!isNum(t.min) || !isNum(t.pct) || t.pct > 60) E(`packages.byo.tiers[${i}]: needs min + pct (0–60)`); });
+}
 if (m.wheel !== undefined) {
   if (!Array.isArray(m.wheel) || m.wheel.length !== 10) E('wheel must be a list of exactly 10 slices (the wheel graphic has 10 segments)');
   else m.wheel.forEach((w, i) => { if (!w.id || !w.label) E(`wheel[${i}]: needs id + label`); if (!isNum(w.weight)) E(`wheel[${i}]: weight must be a number (odds)`); if (w.itemId && !m.categories.some((c) => c.items.some((it) => it.id === w.itemId))) E(`wheel[${i}]: itemId "${w.itemId}" is not a menu item`); });
