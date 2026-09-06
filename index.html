@@ -43,6 +43,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,900;1,9..144,600;1,9..144,900&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Bebas+Neue&amp;display=swap" rel="stylesheet">
 <style>
+  /* Menu screen — category sections + TV-board style tiles / price chips */
+  .menu-section{margin-bottom:26px}
+  .menu-section-head{padding:2px 4px 12px}
+  .menu-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+  .menu-tile{background:#FAF7F0;border:1px solid rgba(20,97,93,.10)}
+  .pd-pcs{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+  .pd-pc{display:inline-flex;align-items:center;gap:4px;font-weight:800;font-size:12px;line-height:1;padding:6px 9px;border-radius:10px;color:#fff !important;white-space:nowrap}
+  .pd-pc img{width:16px;height:16px;display:block}
   :root{
     /* Pink / coral primary */
     --pink:#29B7AF; --pink-deep:#1E8F89; --pink-light:#53C9C2;
@@ -109,7 +117,7 @@
     .pd-bottom-nav-wrap{display:none !important}
     .pd-main-scroll{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;height:100dvh}
     .pd-pina-fab{position:fixed !important;right:24px !important;bottom:24px !important}
-    .menu-columns{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+    .menu-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px 18px}
 
     /* ── Hero desktop layout ─────────────────────────────────── */
     .pd-hero{
@@ -311,11 +319,11 @@
               <div class="noscroll" style="display:flex;gap:14px;overflow-x:auto;padding-bottom:4px;">
                 <sc-for list="{{ featured }}" as="it" hint-placeholder-count="3">
                   <div onClick="{{ it.open }}" class="tap" style="flex:0 0 210px;border-radius:24px;padding:18px;min-height:250px;display:flex;flex-direction:column;justify-content:space-between;background:{{ it.grad }};color:{{ it.text }};position:relative;overflow:hidden;box-shadow:0 14px 30px {{ it.shadow }};">
-                    <div style="position:absolute;top:-20px;right:-14px;font-size:96px;opacity:.32;">{{ it.emoji }}</div>
+                    <img src="{{ it.icon }}" alt="" style="position:absolute;top:-6px;right:-10px;width:112px;height:112px;opacity:.9;filter:drop-shadow(0 8px 12px rgba(0,0,0,.18));pointer-events:none;">
                     <span style="align-self:flex-start;background:{{ it.tagBg }};color:{{ it.tagFg }};font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:99px;position:relative;">{{ it.cat }}</span>
                     <div style="position:relative;">
                       <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:24px;line-height:.95;">{{ it.name }}</div>
-                      <div style="display:flex;align-items:center;gap:8px;margin-top:6px;"><span style="font-family:var(--f-num);font-size:30px;">{{ it.priceLabel }}</span><span style="font-size:11px;font-weight:700;opacity:.78;">{{ it.calLabel }}</span></div>
+                      <div style="display:flex;align-items:center;gap:8px;margin-top:6px;"><span style="font-family:var(--f-num);font-size:30px;">{{ it.priceLabel }}</span><span style="font-size:11px;font-weight:700;opacity:.78;">{{ it.fromLabel }}</span></div>
                     </div>
                   </div>
                 </sc-for>
@@ -448,51 +456,32 @@
             <div style="background:rgba(239,138,0,.12);border:1px solid rgba(239,138,0,.35);border-radius:16px;padding:10px 14px;font-size:12.5px;line-height:1.5;color:var(--gold-glow);font-weight:600;">{{ menuNote }}</div>
           </div>
           </sc-if>
-          <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:18px 16px 0;" class="menu-columns">
-            <!-- DRINKS SECTION -->
-            <div>
-              <sc-if value="{{ hasDrinkItems }}" hint-placeholder-val="{{ true }}">
-              <div style="font-family:var(--f-num);letter-spacing:.14em;font-size:12px;color:var(--gold-glow);margin-bottom:12px;">🥤 DRINKS</div>
-              <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
-                <sc-for list="{{ menuDrinks }}" as="it" hint-placeholder-count="4">
+          <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:18px 16px 0;">
+            <sc-for list="{{ menuSections }}" as="sec" hint-placeholder-count="2">
+            <div class="menu-section">
+              <div class="menu-section-head">
+                <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:26px;line-height:1;letter-spacing:-.02em;color:var(--teal-ink,#14615D);">{{ sec.title }}</div>
+                <sc-if value="{{ sec.hasNote }}" hint-placeholder-val="{{ true }}"><div style="font-size:12px;font-weight:800;color:var(--gold);margin-top:5px;line-height:1.4;">{{ sec.note }}</div></sc-if>
+              </div>
+              <div class="menu-grid">
+                <sc-for list="{{ sec.items }}" as="it" hint-placeholder-count="3">
                   <div onClick="{{ it.open }}" class="tap" style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:12px;">
-                    <div style="flex:0 0 78px;width:78px;height:78px;border-radius:18px;background:{{ it.grad }};display:grid;place-items:center;font-size:40px;box-shadow:0 8px 18px {{ it.shadow }};">{{ it.emoji }}</div>
+                    <div class="menu-tile" style="flex:0 0 78px;width:78px;height:78px;border-radius:18px;display:grid;place-items:center;box-shadow:0 8px 18px {{ it.shadow }};"><img src="{{ it.icon }}" alt="" style="width:64px;height:64px;display:block;"></div>
                     <div style="flex:1;min-width:0;">
                       <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-glow);">{{ it.cat }}</span><span style="font-size:11px;color:rgba(255,255,255,.5);font-weight:600;">{{ it.calLabel }}</span></div>
                       <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:20px;color:#fff;line-height:1.05;margin-top:2px;">{{ it.name }}</div>
-                      <div style="font-size:11.5px;color:rgba(255,255,255,.6);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ it.ingredients }}</div><div class="bf-pills"><sc-for list="{{ it.tagPills }}" as="tp" hint-placeholder-count="2"><span class="bf-pill" style="background:{{ tp.bg }};color:{{ tp.fg }};">{{ tp.icon }} {{ tp.label }}</span></sc-for></div>
+                      <div style="font-size:11.5px;color:rgba(255,255,255,.6);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ it.ingredients }}</div>
+                      <div class="pd-pcs"><sc-for list="{{ it.priceChips }}" as="pc" hint-placeholder-count="2"><span class="pd-pc" style="background:{{ pc.bg }};"><sc-if value="{{ pc.hasIcon }}" hint-placeholder-val="{{ false }}"><img src="{{ pc.icon }}" alt=""></sc-if>{{ pc.text }}</span></sc-for></div>
+                      <div class="bf-pills"><sc-for list="{{ it.tagPills }}" as="tp" hint-placeholder-count="2"><span class="bf-pill" style="background:{{ tp.bg }};color:{{ tp.fg }};">{{ tp.icon }} {{ tp.label }}</span></sc-for></div>
                     </div>
                     <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-                      <span style="font-family:var(--f-num);font-size:26px;color:var(--gold-glow);line-height:1;">{{ it.priceLabel }}</span>
                       <button onClick="{{ it.add }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:22px;font-weight:800;display:grid;place-items:center;line-height:1;box-shadow:0 6px 14px rgba(239,138,0,.4);">+</button>
                     </div>
                   </div>
                 </sc-for>
               </div>
-              </sc-if>
             </div>
-            <!-- FOOD SECTION -->
-            <div>
-              <sc-if value="{{ hasFoodItems }}" hint-placeholder-val="{{ false }}">
-              <div style="font-family:var(--f-num);letter-spacing:.14em;font-size:12px;color:var(--gold-glow);margin-bottom:12px;">🍽️ FOOD</div>
-              <div style="display:flex;flex-direction:column;gap:14px;">
-                <sc-for list="{{ menuFood }}" as="it" hint-placeholder-count="2">
-                  <div onClick="{{ it.open }}" class="tap" style="display:flex;gap:14px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:12px;">
-                    <div style="flex:0 0 78px;width:78px;height:78px;border-radius:18px;background:{{ it.grad }};display:grid;place-items:center;font-size:40px;box-shadow:0 8px 18px {{ it.shadow }};">{{ it.emoji }}</div>
-                    <div style="flex:1;min-width:0;">
-                      <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-glow);">{{ it.cat }}</span><span style="font-size:11px;color:rgba(255,255,255,.5);font-weight:600;">{{ it.calLabel }}</span></div>
-                      <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:20px;color:#fff;line-height:1.05;margin-top:2px;">{{ it.name }}</div>
-                      <div style="font-size:11.5px;color:rgba(255,255,255,.6);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ it.ingredients }}</div><div class="bf-pills"><sc-for list="{{ it.tagPills }}" as="tp" hint-placeholder-count="2"><span class="bf-pill" style="background:{{ tp.bg }};color:{{ tp.fg }};">{{ tp.icon }} {{ tp.label }}</span></sc-for></div>
-                    </div>
-                    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-                      <span style="font-family:var(--f-num);font-size:26px;color:var(--gold-glow);line-height:1;">{{ it.priceLabel }}</span>
-                      <button onClick="{{ it.add }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:22px;font-weight:800;display:grid;place-items:center;line-height:1;box-shadow:0 6px 14px rgba(239,138,0,.4);">+</button>
-                    </div>
-                  </div>
-                </sc-for>
-              </div>
-              </sc-if>
-            </div>
+            </sc-for>
           </div>
           <!-- address + map -->
           <div style="margin:0 0 0;background:#0A2725;padding:0;">
@@ -516,7 +505,7 @@
         <div style="animation:floatIn .35s ease both;padding-bottom:150px;">
           <div style="position:relative;min-height:340px;padding:44px 20px 30px;color:#fff;background:{{ item.grad }};overflow:hidden;">
             <svg viewBox="0 0 240 520" style="position:absolute;left:-46px;bottom:-90px;width:165px;height:auto;"><g fill="rgba(0,0,0,.13)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg>
-            <div style="position:absolute;top:44px;right:-30px;font-size:230px;opacity:.28;line-height:1;transform:rotate(-10deg);">{{ item.emoji }}</div>
+            <img src="{{ item.icon }}" alt="" style="position:absolute;top:96px;right:14px;width:190px;height:190px;transform:rotate(-8deg);filter:drop-shadow(0 16px 24px rgba(0,0,0,.22));pointer-events:none;">
             <div style="display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;min-height:72px;">
               <button onClick="{{ back }}" class="tap" style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.25);border:0;display:grid;place-items:center;backdrop-filter:blur(4px);">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
@@ -606,7 +595,7 @@
           <div style="flex:1;padding:6px 16px 0;display:flex;flex-direction:column;gap:12px;background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding-top:24px;">
             <sc-for list="{{ cart }}" as="ci" hint-placeholder-count="2">
               <div style="display:flex;gap:12px;align-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:11px;">
-                <div style="flex:0 0 62px;width:62px;height:62px;border-radius:16px;background:{{ ci.grad }};display:grid;place-items:center;font-size:32px;">{{ ci.emoji }}</div>
+                <div class="menu-tile" style="flex:0 0 62px;width:62px;height:62px;border-radius:16px;display:grid;place-items:center;box-shadow:0 6px 14px {{ ci.shadow }};"><img src="{{ ci.icon }}" alt="" style="width:50px;height:50px;display:block;"></div>
                 <div style="flex:1;min-width:0;">
                   <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:18px;color:#fff;line-height:1;">{{ ci.name }}</div>
                   <div style="font-family:var(--f-num);font-size:22px;color:var(--gold-glow);margin-top:3px;">{{ ci.lineLabel }}</div>
@@ -1672,21 +1661,21 @@ const MENU_DATA = {
     "smoothie": [
       {
         "oz": 16,
-        "price": 7.5
+        "price": 9.5
       },
       {
         "oz": 24,
-        "price": 10.5
+        "price": 12.5
       }
     ],
     "smoothie_protein": [
       {
         "oz": 16,
-        "price": 8.5
+        "price": 10.5
       },
       {
         "oz": 24,
-        "price": 11.5
+        "price": 13.5
       }
     ],
     "juice": [
@@ -1704,13 +1693,23 @@ const MENU_DATA = {
         "oz": 2,
         "price": 4.5
       }
+    ],
+    "meal": [
+      {
+        "oz": 16,
+        "price": 11
+      },
+      {
+        "oz": 24,
+        "price": 14
+      }
     ]
   },
   "categories": [
     {
       "key": "smoothies",
       "title": "Smoothies",
-      "note": "16 oz $7.50 · 24 oz $10.50 · protein blends +$1",
+      "note": "16 oz $9.50 · 24 oz $12.50 · protein blends +$1 · make any smoothie a meal (oats + protein) +$3",
       "items": [
         {
           "id": "the-regular",
@@ -1829,8 +1828,12 @@ const MENU_DATA = {
       ],
       "addons": [
         {
-          "name": "Protein",
+          "name": "Protein (whey or plant)",
           "price": 2
+        },
+        {
+          "name": "Oats",
+          "price": 1
         },
         {
           "name": "Peanut butter",
@@ -1838,6 +1841,10 @@ const MENU_DATA = {
         },
         {
           "name": "Sea moss",
+          "price": 2
+        },
+        {
+          "name": "Collagen",
           "price": 2
         },
         {
@@ -1849,14 +1856,92 @@ const MENU_DATA = {
           "price": 1.5
         },
         {
+          "name": "Espresso shot",
+          "price": 1.5
+        },
+        {
+          "name": "Extra greens",
+          "price": 1
+        },
+        {
           "name": "Extra fruit",
           "price": 1
+        },
+        {
+          "name": "Fresh ginger or turmeric",
+          "price": 0.5
         }
       ],
       "byo": {
         "name": "Build Your Own",
         "note": "Pick up to 4 — same price as the menu"
       }
+    },
+    {
+      "key": "protein-oats",
+      "title": "Protein & Oats",
+      "note": "16 oz $11 · 24 oz $14 · blended with oats and 20g+ protein — a meal in a cup",
+      "items": [
+        {
+          "id": "heavy-pour",
+          "name": "Heavy Pour",
+          "ingredients": [
+            "oats",
+            "peanut butter",
+            "banana",
+            "chocolate protein",
+            "cacao",
+            "cinnamon",
+            "almond milk"
+          ],
+          "tag": "post-workout",
+          "size": "meal"
+        },
+        {
+          "id": "early-bird",
+          "name": "Early Bird",
+          "ingredients": [
+            "oats",
+            "strawberry",
+            "banana",
+            "vanilla protein",
+            "honey",
+            "oat milk"
+          ],
+          "tag": "breakfast",
+          "size": "meal"
+        },
+        {
+          "id": "green-room",
+          "name": "Green Room",
+          "ingredients": [
+            "oats",
+            "spinach",
+            "banana",
+            "mango",
+            "vanilla protein",
+            "flax",
+            "almond milk"
+          ],
+          "tag": "greens + protein",
+          "size": "meal"
+        },
+        {
+          "id": "carrot-cake",
+          "name": "Carrot Cake",
+          "ingredients": [
+            "oats",
+            "carrot",
+            "banana",
+            "vanilla protein",
+            "walnut",
+            "cinnamon",
+            "oat milk"
+          ],
+          "tag": "dessert, but not",
+          "size": "meal"
+        }
+      ]
     },
     {
       "key": "juices",
@@ -1953,6 +2038,16 @@ const MENU_DATA = {
           "size": "juice"
         },
         {
+          "id": "watermelon-lemon",
+          "name": "Watermelon Lemon",
+          "ingredients": [
+            "watermelon",
+            "lemon"
+          ],
+          "tag": "simple",
+          "size": "juice"
+        },
+        {
           "id": "on-the-rocks",
           "name": "On the Rocks",
           "ingredients": [
@@ -1978,22 +2073,20 @@ const MENU_DATA = {
           "size": "juice"
         }
       ],
-      "cleanses": [
+      "addons": [
         {
-          "name": "1-Day Cleanse",
-          "note": "6 juices",
-          "price": 45
+          "name": "Ginger, turmeric or cayenne boost",
+          "price": 1
         },
         {
-          "name": "3-Day Cleanse",
-          "note": "18 juices",
-          "price": 120
+          "name": "Add a wellness shot to any juice",
+          "price": 3
         }
       ]
     },
     {
       "key": "shots",
-      "title": "Shots",
+      "title": "Wellness Shots",
       "note": "2 oz $4.50 · two for $8",
       "items": [
         {
@@ -2138,7 +2231,7 @@ const MENU_DATA = {
     {
       "key": "wraps-paninis",
       "title": "Wraps & Paninis",
-      "note": "Any wrap or panini + 16 oz smoothie $16",
+      "note": "Any wrap or panini + 16 oz smoothie $17",
       "items": [
         {
           "id": "southwest-wrap",
@@ -2163,6 +2256,23 @@ const MENU_DATA = {
             "salmon": 14,
             "tuna": 10.5
           }
+        },
+        {
+          "id": "ballistic-shrimp-burrito",
+          "name": "Ballistic Shrimp Burrito",
+          "ingredients": [
+            "crispy shrimp",
+            "rice",
+            "black beans",
+            "tomato",
+            "onion",
+            "avocado",
+            "lettuce",
+            "cilantro",
+            "ballistic sauce"
+          ],
+          "price": 13.5,
+          "tag": "spicy"
         },
         {
           "id": "pesto-panini",
@@ -2224,6 +2334,17 @@ const MENU_DATA = {
             "honey or PB drizzle"
           ],
           "price": 12.5
+        },
+        {
+          "id": "fruit-bowl",
+          "name": "Fruit Bowl",
+          "ingredients": [
+            "mixed fresh fruit",
+            "or all pineapple",
+            "or all watermelon"
+          ],
+          "price": 7,
+          "tag": "fresh cut"
         },
         {
           "id": "grits-bowl",
@@ -2293,23 +2414,61 @@ const MENU_DATA = {
       "name": "Pour Pass Gold",
       "price": 75,
       "per": "month",
-      "note": "10 juices + 20% off"
+      "note": "10 juices or smoothies + 20% off everything else"
     },
     {
       "name": "Pour Pass Platinum",
       "price": 130,
       "per": "month",
-      "note": "20 juices + 30% off"
+      "note": "20 juices or smoothies + 30% off everything else"
     }
-  ]
+  ],
+  "packages": {
+    "title": "Juice Packs",
+    "note": "Any juices, mix and match. Pressed to order — call a day ahead for 12 or more.",
+    "items": [
+      {
+        "name": "Six Pack",
+        "desc": "6 × 16 oz juices",
+        "price": 50,
+        "save": "save $7"
+      },
+      {
+        "name": "The Case",
+        "desc": "12 × 16 oz juices",
+        "price": 95,
+        "save": "save $19"
+      },
+      {
+        "name": "Shot Week",
+        "desc": "7 × 2 oz wellness shots",
+        "price": 26,
+        "save": "save $5.50"
+      },
+      {
+        "name": "Day Off",
+        "desc": "1-day cleanse · 6 juices",
+        "price": 45,
+        "save": ""
+      },
+      {
+        "name": "Long Weekend",
+        "desc": "3-day cleanse · 18 juices",
+        "price": 120,
+        "save": "save $51"
+      }
+    ]
+  }
 };
+
 
 // menu.json category key → how the UI labels/filters it
 const MENU_KINDS = [
   { key:'smoothies',       kind:'Smoothies',         one:'Smoothie', drink:true,  chip:'🍓 Smoothies',         emoji:'🍓' },
   { key:'juices',          kind:'Juices',            one:'Juice',    drink:true,  chip:'🥬 Juices',            emoji:'🥤' },
   { key:'shots',           kind:'Shots',             one:'Shot',     drink:true,  chip:'🫚 Shots',             emoji:'🫚' },
-  { key:'salads',          kind:'Salads',            one:'Salad',    drink:false, chip:'🥗 Salads',            emoji:'🥗' },
+  { key:'protein-oats',    kind:'Protein & Oats',    one:'Protein Blend', drink:true, chip:'💪 Protein & Oats', emoji:'🥣' },
+  { key:'salads',        kind:'Salads',            one:'Salad',    drink:false, chip:'🥗 Salads',            emoji:'🥗' },
   { key:'wraps-paninis',   kind:'Wraps & Paninis',   one:'Wrap',     drink:false, chip:'🥪 Wraps & Paninis',   emoji:'🥪' },
   { key:'bowls-breakfast', kind:'Bowls & Breakfast', one:'Bowl',     drink:false, chip:'🥣 Bowls & Breakfast', emoji:'🥣' }
 ];
@@ -2402,6 +2561,36 @@ const MENU_BENEFIT_RULES = [
   { re:/mint|aloe|pear/, tags:['gut'],             bullet:'Easy on the stomach' }
 ];
 
+// ── Item icons — ported from tv-signage/board-pop.html so the site matches the TV board.
+// One SVG per item type, tinted with the item's colour. Rendered as data: URIs in <img src>.
+const MENU_ICON_COLORS = {'the-regular':'#F25C7A','happy-hour':'#FF9A3C','green-light':'#4CB96B','nightcap':'#6B4FBB','designated-driver':'#FFE08A','last-call':'#FF4FA3','liquid-courage':'#8B5A2B','open-tab':'#B8336A','morning-shift':'#5C4033','heavy-pour':'#7A4A1E','early-bird':'#F47C8C','green-room':'#3E9E5E','carrot-cake':'#F28C28','innerg-elevator':'#F28C28','sober-up':'#5CB85C','ase':'#F2C230','red-eye':'#C2185B','hair-of-the-dog':'#B03060','skinny-dip':'#A8D8B9','sunday-brunch':'#FF5C7A','watermelon-lemon':'#FF6B6B','on-the-rocks':'#7FD6C2','clean-slate':'#8BC34A','flu-shot':'#F5A623','double-shot':'#F7D774','the-bouncer':'#6A4C93','southwest-black-bean':'#E0703A','mediterranean-chickpea':'#7BAE5C','cucumber-crunch':'#5BC48A','strawberry-spinach':'#E14C6A','apple-walnut-cranberry':'#B23B3B','southwest-wrap':'#D9822B','mediterranean-wrap':'#8AAE4C','ballistic-shrimp-burrito':'#F25C3B','pesto-panini':'#4F9A4B','chipotle-panini':'#C0392B','veggie-panini':'#6DA544','acai-bowl':'#5E3A8C','grits-bowl':'#E7C36A','oatmeal':'#C9A66B','soup':'#D9773B','avocado-toast':'#7CB342','fruit-bowl':'#FF7A59'};
+const MENU_ICONS = {
+ smoothie:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 34 L70 34 L64 92 Q50 96 36 92 Z" fill="${c}"/><path d="M30 34 L70 34 L68 52 L32 52Z" fill="#fff" opacity=".28"/><path d="M26 28 Q50 14 74 28 L74 34 L26 34Z" fill="#E9F3F2"/><rect x="54" y="6" width="6" height="34" rx="3" fill="#EF8A00" transform="rotate(12 57 23)"/><ellipse cx="50" cy="93" rx="14" ry="3" fill="rgba(0,0,0,.08)"/></svg>`,
+ juice:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M28 22 L72 22 L66 90 Q50 95 34 90 Z" fill="#EAF6F5"/><path d="M31 44 L69 44 L65 89 Q50 93 35 89 Z" fill="${c}"/><path d="M31 44 L69 44 L68 56 L32 56Z" fill="#fff" opacity=".25"/><rect x="26" y="18" width="48" height="6" rx="3" fill="#CFE6E3"/><path d="M62 30 Q78 18 84 30 Q70 28 62 30Z" fill="#2E9C5C"/><ellipse cx="50" cy="93" rx="14" ry="3" fill="rgba(0,0,0,.08)"/></svg>`,
+ shot:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M34 40 L66 40 L62 84 Q50 88 38 84 Z" fill="#EAF6F5"/><path d="M36 54 L64 54 L61 83 Q50 86 39 83 Z" fill="${c}"/><rect x="32" y="36" width="36" height="6" rx="3" fill="#CFE6E3"/><ellipse cx="50" cy="88" rx="12" ry="3" fill="rgba(0,0,0,.08)"/></svg>`,
+ salad:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M16 50 L84 50 Q82 84 50 86 Q18 84 16 50Z" fill="#F3EEE2"/><path d="M16 50 L84 50 L84 56 L16 56Z" fill="#E3D7C2"/><g fill="${c}"><circle cx="34" cy="42" r="12"/><circle cx="52" cy="36" r="13"/><circle cx="68" cy="44" r="11"/></g><g fill="#E8365D"><circle cx="44" cy="46" r="5"/><circle cx="62" cy="38" r="4"/></g><circle cx="56" cy="47" r="4" fill="#FFE29A"/></svg>`,
+ wrap:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M18 62 Q22 40 44 38 L82 38 Q90 48 82 70 L36 74 Q22 74 18 62Z" fill="#F1DDB6"/><path d="M44 38 L82 38 Q86 50 82 70 L60 72Z" fill="#E8CFA0"/><path d="M28 60 Q40 44 60 46 Q62 56 48 66Z" fill="${c}"/><path d="M34 66 Q46 56 58 58" stroke="#3FB56B" stroke-width="5" fill="none"/><path d="M40 70 Q50 64 62 65" stroke="#E8365D" stroke-width="4" fill="none"/></svg>`,
+ burrito:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="16" y="34" width="68" height="36" rx="18" fill="#F1DDB6"/><path d="M16 52 Q50 44 84 52" stroke="#E8CFA0" stroke-width="4" fill="none"/><circle cx="24" cy="52" r="12" fill="${c}"/><circle cx="24" cy="52" r="6" fill="#3FB56B"/><circle cx="20" cy="46" r="3" fill="#E8365D"/></svg>`,
+ panini:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M18 40 Q50 28 82 40 L82 48 L18 48Z" fill="#E7B36B"/><path d="M18 48 L82 48 L82 56 L18 56Z" fill="${c}"/><path d="M14 56 L86 56 L82 62 L18 62Z" fill="#3FB56B"/><path d="M18 62 L82 62 Q84 76 50 78 Q16 76 18 62Z" fill="#E7B36B"/><g stroke="#C98A1B" stroke-width="3"><line x1="28" y1="36" x2="40" y2="34"/><line x1="52" y1="32" x2="64" y2="34"/></g></svg>`,
+ bowl:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 46 L86 46 Q84 84 50 86 Q16 84 14 46Z" fill="#F3EEE2"/><path d="M18 46 L82 46 Q80 54 50 56 Q20 54 18 46Z" fill="${c}"/><g fill="#FFE29A"><circle cx="34" cy="42" r="5"/><circle cx="52" cy="40" r="5"/><circle cx="66" cy="43" r="5"/></g><g fill="#E8365D"><circle cx="42" cy="38" r="4"/><circle cx="60" cy="37" r="4"/></g></svg>`,
+ soup:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 50 L86 50 Q84 84 50 86 Q16 84 14 50Z" fill="#F3EEE2"/><ellipse cx="50" cy="50" rx="34" ry="8" fill="${c}"/><g stroke="#B8B0A0" stroke-width="4" fill="none" stroke-linecap="round"><path d="M40 36 q4 -8 0 -16"/><path d="M52 34 q4 -8 0 -16"/><path d="M64 36 q4 -8 0 -16"/></g></svg>`,
+ toast:c=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 36 Q22 22 36 24 Q50 14 64 24 Q78 22 80 36 L80 82 L20 82Z" fill="#E7B36B"/><path d="M26 40 L74 40 L74 78 L26 78Z" fill="#F5E6C4"/><path d="M30 46 Q50 38 70 46 L70 72 Q50 78 30 72Z" fill="${c}"/><circle cx="46" cy="58" r="4" fill="#E8365D"/><circle cx="58" cy="62" r="3" fill="#E8365D"/></svg>`,
+ salmon:()=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M14 60 Q30 22 84 24 Q86 50 60 76 Q34 84 14 60Z" fill="#F58A78"/><g stroke="#FFD8CF" stroke-width="4" fill="none"><path d="M26 56 Q40 40 70 34"/><path d="M34 66 Q48 50 76 44"/><path d="M46 74 Q58 60 80 56"/></g><path d="M14 60 Q20 66 30 70 Q22 64 14 60Z" fill="#D9695A"/></svg>`,
+ chicken:()=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M60 26 Q84 32 78 58 Q70 78 44 72 Q26 66 30 46 Q36 26 60 26Z" fill="#E9B36A"/><path d="M34 70 L20 84 Q14 78 18 72 L28 62Z" fill="#F3E0BF"/><path d="M22 86 Q10 90 12 80 Q18 80 22 86Z" fill="#F3E0BF"/></svg>`,
+ tuna:()=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M18 50 Q40 26 68 34 Q84 40 84 50 Q84 60 68 66 Q40 74 18 50Z" fill="#6C8DB5"/><path d="M84 50 L96 36 L94 64Z" fill="#6C8DB5"/><path d="M28 50 Q46 38 68 42" stroke="#9FB8D6" stroke-width="4" fill="none"/><circle cx="30" cy="48" r="3" fill="#1E2A44"/></svg>`
+};
+const MENU_ICON_KIND = {'smoothies':'smoothie','protein-oats':'smoothie','juices':'juice','shots':'shot','salads':'salad'};
+const MENU_FOOD_ICON = {'ballistic-shrimp-burrito':'burrito','pesto-panini':'panini','chipotle-panini':'panini','veggie-panini':'panini','acai-bowl':'bowl','grits-bowl':'bowl','oatmeal':'bowl','fruit-bowl':'bowl','soup':'soup','avocado-toast':'toast'};
+const MENU_PROTEIN_ICON = {chicken:'chicken',salmon:'salmon',tuna:'tuna',shrimp:'salmon'};
+const svgDataUri = svg => 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+function menuItemIcon(catKey, it){
+  const k = MENU_FOOD_ICON[it.id] || MENU_ICON_KIND[catKey] || (catKey === 'wraps-paninis' ? (/panini/i.test(it.name) ? 'panini' : 'wrap') : 'bowl');
+  return svgDataUri(MENU_ICONS[k](MENU_ICON_COLORS[it.id] || '#29B7AF'));
+}
+// Menu sections render in this order regardless of menu.json order (matches the TV boards).
+const MENU_SECTION_ORDER = ['smoothies','juices','shots','protein-oats','salads','wraps-paninis','bowls-breakfast'];
+const PRICE_CHIP_COLORS = [{ bg:'#EF8A00', fg:'#fff' }, { bg:'#14615D', fg:'#fff' }];
+
 function buildMenu(data){
   const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
   const money = n => '$' + n.toFixed(n % 1 === 0 ? 0 : 2);
@@ -2410,10 +2599,13 @@ function buildMenu(data){
     if (it.prices) return Object.keys(it.prices).map(k => ({ key:k, label:cap(k), price:it.prices[k] }));
     return [{ key:'', label:'', price:Number(it.price) || 0 }];
   };
-  const menu = [], benefits = {}, notes = {}, cats = ['All'];
-  (data.categories || []).forEach(c => {
+  const menu = [], benefits = {}, notes = {}, cats = ['All'], sections = [];
+  const orderOf = c => { const i = MENU_SECTION_ORDER.indexOf(c.key); return i < 0 ? 99 : i; };
+  (data.categories || []).slice().sort((a, b) => orderOf(a) - orderOf(b)).forEach(c => {
     const K = MENU_KINDS.find(k => k.key === c.key) || { key:c.key, kind:c.title || c.key, one:c.title || c.key, drink:false, emoji:'🍽️' };
     if (!cats.includes(K.kind)) cats.push(K.kind);
+    const section = { key:c.key, kind:K.kind, title:c.title || K.kind, note:c.note || '', itemIds:[] };
+    sections.push(section);
     // Category-level notes (combo deals, add-ons, proteins, cleanses) shown on the menu screen + item detail
     const extras = [];
     if (c.note) extras.push(c.note);
@@ -2443,13 +2635,23 @@ function buildMenu(data){
       const itemExtras = (it.addons && it.addons.length) ? 'Add ' + it.addons.map(a => a.name + ' +' + money(a.price)).join(' · ') : '';
       const sizeSummary = sizes.length > 1 ? sizes.map(s => s.label + ' ' + money(s.price)).join(' · ') : '';
       benefits[it.id] = bullets.slice(0, 3);
+      // Price chips like the TV board: one per size (16 oz / 24 oz) or per variant (chicken / salmon / tuna …)
+      const priceChips = sizes.map((s, j) => {
+        const col = PRICE_CHIP_COLORS[j % PRICE_CHIP_COLORS.length];
+        const prot = MENU_PROTEIN_ICON[String(s.key).toLowerCase()];
+        return { key:s.key, label:s.label, price:s.price, bg:col.bg, fg:col.fg,
+          text: money(s.price) + (s.label ? ' · ' + s.label : ''),
+          hasIcon: !!prot, icon: prot ? svgDataUri(MENU_ICONS[prot]()) : '' };
+      });
+      section.itemIds.push(it.id);
       menu.push({
         id: it.id, name: it.name, kind: K.kind, drink: K.drink, tag: it.tag || '',
         cat: /panini/i.test(it.name) ? 'Panini' : (K.key === 'bowls-breakfast' && !/bowl/i.test(it.name)) ? 'Breakfast' : K.one,
-        price, sizes, hasSizes: sizes.length > 1, sizeSummary,
+        price, sizes, hasSizes: sizes.length > 1, sizeSummary, priceChips,
         defaultSize: sizes.reduce((a, b) => (b.price < a.price ? b : a), sizes[0]).key,
         priceLine: sizeSummary || money(price),
         emoji: copy[0] || K.emoji,
+        icon: menuItemIcon(K.key, it),
         grad: pal.grad, shadow: pal.shadow, text: pal.text, tagBg: pal.tagBg, tagFg: pal.tagFg,
         ingredients: (it.ingredients || []).map(cap).join(' · '),
         ingList: (it.ingredients || []).map(cap),
@@ -2465,7 +2667,7 @@ function buildMenu(data){
   let wheel = pick(['sober-up','the-regular']).concat(['lose']).concat(pick(['innerg-elevator','happy-hour','nightcap','sunday-brunch'])).concat(['lose']).concat(pick(['acai-bowl','double-shot']));
   if (wheel.length < 10) { const fill = menu.filter(m => m.drink && !wheel.includes(m.id)).map(m => m.id); while (wheel.length < 10 && fill.length) wheel.push(fill.shift()); }
   const featured = pick(['the-regular','innerg-elevator','green-light']);
-  return { menu, cats, wheel, benefits, notes, featured };
+  return { menu, cats, wheel, benefits, notes, featured, sections };
 }
 const MENU_BUILT = buildMenu(MENU_DATA);
 
@@ -2625,6 +2827,7 @@ class Component extends DCLogic {
   WHEEL = MENU_BUILT.wheel;
   MENU_NOTES = MENU_BUILT.notes;
   FEATURED = MENU_BUILT.featured;
+  SECTIONS = MENU_BUILT.sections;
 
   _ls(k, d){ try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : d; } catch(e) { return d; } }
   _sv(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
@@ -2768,7 +2971,7 @@ class Component extends DCLogic {
   }
   applyMenuData(data){
     const b = buildMenu(data);
-    this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured;
+    this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured; this.SECTIONS = b.sections;
   }
 
   // Size / variant helpers. Every item has `sizes` (16/24 oz for drinks, 2 oz shots,
@@ -3267,7 +3470,8 @@ class Component extends DCLogic {
     const activeTab = ({ detail:'menu', checkout:'cart', confirm:'cart', notifications:'home', pina:'home', prizes:'account', admin:'account', pass:'account', packages:'packages', gallery:'gallery' })[S.screen] || S.screen;
 
     const cardFields = it => ({
-      ...it, priceLabel: this.fmt(it.price), calLabel: it.hasSizes ? (it.drink ? 'from · ' + it.sizes[0].label : 'from') : (it.tag || ''),
+      ...it, priceLabel: this.fmt(it.price), calLabel: it.tag || '',
+      fromLabel: it.hasSizes ? (it.drink ? 'from · ' + it.sizes[0].label : 'from') : (it.tag || ''),
       tagPills: (it.tagKeys || []).slice(0,2).map(k => ({ ...(this.BENEFIT_TAGS[k]||{icon:'',label:k,bg:'#EFE7D8',fg:'#2B2B26'}) })),
       open: () => this.openItem(it), add: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.addToCart(it); this.go('cart'); }
     });
@@ -3723,11 +3927,11 @@ class Component extends DCLogic {
         return days;
       })(),
 
-      // Menu drinks/food split
-      menuDrinks: menu.filter(m => m.drink).map(cardFields),
-      menuFood: menu.filter(m => !m.drink).map(cardFields),
-      hasDrinkItems: menu.some(m => m.drink),
-      hasFoodItems: menu.some(m => !m.drink)
+      // Menu grouped by category (TV-board order), honouring the category + benefit filters
+      menuSections: (this.SECTIONS || []).map(sec => {
+        const items = menu.filter(m => m.kind === sec.kind && sec.itemIds.includes(m.id));
+        return { title: sec.title, note: sec.note, hasNote: !!sec.note, items: items.map(cardFields), count: items.length };
+      }).filter(sec => sec.count > 0)
     };
   }
 }
