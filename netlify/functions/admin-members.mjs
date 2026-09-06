@@ -9,7 +9,7 @@ export default async (req) => {
   const got = (req.headers.get('authorization') || '').replace(/^Bearer\s+/i, '').trim();
   const ok = want.length >= 24 && got.length === want.length && timingSafeEqual(Buffer.from(got), Buffer.from(want));
   if (!ok) return new Response('Forbidden', { status: 403 });
-  const store = getStore('members');
+  const store = getStore({ name: 'members', consistency: 'strong' });
   const rows = [];
   let cursor;
   do {

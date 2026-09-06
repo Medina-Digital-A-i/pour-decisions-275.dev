@@ -37,7 +37,7 @@ async function auth(req, store) {
 export default async (req) => {
   const url = new URL(req.url);
   const path = url.pathname.replace(/^\/api\/members\/?/, '').replace(/\/$/, '');
-  const store = getStore('members');
+  const store = getStore({ name: 'members', consistency: 'strong' });
   let body = {};
   if (req.method === 'POST') { try { body = await req.json(); } catch { body = {}; } }
 
