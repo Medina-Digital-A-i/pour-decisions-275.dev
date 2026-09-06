@@ -475,7 +475,7 @@
     },
     {
       "key": "wraps-paninis",
-      "title": "Wraps & Paninis",
+      "title": "Wraps, Burritos & Paninis",
       "note": "Any wrap or panini + 16 oz smoothie $17",
       "items": [
         {
@@ -501,6 +501,23 @@
             "salmon": 14,
             "tuna": 10.5
           }
+        },
+        {
+          "id": "ballistic-shrimp-burrito",
+          "name": "Ballistic Shrimp Burrito",
+          "ingredients": [
+            "crispy shrimp",
+            "ballistic sauce (chipotle-lime, kick of cayenne)",
+            "black beans",
+            "corn",
+            "red cabbage",
+            "avocado",
+            "cheddar",
+            "cilantro",
+            "flour tortilla"
+          ],
+          "price": 13.5,
+          "tag": "spicy"
         },
         {
           "id": "pesto-panini",
