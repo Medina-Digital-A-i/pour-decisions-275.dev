@@ -416,3 +416,54 @@ svg[viewBox="0 0 240 520"]{opacity:.5;}
 .pd-drawer-addr{font-size:12.5px;font-weight:700;color:#2B2B26;margin-bottom:6px;line-height:1.4;}
 .pd-drawer-link{display:block;font-size:12.5px;color:#29B7AF;text-decoration:none;font-weight:700;margin-top:4px;word-break:break-word;}
 .pd-drawer-link:hover{text-decoration:underline;}
+
+/* ═══ Round 5 (Sep 2026): contrast on gradient cards + emoji-purge cleanup ═══ */
+/* Inline styles get re-serialized to rgb()/rgba() at runtime, so the hex-based
+   "keep white text on colored surfaces" rules above never match. Match both. */
+[style*="linear-gradient(150deg, rgb(41, 183, 175)"],
+[style*="linear-gradient(120deg, rgb(41, 183, 175)"],
+[style*="linear-gradient(135deg, rgb(41, 183, 175)"],
+[style*="linear-gradient(135deg, rgb(255, 107, 53)"],
+[style*="linear-gradient(135deg, rgba(20, 64, 61"],
+[style*="linear-gradient(135deg,rgba(20,64,61"],
+[style*="linear-gradient(150deg,#29B7AF"],[style*="linear-gradient(120deg,#29B7AF"],
+[style*="linear-gradient(135deg,#FF6B35"]{color:#FFFFFF !important;}
+[style*="linear-gradient(150deg, rgb(41, 183, 175)"] *,
+[style*="linear-gradient(120deg, rgb(41, 183, 175)"] *,
+[style*="linear-gradient(135deg, rgb(41, 183, 175)"] *,
+[style*="linear-gradient(135deg, rgb(255, 107, 53)"] *,
+[style*="linear-gradient(135deg, rgba(20, 64, 61"] *,
+[style*="linear-gradient(135deg,rgba(20,64,61"] *,
+[style*="linear-gradient(150deg,#29B7AF"] *,[style*="linear-gradient(120deg,#29B7AF"] *,
+[style*="linear-gradient(135deg,#FF6B35"] *{color:#FFFFFF !important;text-shadow:none !important;}
+/* secondary text inside those cards: soft white, not gray */
+[style*="linear-gradient(150deg, rgb(41, 183, 175)"] [style*="color: rgba(255, 255, 255"],
+[style*="linear-gradient(135deg, rgb(255, 107, 53)"] [style*="color: rgba(255, 255, 255"],
+[style*="linear-gradient(135deg, rgba(20, 64, 61"] [style*="color: rgba(255, 255, 255"],
+[style*="linear-gradient(150deg,#29B7AF"] [style*="color:rgba(255,255,255"],
+[style*="linear-gradient(135deg,#FF6B35"] [style*="color:rgba(255,255,255"],
+[style*="linear-gradient(135deg,rgba(20,64,61"] [style*="color:rgba(255,255,255"]{color:rgba(255,255,255,.85) !important;}
+/* gold-glow eyebrow text stays gold on dark cards … */
+[style*="linear-gradient(150deg, rgb(41, 183, 175)"] [style*="gold-glow"],
+[style*="linear-gradient(135deg, rgb(255, 107, 53)"] [style*="gold-glow"],
+[style*="linear-gradient(135deg, rgba(20, 64, 61"] [style*="gold-glow"],
+[style*="linear-gradient(150deg,#29B7AF"] [style*="gold-glow"],
+[style*="linear-gradient(135deg,#FF6B35"] [style*="gold-glow"],
+[style*="linear-gradient(135deg,rgba(20,64,61"] [style*="gold-glow"]{color:#FFBE66 !important;}
+/* … but on light surfaces pale gold is unreadable: use deep orange */
+:root{--gold-glow-light:#C86F00;}
+[style*="color:var(--gold-glow)"],[style*="color: var(--gold-glow)"],[style*="color: rgb(255, 190, 102)"],[style*="color:#FFBE66"]{color:#C86F00 !important;}
+[style*="linear-gradient(150deg, rgb(41, 183, 175)"] [style*="color:var(--gold-glow)"],
+[style*="linear-gradient(135deg, rgb(255, 107, 53)"] [style*="color:var(--gold-glow)"],
+[style*="linear-gradient(135deg, rgba(20, 64, 61"] [style*="color:var(--gold-glow)"],
+[style*="linear-gradient(150deg, rgb(41, 183, 175)"] [style*="color: rgb(255, 190, 102)"],
+[style*="linear-gradient(135deg, rgb(255, 107, 53)"] [style*="color: rgb(255, 190, 102)"],
+[style*="linear-gradient(135deg, rgba(20, 64, 61"] [style*="color: rgb(255, 190, 102)"]{color:#FFBE66 !important;}
+/* "Unlock Pour Pass Rewards" sign-in card: orange-tinted card on cream, headline in deep orange */
+[style*="linear-gradient(135deg,rgba(239,138,0,.18)"] *,[style*="linear-gradient(135deg, rgba(239, 138, 0, 0.18)"] *{color:#2B2B26 !important;}
+[style*="linear-gradient(135deg,rgba(239,138,0,.18)"] [style*="gold-glow"],[style*="linear-gradient(135deg, rgba(239, 138, 0, 0.18)"] [style*="gold-glow"],
+[style*="linear-gradient(135deg,rgba(239,138,0,.18)"] [style*="rgb(255, 190, 102)"],[style*="linear-gradient(135deg, rgba(239, 138, 0, 0.18)"] [style*="rgb(255, 190, 102)"]{color:#C86F00 !important;}
+
+/* Emoji purge left empty icon boxes (some with visible circles). Hide any empty
+   element that only existed to hold an emoji. Real content never has font-size + no children. */
+div[style*="font-size"]:empty,span[style*="font-size"]:empty{display:none !important;}
