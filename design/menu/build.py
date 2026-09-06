@@ -31,6 +31,7 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .box p{margin:0;font-weight:600;line-height:1.5}
 .box b{color:var(--gold)}
 .band{background:var(--ink);color:#fff;display:flex;align-items:center}
+.bqr{display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:5px 10px 5px 5px;color:var(--ink);line-height:1.15}.bqr svg{display:block;width:44px;height:44px}.bqr b{font-size:10px;font-family:"Manrope",sans-serif;font-weight:800}
 .band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#DDF3F1}
 .sz{display:inline-flex;align-items:center;gap:.4em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:700;color:#fff;white-space:nowrap}
 .sz b{color:#FFBE66}
@@ -79,13 +80,14 @@ smoothie_note = f'16 oz {money(S["smoothie"][0]["price"])} · 24 oz {money(S["sm
 juice_note = f'16 oz {money(S["juice"][0]["price"])} · 24 oz {money(S["juice"][1]["price"])} · pressed fresh daily'
 shot_note = f'2 oz {money(S["shot"][0]["price"])} · two for $8'
 
-def band(logo, size_pills=True, h=''):
+QR=open('qr-menu.svg').read()
+def band(logo, size_pills=True, h='', qr=True):
+    qrblk = ('<div class="bqr">'+QR+'<b>Scan for<br>the menu</b></div>') if qr else ''
     pills = (f'<span class="sz">Smoothies <b>{money(S["smoothie"][0]["price"])}</b> 16 oz <b>{money(S["smoothie"][1]["price"])}</b> 24 oz</span>'
              f'<span class="sz">Juices <b>{money(S["juice"][0]["price"])}</b> 16 oz <b>{money(S["juice"][1]["price"])}</b> 24 oz</span>') if size_pills else ''
     return (f'<div class="band" {h}><img src="{logo}" alt="Pour Decisions" class="logo">'
-            f'<div class="tg">{esc(biz["tagline"])}</div><div class="pills">{pills}</div></div>')
+            f'<div class="tg">{esc(biz["tagline"])}</div>{qrblk}<div class="pills">{pills}</div></div>')
 
-QR=open('qr-menu.svg').read()
 def footer():
     return (f'<div class="foot"><div class="qr">{QR}<div><b>Scan for the menu</b><br>pourdecisionsjuicebar.com</div></div><span>{esc(biz["address"])}</span><span>@{esc(biz["instagram"])}</span></div>')
 
@@ -238,7 +240,7 @@ PHONE_CSS = """
 """
 phone = doc('phone', PHONE_CSS, f'''
 <div class="page">
-  {band('logo-white.png')}
+  {band('logo-white.png', qr=False)}
   <div class="wrap">
     <div class="stack">{section(sm, note=smoothie_note)}{box('Add-ins', addons_body)}</div>
     <div class="stack">{section(mo)}</div>
