@@ -1129,39 +1129,6 @@
         </div>
         </sc-if>
 
-        <!-- ===================== GALLERY ===================== -->
-        <sc-if value="{{ isGallery }}" hint-placeholder-val="{{ false }}">
-        <div style="animation:floatIn .35s ease both;padding-bottom:120px;">
-          <div class="pd-grove" style="background:{{ splashGrad }};color:#fff;position:relative;overflow:hidden;padding:40px 20px 44px;"><svg class="pd-palm-l" viewBox="0 0 240 520" style="position:absolute;left:-48px;bottom:-36px;width:215px;height:auto;pointer-events:none;"><g fill="rgba(0,0,0,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg><svg style="position:absolute;left:37%;bottom:-50px;width:165px;height:auto;transform:scaleX(-1);pointer-events:none;" viewBox="0 0 240 520"><g fill="rgba(0,0,0,.17)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg><svg class="pd-palm-r" viewBox="0 0 240 520" style="position:absolute;right:-58px;bottom:-16px;width:150px;height:auto;transform:scaleX(-1);pointer-events:none;"><g fill="rgba(0,0,0,.15)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg><div style="position:absolute;top:8px;right:-10px;font-size:100px;animation:bobY 6s ease-in-out infinite;filter:drop-shadow(0 12px 20px rgba(0,0,0,.24));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;top:8px;left:-8px;font-size:88px;animation:bobYr 8s ease-in-out infinite;filter:drop-shadow(0 12px 20px rgba(0,0,0,.22));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;top:50%;right:2px;transform:translateY(-50%);font-size:80px;animation:bobY 10s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.2));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;top:50%;left:2px;transform:translateY(-50%);font-size:80px;animation:bobYr 12s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.18));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;bottom:50px;right:6px;font-size:90px;animation:bobY 9s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.2));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;bottom:50px;left:6px;font-size:82px;animation:bobYr 11s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.18));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to bottom,transparent,rgba(20,64,61,.55));z-index:1;pointer-events:none;"></div><div class="pd-hero-nav" style="position:relative;z-index:2;display:flex;align-items:center;gap:10px;min-height:72px;"><div style="display:flex;gap:6px;flex:0 0 auto;"><button onClick="{{ back }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--pink);display:grid;place-items:center;flex:0 0 36px;" title="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="var(--pink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><button onClick="{{ goHome }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--pink);display:grid;place-items:center;flex:0 0 36px;" title="Home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 4l9 8" stroke="var(--pink)" stroke-width="2.2" stroke-linecap="round"/><path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="var(--pink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><img class="pd-hero-logo" src="assets/logo-v3-512.png" style="height:84px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.38));" alt="Pour Decisions"><span style="width:40px;flex:0 0 40px;margin-left:auto;"></span></div><div class="pd-hero-body" style="position:relative;z-index:2;margin-top:20px;text-align:center;"><h2 class="pd-hero-title" style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:64px;line-height:.9;letter-spacing:-.035em;margin:0;text-shadow:0 4px 18px rgba(0,0,0,.22);">Gallery</h2></div></div>
-          <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:32px 20px;">
-            <div style="text-align:center;padding:40px 20px;">
-              <div style="display:inline-block;background:var(--pink);color:#fff;font-weight:800;font-size:11px;letter-spacing:.12em;padding:6px 14px;border-radius:99px;margin-bottom:20px;">COMING SOON</div>
-              <div style="font-size:64px;margin-bottom:16px;"></div>
-              <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:28px;color:#fff;margin-bottom:10px;">Photos Coming Soon</div>
-              <p style="font-size:15px;color:rgba(255,255,255,.65);line-height:1.6;max-width:28ch;margin:0 auto 24px;">Our gallery is on its way. Follow us on Instagram for the latest pours and vibes.</p>
-              <button onClick="{{ () =>window.open('https://www.instagram.com/pourdecisions_juicebar/','_blank') }}" class="tap" style="background:linear-gradient(135deg,#833AB4,#FD1D1D,#F77737);color:#fff;font-weight:800;font-size:15px;padding:14px 28px;border-radius:99px;border:0;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(131,58,180,.4);">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#fff" stroke-width="2"/><circle cx="12" cy="12" r="5" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5" fill="#fff"/></svg>
-                @pourdecisions_juicebar
-              </button>
-            </div>
-          </div>
-          <!-- address + map -->
-          <div style="margin:0 0 0;background:#0A2725;padding:0;">
-            <div style="padding:20px 20px 10px;display:flex;align-items:center;gap:10px;">
-              <span style="font-size:18px;"></span>
-              <div>
-                <div style="font-weight:700;color:#fff;font-size:14px;">359 Northern Blvd, Albany NY 12204</div>
-                <a href="https://maps.google.com/?q=359+Northern+Blvd+Albany+NY+12204" target="_blank" style="font-size:12px;color:var(--pink);text-decoration:none;font-weight:600;">Get Directions →</a>
-              </div>
-            </div>
-            <div style="height:160px;overflow:hidden;">
-              <iframe src="https://www.google.com/maps?q=359+Northern+Blvd+Albany+NY+12204&output=embed" width="100%" height="160" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-          </div>
-
-        </div>
-        </sc-if>
-
         <!-- ===================== EVENT POP-UP (once per event, every 3 days) ===================== -->
         <sc-if value="{{ showEventPop }}" hint-placeholder-val="{{ false }}">
         <div class="evp-backdrop" onClick="{{ dismissEventPop }}">
@@ -2144,6 +2111,7 @@ class Component extends DCLogic {
   }
 
   go(screen){ 
+  if (screen === 'gallery') { try { window.open('https://www.instagram.com/pourdecisions_juicebar/', '_blank', 'noopener'); } catch(e) {} return; }
   this.setState(s => ({ prev: s.screen, screen })); 
   this._syncHash(screen);
   this._track(screen);
@@ -2290,7 +2258,7 @@ class Component extends DCLogic {
   // On load, refresh the menu from ./menu.json (the source of truth). The embedded
   // MENU_DATA copy already rendered, so this only re-renders if the file loaded.
   // ─── Hash routing: pourdecisionsjuicebar.com/#/menu, /#/menu/juices, /#/events … ───
-  get ROUTES(){ return ['home','menu','pass','events','packages','gallery','venue','wheel','prizes','account','cart','pina','auth']; }
+  get ROUTES(){ return ['home','menu','pass','events','packages','venue','wheel','prizes','account','cart','pina','auth']; }
   _slug(c){ return String(c||'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
   _syncHash(screen){
     if (!this.ROUTES.includes(screen)) return;
@@ -3105,7 +3073,7 @@ class Component extends DCLogic {
         { icon:'', label:'Plans',       sub:'Cleanses & subscriptions',  key:'packages' },
         { icon:'', label:'Events',      sub:'What\u2019s on this month', key:'events' },
         { icon:'', label:'Event Space', sub:'Rent the whole bar',        key:'venue' },
-        { icon:'', label:'Gallery',     sub:'The bar, the drinks, the people', key:'gallery' },
+        { icon:'', label:'Gallery',     sub:'Photos on Instagram ↗',     key:'gallery' },
                 { icon:'', label:'Pour Pass',   sub:'9 pours = 1 free',          key:'pass' },
         { icon:'', label:'Monthly Spin', sub:'One free spin a month',    key:'wheel' },
         { icon:'', label:'My Prizes',   sub:'What you\u2019ve won',      key:'prizes' },
@@ -3149,7 +3117,7 @@ class Component extends DCLogic {
       submitVenue:()=>this.submitVenue(),
       vqReset:()=>this.setState({vqSent:false,vqName:'',vqEmail:'',vqPhone:'',vqDate:'',vqGuests:'',vqNote:'',vqType:'',vqPkg:'',vqTime:''}),
 
-      isEvents:S.screen==='events', isPrizes:S.screen==='prizes', isAdmin:S.screen==='admin', isGallery:S.screen==='gallery',
+      isEvents:S.screen==='events', isPrizes:S.screen==='prizes', isAdmin:S.screen==='admin', 
       goEvents:()=>this.go('events'), goPrizes:()=>this.go('prizes'), goAdmin:()=>this.go('admin'), goGallery:()=>this.go('gallery'),
       goAccount:()=>this.go('account'), goWheel2:()=>this.go('wheel'),
 
