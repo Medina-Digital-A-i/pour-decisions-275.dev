@@ -19,6 +19,7 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .catnote{font-weight:700;color:var(--gold);letter-spacing:.02em}
 .it{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:.9em;align-items:baseline;border-bottom:1px solid var(--line)}
 .it:last-child{border-bottom:0}
+.it.multi{grid-template-columns:minmax(0,1fr)}.it.multi .pr{text-align:left;margin-top:.15em;font-size:.85em;white-space:normal}
 .nm{font-family:"Fraunces","Georgia",serif;font-weight:700;color:var(--text);line-height:1.1;display:flex;align-items:center;gap:.5em;flex-wrap:wrap}
 .tag{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--ink);background:var(--teal-soft);border-radius:999px;white-space:nowrap}
 .tag.house{color:var(--gold);background:var(--gold-soft)}
@@ -53,7 +54,8 @@ def item(it, show_size=True, food=False):
         pr = '<div class="pr">' + ' &nbsp;'.join(f'{money(p)}<small> {esc(k)}</small>' for k, p in it['prices'].items()) + '</div>'
     else:
         pr = f'<div class="pr">{money(it["price"])}</div>'
-    return f'<div class="it"><div><div class="nm">{esc(it["name"])}{tag}</div><div class="ing">{ing}</div></div>{pr}</div>'
+    cls = ' multi' if it.get('prices') else ''
+    return f'<div class="it{cls}"><div><div class="nm">{esc(it["name"])}{tag}</div><div class="ing">{ing}</div></div>{pr}</div>'
 
 def section(cat, items=None, note=None, cls=''):
     items = items if items is not None else cat['items']
@@ -64,9 +66,11 @@ def section(cat, items=None, note=None, cls=''):
 def box(title, body):
     return f'<div class="box"><h4>{esc(title)}</h4><p>{body}</p></div>'
 
-sm, ju, sh, sa, wp, bb = C['smoothies'], C['juices'], C['shots'], C['salads'], C['wraps-paninis'], C['bowls-breakfast']
+sm, mo, ju, sh, sa, wp, bb = C['smoothies'], C['protein-oats'], C['juices'], C['shots'], C['salads'], C['wraps-paninis'], C['bowls-breakfast']
 addons_body = ' · '.join(f'{esc(a["name"])} <b>+{money(a["price"])}</b>' for a in sm['addons']) + f'<br>{esc(sm["byo"]["name"])} — {esc(sm["byo"]["note"])}'
-cleanse_body = ' &nbsp;·&nbsp; '.join(f'{esc(c["name"])} <b>{money(c["price"])}</b> <span style="color:var(--muted)">{esc(c["note"])}</span>' for c in ju['cleanses'])
+pk = M['packages']
+pack_body = '<br>'.join(f'<b style="color:var(--text)">{esc(c["name"])}</b> <span style="color:var(--muted)">{esc(c["desc"])}</span> <b>{money(c["price"])}</b>' + (f' <span style="color:var(--muted)">· {esc(c["save"])}</span>' if c.get('save') else '') for c in pk['items'])
+juice_add = ' · '.join(f'{esc(a["name"])} <b>+{money(a["price"])}</b>' for a in ju['addons'])
 prot_body = ' · '.join(f'{esc(p["name"])} <b>+{money(p["price"])}</b>' for p in sa['proteins'])
 pass_body = '<br>'.join(f'{esc(m["name"])} <b>{money(m["price"])}</b>/{m["per"]} — {esc(m["note"])}' for m in M['memberships'])
 shots_body = '<br>'.join(f'<span style="color:var(--text)">{esc(i["name"])}</span> <span style="color:var(--muted)">— {esc(", ".join(i["ingredients"]))}</span>' for i in sh['items'])
@@ -131,8 +135,8 @@ print_drinks = doc('drinks', PRINT_CSS, f'''
 <div class="page">
   {band('logo-white.png')}
   <div class="cols">
-    <div class="stack">{section(sm, note=smoothie_note)}{box('Add-ons', addons_body)}</div>
-    <div class="stack">{section(ju, note=juice_note)}{box('Cleanses', cleanse_body)}{section(sh, note=shot_note, cls='shots')}</div>
+    <div class="stack">{section(sm, note=smoothie_note)}{section(mo, cls='shots')}</div>
+    <div class="stack">{section(ju, note=juice_note)}{section(sh, note=shot_note, cls='shots')}{box('Juice add-ins', juice_add)}</div>
   </div>
   {footer()}
 </div>''')
@@ -141,7 +145,7 @@ PRINT_FOOD_CSS = PRINT_CSS + """
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 26px;padding:22px 40px 0;flex:1}
 .cols3 .nm{font-size:15px}.cols3 .ing{font-size:11px}.cols3 .pr{font-size:13px}
 .cols3 .cat{font-size:30px}
-.cols3 .it{padding:5px 0}.cols3 .ing{font-size:10.5px}.cols3 .box{padding:8px 12px;margin-top:8px}
+.cols3 .it{padding:4px 0}.cols3 .ing{font-size:10px}.cols3 .nm{font-size:14px}.cols3 .box{padding:7px 11px;margin-top:7px}.cols3 .box p{font-size:10.2px;line-height:1.4}.cols3 .box h4{font-size:8.5px}.cols3 .sech{margin-bottom:5px}
 """
 print_food = doc('food', PRINT_FOOD_CSS, f'''
 <div class="page">
@@ -149,7 +153,7 @@ print_food = doc('food', PRINT_FOOD_CSS, f'''
   <div class="cols3">
     <div class="stack">{section(sa, note='Meat-free by design')}{box('Add protein', prot_body)}</div>
     <div class="stack">{section(wp)}</div>
-    <div class="stack">{section(bb, note='')}{box('Pour Pass', pass_body)}</div>
+    <div class="stack">{section(bb, note='')}{box('Smoothie add-ins', addons_body)}{box(pk['title'] + ' · ' + pk['note'], pack_body)}{box('Pour Pass', pass_body)}</div>
   </div>
   {footer()}
 </div>''')
@@ -184,14 +188,14 @@ tv1 = doc('tv1', TV_CSS, f'''
   {band('logo-white.png')}
   <div class="cols">
     <div class="stack">{section(sm, sm['items'][:5], note=smoothie_note)}</div>
-    <div class="stack"><div class="sech"></div>{''.join(item(i) for i in sm['items'][5:])}{box('Add-ons', addons_body)}{box('Pour Pass', pass_body)}</div>
+    <div class="stack"><div class="sech"></div>{''.join(item(i) for i in sm['items'][5:])}{box('Add-ins', addons_body)}</div>
   </div>
 </div>''')
 tv2 = doc('tv2', TV_CSS, f'''
 <div class="page">
   {band('logo-white.png')}
   <div class="cols">
-    <div class="stack">{section(ju, ju['items'][:5], note=juice_note)}{box('Cleanses', cleanse_body)}</div>
+    <div class="stack">{section(ju, ju['items'][:5], note=juice_note)}{box(pk['title'], pack_body)}</div>
     <div class="stack"><div class="sech"></div>{''.join(item(i) for i in ju['items'][5:])}{section(sh, note=shot_note, cls='shots')}</div>
   </div>
 </div>''')
@@ -233,12 +237,13 @@ phone = doc('phone', PHONE_CSS, f'''
 <div class="page">
   {band('logo-white.png')}
   <div class="wrap">
-    <div class="stack">{section(sm, note=smoothie_note)}{box('Add-ons', addons_body)}</div>
-    <div class="stack">{section(ju, note=juice_note)}{box('Cleanses', cleanse_body)}</div>
+    <div class="stack">{section(sm, note=smoothie_note)}{box('Add-ins', addons_body)}</div>
+    <div class="stack">{section(mo)}</div>
+    <div class="stack">{section(ju, note=juice_note)}{box('Juice add-ins', juice_add)}{box(pk['title'], pack_body)}</div>
     <div class="stack">{section(sh, note=shot_note)}</div>
     <div class="stack">{section(sa, note='Meat-free by design')}{box('Add protein', prot_body)}</div>
     <div class="stack">{section(wp)}</div>
-    <div class="stack">{section(bb, note='')}{box('Pour Pass', pass_body)}</div>
+    <div class="stack">{section(bb, note='')}{box('Smoothie add-ins', addons_body)}{box(pk['title'] + ' · ' + pk['note'], pack_body)}{box('Pour Pass', pass_body)}</div>
   </div>
   {footer()}
 </div>''')

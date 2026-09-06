@@ -42,13 +42,23 @@
         "oz": 2,
         "price": 4.5
       }
+    ],
+    "meal": [
+      {
+        "oz": 16,
+        "price": 11
+      },
+      {
+        "oz": 24,
+        "price": 14
+      }
     ]
   },
   "categories": [
     {
       "key": "smoothies",
       "title": "Smoothies",
-      "note": "16 oz $9.50 · 24 oz $12.50 · protein blends +$1",
+      "note": "16 oz $9.50 · 24 oz $12.50 · protein blends +$1 · make any smoothie a meal (oats + protein) +$3",
       "items": [
         {
           "id": "the-regular",
@@ -167,8 +177,12 @@
       ],
       "addons": [
         {
-          "name": "Protein",
+          "name": "Protein (whey or plant)",
           "price": 2
+        },
+        {
+          "name": "Oats",
+          "price": 1
         },
         {
           "name": "Peanut butter",
@@ -176,6 +190,10 @@
         },
         {
           "name": "Sea moss",
+          "price": 2
+        },
+        {
+          "name": "Collagen",
           "price": 2
         },
         {
@@ -187,14 +205,92 @@
           "price": 1.5
         },
         {
+          "name": "Espresso shot",
+          "price": 1.5
+        },
+        {
+          "name": "Extra greens",
+          "price": 1
+        },
+        {
           "name": "Extra fruit",
           "price": 1
+        },
+        {
+          "name": "Fresh ginger or turmeric",
+          "price": 0.5
         }
       ],
       "byo": {
         "name": "Build Your Own",
         "note": "Pick up to 4 — same price as the menu"
       }
+    },
+    {
+      "key": "protein-oats",
+      "title": "Protein & Oats",
+      "note": "16 oz $11 · 24 oz $14 · blended with oats and 20g+ protein — a meal in a cup",
+      "items": [
+        {
+          "id": "heavy-pour",
+          "name": "Heavy Pour",
+          "ingredients": [
+            "oats",
+            "peanut butter",
+            "banana",
+            "chocolate protein",
+            "cacao",
+            "cinnamon",
+            "almond milk"
+          ],
+          "tag": "post-workout",
+          "size": "meal"
+        },
+        {
+          "id": "early-bird",
+          "name": "Early Bird",
+          "ingredients": [
+            "oats",
+            "strawberry",
+            "banana",
+            "vanilla protein",
+            "honey",
+            "oat milk"
+          ],
+          "tag": "breakfast",
+          "size": "meal"
+        },
+        {
+          "id": "green-room",
+          "name": "Green Room",
+          "ingredients": [
+            "oats",
+            "spinach",
+            "banana",
+            "mango",
+            "vanilla protein",
+            "flax",
+            "almond milk"
+          ],
+          "tag": "greens + protein",
+          "size": "meal"
+        },
+        {
+          "id": "carrot-cake",
+          "name": "Carrot Cake",
+          "ingredients": [
+            "oats",
+            "carrot",
+            "banana",
+            "vanilla protein",
+            "walnut",
+            "cinnamon",
+            "oat milk"
+          ],
+          "tag": "dessert, but not",
+          "size": "meal"
+        }
+      ]
     },
     {
       "key": "juices",
@@ -326,16 +422,14 @@
           "size": "juice"
         }
       ],
-      "cleanses": [
+      "addons": [
         {
-          "name": "1-Day Cleanse",
-          "note": "6 juices",
-          "price": 45
+          "name": "Ginger, turmeric or cayenne boost",
+          "price": 1
         },
         {
-          "name": "3-Day Cleanse",
-          "note": "18 juices",
-          "price": 120
+          "name": "Add a wellness shot to any juice",
+          "price": 3
         }
       ]
     },
@@ -485,7 +579,7 @@
     },
     {
       "key": "wraps-paninis",
-      "title": "Wraps, Burritos & Paninis",
+      "title": "Wraps & Paninis",
       "note": "Any wrap or panini + 16 oz smoothie $17",
       "items": [
         {
@@ -658,13 +752,49 @@
       "name": "Pour Pass Gold",
       "price": 75,
       "per": "month",
-      "note": "10 juices + 20% off"
+      "note": "10 juices or smoothies + 20% off everything else"
     },
     {
       "name": "Pour Pass Platinum",
       "price": 130,
       "per": "month",
-      "note": "20 juices + 30% off"
+      "note": "20 juices or smoothies + 30% off everything else"
     }
-  ]
+  ],
+  "packages": {
+    "title": "Juice Packs",
+    "note": "Any juices, mix and match. Pressed to order — call a day ahead for 12 or more.",
+    "items": [
+      {
+        "name": "Six Pack",
+        "desc": "6 × 16 oz juices",
+        "price": 50,
+        "save": "save $7"
+      },
+      {
+        "name": "The Case",
+        "desc": "12 × 16 oz juices",
+        "price": 95,
+        "save": "save $19"
+      },
+      {
+        "name": "Shot Week",
+        "desc": "7 × 2 oz wellness shots",
+        "price": 26,
+        "save": "save $5.50"
+      },
+      {
+        "name": "Day Off",
+        "desc": "1-day cleanse · 6 juices",
+        "price": 45,
+        "save": ""
+      },
+      {
+        "name": "Long Weekend",
+        "desc": "3-day cleanse · 18 juices",
+        "price": 120,
+        "save": "save $51"
+      }
+    ]
+  }
 }
