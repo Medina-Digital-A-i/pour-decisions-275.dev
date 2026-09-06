@@ -89,7 +89,7 @@ def band(logo, size_pills=True, h='', qr=True):
             f'<div class="tg">{esc(biz["tagline"])}</div>{qrblk}<div class="pills">{pills}</div></div>')
 
 def footer():
-    return (f'<div class="foot"><div class="qr">{QR}<div><b>Scan for the menu</b><br>pourdecisionsjuicebar.com</div></div><span>{esc(biz["address"])}</span><span>@{esc(biz["instagram"])}</span></div>')
+    return (f'<div class="foot"><div class="qr">{QR}<div><b>Scan for the menu</b><br>pourdecisionsjuicebar.com</div></div><span>{esc(biz["address"])}</span><span>{esc(biz.get("phone",""))}</span><span>@{esc(biz["instagram"])}</span></div>')
 
 def doc(title, body_css, body):
     return f'''<!doctype html>
