@@ -430,7 +430,7 @@
             </div>
             <div class="pd-hero-body" style="position:relative;z-index:2;margin-top:20px;text-align:center;">
               <h2 class="pd-hero-title" style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:52px;line-height:.9;letter-spacing:-.035em;margin:0 0 18px;text-shadow:0 4px 18px rgba(0,0,0,.22);">Pick your pour.</h2>
-              <div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;justify-content:center;">
+              <div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;justify-content:safe center;padding:0 4px;">
                 <sc-for list="{{ categories }}" as="cat" hint-placeholder-count="5">
                   <span onClick="{{ cat.go }}" class="tap" style="flex:0 0 auto;font-weight:800;font-size:13px;padding:9px 16px;border-radius:99px;background:{{ cat.bg }};color:{{ cat.fg }};">{{ cat.label }}</span>
                 </sc-for>
@@ -2513,7 +2513,8 @@ class Component extends DCLogic {
     const S = this.state;
     const active = this.MENU.find(m => m.id === S.activeId) || this.MENU[0];
     const cat = this.props.menuCategory ?? '__none';
-    const activeCat = (cat !== '__none' && this.CATS.includes(cat)) ? cat : (S.cat || 'All');
+    // A category the user tapped wins; the editor prop is only a default.
+    const activeCat = (S.cat && this.CATS.includes(S.cat)) ? S.cat : ((cat !== '__none' && this.CATS.includes(cat)) ? cat : 'All');
     const bf = S.benefitFilter;
     const menu = this.MENU
       .filter(m => activeCat === 'All' || m.kind === activeCat)
@@ -3034,7 +3035,7 @@ window.addEventListener('beforeinstallprompt', function(e) {
           {e:'🫐',t:'Blueberries have the highest antioxidant content of any common fruit. Brain food.'},
           {e:'🥥',t:'Coconut water has 5 electrolytes — more than most sports drinks, with zero artificial stuff.'},
           {e:'🍋',t:'Lemon water in the morning alkalizes your body, supports digestion, and wakes up your liver.'},
-          {e:'🥑',t:'Avocado's healthy fats help your body absorb fat-soluble vitamins A, D, E, and K.'},
+          {e:'🥑',t:'Avocado\'s healthy fats help your body absorb fat-soluble vitamins A, D, E, and K.'},
           {e:'🍵',t:'L-theanine in matcha promotes calm focus — the perfect alternative to coffee jitters.'},
           {e:'🫛',t:'Getting enough fiber? Most adults only hit 50% of the recommended 25-38g per day.'},
           {e:'🌿',t:'Cold-pressed juices preserve 95% of nutrients compared to pasteurized options. Fresh is better.'}
