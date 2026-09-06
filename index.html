@@ -2023,6 +2023,7 @@ class Component extends DCLogic {
 
   go(screen){ 
   this.setState(s => ({ prev: s.screen, screen })); 
+  this._syncHash(screen);
   try{ window.scrollTo({top:0,behavior:'instant'}); }catch(e){}
   try{ document.body.scrollTop = 0; document.documentElement.scrollTop = 0; }catch(e){}
   try{ document.querySelector('#pd-app').scrollTop = 0; }catch(e){}
@@ -2139,11 +2140,36 @@ class Component extends DCLogic {
   }
   // On load, refresh the menu from ./menu.json (the source of truth). The embedded
   // MENU_DATA copy already rendered, so this only re-renders if the file loaded.
+  // ─── Hash routing: pourdecisionsjuicebar.com/#/menu, /#/menu/juices, /#/events … ───
+  get ROUTES(){ return ['home','menu','pass','events','packages','gallery','venue','wheel','prizes','account','cart','pina','auth']; }
+  _slug(c){ return String(c||'').toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
+  _syncHash(screen){
+    if (!this.ROUTES.includes(screen)) return;
+    const want = screen === 'home' ? '#/' : '#/' + screen;
+    this._hashLock = true;
+    try { if (location.hash !== want) history.replaceState(null, '', want); } catch(e) {}
+    setTimeout(() => { this._hashLock = false; }, 0);
+  }
+  _routeFromHash(){
+    if (this._hashLock) return;
+    const m = /^#\/([a-z-]*)(?:\/([a-z0-9-]+))?/.exec(location.hash || '');
+    if (!m) return;
+    const screen = m[1] || 'home';
+    if (!this.ROUTES.includes(screen)) return;
+    const patch = { screen };
+    if (screen === 'menu' && m[2]) {
+      const cat = (this.CATS || []).find(c => this._slug(c) === m[2]);
+      if (cat) patch.cat = cat;
+    }
+    this.setState(s => ({ prev: s.screen, ...patch }));
+    try { window.scrollTo({top:0,behavior:'instant'}); } catch(e) {}
+  }
   componentDidMount(){
+    try { this._routeFromHash(); window.addEventListener('hashchange', () => this._routeFromHash()); } catch(e) {}
     try {
       fetch('./menu.json', { cache:'no-store' })
         .then(r => (r && r.ok) ? r.json() : null)
-        .then(data => { if (data && Array.isArray(data.categories) && data.categories.length) { this.applyMenuData(data); this.setState({ menuVersion: Date.now() }); } })
+        .then(data => { if (data && Array.isArray(data.categories) && data.categories.length) { this.applyMenuData(data); this.setState({ menuVersion: Date.now() }); if (/^#\/menu\//.test(location.hash||'')) this._routeFromHash(); } })
         .catch(() => {});
     } catch(e) {}
   }
