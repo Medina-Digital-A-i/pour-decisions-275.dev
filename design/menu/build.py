@@ -250,10 +250,7 @@ canvas = {
   "artboards": [
     {"file": "Main.dc.html", "title": "Print · Drinks (Letter)", "x": 0, "y": 0, "w": 816, "h": 1056, "print": "fixed"},
     {"file": "PrintFood.dc.html", "title": "Print · Food (Letter)", "x": 900, "y": 0, "w": 816, "h": 1056, "print": "fixed"},
-    {"file": "Phone.dc.html", "title": "Phone · Full menu", "x": 1800, "y": 0, "w": 390, "h": 4200, "print": "flow"},
-    {"file": "TV1Smoothies.dc.html", "title": "TV 1 · Smoothies", "x": 0, "y": 1220, "w": 1920, "h": 1080},
-    {"file": "TV2Juices.dc.html", "title": "TV 2 · Juices & Shots", "x": 0, "y": 2440, "w": 1920, "h": 1080},
-    {"file": "TV3Food.dc.html", "title": "TV 3 · Food", "x": 0, "y": 3660, "w": 1920, "h": 1080}
+    {"file": "Phone.dc.html", "title": "Phone · Full menu", "x": 1800, "y": 0, "w": 390, "h": 4400, "print": "flow"}
   ],
   "launch": {"view": "canvas"}
 }
