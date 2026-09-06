@@ -443,6 +443,11 @@
               </div>
             </div>
           </div>
+          <sc-if value="{{ hasMenuNote }}" hint-placeholder-val="{{ false }}">
+          <div style="background:var(--navy);margin-top:-32px;position:relative;z-index:3;border-radius:28px 28px 0 0;padding:18px 20px 44px;">
+            <div style="background:rgba(239,138,0,.12);border:1px solid rgba(239,138,0,.35);border-radius:16px;padding:10px 14px;font-size:12.5px;line-height:1.5;color:var(--gold-glow);font-weight:600;">{{ menuNote }}</div>
+          </div>
+          </sc-if>
           <div style="background:var(--navy);border-radius:28px 28px 0 0;margin-top:-32px;position:relative;z-index:3;padding:18px 16px 0;" class="menu-columns">
             <!-- DRINKS SECTION -->
             <div>
@@ -528,6 +533,14 @@
           </div>
           <div style="background:var(--navy);border-radius:30px 30px 0 0;margin-top:-24px;position:relative;z-index:3;padding:26px 20px 0;">
             <p style="color:rgba(255,255,255,.82);font-size:15px;line-height:1.6;font-weight:500;margin:0 0 20px;">{{ item.blurb }}</p>
+            <sc-if value="{{ item.hasSizeOptions }}" hint-placeholder-val="{{ true }}">
+            <div style="font-family:var(--f-num);letter-spacing:.16em;font-size:13px;color:var(--gold-glow);margin-bottom:10px;">{{ item.sizeTitle }}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;">
+              <sc-for list="{{ item.sizeOptions }}" as="sz" hint-placeholder-count="2">
+                <span onClick="{{ sz.pick }}" class="tap" style="font-weight:800;font-size:13px;padding:10px 16px;border-radius:99px;background:{{ sz.bg }};color:{{ sz.fg }};border:1px solid rgba(255,255,255,.1);">{{ sz.label }}</span>
+              </sc-for>
+            </div>
+            </sc-if>
             <div style="font-family:var(--f-num);letter-spacing:.16em;font-size:13px;color:var(--gold-glow);margin-bottom:10px;">WHAT'S INSIDE</div>
             <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;">
               <sc-for list="{{ item.ingList }}" as="ing" hint-placeholder-count="4">
@@ -548,6 +561,9 @@
                 <li>{{ b }}</li>
               </sc-for>
             </ul>
+            <sc-if value="{{ item.hasExtras }}" hint-placeholder-val="{{ false }}">
+              <p style="color:rgba(255,255,255,.6);font-size:12.5px;line-height:1.55;font-weight:600;margin:0 0 20px;">{{ item.extras }}</p>
+            </sc-if>
             <div style="display:flex;gap:12px;margin-bottom:24px;">
               <sc-for list="{{ item.macros }}" as="m" hint-placeholder-count="3">
                 <div style="flex:1;background:rgba(255,255,255,.05);border-radius:18px;padding:14px 10px;text-align:center;border:1px solid rgba(255,255,255,.07);">
@@ -940,16 +956,9 @@
             <div style="position:absolute;inset:0;border-radius:50%;background:var(--cream);box-shadow:0 20px 50px rgba(0,0,0,.35),inset 0 0 0 6px rgba(18,48,60,.15);padding:12px;">
               <!-- rotating wheel -->
               <div style="position:relative;width:100%;height:100%;border-radius:50%;transition:transform 4.2s cubic-bezier(.16,.84,.3,1);transform:{{ wheelTransform }};background:conic-gradient(from -18deg,#84CC16 0deg 36deg,#2FC4BC 36deg 72deg,#555 72deg 108deg,#FF8A3D 108deg 144deg,#FFC64D 144deg 180deg,#7C3AED 180deg 216deg,#63CFC8 216deg 252deg,#555 252deg 288deg,#6D28D9 288deg 324deg,#EF8A00 324deg 360deg);box-shadow:inset 0 0 0 3px rgba(255,255,255,.5);">
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(0deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🥬</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(36deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍓</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(72deg) translateY(-96px);font-size:24px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">😔</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(108deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍊</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(144deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🥭</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(180deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🫐</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(216deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍉</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(252deg) translateY(-96px);font-size:24px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">😔</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(288deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🍇</div>
-                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(324deg) translateY(-96px);font-size:28px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">🫚</div>
+                <sc-for list="{{ wheelSlices }}" as="s" hint-placeholder-count="10">
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate({{ s.deg }}deg) translateY(-96px);font-size:{{ s.size }}px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));">{{ s.emoji }}</div>
+                </sc-for>
               </div>
             </div>
             <!-- center hub -->
@@ -1632,7 +1641,7 @@
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:1000},&quot;splashTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sunset&quot;,&quot;Citrus&quot;,&quot;Berry&quot;],&quot;default&quot;:&quot;Sunset&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;showFruitStickers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;menuCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Juices&quot;,&quot;Smoothies&quot;,&quot;Bowls&quot;,&quot;Shots&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Menu&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:1000},&quot;splashTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Sunset&quot;,&quot;Citrus&quot;,&quot;Berry&quot;],&quot;default&quot;:&quot;Sunset&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;showFruitStickers&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;menuCategory&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;All&quot;,&quot;Smoothies&quot;,&quot;Juices&quot;,&quot;Shots&quot;,&quot;Salads&quot;,&quot;Wraps &amp; Paninis&quot;,&quot;Bowls &amp; Breakfast&quot;],&quot;default&quot;:&quot;All&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Menu&quot;}}">
 const MAINTENANCE_MODE = false; // Set true to hide WIP pages
 const WIP_PAGES = ['admin']; // pages to hide in maintenance mode
 function _scrollTop(){ 
@@ -1640,6 +1649,825 @@ function _scrollTop(){
   try{ document.body.scrollTop=0; document.documentElement.scrollTop=0; }catch(e){}
   try{ document.querySelectorAll('*').forEach(el=>{ if(el.scrollTop>0) el.scrollTop=0; }); }catch(e){}
 }
+
+// ══════════════════════════════════════════════════════════════
+//  MENU — the single source of truth is /menu.json
+//
+//  MENU_DATA below is an embedded copy of menu.json so the app renders
+//  instantly (and offline). On load the app also fetches ./menu.json
+//  and rebuilds from it, so editing menu.json is all an operator has to
+//  do. buildMenu() is the ONLY glue between menu.json's shape and what
+//  the UI reads (MENU / CATS / WHEEL / BENEFITS / MENU_NOTES).
+//  Never hand-edit menu items anywhere else in this file.
+// ══════════════════════════════════════════════════════════════
+const MENU_DATA = {
+  "business": {
+    "name": "Pour Decisions",
+    "tagline": "Cold-pressed juice · smoothies · good food",
+    "address": "348 Loudon Plaza, Albany NY 12211",
+    "email": "pourdecisionsalb@gmail.com",
+    "instagram": "pourdecisions_juicebar"
+  },
+  "sizes": {
+    "smoothie": [
+      {
+        "oz": 16,
+        "price": 7.5
+      },
+      {
+        "oz": 24,
+        "price": 10.5
+      }
+    ],
+    "smoothie_protein": [
+      {
+        "oz": 16,
+        "price": 8.5
+      },
+      {
+        "oz": 24,
+        "price": 11.5
+      }
+    ],
+    "juice": [
+      {
+        "oz": 16,
+        "price": 9.5
+      },
+      {
+        "oz": 24,
+        "price": 12.5
+      }
+    ],
+    "shot": [
+      {
+        "oz": 2,
+        "price": 4.5
+      }
+    ]
+  },
+  "categories": [
+    {
+      "key": "smoothies",
+      "title": "Smoothies",
+      "note": "16 oz $7.50 · 24 oz $10.50 · protein blends +$1",
+      "items": [
+        {
+          "id": "the-regular",
+          "name": "The Regular",
+          "ingredients": [
+            "strawberry",
+            "banana",
+            "oat milk",
+            "agave"
+          ],
+          "tag": "classic",
+          "size": "smoothie"
+        },
+        {
+          "id": "happy-hour",
+          "name": "Happy Hour",
+          "ingredients": [
+            "strawberry",
+            "pineapple",
+            "mango",
+            "orange juice"
+          ],
+          "tag": "tropical",
+          "size": "smoothie"
+        },
+        {
+          "id": "green-light",
+          "name": "Green Light",
+          "ingredients": [
+            "spinach",
+            "kale",
+            "mango",
+            "pineapple",
+            "banana",
+            "ginger"
+          ],
+          "tag": "no added sugar",
+          "size": "smoothie"
+        },
+        {
+          "id": "nightcap",
+          "name": "Nightcap",
+          "ingredients": [
+            "açaí",
+            "blueberry",
+            "strawberry",
+            "banana",
+            "almond milk"
+          ],
+          "tag": "antioxidant",
+          "size": "smoothie"
+        },
+        {
+          "id": "designated-driver",
+          "name": "Designated Driver",
+          "ingredients": [
+            "pineapple",
+            "banana",
+            "coconut cream",
+            "coconut water"
+          ],
+          "tag": "piña colada, no rum",
+          "size": "smoothie"
+        },
+        {
+          "id": "last-call",
+          "name": "Last Call",
+          "ingredients": [
+            "pitaya",
+            "strawberry",
+            "pineapple",
+            "coconut water"
+          ],
+          "tag": "the pink one",
+          "size": "smoothie"
+        },
+        {
+          "id": "liquid-courage",
+          "name": "Liquid Courage",
+          "ingredients": [
+            "peanut butter",
+            "banana",
+            "cacao",
+            "chocolate protein",
+            "almond milk"
+          ],
+          "tag": "protein",
+          "size": "smoothie_protein"
+        },
+        {
+          "id": "open-tab",
+          "name": "Open Tab",
+          "ingredients": [
+            "peanut butter",
+            "strawberry",
+            "blueberry",
+            "banana",
+            "oat milk"
+          ],
+          "tag": "PB&J",
+          "size": "smoothie_protein"
+        },
+        {
+          "id": "morning-shift",
+          "name": "Morning Shift",
+          "ingredients": [
+            "cold brew",
+            "banana",
+            "peanut butter",
+            "cacao nibs",
+            "oat milk"
+          ],
+          "tag": "coffee",
+          "size": "smoothie_protein"
+        }
+      ],
+      "addons": [
+        {
+          "name": "Protein",
+          "price": 2
+        },
+        {
+          "name": "Peanut butter",
+          "price": 1.5
+        },
+        {
+          "name": "Sea moss",
+          "price": 2
+        },
+        {
+          "name": "Chia / flax",
+          "price": 1
+        },
+        {
+          "name": "Spirulina",
+          "price": 1.5
+        },
+        {
+          "name": "Extra fruit",
+          "price": 1
+        }
+      ],
+      "byo": {
+        "name": "Build Your Own",
+        "note": "Pick up to 4 — same price as the menu"
+      }
+    },
+    {
+      "key": "juices",
+      "title": "Cold-Pressed Juices",
+      "note": "16 oz $9.50 · 24 oz $12.50 · pressed fresh daily",
+      "items": [
+        {
+          "id": "innerg-elevator",
+          "name": "InnerG Elevator",
+          "ingredients": [
+            "orange",
+            "carrot",
+            "ginger",
+            "lemon"
+          ],
+          "tag": "immunity",
+          "size": "juice"
+        },
+        {
+          "id": "sober-up",
+          "name": "Sober Up",
+          "ingredients": [
+            "apple",
+            "celery",
+            "cucumber",
+            "parsley",
+            "cilantro",
+            "ginger",
+            "lemon",
+            "cayenne"
+          ],
+          "tag": "cleanse",
+          "size": "juice"
+        },
+        {
+          "id": "ase",
+          "name": "Ase",
+          "ingredients": [
+            "pineapple",
+            "ginger",
+            "lemon",
+            "mint"
+          ],
+          "tag": "gut",
+          "size": "juice"
+        },
+        {
+          "id": "red-eye",
+          "name": "Red Eye",
+          "ingredients": [
+            "beet",
+            "pineapple",
+            "strawberry"
+          ],
+          "tag": "iron",
+          "size": "juice"
+        },
+        {
+          "id": "hair-of-the-dog",
+          "name": "Hair of the Dog",
+          "ingredients": [
+            "beet",
+            "apple",
+            "carrot",
+            "lemon",
+            "ginger"
+          ],
+          "tag": "energy",
+          "size": "juice"
+        },
+        {
+          "id": "skinny-dip",
+          "name": "Skinny Dip",
+          "ingredients": [
+            "pear",
+            "pineapple",
+            "aloe vera",
+            "cucumber",
+            "apple",
+            "lime"
+          ],
+          "tag": "skin & hydration",
+          "size": "juice"
+        },
+        {
+          "id": "sunday-brunch",
+          "name": "Sunday Brunch",
+          "ingredients": [
+            "watermelon",
+            "strawberry",
+            "apple"
+          ],
+          "tag": "just tastes good",
+          "size": "juice"
+        },
+        {
+          "id": "on-the-rocks",
+          "name": "On the Rocks",
+          "ingredients": [
+            "watermelon",
+            "cucumber",
+            "mint",
+            "lime",
+            "ginger"
+          ],
+          "tag": "hydration",
+          "size": "juice"
+        },
+        {
+          "id": "clean-slate",
+          "name": "Clean Slate",
+          "ingredients": [
+            "celery",
+            "cucumber",
+            "cilantro",
+            "lime"
+          ],
+          "tag": "reset",
+          "size": "juice"
+        }
+      ],
+      "cleanses": [
+        {
+          "name": "1-Day Cleanse",
+          "note": "6 juices",
+          "price": 45
+        },
+        {
+          "name": "3-Day Cleanse",
+          "note": "18 juices",
+          "price": 120
+        }
+      ]
+    },
+    {
+      "key": "shots",
+      "title": "Shots",
+      "note": "2 oz $4.50 · two for $8",
+      "items": [
+        {
+          "id": "flu-shot",
+          "name": "Flu Shot",
+          "ingredients": [
+            "orange",
+            "turmeric",
+            "ginger",
+            "black pepper",
+            "black seed oil",
+            "lemon",
+            "cayenne"
+          ],
+          "tag": "immunity",
+          "size": "shot"
+        },
+        {
+          "id": "double-shot",
+          "name": "Double Shot",
+          "ingredients": [
+            "ginger",
+            "lemon",
+            "cayenne"
+          ],
+          "tag": "the ginger shot",
+          "size": "shot"
+        },
+        {
+          "id": "the-bouncer",
+          "name": "The Bouncer",
+          "ingredients": [
+            "sea moss",
+            "elderberry",
+            "lemon",
+            "cayenne"
+          ],
+          "tag": "defense",
+          "size": "shot"
+        }
+      ]
+    },
+    {
+      "key": "salads",
+      "title": "Salads",
+      "note": "Add grilled chicken +$5 · albacore tuna +$4 · grilled salmon +$7",
+      "items": [
+        {
+          "id": "southwest-black-bean",
+          "name": "Southwest Black Bean",
+          "ingredients": [
+            "romaine",
+            "black beans",
+            "corn",
+            "tomato",
+            "avocado",
+            "red onion",
+            "cheddar",
+            "tortilla strips",
+            "chipotle-lime"
+          ],
+          "price": 11
+        },
+        {
+          "id": "mediterranean-chickpea",
+          "name": "Mediterranean Chickpea",
+          "ingredients": [
+            "mixed greens",
+            "chickpeas",
+            "cucumber",
+            "tomato",
+            "red onion",
+            "kalamata olives",
+            "feta",
+            "roasted red pepper",
+            "lemon-herb"
+          ],
+          "price": 11
+        },
+        {
+          "id": "cucumber-crunch",
+          "name": "Cucumber Crunch",
+          "ingredients": [
+            "English cucumber",
+            "cherry tomato",
+            "red cabbage",
+            "bell pepper",
+            "red onion",
+            "cilantro",
+            "sesame",
+            "feta",
+            "lemon-lime"
+          ],
+          "price": 9.5,
+          "tag": "house"
+        },
+        {
+          "id": "strawberry-spinach",
+          "name": "Strawberry Spinach",
+          "ingredients": [
+            "spinach",
+            "strawberry",
+            "blueberry",
+            "walnut",
+            "feta",
+            "red onion",
+            "balsamic"
+          ],
+          "price": 11
+        },
+        {
+          "id": "apple-walnut-cranberry",
+          "name": "Apple Walnut Cranberry",
+          "ingredients": [
+            "spring mix",
+            "apple",
+            "dried cranberry",
+            "walnut",
+            "cucumber",
+            "feta",
+            "red onion",
+            "honey-mustard"
+          ],
+          "price": 11
+        }
+      ],
+      "proteins": [
+        {
+          "name": "Grilled chicken",
+          "price": 5
+        },
+        {
+          "name": "Albacore tuna",
+          "price": 4
+        },
+        {
+          "name": "Grilled salmon",
+          "price": 7
+        }
+      ]
+    },
+    {
+      "key": "wraps-paninis",
+      "title": "Wraps & Paninis",
+      "note": "Any wrap or panini + 16 oz smoothie $16",
+      "items": [
+        {
+          "id": "southwest-wrap",
+          "name": "Southwest Wrap",
+          "ingredients": [
+            "the Southwest salad in a wheat tortilla"
+          ],
+          "prices": {
+            "chicken": 11,
+            "salmon": 14,
+            "tuna": 10.5
+          }
+        },
+        {
+          "id": "mediterranean-wrap",
+          "name": "Mediterranean Wrap",
+          "ingredients": [
+            "the Mediterranean salad in a wheat tortilla"
+          ],
+          "prices": {
+            "chicken": 11,
+            "salmon": 14,
+            "tuna": 10.5
+          }
+        },
+        {
+          "id": "pesto-panini",
+          "name": "Pesto Panini",
+          "ingredients": [
+            "ciabatta",
+            "mozzarella",
+            "tomato",
+            "basil pesto"
+          ],
+          "prices": {
+            "chicken": 11.5,
+            "salmon": 14.5,
+            "tuna": 10.5
+          }
+        },
+        {
+          "id": "chipotle-panini",
+          "name": "Chipotle Panini",
+          "ingredients": [
+            "ciabatta",
+            "cheddar",
+            "avocado",
+            "chipotle aioli"
+          ],
+          "prices": {
+            "chicken": 11.5,
+            "salmon": 14.5,
+            "tuna": 10.5
+          }
+        },
+        {
+          "id": "veggie-panini",
+          "name": "Veggie Panini",
+          "ingredients": [
+            "ciabatta",
+            "roasted red pepper",
+            "mozzarella",
+            "spinach",
+            "pesto"
+          ],
+          "price": 9.5
+        }
+      ]
+    },
+    {
+      "key": "bowls-breakfast",
+      "title": "Bowls & Breakfast",
+      "items": [
+        {
+          "id": "acai-bowl",
+          "name": "Açaí Bowl",
+          "ingredients": [
+            "açaí",
+            "banana",
+            "granola",
+            "strawberry",
+            "blueberry",
+            "honey or PB drizzle"
+          ],
+          "price": 12.5
+        },
+        {
+          "id": "grits-bowl",
+          "name": "Grits Bowl",
+          "ingredients": [
+            "stone-ground grits",
+            "spinach",
+            "tomato",
+            "egg"
+          ],
+          "prices": {
+            "veggie": 10,
+            "salmon": 14,
+            "shrimp": 15
+          }
+        },
+        {
+          "id": "oatmeal",
+          "name": "Oatmeal",
+          "ingredients": [
+            "plain",
+            "or loaded: berries, walnuts, honey, cinnamon"
+          ],
+          "prices": {
+            "plain": 5,
+            "loaded": 8
+          }
+        },
+        {
+          "id": "soup",
+          "name": "Soup of the Day",
+          "ingredients": [
+            "with sourdough"
+          ],
+          "prices": {
+            "cup": 6,
+            "bowl": 9
+          }
+        },
+        {
+          "id": "avocado-toast",
+          "name": "Avocado Toast",
+          "ingredients": [
+            "sourdough",
+            "smashed avocado",
+            "lemon",
+            "chili flake",
+            "microgreens"
+          ],
+          "price": 9,
+          "addons": [
+            {
+              "name": "egg",
+              "price": 2
+            },
+            {
+              "name": "smoked salmon",
+              "price": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "memberships": [
+    {
+      "name": "Pour Pass Gold",
+      "price": 75,
+      "per": "month",
+      "note": "10 juices + 20% off"
+    },
+    {
+      "name": "Pour Pass Platinum",
+      "price": 130,
+      "per": "month",
+      "note": "20 juices + 30% off"
+    }
+  ]
+};
+
+// menu.json category key → how the UI labels/filters it
+const MENU_KINDS = [
+  { key:'smoothies',       kind:'Smoothies',         one:'Smoothie', drink:true,  chip:'🍓 Smoothies',         emoji:'🍓' },
+  { key:'juices',          kind:'Juices',            one:'Juice',    drink:true,  chip:'🥬 Juices',            emoji:'🥤' },
+  { key:'shots',           kind:'Shots',             one:'Shot',     drink:true,  chip:'🫚 Shots',             emoji:'🫚' },
+  { key:'salads',          kind:'Salads',            one:'Salad',    drink:false, chip:'🥗 Salads',            emoji:'🥗' },
+  { key:'wraps-paninis',   kind:'Wraps & Paninis',   one:'Wrap',     drink:false, chip:'🥪 Wraps & Paninis',   emoji:'🥪' },
+  { key:'bowls-breakfast', kind:'Bowls & Breakfast', one:'Bowl',     drink:false, chip:'🥣 Bowls & Breakfast', emoji:'🥣' }
+];
+const DRINK_KINDS = MENU_KINDS.filter(k => k.drink).map(k => k.kind);
+const FOOD_KINDS  = MENU_KINDS.filter(k => !k.drink).map(k => k.kind);
+
+// Card colour palettes. Chosen by ingredient keyword so a new item in menu.json gets a sensible look.
+const MENU_PALETTES = {
+  pink:   { grad:'linear-gradient(150deg,#FF8FB8,#E0367A)', shadow:'rgba(224,54,122,.35)',  text:'#fff',     tagBg:'rgba(255,255,255,.9)', tagFg:'#E0367A' },
+  purple: { grad:'linear-gradient(150deg,#A78BFA,#6D28D9)', shadow:'rgba(109,40,217,.35)',  text:'#fff',     tagBg:'rgba(255,255,255,.9)', tagFg:'#6D28D9' },
+  mocha:  { grad:'linear-gradient(150deg,#E0B183,#8B5A2B)', shadow:'rgba(139,90,43,.35)',   text:'#fff',     tagBg:'rgba(255,255,255,.9)', tagFg:'#8B5A2B' },
+  green:  { grad:'linear-gradient(150deg,#BEF264,#65A30D)', shadow:'rgba(101,163,13,.35)',  text:'#0F3734', tagBg:'rgba(15,55,52,.9)',   tagFg:'#BEF264' },
+  red:    { grad:'linear-gradient(150deg,#FF8A80,#C62828)', shadow:'rgba(198,40,40,.35)',   text:'#fff',     tagBg:'rgba(255,255,255,.9)', tagFg:'#C62828' },
+  tropic: { grad:'linear-gradient(150deg,#FFD54D,#FF8A3D)', shadow:'rgba(255,138,61,.35)',  text:'#0F3734', tagBg:'rgba(15,55,52,.9)',   tagFg:'#FFD54D' },
+  gold:   { grad:'linear-gradient(150deg,#FFC978,#EF8A00)', shadow:'rgba(239,138,0,.35)',   text:'#0F3734', tagBg:'rgba(15,55,52,.9)',   tagFg:'#FFC978' },
+  teal:   { grad:'linear-gradient(150deg,#8FE0DA,#2FC4BC)', shadow:'rgba(47,196,188,.35)',  text:'#fff',     tagBg:'rgba(255,255,255,.9)', tagFg:'#2FC4BC' }
+};
+const MENU_PALETTE_RULES = [
+  [/pitaya|dragon/,                                                       'pink'],
+  [/açaí|acai|blueberry|elderberry/,                                       'purple'],
+  [/cold brew|coffee|peanut|cacao/,                                        'mocha'],
+  [/spinach|kale|celery|parsley|cilantro|romaine|mixed greens|spring mix|avocado|pesto|microgreens|cucumber/, 'green'],
+  [/beet|watermelon|tomato|chipotle/,                                      'red'],
+  [/mango|pineapple|coconut|orange|carrot|turmeric|pear/,                  'tropic'],
+  [/strawberry/,                                                           'pink'],
+  [/ginger|lemon|grits|oat|sourdough|ciabatta/,                            'gold']
+];
+
+// Per-item emoji + one-line blurb (UI copy only — prices/ingredients always come from menu.json).
+// Items missing from here fall back to a generated blurb and the category emoji.
+const MENU_COPY = {
+  'the-regular':        ['🍓', 'The one everybody orders. Strawberry and banana blended smooth with oat milk and a touch of agave.'],
+  'happy-hour':         ['🍍', 'Strawberry, pineapple and mango over fresh OJ. Tastes like 5pm on a Friday.'],
+  'green-light':        ['🥬', 'Spinach and kale hidden under mango, pineapple and banana with a little ginger. No added sugar, all go.'],
+  'nightcap':           ['🫐', 'Açaí and blueberry with strawberry and banana in almond milk. Deep purple, antioxidant heavy.'],
+  'designated-driver':  ['🥥', 'A piña colada with none of the rum. Pineapple, banana, coconut cream and coconut water.'],
+  'last-call':          ['🍧', 'The pink one. Pitaya, strawberry and pineapple over coconut water — hydrating and loud.'],
+  'liquid-courage':     ['🥜', 'Peanut butter, banana and cacao with chocolate protein in almond milk. Post-gym fuel that drinks like a milkshake.'],
+  'open-tab':           ['🍇', 'PB&J in a cup: peanut butter with strawberry, blueberry and banana in oat milk. Protein blend.'],
+  'morning-shift':      ['☕', 'Cold brew, banana and peanut butter with cacao nibs in oat milk. Breakfast and coffee in one pour.'],
+  'innerg-elevator':    ['🍊', 'Orange, carrot, ginger and lemon. The immunity classic with a warm ginger finish.'],
+  'sober-up':           ['🥬', 'Apple, celery, cucumber, parsley, cilantro, ginger, lemon and cayenne. Our deepest green cleanse.'],
+  'ase':                ['🌿', 'Pineapple, ginger, lemon and mint. Bright, gut-friendly and easy to drink.'],
+  'red-eye':            ['🍓', 'Beet, pineapple and strawberry. Earthy-sweet and loaded with iron.'],
+  'hair-of-the-dog':    ['🍎', 'Beet, apple, carrot, lemon and ginger. The natural-nitrate energy pour.'],
+  'skinny-dip':         ['🍐', 'Pear, pineapple, aloe vera, cucumber, apple and lime. Built for skin and hydration.'],
+  'sunday-brunch':      ['🍉', 'Watermelon, strawberry and apple. No agenda — it just tastes good.'],
+  'on-the-rocks':       ['🥒', 'Watermelon, cucumber, mint, lime and ginger. Pure hydration, mocktail energy.'],
+  'clean-slate':        ['🥒', 'Celery, cucumber, cilantro and lime. Four ingredients, full reset.'],
+  'flu-shot':           ['🛡️', 'Orange, turmeric, ginger, black pepper, black seed oil, lemon and cayenne. Take it when you feel something coming on.'],
+  'double-shot':        ['🫚', 'Ginger, lemon and cayenne. The ginger shot — hits fast, settles your stomach.'],
+  'the-bouncer':        ['🥊', 'Sea moss, elderberry, lemon and cayenne. Defense in two ounces.'],
+  'southwest-black-bean':   ['🌽', 'Romaine with black beans, corn, tomato, avocado, red onion, cheddar and tortilla strips in chipotle-lime.'],
+  'mediterranean-chickpea': ['🫒', 'Mixed greens with chickpeas, cucumber, tomato, red onion, kalamata olives, feta and roasted red pepper in lemon-herb.'],
+  'cucumber-crunch':        ['🥒', 'The house salad. English cucumber, cherry tomato, red cabbage, bell pepper, red onion, cilantro, sesame and feta in lemon-lime.'],
+  'strawberry-spinach':     ['🍓', 'Spinach with strawberry, blueberry, walnut, feta and red onion in balsamic.'],
+  'apple-walnut-cranberry': ['🍎', 'Spring mix with apple, dried cranberry, walnut, cucumber, feta and red onion in honey-mustard.'],
+  'southwest-wrap':     ['🌯', 'The Southwest salad rolled in a wheat tortilla. Pick your protein.'],
+  'mediterranean-wrap': ['🌯', 'The Mediterranean salad rolled in a wheat tortilla. Pick your protein.'],
+  'pesto-panini':       ['🥪', 'Ciabatta pressed with mozzarella, tomato and basil pesto. Pick your protein.'],
+  'chipotle-panini':    ['🥪', 'Ciabatta pressed with cheddar, avocado and chipotle aioli. Pick your protein.'],
+  'veggie-panini':      ['🥪', 'Ciabatta pressed with roasted red pepper, mozzarella, spinach and pesto.'],
+  'acai-bowl':          ['🍇', 'Thick açaí and banana topped with granola, strawberry, blueberry and a honey or PB drizzle.'],
+  'grits-bowl':         ['🍳', 'Stone-ground grits with spinach, tomato and egg. Go veggie, or add salmon or shrimp.'],
+  'oatmeal':            ['🥣', 'Plain, or loaded with berries, walnuts, honey and cinnamon.'],
+  'soup':               ['🍲', 'Ask what is on today. Served with sourdough.'],
+  'avocado-toast':      ['🥑', 'Sourdough, smashed avocado, lemon, chili flake and microgreens.']
+};
+
+// Benefit tags (the "shop by what you need" filters) derived from menu.json's tag + ingredients.
+const MENU_TAG_MAP = {
+  immunity:'immunity', defense:'immunity', cleanse:'detox', reset:'detox', 'no added sugar':'detox',
+  gut:'gut', iron:'recovery', energy:'energy', protein:'recovery', coffee:'focus', antioxidant:'glow',
+  'skin & hydration':'glow', hydration:'hydration'
+};
+const MENU_BENEFIT_RULES = [
+  { re:/ginger/,        tags:['gut','immunity'],   line:'Ginger is well studied for easing nausea, bloating and inflammation.', bullet:'Digestion aid' },
+  { re:/turmeric/,      tags:['antiinflam'],       line:'Turmeric with black pepper so it actually absorbs — the classic anti-inflammatory pairing.', bullet:'Anti-inflammatory' },
+  { re:/beet/,          tags:['energy','recovery'],line:"Beets are the athlete's secret — natural nitrates support blood flow and stamina.", bullet:'Nitrates for stamina' },
+  { re:/cold brew/,     tags:['energy','focus'],   line:'Clean, steady caffeine from cold brew — no crash.', bullet:'Clean caffeine' },
+  { re:/spinach|kale|celery|parsley|cilantro/, tags:['detox'], line:'Chlorophyll-rich greens — the reset when you have been off your routine.', bullet:'Detox greens' },
+  { re:/açaí|acai|blueberry|elderberry|pitaya|cranberry/, tags:['glow'], line:'Deep-coloured berries are some of the most antioxidant-dense foods on earth.', bullet:'Antioxidants' },
+  { re:/orange|grapefruit|kiwi/, tags:['immunity'], line:'Vitamin C straight from the fruit.', bullet:'Vitamin C' },
+  { re:/watermelon|coconut water|cucumber|aloe/, tags:['hydration'], line:'Electrolytes and water-rich produce — straight hydration.', bullet:'Hydrating' },
+  { re:/protein|peanut|walnut|chickpea|black bean|egg|chicken|salmon|tuna|shrimp/, tags:['recovery'], line:'Real protein that keeps you full and helps you rebuild.', bullet:'Protein' },
+  { re:/sea moss|black seed|cayenne/, tags:['immunity'], bullet:'Immune support' },
+  { re:/avocado|olive|sesame|walnut/, tags:['glow','focus'], line:'Healthy fats feed your brain and your skin.', bullet:'Healthy fats' },
+  { re:/oat|grits|sourdough|granola|ciabatta|tortilla/, tags:['energy'], line:'Slow-release carbs keep energy level all morning.', bullet:'Slow-release energy' },
+  { re:/banana/,        tags:['energy'],           bullet:'Potassium' },
+  { re:/mint|aloe|pear/, tags:['gut'],             bullet:'Easy on the stomach' }
+];
+
+function buildMenu(data){
+  const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : s;
+  const money = n => '$' + n.toFixed(n % 1 === 0 ? 0 : 2);
+  const sizesOf = it => {
+    if (it.size && data.sizes && data.sizes[it.size]) return data.sizes[it.size].map(s => ({ key:String(s.oz), label:s.oz + ' oz', price:s.price }));
+    if (it.prices) return Object.keys(it.prices).map(k => ({ key:k, label:cap(k), price:it.prices[k] }));
+    return [{ key:'', label:'', price:Number(it.price) || 0 }];
+  };
+  const menu = [], benefits = {}, notes = {}, cats = ['All'];
+  (data.categories || []).forEach(c => {
+    const K = MENU_KINDS.find(k => k.key === c.key) || { key:c.key, kind:c.title || c.key, one:c.title || c.key, drink:false, emoji:'🍽️' };
+    if (!cats.includes(K.kind)) cats.push(K.kind);
+    // Category-level notes (combo deals, add-ons, proteins, cleanses) shown on the menu screen + item detail
+    const extras = [];
+    if (c.note) extras.push(c.note);
+    if (c.addons && c.addons.length) extras.push('Add-ons: ' + c.addons.map(a => a.name + ' +' + money(a.price)).join(' · '));
+    if (c.proteins && c.proteins.length && !c.proteins.some(a => (c.note || '').toLowerCase().includes(a.name.toLowerCase().split(' ').pop()))) extras.push('Add a protein: ' + c.proteins.map(a => a.name + ' +' + money(a.price)).join(' · '));
+    if (c.byo) extras.push(c.byo.name + ' — ' + c.byo.note);
+    if (c.cleanses && c.cleanses.length) extras.push('Cleanses: ' + c.cleanses.map(x => x.name + ' ' + money(x.price) + ' (' + x.note + ')').join(' · '));
+    notes[K.kind] = extras.join('  ·  ');
+    (c.items || []).forEach(it => {
+      const ingRaw = (it.ingredients || []).join(' ');
+      const hay = (ingRaw + ' ' + (it.tag || '') + ' ' + it.name).toLowerCase();
+      const sizes = sizesOf(it);
+      const price = Math.min.apply(null, sizes.map(s => s.price));
+      const pal = MENU_PALETTES[(MENU_PALETTE_RULES.find(r => r[0].test(hay)) || [0, K.drink ? 'teal' : 'gold'])[1]];
+      const copy = MENU_COPY[it.id] || [];
+      // benefit tags: menu.json tag first, then ingredient rules
+      const tagKeys = [], lines = [], bullets = [];
+      const tagMapped = MENU_TAG_MAP[(it.tag || '').toLowerCase()];
+      if (tagMapped) tagKeys.push(tagMapped);
+      if ((it.tag || '').toLowerCase() === 'skin & hydration') tagKeys.push('hydration');
+      MENU_BENEFIT_RULES.forEach(r => {
+        if (!r.re.test(hay)) return;
+        r.tags.forEach(t => { if (!tagKeys.includes(t)) tagKeys.push(t); });
+        if (r.line && lines.length < 1) lines.push(r.line);
+        if (r.bullet && !bullets.includes(r.bullet)) bullets.push(r.bullet);
+      });
+      const itemExtras = (it.addons && it.addons.length) ? 'Add ' + it.addons.map(a => a.name + ' +' + money(a.price)).join(' · ') : '';
+      const sizeSummary = sizes.length > 1 ? sizes.map(s => s.label + ' ' + money(s.price)).join(' · ') : '';
+      benefits[it.id] = bullets.slice(0, 3);
+      menu.push({
+        id: it.id, name: it.name, kind: K.kind, drink: K.drink, tag: it.tag || '',
+        cat: /panini/i.test(it.name) ? 'Panini' : (K.key === 'bowls-breakfast' && !/bowl/i.test(it.name)) ? 'Breakfast' : K.one,
+        price, sizes, hasSizes: sizes.length > 1, sizeSummary,
+        defaultSize: sizes.reduce((a, b) => (b.price < a.price ? b : a), sizes[0]).key,
+        priceLine: sizeSummary || money(price),
+        emoji: copy[0] || K.emoji,
+        grad: pal.grad, shadow: pal.shadow, text: pal.text, tagBg: pal.tagBg, tagFg: pal.tagFg,
+        ingredients: (it.ingredients || []).map(cap).join(' · '),
+        ingList: (it.ingredients || []).map(cap),
+        blurb: copy[1] || ((it.ingredients || []).map(cap).join(', ') + '.'),
+        extras: [itemExtras, notes[K.kind]].filter(Boolean).join('  ·  '),
+        tagKeys: tagKeys.slice(0, 3),
+        benefitLine: lines[0] || ''
+      });
+    });
+  });
+  // Prize wheel: 10 slices, two "lose" slots, filled with real drinks
+  const pick = ids => ids.map(id => menu.find(m => m.id === id)).filter(Boolean).map(m => m.id);
+  let wheel = pick(['sober-up','the-regular']).concat(['lose']).concat(pick(['innerg-elevator','happy-hour','nightcap','sunday-brunch'])).concat(['lose']).concat(pick(['acai-bowl','double-shot']));
+  if (wheel.length < 10) { const fill = menu.filter(m => m.drink && !wheel.includes(m.id)).map(m => m.id); while (wheel.length < 10 && fill.length) wheel.push(fill.shift()); }
+  const featured = pick(['the-regular','innerg-elevator','green-light']);
+  return { menu, cats, wheel, benefits, notes, featured };
+}
+const MENU_BUILT = buildMenu(MENU_DATA);
 
 class Component extends DCLogic {
   state = (() => {
@@ -1654,6 +2482,7 @@ class Component extends DCLogic {
       authEmail: '',
       activeId: null,
       qty: 1,
+      sizeKey: '',
       cart: ls('pd_cart', []),
       theme: 'Sunset',
       points: ls('pd_points', 640),
@@ -1675,9 +2504,9 @@ class Component extends DCLogic {
       wonId: null,
       prizes: ls('pd_prizes', []),
       orders: ls('pd_orders', [
-        { id:4825, date:'2026-06-28', items:[{name:'Green Machine',qty:1},{name:'Ginger Shot',qty:2}], total:17, points:170 },
-        { id:4820, date:'2026-06-22', items:[{name:'Berry Bloom',qty:1},{name:'Açaí Bowl',qty:1}], total:22, points:220 },
-        { id:4815, date:'2026-06-15', items:[{name:'Citrus Sunrise',qty:2}], total:16, points:160 }
+        { id:4825, date:'2026-06-28', items:[{name:'Green Light · 16 oz',qty:1},{name:'Double Shot',qty:2}], total:16.5, points:165 },
+        { id:4820, date:'2026-06-22', items:[{name:'The Regular · 16 oz',qty:1},{name:'Açaí Bowl',qty:1}], total:20, points:200 },
+        { id:4815, date:'2026-06-15', items:[{name:'InnerG Elevator · 16 oz',qty:2}], total:19, points:190 }
       ]),
       events: ls('pd_events', [
         { id:1, title:'Cold Press Workshop', date:'2026-08-15', time:'11:00 AM', desc:'Learn how we cold-press every juice fresh daily. Hands-on demo included.', price:0, emoji:'🥬', rsvpd:false },
@@ -1791,160 +2620,16 @@ class Component extends DCLogic {
     { q:'Can we decorate the space?', a:'Absolutely. Come early to set up, or add our decor package and we will have the floor ready when you walk in.' }
   ];
 
-  MENU = [
-    { id:'green', tagKeys:['detox', 'gut', 'glow'], benefitLine:"Chlorophyll-rich greens with hydrating cucumber and lemon. The reset when you've been off your routine.", name:'Green Machine', cat:'Detox', kind:'Juices', price:9, cal:120, emoji:'🥬',
-      grad:'linear-gradient(150deg,#BEF264,#84CC16)', shadow:'rgba(132,204,22,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#BEF264',
-      ingredients:'Kale · spinach · cucumber · green apple · lemon',
-      ingList:['Kale','Spinach','Cucumber','Green apple','Lemon','Ginger'],
-      blurb:'A garden in a cup. Leafy greens balanced by crisp apple and a bright lemon finish — our most-poured detox.' },
-    { id:'berry', tagKeys:['glow', 'recovery'], benefitLine:"Berry antioxidants plus potassium from banana. Easy post-workout fuel that drinks like dessert.", name:'Berry Bloom', cat:'Smoothie', kind:'Smoothies', price:10, cal:210, emoji:'🍓',
-      grad:'linear-gradient(150deg,#8FE0DA,#2FC4BC)', shadow:'rgba(47,196,188,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#2FC4BC',
-      ingredients:'Strawberry · blueberry · banana · almond milk',
-      ingList:['Strawberry','Blueberry','Banana','Almond milk','Honey'],
-      blurb:'Creamy, berry-loaded and just sweet enough. Blended with almond milk for a smooth, frosty pour.' },
-    { id:'citrus', tagKeys:['immunity', 'antiinflam'], benefitLine:"Vitamin C from citrus with the ginger-turmeric duo studied for calming inflammation.", name:'Citrus Sunrise', cat:'Juice', kind:'Juices', price:8, cal:140, emoji:'🍊',
-      grad:'linear-gradient(150deg,#FFC64D,#FF8A3D)', shadow:'rgba(255,138,61,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFC64D',
-      ingredients:'Orange · carrot · ginger · turmeric',
-      ingList:['Orange','Carrot','Ginger','Turmeric','Lemon'],
-      blurb:'Sunshine, pressed. An immunity classic with a warm ginger-turmeric kick to start the day right.' },
-    { id:'tropic', tagKeys:['energy', 'gut'], benefitLine:"Pineapple brings bromelain, an enzyme that helps break down food. Coconut water puts electrolytes back.", name:'Tropic Thunder', cat:'Smoothie', kind:'Smoothies', price:11, cal:240, emoji:'🥭',
-      grad:'linear-gradient(150deg,#FFD54D,#FF8A3D)', shadow:'rgba(255,138,61,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFD54D',
-      ingredients:'Mango · pineapple · coconut · passionfruit',
-      ingList:['Mango','Pineapple','Coconut water','Passionfruit','Banana'],
-      blurb:'A one-way ticket to the tropics. Mango and pineapple blended with coconut water for pure vacation energy.' },
-    { id:'purple', tagKeys:['energy', 'recovery'], benefitLine:"Beets are the athlete's secret — natural nitrates support blood flow and stamina.", name:'Purple Rain', cat:'Juice', kind:'Juices', price:9, cal:130, emoji:'🫐',
-      grad:'linear-gradient(150deg,#A78BFA,#7C3AED)', shadow:'rgba(124,58,237,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#7C3AED',
-      ingredients:'Beet · blackberry · apple · lemon',
-      ingList:['Beet','Blackberry','Apple','Lemon','Mint'],
-      blurb:'Deep, earthy and antioxidant-rich. Roasted-sweet beet meets tart blackberry — a pour with attitude.' },
-    { id:'melon', tagKeys:['hydration', 'glow'], benefitLine:"Straight hydration with lycopene, the antioxidant that gives watermelon its color.", name:'Watermelon Wave', cat:'Juice', kind:'Juices', price:8, cal:90, emoji:'🍉',
-      grad:'linear-gradient(150deg,#63CFC8,#2FC4BC)', shadow:'rgba(47,196,188,.32)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#2FC4BC',
-      ingredients:'Watermelon · mint · lime',
-      ingList:['Watermelon','Mint','Lime'],
-      blurb:'Barely 90 calories of pure refreshment. Three ingredients, zero effort, all summer.' },
-    { id:'acai', tagKeys:['glow', 'energy'], benefitLine:"Açaí is one of the most antioxidant-dense berries on earth. Slow-release energy in a spoon.", name:'Açaí Bowl', cat:'Bowl', kind:'Bowls', price:12, cal:320, emoji:'🍇',
-      grad:'linear-gradient(150deg,#8B5CF6,#6D28D9)', shadow:'rgba(109,40,217,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#6D28D9',
-      ingredients:'Açaí · banana · granola · coconut',
-      ingList:['Açaí','Banana','Granola','Coconut flakes','Strawberry'],
-      blurb:'Thick, spoonable and topped with crunch. The bowl that eats like a treat and fuels like breakfast.' },
-    { id:'ginger', tagKeys:['gut', 'immunity', 'antiinflam'], benefitLine:"The one to take when your stomach's off. Ginger is well studied for easing nausea, bloating and inflammation.", name:'Ginger Shot', cat:'Shot', kind:'Shots', price:4, cal:45, emoji:'🫚',
-      grad:'linear-gradient(150deg,#FFC978,#EF8A00)', shadow:'rgba(239,138,0,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFC978',
-      ingredients:'Ginger · lemon · cayenne · honey',
-      ingList:['Ginger','Lemon','Cayenne','Honey'],
-      blurb:'A 2oz wake-up call. Fiery ginger and cayenne with just enough honey to keep it friendly.' },
-    { id:'pb', tagKeys:['recovery', 'energy'], benefitLine:"Protein and healthy fats that actually keep you full. Built for after the gym or instead of lunch.", name:'PB Power', cat:'Protein', kind:'Smoothies', price:10, cal:340, emoji:'🥜',
-      grad:'linear-gradient(150deg,#E0B183,#9C6B3A)', shadow:'rgba(156,107,58,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#9C6B3A',
-      ingredients:'Peanut butter · Banana · Cacao · Oat milk · Dates',
-      blurb:'Post-workout fuel that drinks like a milkshake — 18g of plant protein, zero guilt.' },
-    { id:'turmeric', tagKeys:['antiinflam', 'glow'], benefitLine:"Curcumin with black pepper to help your body absorb it — the classic anti-inflammatory pairing.", name:'Turmeric Glow', cat:'Shot', kind:'Shots', price:4, cal:40, emoji:'🌞',
-      grad:'linear-gradient(150deg,#FFD54D,#F59E0B)', shadow:'rgba(245,158,11,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFD54D',
-      ingredients:'Turmeric · Orange · Black pepper · Agave',
-      blurb:'Golden anti-inflammatory goodness — black pepper included so it actually works.' },
-    { id:'wheatgrass', tagKeys:['detox', 'energy'], benefitLine:"Pure chlorophyll and trace minerals. A hard, green two-ounce wake-up call.", name:'Wheatgrass Shot', cat:'Shot', kind:'Shots', price:5, cal:25, emoji:'🌱',
-      grad:'linear-gradient(150deg,#86EFAC,#16A34A)', shadow:'rgba(22,163,74,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#86EFAC',
-      ingredients:'Cold-pressed wheatgrass · Lemon wedge',
-      blurb:'One ounce of pure chlorophyll courage — lemon chaser on the side.' },
-    { id:'pitaya', tagKeys:['glow', 'gut'], benefitLine:"Dragon fruit brings prebiotic fiber and vitamin C — good for your gut and your skin.", name:'Pitaya Sunrise Bowl', cat:'Bowl', kind:'Bowls', price:12, cal:300, emoji:'🍧',
-      grad:'linear-gradient(150deg,#6FD6CF,#1FA49D)', shadow:'rgba(31,164,157,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#1FA49D',
-      ingredients:'Pitaya · Mango · Granola · Coconut flakes',
-      blurb:'Hot-pink dragonfruit under mango, granola crunch and coconut snow.' },
-    { id:'oats', tagKeys:['gut', 'energy'], benefitLine:"Beta-glucan fiber from steel-cut oats keeps blood sugar steady all morning.", name:'Sunrise Oatmeal', cat:'Warm', kind:'Breakfast', price:6, cal:280, emoji:'🥣',
-      grad:'linear-gradient(150deg,#FFE3B3,#D19A4E)', shadow:'rgba(209,154,78,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFE3B3',
-      ingredients:'Steel-cut oats · Mixed berries · Banana · Honey · Cinnamon',
-      blurb:'Slow-cooked steel-cut oats with warm cinnamon and a berry crown.' },
-    { id:'avotoast', tagKeys:['focus', 'energy'], benefitLine:"Healthy fats feed your brain; sourdough keeps the energy slow and level.", name:'Avocado Toast', cat:'Toast', kind:'Breakfast', price:8, cal:320, emoji:'🥑',
-      grad:'linear-gradient(150deg,#C6F27E,#5B8C2A)', shadow:'rgba(91,140,42,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#C6F27E',
-      ingredients:'Sourdough · Avocado · Chili flakes · Lime · Sea salt',
-      blurb:'Thick-cut sourdough, half an avocado, and just enough chili to wake it up.' },
-    { id:'pesto', tagKeys:['recovery', 'energy'], benefitLine:"Lean grilled chicken protein to rebuild after a hard day or a hard workout.", name:'Pesto Chicken Panini', cat:'Panini', kind:'Eats', price:10, cal:480, emoji:'🥪',
-      grad:'linear-gradient(150deg,#F5AC42,#B45309)', shadow:'rgba(180,83,9,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#F5AC42',
-      ingredients:'Grilled chicken · Basil pesto · Mozzarella · Tomato',
-      blurb:'Grilled chicken and basil pesto pressed golden on whole-grain ciabatta.' },
-    { id:'caprese', tagKeys:['energy', 'glow'], benefitLine:"Fresh mozzarella and tomato — lycopene and calcium in the most satisfying way.", name:'Caprese Panini', cat:'Panini', kind:'Eats', price:9, cal:420, emoji:'🧀',
-      grad:'linear-gradient(150deg,#FF8A80,#D32F2F)', shadow:'rgba(211,47,47,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#D32F2F',
-      ingredients:'Fresh mozzarella · Tomato · Basil · Balsamic glaze',
-      blurb:'The classic — mozzarella, tomato and basil, pressed hot on ciabatta.' },
-    { id:'hummus', tagKeys:['gut', 'energy'], benefitLine:"Chickpea fiber and plant protein. Plant-forward and genuinely filling.", name:'Garden Hummus Panini', cat:'Panini', kind:'Eats', price:9, cal:390, emoji:'🥙',
-      grad:'linear-gradient(150deg,#FFC978,#CA8A04)', shadow:'rgba(202,138,4,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFC978',
-      ingredients:'Hummus · Cucumber · Roasted peppers · Spinach',
-      blurb:'Creamy hummus with crunchy garden veg — the best-selling plant pick.' },
-    { id:'veggiepatty', tagKeys:['energy', 'gut'], benefitLine:"Island spices over a veggie base — comfort food that still moves right.", name:'Island Veggie Patty', cat:'Patty', kind:'Eats', price:5, cal:310, emoji:'🥟',
-      grad:'linear-gradient(150deg,#FFC64D,#EA8C00)', shadow:'rgba(234,140,0,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFC64D',
-      ingredients:'Golden turmeric crust · Curried island vegetables',
-      blurb:'A baked golden-crust patty with gently spiced island veg inside.' },
-    { id:'jerkpatty', tagKeys:['recovery', 'energy'], benefitLine:"Protein with real heat. Jerk spice brings allspice and scotch bonnet warmth.", name:'Jerk Chicken Patty', cat:'Patty', kind:'Eats', price:6, cal:340, emoji:'🌶️',
-      grad:'linear-gradient(150deg,#FF8A3D,#C2410C)', shadow:'rgba(194,65,12,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#C2410C',
-      ingredients:'Jerk chicken · Scotch bonnet · Island herbs',
-      blurb:'Slow-spiced jerk chicken in a flaky baked shell — heat you can handle.' },
-    { id:'kalecaesar', tagKeys:['detox', 'glow'], benefitLine:"Raw kale delivers vitamin K and fiber — the salad that earns its keep.", name:'Kale Caesar', cat:'Salad', kind:'Salads & Soup', price:10, cal:350, emoji:'🥗',
-      grad:'linear-gradient(150deg,#BEF264,#65A30D)', shadow:'rgba(101,163,13,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#BEF264',
-      ingredients:'Kale · Parmesan · Chickpea croutons · Lemon dressing',
-      blurb:'Massaged kale, lemony dressing and crispy chickpea croutons.' },
-    { id:'rainbow', tagKeys:['immunity', 'glow'], benefitLine:"Eat the whole color wheel. Different pigments, different antioxidants, all in one bowl.", name:'Rainbow Crunch', cat:'Salad', kind:'Salads & Soup', price:10, cal:330, emoji:'🥕',
-      grad:'linear-gradient(150deg,#FFC64D,#2FC4BC)', shadow:'rgba(47,196,188,.32)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFC64D',
-      ingredients:'Quinoa · Carrot · Red cabbage · Citrus vinaigrette',
-      blurb:'Every color on one plate, tossed in a bright citrus vinaigrette.' },
-    { id:'carrotsoup', tagKeys:['immunity', 'antiinflam'], benefitLine:"Beta-carotene from carrots plus warming ginger. Comfort with a purpose.", name:'Carrot-Ginger Soup', cat:'Soup', kind:'Salads & Soup', price:7, cal:220, emoji:'🍲',
-      grad:'linear-gradient(150deg,#FFB74D,#E65100)', shadow:'rgba(230,81,0,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#E65100',
-      ingredients:'Carrot · Ginger · Coconut milk',
-      blurb:'Velvety carrot and warming ginger, finished with coconut cream.' },
-    { id:'tomatosoup', tagKeys:['glow', 'immunity'], benefitLine:"Cooked tomatoes release more lycopene than raw — better for your skin, warmer for your soul.", name:'Tomato Basil Soup', cat:'Soup', kind:'Salads & Soup', price:7, cal:200, emoji:'🍅',
-      grad:'linear-gradient(150deg,#FF7A6B,#C62828)', shadow:'rgba(198,40,40,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#C62828',
-      ingredients:'Slow-simmered tomato · Basil · Olive oil',
-      blurb:'Slow-simmered tomatoes and fresh basil — comfort without the cream.' },
-    { id:'coldbrew', tagKeys:['energy', 'focus'], benefitLine:"Smoother and less acidic than hot coffee, with clean, steady caffeine.", name:'Cold Brew', cat:'Coffee', kind:'Coffee & Tea', price:5, cal:10, emoji:'☕',
-      grad:'linear-gradient(150deg,#A9746E,#4E342E)', shadow:'rgba(78,52,46,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#4E342E',
-      ingredients:'Single-origin beans · 18-hour steep',
-      blurb:'Steeped 18 hours, silky smooth, zero bitterness — add oat milk if you like.' },
-    { id:'matcha', tagKeys:['focus', 'energy'], benefitLine:"L-theanine with caffeine — alert without the crash or the jitters.", name:'Matcha Latte', cat:'Tea', kind:'Coffee & Tea', price:6, cal:120, emoji:'🍵',
-      grad:'linear-gradient(150deg,#A7D46F,#3F6212)', shadow:'rgba(63,98,18,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#3F6212',
-      ingredients:'Ceremonial matcha · Steamed oat milk',
-      blurb:'Stone-ground ceremonial matcha whisked into steamed oat milk.' },
-    { id:'goldenlatte', tagKeys:['antiinflam', 'recovery'], benefitLine:"Turmeric, ginger and warm milk. The wind-down drink that works on your joints.", name:'Golden Latte', cat:'Latte', kind:'Coffee & Tea', price:6, cal:140, emoji:'🍯',
-      grad:'linear-gradient(150deg,#FFD54D,#C86F00)', shadow:'rgba(198,143,44,.35)', text:'#0F3734', tagBg:'rgba(15,55,52,.9)', tagFg:'#FFD54D',
-      ingredients:'Turmeric · Cinnamon · Oat milk · Honey',
-      blurb:'Turmeric, cinnamon and honey steamed into a caffeine-free golden hug.' },
-    { id:'hibiscus', tagKeys:['glow', 'detox'], benefitLine:"Hibiscus is loaded with anthocyanins and drinks tart and bright. Caffeine-free all day.", name:'Hibiscus Cooler', cat:'Tea', kind:'Coffee & Tea', price:4, cal:60, emoji:'🌺',
-      grad:'linear-gradient(150deg,#6FD6CF,#AD1457)', shadow:'rgba(173,20,87,.35)', text:'#fff', tagBg:'rgba(255,255,255,.9)', tagFg:'#AD1457',
-      ingredients:'Hibiscus · Lime · Fresh mint',
-      blurb:'Ruby-red iced hibiscus with lime — tart, floral, endlessly refreshing.' }
-  ];
-
-  CATS = ['All','Juices','Smoothies','Shots','Bowls','Breakfast','Eats','Salads & Soup','Coffee & Tea'];
-  WHEEL = ['green','berry','lose','citrus','tropic','purple','melon','lose','acai','ginger'];
+  MENU = MENU_BUILT.menu;
+  CATS = MENU_BUILT.cats;
+  WHEEL = MENU_BUILT.wheel;
+  MENU_NOTES = MENU_BUILT.notes;
+  FEATURED = MENU_BUILT.featured;
 
   _ls(k, d){ try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : d; } catch(e) { return d; } }
   _sv(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
 
-  BENEFITS = {
-    green:['Detox & digestion','Iron + vitamin K','Low sugar'],
-    berry:['Antioxidant-rich','Heart health','Natural energy'],
-    citrus:['Immunity boost','Vitamin C + A','Anti-inflammatory'],
-    tropic:['Deep hydration','Vitamin C','Mood lift'],
-    purple:['Antioxidants','Stamina & blood flow','Liver support'],
-    melon:['Ultra hydrating','Low calorie','Muscle recovery'],
-    acai:['Omega fats','Antioxidants','Lasting energy'],
-    ginger:['Immunity kick','Digestion aid','Anti-inflammatory'],
-    pb:['18g plant protein','Muscle recovery','Keeps you full'],
-    turmeric:['Anti-inflammatory','Joint support','Immunity'],
-    wheatgrass:['Chlorophyll detox','Alkalizing','Micronutrients'],
-    pitaya:['Vitamin C','Fiber-rich','Gut health'],
-    oats:['Slow-release energy','High fiber','Heart healthy'],
-    avotoast:['Healthy fats','Fiber','Potassium'],
-    pesto:['28g protein','Whole grains','Fresh basil'],
-    caprese:['Calcium + protein','Lycopene','Light & fresh'],
-    hummus:['Plant protein','High fiber','Heart healthy'],
-    veggiepatty:['Baked, not fried','Plant-based','Turmeric crust'],
-    jerkpatty:['Lean protein','Baked, not fried','Metabolism kick'],
-    kalecaesar:['Vitamin K','Plant protein','Gut-friendly'],
-    rainbow:['Phytonutrients','Complete protein','Light & filling'],
-    carrotsoup:['Beta-carotene','Immunity','Warming & light'],
-    tomatosoup:['Lycopene','Low calorie','Heart health'],
-    coldbrew:['Clean caffeine','Zero sugar','Antioxidants'],
-    matcha:['Calm, focused energy','L-theanine','Antioxidants'],
-    goldenlatte:['Caffeine-free','Anti-inflammatory','Evening-safe'],
-    hibiscus:['Vitamin C','Heart support','Caffeine-free']
-  };
+  BENEFITS = MENU_BUILT.benefits;
 
   fmt(n){ return '$' + n.toFixed(n % 1 === 0 ? 0 : 2); }
   themeGrad(){
@@ -2071,14 +2756,35 @@ class Component extends DCLogic {
     this._sv('pd_cart', []);
     this.setState({ signedIn:false, screen:'auth', cart:[] });
   }
-  openItem(it){ this.setState(s => ({ prev: s.screen, screen:'detail', activeId: it.id, qty: 1 })); }
+  // On load, refresh the menu from ./menu.json (the source of truth). The embedded
+  // MENU_DATA copy already rendered, so this only re-renders if the file loaded.
+  componentDidMount(){
+    try {
+      fetch('./menu.json', { cache:'no-store' })
+        .then(r => (r && r.ok) ? r.json() : null)
+        .then(data => { if (data && Array.isArray(data.categories) && data.categories.length) { this.applyMenuData(data); this.setState({ menuVersion: Date.now() }); } })
+        .catch(() => {});
+    } catch(e) {}
+  }
+  applyMenuData(data){
+    const b = buildMenu(data);
+    this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured;
+  }
 
-  addToCart(it, q, free){
+  // Size / variant helpers. Every item has `sizes` (16/24 oz for drinks, 2 oz shots,
+  // chicken/salmon/tuna etc. for food, or a single unlabeled entry).
+  sizeOf(it, key){ return (it && it.sizes && (it.sizes.find(s => s.key === key) || it.sizes.find(s => s.key === it.defaultSize) || it.sizes[0])) || { key:'', label:'', price: it ? it.price : 0 }; }
+  labelWithSize(it, sz){ return it.name + (sz && sz.label ? ' · ' + sz.label : ''); }
+
+  openItem(it){ this.setState(s => ({ prev: s.screen, screen:'detail', activeId: it.id, qty: 1, sizeKey: this.sizeOf(it).key })); }
+
+  addToCart(it, q, free, sizeKey){
     q = q || 1;
+    const size = this.sizeOf(it, sizeKey).key;
     this.setState(s => {
       const cart = s.cart.slice();
-      const ex = cart.find(c => c.id === it.id && !!c.free === !!free);
-      if (ex) ex.qty += q; else cart.push({ id: it.id, qty: q, free: !!free });
+      const ex = cart.find(c => c.id === it.id && !!c.free === !!free && (c.size || '') === size);
+      if (ex) ex.qty += q; else cart.push({ id: it.id, qty: q, free: !!free, size });
       return { cart };
     });
   }
@@ -2089,7 +2795,16 @@ class Component extends DCLogic {
     });
   }
 
-  cartDetailed(){ return this.state.cart.map(c => { const m = this.MENU.find(m => m.id === c.id); return { ...m, qty: c.qty, free: c.free, price: c.free ? 0 : m.price }; }); }
+  cartDetailed(){
+    // Cart lines carry {id, qty, free, size}. Lines for items no longer on the menu
+    // (e.g. a stale localStorage cart after a menu change) are dropped, not crashed on.
+    return this.state.cart.map(c => {
+      const m = this.MENU.find(m => m.id === c.id);
+      if (!m) return null;
+      const sz = this.sizeOf(m, c.size);
+      return { ...m, qty: c.qty, free: c.free, size: sz.key, name: this.labelWithSize(m, sz), price: c.free ? 0 : sz.price };
+    }).filter(Boolean);
+  }
   subtotal(){ return this.cartDetailed().reduce((a, c) => a + c.price * c.qty, 0); }
 
   spin(){
@@ -2126,20 +2841,20 @@ class Component extends DCLogic {
   }
 
   pinaLine(it){
-    return it.emoji + ' ' + it.name + ' — ' + it.ingredients + '. ' + this.fmt(it.price) + (it.cal ? ' · ' + it.cal + ' cal' : '');
+    return it.emoji + ' ' + it.name + ' — ' + it.ingredients + '. ' + it.priceLine;
   }
 
   pinaByTag(tag, n){
     const all = this.MENU.filter(m => (m.tagKeys || []).includes(tag));
-    const drinkKinds = ['Juices','Smoothies','Shots','Coffee & Tea','Bowls'];
-    const drinks = all.filter(m => drinkKinds.includes(m.kind));
-    const rest = all.filter(m => !drinkKinds.includes(m.kind));
+    const drinks = all.filter(m => m.drink);
+    const rest = all.filter(m => !m.drink);
     return drinks.concat(rest).slice(0, n || 3);
   }
 
   pinaDrinksOnly(list){
-    return list.filter(m => ['Juices','Smoothies','Shots','Coffee & Tea','Bowls'].includes(m.kind));
+    return list.filter(m => m.drink);
   }
+  pinaById(id){ return this.MENU.find(m => m.id === id) || this.MENU[0]; }
 
   pinaChips(arr){ return arr; }
 
@@ -2174,11 +2889,13 @@ class Component extends DCLogic {
     // ── 1. Specific item lookup ─────────────────────────────────
     const isSearchPhrasing = /do you have|anything with|any drinks|got anything|which ones|what has|made with|contains?\b|everything with|all your/.test(L);
     const named = M.find(m => L.includes(m.name.toLowerCase()))
-      || (!isSearchPhrasing && M.find(m => m.name.toLowerCase().split(' ')[0].length > 4 && L.includes(m.name.toLowerCase().split(' ')[0])));
+      || (!isSearchPhrasing && M.find(m => { const w = m.name.toLowerCase().split(' ')[0]; return w.length > 4 && new RegExp('\\b' + w + '\\b').test(L); }));
     if (named && !isSearchPhrasing && !/instead|other than|besides|not the/.test(L)) {
       const tags = (named.tagKeys || []).map(tagLabel).join(', ');
-      let txt = named.emoji + ' ' + named.name + ' — ' + this.fmt(named.price) + (named.cal ? ' · ' + named.cal + ' cal' : '') + '\n\n';
+      this._pinaLastItem = named.id;
+      let txt = named.emoji + ' ' + named.name + ' — ' + named.priceLine + '\n\n';
       txt += "What's in it: " + named.ingredients + '\n\n';
+      if (named.extras) txt += named.extras + '\n\n';
       if (named.benefitLine) txt += named.benefitLine + '\n\n';
       if (tags) txt += 'Good for: ' + tags;
       return { text:txt.trim(), chips:['Add it to my cart','What else is like this?','Show me something else'] };
@@ -2189,7 +2906,7 @@ class Component extends DCLogic {
       const last = this._pinaLastItem;
       if (last) {
         const it = M.find(m => m.id === last);
-        if (it) { this.addToCart(it, 1); return { text:'Done — ' + it.emoji + ' ' + it.name + ' is in your cart. Anything else while you’re here?', chips:['Add a ginger shot','Something to eat','Take me to my cart'] }; }
+        if (it) { this.addToCart(it, 1); return { text:'Done — ' + it.emoji + ' ' + this.labelWithSize(it, this.sizeOf(it)) + ' is in your cart. Anything else while you’re here?', chips:['Add the Double Shot','Something to eat','Take me to my cart'] }; }
       }
       return { text:"Tell me which one and I'll drop it in 🍹", chips:DEFAULT_CHIPS };
     }
@@ -2199,16 +2916,18 @@ class Component extends DCLogic {
 
     // ── 3. Hangover / rough night ───────────────────────────────
     if (/h[au]ng ?over|rough night|too much last night|drank too much|too many drinks|wine drunk/.test(L)) {
-      const g = M.find(m=>m.id==='ginger'), w = M.find(m=>m.id==='melon'), c = M.find(m=>m.id==='citrus');
-      return { text:"Say less 🙏 Here's the rescue order:\n\n1. " + line(g) + "\n   Settles your stomach fast.\n\n2. " + line(w) + "\n   Pure hydration, that's what you're missing.\n\n3. " + line(c) + "\n   Vitamin C and ginger to get you upright.",
-               chips:['Add the ginger shot','Something to eat','What else helps?'] };
+      const g = this.pinaById('double-shot'), w = this.pinaById('on-the-rocks'), c = this.pinaById('hair-of-the-dog');
+      this._pinaLastItem = g.id;
+      return { text:"Say less 🙏 Here's the rescue order:\n\n1. " + line(g) + "\n   Settles your stomach fast.\n\n2. " + line(w) + "\n   Pure hydration, that's what you're missing.\n\n3. " + line(c) + "\n   The name says it all — beet, apple and ginger to get you upright.",
+               chips:['Add the Double Shot','Something to eat','What else helps?'] };
     }
 
     // ── 4. Feeling sick ─────────────────────────────────────────
     if (/sick|cold|flu|sore throat|run down|rundown|congested|sniffl|fever|immune|immunity|germ/.test(L)) {
       const picks = this.pinaByTag('immunity', 3);
-      return { text:"Let's get you right 🛡️ These are our immunity movers:\n\n" + picks.map(p => line(p)).join('\n\n') + "\n\nIf you only grab one, make it the Ginger Shot — ginger is well studied for inflammation and fighting off what's coming.",
-               chips:['Add a ginger shot','What about turmeric?','Something warm'] };
+      if (picks.length) this._pinaLastItem = picks[0].id;
+      return { text:"Let's get you right 🛡️ These are our immunity movers:\n\n" + picks.map(p => line(p)).join('\n\n') + "\n\nIf you only grab one, make it the Flu Shot — turmeric, ginger, black seed oil and cayenne for whatever's coming.",
+               chips:['Add the Flu Shot','What about ginger?','Show me the shots'] };
     }
 
     // ── 5. Benefit-driven matching ──────────────────────────────
@@ -2251,7 +2970,8 @@ class Component extends DCLogic {
                chips:['Best juice for energy','Show me the shots','Something sweet'] };
     }
     if (/low cal|lowest cal|light|diet|weight|slim|calorie|lose weight|cutting/.test(L)) {
-      const picks = this.pinaDrinksOnly(M).slice().sort((a,b)=>a.cal-b.cal).slice(0,3);
+      const light = this.pinaDrinksOnly(M).filter(m => /cucumber|celery|watermelon/i.test(m.ingredients) && !/banana|milk|cream/i.test(m.ingredients));
+      const picks = (light.length ? light : this.pinaDrinksOnly(M)).slice(0,3);
       return { text:"Lightest pours on the board 🍃\n\n" + picks.map(p=>line(p)).join('\n\n') + "\n\nAll cold-pressed, no added sugar — the calories are the fruit and veg themselves.",
                chips:['Something filling instead','Best detox juice','Add the ' + picks[0].name] };
     }
@@ -2261,13 +2981,13 @@ class Component extends DCLogic {
                chips:['How does the Pour Pass work?','Show me the shots','What do you recommend?'] };
     }
     if (/no sugar|sugar.?free|less sugar|low sugar|diabet/.test(L)) {
-      const picks = this.pinaDrinksOnly(M).filter(m=>/cucumber|kale|spinach|celery|wheatgrass|lemon|ginger|turmeric|hibiscus|matcha/i.test(m.ingredients)).slice(0,3);
+      const picks = this.pinaDrinksOnly(M).filter(m=>/cucumber|kale|spinach|celery|lemon|ginger|turmeric|cilantro/i.test(m.ingredients) && !/agave|honey|orange juice/i.test(m.ingredients)).slice(0,3);
       return { text:"Lowest-sugar picks 🌿\n\n" + picks.map(p=>line(p)).join('\n\n') + "\n\nWe never add sugar to anything — what's in there is straight from the produce.",
                chips:['Best green juice','Show me the shots','Something for energy'] };
     }
 
     // ── 7. Ingredient search ────────────────────────────────────
-    const INGREDIENTS = ['ginger','turmeric','kale','spinach','beet','mango','pineapple','strawberry','blueberry','banana','apple','lemon','lime','orange','carrot','cucumber','mint','coconut','avocado','matcha','honey','watermelon','wheatgrass','cayenne','peanut','almond'];
+    const INGREDIENTS = ['ginger','turmeric','kale','spinach','beet','mango','pineapple','strawberry','blueberry','banana','apple','lemon','lime','orange','carrot','cucumber','mint','coconut','avocado','pitaya','açaí','acai','sea moss','elderberry','cold brew','oat','watermelon','celery','aloe','pear','cayenne','peanut','almond','feta','chickpea','egg','salmon','chicken','tuna','shrimp'];
     const hitIng = INGREDIENTS.find(w => new RegExp('\\b' + w, 'i').test(L));
     if (hitIng && (isSearchPhrasing || /have|with|contain|anything|any |got |which|list/.test(L))) {
       const picks = M.filter(m => new RegExp(hitIng, 'i').test(m.ingredients)).slice(0,4);
@@ -2279,37 +2999,40 @@ class Component extends DCLogic {
 
     // ── 8. Category browsing ────────────────────────────────────
     const CATS = [
-      [/shot|shots|ginger shot|wellness shot/, 'Shots', "Our shots are 2oz and they hit fast 🫚"],
-      [/smoothie/, 'Smoothies', "Smoothies — thicker, more filling, blended fresh 🥤"],
-      [/juice|juices|cold.?press/, 'Juices', "Cold-pressed juices, made fresh daily 🍹"],
-      [/bowl|acai|açaí|pitaya/, 'Bowls', "Bowls — a full meal you eat with a spoon 🥣"],
-      [/coffee|tea|latte|matcha|cold brew|caffeine|espresso/, 'Coffee & Tea', "Coffee and tea side of the board ☕"],
-      [/panini|sandwich|patty|eats|lunch/, 'Eats', "Real food, made to order 🥪"],
-      [/salad|soup/, 'Salads & Soup', "Salads and soups 🥗"],
-      [/breakfast|oatmeal|toast|morning food/, 'Breakfast', "Breakfast lineup 🍳"]
+      [/shot|shots|ginger shot|wellness shot/, 'Shots', "Our shots are 2 oz, $4.50 each or two for $8 — and they hit fast 🫚"],
+      [/protein smoothie|protein/, 'Smoothies', "Protein blends (Liquid Courage, Open Tab, Morning Shift) are +$1 — or add protein to any smoothie for $2 💪"],
+      [/smoothie|build your own|byo/, 'Smoothies', "Smoothies — 16 oz $7.50, 24 oz $10.50, blended fresh 🥤 Or Build Your Own: pick up to 4, same price."],
+      [/juice|juices|cold.?press/, 'Juices', "Cold-pressed juices, pressed fresh daily — 16 oz $9.50, 24 oz $12.50 🍹"],
+      [/coffee|caffeine|cold brew|espresso|latte/, 'Smoothies', "No espresso bar — but Morning Shift is a cold brew smoothie ☕"],
+      [/bowl|acai|açaí|grits|breakfast|oatmeal|toast|soup|morning food/, 'Bowls & Breakfast', "Bowls and breakfast — the eat-with-a-spoon side of the board 🥣"],
+      [/panini|sandwich|wrap|eats/, 'Wraps & Paninis', "Wraps and paninis, made to order 🥪 Any wrap or panini + a 16 oz smoothie is $16."],
+      [/salad/, 'Salads', "Salads 🥗 Add grilled chicken +$5, albacore tuna +$4 or grilled salmon +$7."]
     ];
     for (const [re, kind, lead] of CATS) {
       if (re.test(L)) {
-        const picks = M.filter(m => m.kind === kind);
+        let picks = M.filter(m => m.kind === kind);
+        if (/coffee|caffeine|cold brew|espresso|latte/.test(L)) picks = picks.filter(m => /cold brew/i.test(m.ingredients)).concat(picks.filter(m => !/cold brew/i.test(m.ingredients)));
+        if (/protein/.test(L) && kind === 'Smoothies') picks = picks.filter(m => /protein/i.test(m.tag + ' ' + m.ingredients)).concat(picks.filter(m => !/protein/i.test(m.tag + ' ' + m.ingredients)));
         if (picks.length) {
           let txt = lead + "\n\n" + picks.slice(0,5).map(p=>line(p)).join('\n\n');
-          if (kind === 'Shots') txt += "\n\nGinger Shot is the one people come back for — it's the go-to when your stomach's off or you feel something coming on.";
+          if (kind === 'Shots') txt += "\n\nDouble Shot is the ginger shot people come back for — the go-to when your stomach's off. Flu Shot when you feel something coming on.";
           this._pinaLastItem = picks[0].id;
           return { text:txt, chips:['Tell me about the ' + picks[0].name, 'What do you recommend?', 'Something else'] };
         }
       }
     }
     if (/food|eat|hungry|snack|meal|lunch/.test(L)) {
-      const picks = M.filter(m => ['Breakfast','Eats','Salads & Soup'].includes(m.kind)).slice(0,5);
+      const picks = M.filter(m => !m.drink).slice(0,5);
       return { text:"We do real food too 🥪\n\n" + picks.map(p=>line(p)).join('\n\n'),
                chips:['Show me paninis','Something light','Add a juice with that'] };
     }
 
     // ── 9. Sweet / picky / kid ──────────────────────────────────
     if (/sweet|sugary|dessert|treat|kid|child|picky|doesn'?t like veg|tastes? good|not bitter/.test(L)) {
-      const picks = M.filter(m => ['berry','tropic','melon','acai','pitaya'].includes(m.id)).slice(0,4);
+      const picks = M.filter(m => ['the-regular','happy-hour','last-call','sunday-brunch','acai-bowl'].includes(m.id)).slice(0,4);
+      if (picks.length) this._pinaLastItem = picks[0].id;
       return { text:"Sweet side of the menu 🍓 These go down easy — even for the veggie-averse:\n\n" + picks.map(p=>line(p)).join('\n\n'),
-               chips:['Add the Berry Bloom','Something healthier','Show me bowls'] };
+               chips:['Add the ' + (picks[0] ? picks[0].name : 'first one'),'Something healthier','Show me bowls'] };
     }
 
     // ── 10. General recommendation / vague ──────────────────────
@@ -2332,7 +3055,10 @@ class Component extends DCLogic {
                chips:['Take me to the event page','What are your hours?','What do you recommend?'] };
     }
     if (/cleanse|plan|subscription|program|3.?day|5.?day|1.?day|package/.test(L)) {
-      return { text:"We run cold-press cleanses 🌿\n\n• 1-Day Cleanse — 6 juices, a one-day reset\n• 3-Day Cleanse — 18 juices, nutrition guide included\n• 5-Day Cleanse — 30 juices, personalized blends and a day-3 check-in\n\nThere are weekly subscriptions too if you'd rather just have juice waiting for you. Tap Plans to see it all.",
+      const juiceCat = (MENU_DATA.categories || []).find(c => c.key === 'juices') || {};
+      const cleanses = (juiceCat.cleanses || []).map(c => '• ' + c.name + ' — ' + c.note + ', ' + this.fmt(c.price)).join('\n');
+      const passes = (MENU_DATA.memberships || []).map(m => '• ' + m.name + ' — ' + this.fmt(m.price) + '/' + m.per + ', ' + m.note).join('\n');
+      return { text:"We run cold-press cleanses 🌿\n\n" + cleanses + (passes ? "\n\nOr go monthly with a Pour Pass:\n" + passes : '') + "\n\nTap Plans to see it all.",
                chips:['Take me to Plans','Which cleanse should I do?','What do you recommend?'] };
     }
     if (/pour pass|loyalty|reward|points|free|stamp|punch/.test(L)) {
@@ -2347,7 +3073,7 @@ class Component extends DCLogic {
       const drinks = this.pinaDrinksOnly(M);
       const lo = Math.min.apply(null, drinks.map(d=>d.price));
       const hi = Math.max.apply(null, drinks.map(d=>d.price));
-      return { text:"Drinks run " + this.fmt(lo) + "–" + this.fmt(hi) + ". Shots are our cheapest, bowls the most filling.\n\nTap Menu to see everything with ingredients and what each one does for you — or just tell me your goal and I'll pick.",
+      return { text:"Drinks run " + this.fmt(lo) + "–" + this.fmt(hi) + " for a 16 oz — smoothies $7.50, cold-pressed juices $9.50, shots $4.50 (two for $8). 24 oz is $3 more.\n\nTap Menu to see everything with ingredients and what each one does for you — or just tell me your goal and I'll pick.",
                chips:['What do you recommend?','Best juice for energy','Show me the shots'] };
     }
     if (/deliver|pickup|pick up|order ahead|online order|to.?go/.test(L)) {
@@ -2520,6 +3246,8 @@ class Component extends DCLogic {
       .filter(m => activeCat === 'All' || m.kind === activeCat)
       .filter(m => !bf || (m.tagKeys || []).includes(bf))
       .slice().sort((a, b) => this.CATS.indexOf(a.kind) - this.CATS.indexOf(b.kind));
+    const activeSize = this.sizeOf(active, S.sizeKey);
+    const shotDeal = (() => { const n = (this.MENU_NOTES || {})[active.kind] || ''; const m = active.kind === 'Shots' && n.match(/two for \$(\d+(?:\.\d+)?)/i); return m ? '2 for $' + m[1] : ''; })();
     const sub = this.subtotal();
     const tax = sub * 0.08;
     const total = sub + tax;
@@ -2539,7 +3267,7 @@ class Component extends DCLogic {
     const activeTab = ({ detail:'menu', checkout:'cart', confirm:'cart', notifications:'home', pina:'home', prizes:'account', admin:'account', pass:'account', packages:'packages', gallery:'gallery' })[S.screen] || S.screen;
 
     const cardFields = it => ({
-      ...it, priceLabel: this.fmt(it.price), calLabel: it.cal + ' cal',
+      ...it, priceLabel: this.fmt(it.price), calLabel: it.hasSizes ? (it.drink ? 'from · ' + it.sizes[0].label : 'from') : (it.tag || ''),
       tagPills: (it.tagKeys || []).slice(0,2).map(k => ({ ...(this.BENEFIT_TAGS[k]||{icon:'',label:k,bg:'#EFE7D8',fg:'#2B2B26'}) })),
       open: () => this.openItem(it), add: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.addToCart(it); this.go('cart'); }
     });
@@ -2582,6 +3310,7 @@ class Component extends DCLogic {
       spinLabel: S.spinning ? '···' : 'SPIN',
       won: !!S.wonId && S.screen==='wheel',
       wonItem: (()=>{ const wId = (S.wonId && S.wonId !== 'lose') ? S.wonId : null; const w = wId ? (this.MENU.find(m=>m.id===wId)||this.MENU[0]) : this.MENU[0]; return { name:w.name, emoji:w.emoji, cat:w.cat, grad:w.grad }; })(),
+      wheelSlices: this.WHEEL.map((id, i) => { const w = id === 'lose' ? null : this.MENU.find(m => m.id === id); return { deg: i * (360 / this.WHEEL.length), emoji: w ? w.emoji : '😔', size: w ? 28 : 24 }; }),
       claimFree:()=>{
         const w=this.MENU.find(m=>m.id===S.wonId);
         if(w){ this.addToCart(w,1,true); }
@@ -2599,17 +3328,13 @@ class Component extends DCLogic {
       hasCart: cartCount>0, cartEmpty: cartCount===0, cartCount,
       subtotalLabel:this.fmt(sub), taxLabel:this.fmt(tax), totalLabel:this.fmt(total),
 
-      featured: ['green','berry','tropic'].map(id => cardFields(this.MENU.find(m => m.id === id))),
+      featured: this.FEATURED.map(id => this.MENU.find(m => m.id === id)).filter(Boolean).map(cardFields),
       menu: menu.map(cardFields),
 
-      homeChips: [
-        { label:'🥬 Juices', bg:'var(--gold)', fg:'var(--teal-deep)', fw:800, cat:'Juices' },
-        { label:'🍓 Smoothies', bg:'rgba(255,255,255,.1)', fg:'#fff', fw:700, cat:'Smoothies' },
-        { label:'🫚 Shots', bg:'rgba(255,255,255,.1)', fg:'#fff', fw:700, cat:'Shots' },
-        { label:'🥣 Breakfast', bg:'rgba(255,255,255,.1)', fg:'#fff', fw:700, cat:'Breakfast' },
-        { label:'🥪 Eats', bg:'rgba(255,255,255,.1)', fg:'#fff', fw:700, cat:'Eats' },
-        { label:'☕ Coffee & Tea', bg:'rgba(255,255,255,.1)', fg:'#fff', fw:700, cat:'Coffee & Tea' }
-      ].map(c => ({ ...c, go:()=>{ this.setState({cat:c.cat}); this.go('menu'); } })),
+      homeChips: MENU_KINDS.filter(k => this.CATS.includes(k.kind)).map((k, i) => ({
+        label:k.chip, cat:k.kind,
+        bg: i === 0 ? 'var(--gold)' : 'rgba(255,255,255,.1)', fg: i === 0 ? 'var(--teal-deep)' : '#fff', fw: i === 0 ? 800 : 700
+      })).map(c => ({ ...c, go:()=>{ this.setState({cat:c.cat}); this.go('menu'); } })),
 
       benefitChips: [{key:'',icon:'🍹',label:'All'}].concat(
         this.BENEFIT_ORDER.map(k => ({ key:k, icon:this.BENEFIT_TAGS[k].icon, label:this.BENEFIT_TAGS[k].label }))
@@ -2620,6 +3345,8 @@ class Component extends DCLogic {
       benefitFilterActive: !!S.benefitFilter,
       benefitFilterLabel: S.benefitFilter ? (this.BENEFIT_TAGS[S.benefitFilter]||{}).label : '',
       menuEmpty: menu.length === 0,
+      menuNote: (this.MENU_NOTES || {})[activeCat] || '',
+      hasMenuNote: !!((this.MENU_NOTES || {})[activeCat]),
       clearBenefitFilter: () => this.setState({ benefitFilter:'' }),
 
       categories: this.CATS.map(c => ({
@@ -2629,21 +3356,29 @@ class Component extends DCLogic {
       })),
 
       item: {
-        ...active, calLabel: active.cal + ' cal',
+        ...active, calLabel: active.tag || active.kind,
         ingList: active.ingList || active.ingredients.split(' · '),
         benefits: this.BENEFITS[active.id] || [],
         benefitLine: active.benefitLine || '',
         hasBenefitLine: !!active.benefitLine,
+        hasExtras: !!active.extras, extras: active.extras || '',
         tagPills: (active.tagKeys || []).map(k => ({ ...(this.BENEFIT_TAGS[k]||{icon:'',label:k,bg:'#EFE7D8',fg:'#2B2B26'}) })),
+        hasSizeOptions: !!active.hasSizes,
+        sizeTitle: active.drink ? 'PICK A SIZE' : 'PICK A STYLE',
+        sizeOptions: (active.sizes || []).map(sz => ({
+          label: sz.label + ' · ' + this.fmt(sz.price),
+          pick: () => this.setState({ sizeKey: sz.key }),
+          bg: sz.key === activeSize.key ? 'var(--gold)' : 'rgba(255,255,255,.08)',
+          fg: sz.key === activeSize.key ? 'var(--teal-deep)' : '#fff'
+        })),
         macros: [
-          { value: this.fmt(active.price), label:'Price' },
-          { value: active.cal, label:'Calories' },
-          { value: ({ 'Shots':'2oz', 'Coffee & Tea':'12oz', 'Bowls':'Bowl', 'Breakfast':'Plate', 'Eats':'Plate', 'Salads & Soup':'Plate' })[active.kind] || '16oz', label:'Size' }
-        ]
+          { value: this.fmt(activeSize.price), label:'Price' },
+          { value: activeSize.label || (active.kind === 'Shots' ? '2 oz' : (active.drink ? '16 oz' : 'Plate')), label: (active.hasSizes && !active.drink) ? 'Style' : 'Size' }
+        ].concat(shotDeal ? [{ value: shotDeal, label:'Deal' }] : [])
       },
       qty:S.qty, incQty:()=>this.setState(s=>({qty:s.qty+1})), decQty:()=>this.setState(s=>({qty:Math.max(1,s.qty-1)})),
-      addDetail:()=>{ this.addToCart(active, S.qty); this.go('cart'); },
-      detailTotal:this.fmt(active.price * S.qty),
+      addDetail:()=>{ this.addToCart(active, S.qty, false, activeSize.key); this.go('cart'); },
+      detailTotal:this.fmt(activeSize.price * S.qty),
 
       cart: this.cartDetailed().map((ci, i) => ({
         ...ci, lineLabel: ci.free ? 'FREE' : this.fmt(ci.price * ci.qty),
@@ -2684,9 +3419,9 @@ class Component extends DCLogic {
 
       notifications: [
         { emoji:'🎉', title:'Your Pour Pass leveled up', time:'2m', body:'You hit Gold! Enjoy double points every Friday this month.', grad:'linear-gradient(150deg,#FFC978,#EF8A00)', bg:'rgba(239,138,0,.1)', border:'rgba(239,138,0,.3)' },
-        { emoji:'🍉', title:'New: Watermelon Wave', time:'1h', body:'Summer\'s lightest pour just dropped — 90 cal, three ingredients.', grad:'linear-gradient(150deg,#63CFC8,#2FC4BC)', bg:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.08)' },
+        { emoji:'🍉', title:'New: Sunday Brunch', time:'1h', body:'Watermelon, strawberry, apple — the summer pour just dropped.', grad:'linear-gradient(150deg,#63CFC8,#2FC4BC)', bg:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.08)' },
         { emoji:'⏰', title:'Order #4826 is ready', time:'3h', body:'Grab it at the 348 Loudon Plaza pickup shelf — your name\'s on it.', grad:'linear-gradient(150deg,#22D3EE,#0EA5C4)', bg:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.08)' },
-        { emoji:'🥭', title:'Tropic Thunder, 20% off', time:'1d', body:'Beat the heat — today only, tap to order ahead.', grad:'linear-gradient(150deg,#FFD54D,#FF8A3D)', bg:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.08)' }
+        { emoji:'🍍', title:'Happy Hour, 20% off', time:'1d', body:'Beat the heat — today only, tap to order ahead.', grad:'linear-gradient(150deg,#FFD54D,#FF8A3D)', bg:'rgba(255,255,255,.04)', border:'rgba(255,255,255,.08)' }
       ],
 
       accountRows: [
@@ -2989,10 +3724,10 @@ class Component extends DCLogic {
       })(),
 
       // Menu drinks/food split
-      menuDrinks: menu.filter(m => ['Juices','Smoothies','Shots','Coffee & Tea','Bowls'].includes(m.kind)).map(cardFields),
-      menuFood: menu.filter(m => ['Breakfast','Eats','Salads & Soup'].includes(m.kind)).map(cardFields),
-      hasDrinkItems: menu.some(m => ['Juices','Smoothies','Shots','Coffee & Tea','Bowls'].includes(m.kind)),
-      hasFoodItems: menu.some(m => ['Breakfast','Eats','Salads & Soup'].includes(m.kind))
+      menuDrinks: menu.filter(m => m.drink).map(cardFields),
+      menuFood: menu.filter(m => !m.drink).map(cardFields),
+      hasDrinkItems: menu.some(m => m.drink),
+      hasFoodItems: menu.some(m => !m.drink)
     };
   }
 }
