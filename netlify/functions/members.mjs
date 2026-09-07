@@ -6,6 +6,7 @@
 //   POST signout                                                    -> {ok}
 //   POST order   {items:[{name,qty}], total}                        -> {member, order}  (recorded as unpaid; points only when paid)
 //   POST profile {name?, phone?, marketing?, birthday?}             -> {member}
+//   POST password {current, next}                                  -> {member}   (also clears a staff-issued temp password)
 //   POST spin                                                       -> {index, prize, member}  (one spin per calendar month, prizes from menu.json "wheel")
 //   POST redeem  {rewardId}                                        -> {prize, member}   (spend points on a menu.json rewards.catalog item)
 //   POST claim   {prizeId}                                          -> {member}          (member marks a prize used; staff verify by code)
@@ -27,7 +28,7 @@ export const pub = (m) => ({
   name: m.name, email: m.email, phone: m.phone || '', marketing: !!m.marketing, birthday: m.birthday || '',
   points: m.points || 0, filled: m.filled || 0, orders: m.orders || [], prizes: m.prizes || [],
   lastSpinMonth: m.lastSpinMonth || '', canSpin: (m.lastSpinMonth || '') !== monthKey(),
-  role: isOwner(m.email) ? 'owner' : 'member', created: m.created, rsvps: m.rsvps || [],
+  role: isOwner(m.email) ? 'owner' : 'member', created: m.created, rsvps: m.rsvps || [], mustChange: !!m.mustChange,
 });
 export async function saveMember(st, m) {
   await st.setJSON('member:' + m.email, m);
@@ -155,6 +156,16 @@ export default async (req) => {
     await saveMember(st, m);
     if (process.env.NOTIFY_ORDERS !== '0') notifyOwners({ origin: url.origin, subject: `Order #${String(order.id).slice(-5)} — ${m.name} — $${total.toFixed(2)}`, text: items.map((i) => `${i.qty} × ${i.name}`).join('\n') + `\n\nTotal $${total.toFixed(2)} · pay at pickup\n${m.name} · ${m.email}${m.phone ? ' · ' + m.phone : ''}\n\nMark it paid in the dashboard when they pay: ${process.env.URL || url.origin}/admin.html#orders` }).catch(() => {});
     return json({ member: pub(m), order });
+  }
+  if (path === 'password' && req.method === 'POST') {
+    const cur = String(body.current || ''), next = String(body.next || '');
+    if (next.length < 6) return json({ error: 'New password needs at least 6 characters.' }, 400);
+    const h = await hash(cur, m.salt);
+    const ok = h.length === m.hash.length && timingSafeEqual(Buffer.from(h), Buffer.from(m.hash));
+    if (!ok) return json({ error: 'Current password is wrong.' }, 401);
+    m.salt = randomBytes(16).toString('hex'); m.hash = await hash(next, m.salt); delete m.mustChange; m.fails = 0; delete m.lockUntil;
+    await saveMember(st, m);
+    return json({ member: pub(m) });
   }
   if (path === 'profile' && req.method === 'POST') {
     if (body.name) m.name = String(body.name).trim().slice(0, 80);

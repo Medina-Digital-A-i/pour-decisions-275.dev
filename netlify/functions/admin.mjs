@@ -7,7 +7,8 @@
 //   POST /api/admin/prize              -> {email, prizeId, claimed:true|false}  (staff marks a prize redeemed)
 //   GET /api/admin/members.csv         -> CSV export (owner session, or Authorization: Bearer <ADMIN_TOKEN>)
 import { getStore } from '@netlify/blobs';
-import { timingSafeEqual } from 'node:crypto';
+import { timingSafeEqual, scrypt, randomBytes } from 'node:crypto';
+const hash = (pw, salt) => new Promise((res, rej) => scrypt(pw, salt, 64, (e, k) => (e ? rej(e) : res(k.toString('hex')))));
 import { auth, store, isOwner, pub, saveMember, loadMenu, rewardRules, settleOrder } from './members.mjs';
 
 const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
@@ -113,6 +114,17 @@ export default async (req) => {
     m.prizes = (m.prizes || []).map((p) => (p.id === +b.prizeId ? { ...p, claimed: !!b.claimed, claimedAt: b.claimed ? new Date().toISOString() : undefined } : p));
     await saveMember(st, m);
     return json({ member: pub(m) });
+  }
+  if (path === 'reset' && req.method === 'POST') {
+    // Counter reset: staff hands the customer a temporary password; the app asks them to change it.
+    let b = {}; try { b = await req.json(); } catch {}
+    const email = String(b.email || '').toLowerCase().trim();
+    const m = await st.get('member:' + email, { type: 'json' });
+    if (!m) return json({ error: 'Not found' }, 404);
+    const temp = 'pour-' + String(Math.floor(1000 + Math.random() * 9000));
+    m.salt = randomBytes(16).toString('hex'); m.hash = await hash(temp, m.salt); m.mustChange = true; m.fails = 0; delete m.lockUntil;
+    await saveMember(st, m);
+    return json({ temp });
   }
   if (path === 'events') {
     const ev = getStore({ name: 'content', consistency: 'strong' });

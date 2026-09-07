@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pour Decisions · TV Menu Preview</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600..900;1,9..144,600..900&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F8F7F3;--ink:#0B5C57;--text:#16302D;--muted:#6E7470;--teal:#14B8AC;--orange:#FF8A00;--mango:#FFB800;--line:#E6E3DA}
+*{box-sizing:border-box}html,body{margin:0;background:var(--cream);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 18px 60px}
+.top{display:flex;align-items:center;gap:16px;margin-bottom:8px}.top img{width:132px;height:auto}
+.top .k{font:800 11px/1 Inter;letter-spacing:.22em;text-transform:uppercase;color:var(--ink)}
+h1{font:italic 900 clamp(30px,5vw,46px)/1.05 Fraunces,Georgia,serif;letter-spacing:-.02em;margin:6px 0 6px;color:var(--ink)}
+.sub{color:var(--muted);font-size:15px;line-height:1.5;max-width:720px;margin:0 0 26px}
+.grid{display:grid;grid-template-columns:1fr;gap:26px}@media(min-width:900px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 14px 40px rgba(11,92,87,.08)}
+.head{padding:18px 20px 16px;color:#fff;position:relative;overflow:hidden}
+.head .v{font:800 11px/1 Inter;letter-spacing:.22em;text-transform:uppercase;opacity:.85}
+.head h2{font:italic 900 30px/1.05 Fraunces,Georgia,serif;margin:6px 0 4px;letter-spacing:-.01em}
+.head p{margin:0;font-size:14px;opacity:.9}
+.v1 .head{background:linear-gradient(135deg,#050914 0%,#0B1630 60%,#08111f 100%)}
+.v1 .head h2{color:#7CF5EA;text-shadow:0 0 14px rgba(124,245,234,.75),0 0 30px rgba(124,245,234,.35)}
+.v2 .head{background:linear-gradient(135deg,#14B8AC 0%,#0F7A73 55%,#0B5C57 100%)}
+.v2 .head::before{content:"";position:absolute;right:-8%;top:-90%;width:44%;padding-top:44%;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFB800 0%,#FF8A00 45%,rgba(255,138,0,0) 72%);opacity:.9}
+.head>*{position:relative}
+video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.body{padding:16px 18px 20px}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 14px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;font:700 14px/1 Inter;text-decoration:none;color:#fff;background:var(--ink);white-space:nowrap}
+.btn.o{background:var(--orange)}.btn.g{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn svg{width:14px;height:14px;fill:currentColor}
+.files{margin:0;padding:12px 14px;border-radius:14px;background:var(--cream);border:1px solid var(--line);font-size:13px;line-height:1.55;color:var(--text)}
+.files b{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);margin-bottom:6px}
+.files span{display:block;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:#3d4b48}
+.note{margin-top:26px;padding:16px 18px;border-radius:16px;background:#fff;border:1px solid var(--line);font-size:14px;line-height:1.6;color:var(--muted)}
+.note b{color:var(--ink)}
+</style></head><body><div class="wrap">
+<div class="top"><img src="logo.png" alt="Pour Decisions"><div class="k">TV Menu · Preview</div></div>
+<h1>Two TV menus, ready for the stick.</h1>
+<p class="sub">Each preview below is one full ~58-second cycle of the show (Smoothies + Protein → Juices + Shots). The stick gets the same thing as a seamless 60-minute file plus the single 58-second cycle for TVs that can repeat. Tap “Open live” to see a board animate full screen in your browser.</p>
+<div class="grid">
+ <section class="card v1"><div class="head"><div class="v">Version 1</div><h2>Neon Menu — dark</h2><p>The earlier look: neon fruit on a midnight background.</p></div>
+  <video controls muted loop playsinline autoplay preload="metadata" poster="preview/v1-neon-poster.jpg"><source src="preview/v1-neon-show.mp4" type="video/mp4"></video>
+  <div class="body"><div class="btns">
+   <a class="btn" href="board-neon-a" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open Menu A live</a>
+   <a class="btn" href="board-neon-b" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open Menu B live</a>
+   <a class="btn g" href="preview/v1-neon-show.mp4" target="_blank">Video only</a></div>
+   <div class="files"><b>Goes on the stick as</b><span>1 Neon Menu (dark)/</span><span>  1 Neon Menu - Smoothies + Juices + Shots - 60 min.mp4</span><span>  2 Neon Menu - Smoothies + Protein only - 60 min.mp4</span><span>  3 Neon Menu - Juices + Shots only - 60 min.mp4</span><span>  4 Neon Menu - one 58 sec cycle (set TV to Repeat).mp4</span></div></div>
+ </section>
+ <section class="card v2"><div class="head"><div class="v">Version 2 · new</div><h2>Brand Menu — Canva design</h2><p>Same animation on the Pour Decisions teal + orange, matched to the website and the Canva master.</p></div>
+  <video controls muted loop playsinline autoplay preload="metadata" poster="preview/v2-brand-poster.jpg"><source src="preview/v2-brand-show.mp4" type="video/mp4"></video>
+  <div class="body"><div class="btns">
+   <a class="btn o" href="board-neon-a-brand" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open Menu A live</a>
+   <a class="btn o" href="board-neon-b-brand" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open Menu B live</a>
+   <a class="btn g" href="preview/v2-brand-show.mp4" target="_blank">Video only</a>
+   <a class="btn g" href="https://www.canva.com/d/5vxE6U-XITix9KM" target="_blank">Canva master</a></div>
+   <div class="files"><b>Goes on the stick as</b><span>2 Brand Menu (Canva)/</span><span>  1 Brand Menu - Smoothies + Juices + Shots - 60 min.mp4</span><span>  2 Brand Menu - Smoothies + Protein only - 60 min.mp4</span><span>  3 Brand Menu - Juices + Shots only - 60 min.mp4</span><span>  4 Brand Menu - one 58 sec cycle (set TV to Repeat).mp4</span></div></div>
+ </section>
+</div>
+<div class="note"><b>On the TV:</b> 1920×1080, 30 fps, no audio. Roku: Home → USB Media Player → Videos → pick the file → press ✱ → Repeat: On. Two-TV setup: file 2 on the left screen, file 3 on the right. Nothing already on the stick gets removed — these land in their own two folders.</div>
+</div></body></html>
