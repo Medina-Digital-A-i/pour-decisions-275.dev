@@ -2,7 +2,7 @@
    v1.1 · stale-while-revalidate for shell, cache-first for assets,
    offline fallback to offline.html, network-only for cross-origin POSTs. */
 
-const VERSION = 'pd-v3.9.13';
+const VERSION = 'pd-v3.9.14';
 const SHELL_CACHE = `${VERSION}-shell`;
 const RUNTIME_CACHE = `${VERSION}-runtime`;
 

@@ -34,7 +34,7 @@
 
 <link rel="stylesheet" href="assets/light-theme.css?v=5">
 <link rel="stylesheet" href="assets/theme-bar.css?v=7">
-<link rel="stylesheet" href="assets/theme-pop.css?v=12">
+<link rel="stylesheet" href="assets/theme-pop.css?v=13">
 </head>
 <body>
 <x-dc>
@@ -432,15 +432,15 @@
 </svg>
             <div class="hm-eyebrow">Cold-pressed juice bar · Albany, NY</div>
             <h1 class="hm-h1">Make a <em>pour</em> decision.</h1>
-            <p class="hm-lede">Juices, smoothies and wellness shots, blended and pressed here every morning. Happy hour starts at 7:30.</p>
+            <p class="hm-lede">Juices, smoothies and wellness shots, blended and pressed here every morning. Doors open 7:30.</p>
             <div class="hm-ctas">
               <button onClick="{{ goMenu }}" class="tap hm-btn hm-btn-gold">Order ahead</button>
               <button onClick="{{ goPackages }}" class="tap hm-btn hm-btn-ghost">Build a juice pack</button>
             </div>
             <div class="hm-hours"><i></i>{{ hoursLabel }} · 359 Northern Blvd</div>
-            <div class="stk">Happy hour<b>7:30</b>AM daily</div>
+            <div class="stk">Pressed fresh<b>7:30</b>AM daily</div>
           </div>
-          <div class="mq"><div class="mq-track"><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Happy hour starts at 7:30<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is on us<i></i></span><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Happy hour starts at 7:30<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is on us<i></i></span></div></div>
+          <div class="mq"><div class="mq-track"><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Smoothies · Juices · Wellness shots<i></i></span><span>Open 7:30 AM – 5 PM daily<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is free<i></i></span><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Smoothies · Juices · Wellness shots<i></i></span><span>Open 7:30 AM – 5 PM daily<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is free<i></i></span></div></div>
 
           <!-- categories (photo tiles) -->
           <div class="hm-sec">
@@ -458,19 +458,18 @@
             </div>
           </div>
 
-          <!-- house favorites (bar-menu list) -->
+          <!-- the lineup: branded cups + bottles -->
           <div class="hm-sec">
             <div class="hm-sec-head">
-              <h2 class="hm-h2">House favorites</h2>
+              <h2 class="hm-h2">The lineup.</h2>
               <span onClick="{{ goMenu }}" class="tap hm-link">See everything</span>
             </div>
-            <div class="hm-menu">
+            <div class="hm-favs">
               <sc-for list="{{ homeItems }}" as="it" hint-placeholder-count="6">
-                <div onClick="{{ it.open }}" class="tap hm-row">
-                  <span class="pa-mini"><span class="pa-color" style="--pa-c:{{ it.color }}"><sc-if value="{{ it.isCup }}" hint-placeholder-val="{{ true }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="straw" x="72" y="2" width="9" height="66" rx="4.5" transform="rotate(14 76 34)"/><rect class="strawStripe" x="72" y="22" width="9" height="8" transform="rotate(14 76 34)"/><path class="lid" d="M20 66 Q60 14 100 66 Z"/><rect class="rim" x="13" y="63" width="94" height="11" rx="5.5"/><path fill="currentColor" d="M18 74 L102 74 L93 196 Q60 207 27 196 Z"/><path class="shade" d="M70 74 L102 74 L93 196 Q77 203 62 203 Z"/><path class="sheen" d="M22 80 L34 80 L31 190 L27 190 Z"/><ellipse cx="60" cy="76" rx="42" ry="4" fill="#fff" fill-opacity=".4"/><path class="glass" d="M18 74 L102 74 L93 196 Q60 207 27 196 Z"/><circle class="bub" cx="45" cy="185" r="3"/><circle class="bub b2" cx="62" cy="190" r="2.2"/><circle class="bub b3" cx="78" cy="182" r="2.6"/><rect class="label" x="29" y="104" width="62" height="46" rx="10"/><image href="assets/logo-clean-512.png" x="33" y="109" width="54" height="36" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isBottle }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="cap" x="41" y="4" width="38" height="24" rx="6"/><rect x="41" y="12" width="38" height="3" fill="#fff" fill-opacity=".35"/><path fill="currentColor" d="M46 28 L74 28 L84 56 L84 190 Q84 204 70 204 L50 204 Q36 204 36 190 L36 56 Z"/><path class="shade" d="M64 28 L74 28 L84 56 L84 190 Q84 204 70 204 L64 204 Z"/><path class="sheen" d="M41 60 L48 60 L48 190 L43 190 Z"/><path class="glass" d="M46 28 L74 28 L84 56 L84 190 Q84 204 70 204 L50 204 Q36 204 36 190 L36 56 Z"/><rect class="label" x="39" y="92" width="42" height="58" rx="8"/><image href="assets/logo-clean-512.png" x="41" y="103" width="38" height="36" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isShot }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="cap" x="45" y="52" width="30" height="20" rx="5"/><path fill="currentColor" d="M48 72 L72 72 L80 92 L80 184 Q80 196 68 196 L52 196 Q40 196 40 184 L40 92 Z"/><path class="shade" d="M62 72 L72 72 L80 92 L80 184 Q80 196 68 196 L62 196 Z"/><path class="sheen" d="M44 96 L50 96 L50 182 L46 182 Z"/><path class="glass" d="M48 72 L72 72 L80 92 L80 184 Q80 196 68 196 L52 196 Q40 196 40 184 L40 92 Z"/><rect class="label" x="44" y="116" width="32" height="42" rx="6"/><image href="assets/logo-clean-512.png" x="45" y="124" width="30" height="26" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isBowl }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><ellipse cx="60" cy="198" rx="34" ry="6" fill="#000" fill-opacity=".14"/><path d="M8 116 Q60 226 112 116 Z" fill="currentColor"/><path d="M60 116 Q60 226 112 116 Z" class="shade"/><path d="M14 116 Q60 150 106 116 Z" fill="#fff" fill-opacity=".22"/><ellipse cx="60" cy="116" rx="52" ry="15" fill="#fff" fill-opacity=".97"/><ellipse cx="60" cy="116" rx="45" ry="11.5" fill="#FFE7A8"/><ellipse cx="46" cy="112" rx="9" ry="6" fill="#1FA84E"/><ellipse cx="72" cy="119" rx="8" ry="5.5" fill="#2FB36B"/><circle cx="60" cy="110" r="6" fill="#FF3D6E"/><circle cx="82" cy="112" r="4.5" fill="#FFB800"/><circle cx="36" cy="119" r="4" fill="#7A3DFF"/><circle cx="52" cy="121" r="3" fill="#FF8A00"/><path d="M62 104 q6 -10 14 -6 q-4 8 -14 6z" fill="#8BE000"/></svg></sc-if></span></span>
-                  <span style="min-width:0"><span class="hm-row-name">{{ it.name }}</span><span class="hm-row-ing" style="display:block">{{ it.ingredients }}</span></span>
-                  <span class="hm-row-price">{{ it.priceLabel }}<small>{{ it.fromLabel }}</small></span>
-                  <button onClick="{{ it.add }}" class="tap hm-row-add" title="Add to cart">+</button>
+                <div onClick="{{ it.open }}" class="tap hm-fav" style="--tint:{{ it.tint }}">
+                  <div class="hm-fav-art"><span class="pa-color" style="--pa-c:{{ it.color }}"><sc-if value="{{ it.isCup }}" hint-placeholder-val="{{ true }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="straw" x="72" y="2" width="9" height="66" rx="4.5" transform="rotate(14 76 34)"/><rect class="strawStripe" x="72" y="22" width="9" height="8" transform="rotate(14 76 34)"/><path class="lid" d="M20 66 Q60 14 100 66 Z"/><rect class="rim" x="13" y="63" width="94" height="11" rx="5.5"/><path fill="currentColor" d="M18 74 L102 74 L93 196 Q60 207 27 196 Z"/><path class="shade" d="M70 74 L102 74 L93 196 Q77 203 62 203 Z"/><path class="sheen" d="M22 80 L34 80 L31 190 L27 190 Z"/><ellipse cx="60" cy="76" rx="42" ry="4" fill="#fff" fill-opacity=".4"/><path class="glass" d="M18 74 L102 74 L93 196 Q60 207 27 196 Z"/><circle class="bub" cx="45" cy="185" r="3"/><circle class="bub b2" cx="62" cy="190" r="2.2"/><circle class="bub b3" cx="78" cy="182" r="2.6"/><rect class="label" x="29" y="104" width="62" height="46" rx="10"/><image href="assets/logo-clean-512.png" x="33" y="109" width="54" height="36" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isBottle }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="cap" x="41" y="4" width="38" height="24" rx="6"/><rect x="41" y="12" width="38" height="3" fill="#fff" fill-opacity=".35"/><path fill="currentColor" d="M46 28 L74 28 L84 56 L84 190 Q84 204 70 204 L50 204 Q36 204 36 190 L36 56 Z"/><path class="shade" d="M64 28 L74 28 L84 56 L84 190 Q84 204 70 204 L64 204 Z"/><path class="sheen" d="M41 60 L48 60 L48 190 L43 190 Z"/><path class="glass" d="M46 28 L74 28 L84 56 L84 190 Q84 204 70 204 L50 204 Q36 204 36 190 L36 56 Z"/><rect class="label" x="39" y="92" width="42" height="58" rx="8"/><image href="assets/logo-clean-512.png" x="41" y="103" width="38" height="36" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isShot }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="cap" x="45" y="52" width="30" height="20" rx="5"/><path fill="currentColor" d="M48 72 L72 72 L80 92 L80 184 Q80 196 68 196 L52 196 Q40 196 40 184 L40 92 Z"/><path class="shade" d="M62 72 L72 72 L80 92 L80 184 Q80 196 68 196 L62 196 Z"/><path class="sheen" d="M44 96 L50 96 L50 182 L46 182 Z"/><path class="glass" d="M48 72 L72 72 L80 92 L80 184 Q80 196 68 196 L52 196 Q40 196 40 184 L40 92 Z"/><rect class="label" x="44" y="116" width="32" height="42" rx="6"/><image href="assets/logo-clean-512.png" x="45" y="124" width="30" height="26" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isBowl }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><ellipse cx="60" cy="198" rx="34" ry="6" fill="#000" fill-opacity=".14"/><path d="M8 116 Q60 226 112 116 Z" fill="currentColor"/><path d="M60 116 Q60 226 112 116 Z" class="shade"/><path d="M14 116 Q60 150 106 116 Z" fill="#fff" fill-opacity=".22"/><ellipse cx="60" cy="116" rx="52" ry="15" fill="#fff" fill-opacity=".97"/><ellipse cx="60" cy="116" rx="45" ry="11.5" fill="#FFE7A8"/><ellipse cx="46" cy="112" rx="9" ry="6" fill="#1FA84E"/><ellipse cx="72" cy="119" rx="8" ry="5.5" fill="#2FB36B"/><circle cx="60" cy="110" r="6" fill="#FF3D6E"/><circle cx="82" cy="112" r="4.5" fill="#FFB800"/><circle cx="36" cy="119" r="4" fill="#7A3DFF"/><circle cx="52" cy="121" r="3" fill="#FF8A00"/><path d="M62 104 q6 -10 14 -6 q-4 8 -14 6z" fill="#8BE000"/></svg></sc-if></span></div>
+                  <div class="hm-fav-body"><span class="hm-fav-name">{{ it.name }}</span><span class="hm-fav-ing">{{ it.ingredients }}</span><span class="hm-fav-price">{{ it.priceLabel }}<small>{{ it.fromLabel }}</small></span></div>
+                  <button onClick="{{ it.add }}" class="tap hm-fav-add" title="Add to cart">+</button>
                 </div>
               </sc-for>
             </div>
@@ -485,15 +484,15 @@
             </div>
           </div>
 
-          <div class="mq teal" style="margin-top:30px"><div class="mq-track"><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Happy hour starts at 7:30<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is on us<i></i></span><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Happy hour starts at 7:30<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is on us<i></i></span></div></div>
+          <div class="mq teal" style="margin-top:30px"><div class="mq-track"><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Smoothies · Juices · Wellness shots<i></i></span><span>Open 7:30 AM – 5 PM daily<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is free<i></i></span><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Smoothies · Juices · Wellness shots<i></i></span><span>Open 7:30 AM – 5 PM daily<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is free<i></i></span></div></div>
           <!-- the space -->
           <div class="hm-sec">
-            <div class="hm-sec-head"><h2 class="hm-h2">Pull up a stool.</h2><span onClick="{{ goVenue }}" class="tap hm-link">Book the bar</span></div>
+            <div class="hm-sec-head"><h2 class="hm-h2">Come sit with us.</h2><span onClick="{{ goVenue }}" class="tap hm-link">Book the space</span></div>
             <div class="hm-space">
-              <img class="wide" src="assets/photos/space-bar.jpg" alt="The bar at Pour Decisions" loading="lazy">
+              <img class="wide" src="assets/photos/space-bar.jpg" alt="The counter at Pour Decisions" loading="lazy">
               <img src="assets/photos/space-tables.jpg" alt="High-top tables and the lounge" loading="lazy">
               <img src="assets/photos/space-room.jpg" alt="Inside Pour Decisions" loading="lazy">
-              <div class="hm-space-copy"><p>A real bar — mahogany top, brass rail, twelve stools — pouring juice instead. Sit, work, meet, or take it to go.</p></div>
+              <div class="hm-space-copy"><p>Counter seats, high-tops and good light. Sit down with a smoothie, get some work done, or grab it and go.</p></div>
             </div>
           </div>
 
@@ -513,7 +512,7 @@
               <div onClick="{{ goAuth }}" class="tap hm-pass hm-band"><img class="bg" src="assets/photos/space-rail.jpg" alt="" loading="lazy">
                 <div class="hm-pass-l">
                   <div class="hm-kicker">POUR PASS · FREE TO JOIN</div>
-                  <div class="hm-pass-title">Every pour earns a stamp. Nine stamps, the tenth's on us.</div>
+                  <div class="hm-pass-title">Every pour earns a stamp. Nine stamps, the tenth's free.</div>
                   <div class="hm-pass-sub">Plus one free spin a month — shots, upgrades, points and the occasional free drink.</div>
                 </div>
                 <div class="hm-pass-r"><span class="hm-pill hm-pill-gold">Join free →</span></div>
@@ -579,7 +578,7 @@
             <div class="hm-venue hm-band"><img class="bg" src="assets/photos/space-bar.jpg" alt="" loading="lazy">
               <div>
                 <div class="hm-kicker" style="color:#FFBE66">THE SPACE</div>
-                <div class="hm-promo-title">Birthdays, pop-ups, meetings — the whole bar, yours.</div>
+                <div class="hm-promo-title">Birthdays, pop-ups, meetings — the whole space, yours.</div>
               </div>
               <button onClick="{{ goVenue }}" class="tap hm-btn hm-btn-gold" style="flex:0 0 auto">Book the space</button>
             </div>
@@ -1202,7 +1201,7 @@
           <div class="pd-grove" style="background:{{ splashGrad }};color:#fff;position:relative;overflow:hidden;padding:40px 20px 44px;"><svg class="pd-palm-l" viewBox="0 0 240 520" style="position:absolute;left:-48px;bottom:-36px;width:215px;height:auto;pointer-events:none;"><g fill="rgba(0,0,0,.22)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg><svg style="position:absolute;left:37%;bottom:-50px;width:165px;height:auto;transform:scaleX(-1);pointer-events:none;" viewBox="0 0 240 520"><g fill="rgba(0,0,0,.17)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg><svg class="pd-palm-r" viewBox="0 0 240 520" style="position:absolute;right:-58px;bottom:-16px;width:150px;height:auto;transform:scaleX(-1);pointer-events:none;"><g fill="rgba(0,0,0,.15)"><path d="M104 520 C112 400 122 280 146 160 L158 164 C138 280 130 400 126 520 Z"></path><path d="M152 158 C110 118 48 114 12 140 C56 94 128 106 152 138 Z"></path><path d="M150 162 C112 168 70 200 58 242 C64 188 108 150 148 148 Z"></path><path d="M154 158 C196 118 228 116 238 142 C212 98 162 106 152 138 Z"></path><path d="M156 162 C194 170 222 204 228 246 C216 190 180 152 154 148 Z"></path><path d="M152 156 C150 108 166 66 192 50 C158 62 138 108 146 150 Z"></path><path d="M150 154 C132 110 94 82 58 78 C104 70 140 102 154 144 Z"></path><circle cx="146" cy="166" r="9"></circle><circle cx="161" cy="170" r="8"></circle></g></svg><div style="position:absolute;top:8px;right:-10px;font-size:100px;animation:bobY 6s ease-in-out infinite;filter:drop-shadow(0 12px 20px rgba(0,0,0,.24));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;top:8px;left:-8px;font-size:88px;animation:bobYr 8s ease-in-out infinite;filter:drop-shadow(0 12px 20px rgba(0,0,0,.22));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;top:50%;right:2px;transform:translateY(-50%);font-size:80px;animation:bobY 10s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.2));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;top:50%;left:2px;transform:translateY(-50%);font-size:80px;animation:bobYr 12s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.18));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;bottom:50px;right:6px;font-size:90px;animation:bobY 9s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.2));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;bottom:50px;left:6px;font-size:82px;animation:bobYr 11s ease-in-out infinite;filter:drop-shadow(0 10px 16px rgba(0,0,0,.18));pointer-events:none;z-index:0;opacity:.85;"></div><div style="position:absolute;bottom:0;left:0;right:0;height:56px;background:linear-gradient(to bottom,transparent,rgba(20,64,61,.55));z-index:1;pointer-events:none;"></div><div class="pd-hero-nav" style="position:relative;z-index:2;display:flex;align-items:center;gap:10px;min-height:72px;"><div style="display:flex;gap:6px;flex:0 0 auto;"><button onClick="{{ back }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--pink);display:grid;place-items:center;flex:0 0 36px;" title="Back"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="var(--pink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><button onClick="{{ goHome }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.9);border:2px solid var(--pink);display:grid;place-items:center;flex:0 0 36px;" title="Home"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12L12 4l9 8" stroke="var(--pink)" stroke-width="2.2" stroke-linecap="round"/><path d="M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9" stroke="var(--pink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><img class="pd-hero-logo" src="assets/logo-v3-512.png" style="height:84px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.38));" alt="Pour Decisions"><span style="width:40px;flex:0 0 40px;margin-left:auto;"></span></div><div class="pd-hero-body" style="position:relative;z-index:2;margin-top:20px;text-align:center;">
             <div class="vq-eyebrow">348 LOUDON PLAZA &middot; ALBANY</div>
             <h2 class="pd-hero-title vq-h1">Event space.</h2>
-            <p class="vq-sub">The whole bar, yours for the night.</p>
+            <p class="vq-sub">The whole space, yours for the night.</p>
           </div></div>
 
           <div class="vq-wrap">
@@ -1448,7 +1447,7 @@
             <div class="hm-venue hm-band"><img class="bg" src="assets/photos/space-bar.jpg" alt="" loading="lazy">
               <div>
                 <div class="hm-kicker" style="color:#FFBE66">HOST YOUR OWN</div>
-                <div class="hm-promo-title">Birthdays, pop-ups, meetings — the whole bar, yours for the night.</div>
+                <div class="hm-promo-title">Birthdays, pop-ups, meetings — the whole space, yours for the night.</div>
               </div>
               <button onClick="{{ goVenue }}" class="tap hm-btn hm-btn-gold" style="flex:0 0 auto">Book the space</button>
             </div>
@@ -2233,7 +2232,7 @@ class Component extends DCLogic {
 
   VENUE_PKGS = [
     { key:'sip',  name:'The Sip',       hours:'2 hours', tag:'',
-      blurb:'The whole bar is yours. Bring your own decor, cake and food \u2014 we hand you the floor and get out of your way.',
+      blurb:'The whole space is yours. Bring your own decor, cake and food \u2014 we hand you the floor and get out of your way.',
       inc:['Exclusive use of the full floor','Tables, chairs & setup','Wifi + bluetooth sound','Fridge & prep counter access'] },
     { key:'squeeze', name:'The Squeeze', hours:'2 hours', tag:'MOST POPULAR',
       blurb:'The floor plus a live juice & smoothie bar. We pour for your guests all night, you just run the party.',
@@ -2242,7 +2241,7 @@ class Component extends DCLogic {
       blurb:'The whole thing handled. Drinks, bites, decor setup and a dedicated host working the floor start to finish.',
       inc:['Everything in The Squeeze','Light bites & smoothie bowls','Decor setup & takedown','Dedicated host on site'] },
     { key:'boardroom', name:'The Boardroom', hours:'3 hours', tag:'WEEKDAYS',
-      blurb:'Your team takes over the whole bar. Open floor, screen to present on, and cold-press fuel all morning.',
+      blurb:'Your team takes over the whole space. Open floor, screen to present on, and cold-press fuel all morning.',
       inc:['Exclusive weekday buyout','Wifi + screen for presenting','Coffee, tea & juice service','Notepads & water station'] }
   ];
 
@@ -2910,7 +2909,7 @@ class Component extends DCLogic {
                chips:['What are your hours?','What do you recommend?','Do you rent the space?'] };
     }
     if (/event|rent|party|book|birthday|meeting|venue|space|host|shower/.test(L)) {
-      return { text:"Yes — the whole bar can be yours \n\nBirthdays, private parties, team meetings, showers, pop-ups. It's an open-concept space so a booking means the entire floor, not a back room.\n\nEmail " + F.email + " with your date and what you're planning.",
+      return { text:"Yes — the whole space can be yours \n\nBirthdays, private parties, team meetings, showers, pop-ups. It's an open-concept space so a booking means the entire floor, not a back room.\n\nEmail " + F.email + " with your date and what you're planning.",
                chips:['Take me to the event page','What are your hours?','What do you recommend?'] };
     }
     if (/cleanse|plan|subscription|program|3.?day|5.?day|1.?day|package/.test(L)) {
@@ -2921,7 +2920,7 @@ class Component extends DCLogic {
                chips:['Take me to Plans','Which cleanse should I do?','What do you recommend?'] };
     }
     if (/pour pass|loyalty|reward|points|free|stamp|punch/.test(L)) {
-      return { text:"The Pour Pass is our loyalty card \n\nEvery pour earns a stamp. Nine stamps and the tenth is on us. You also get one free spin every month — real prizes, no catch.",
+      return { text:"The Pour Pass is our loyalty card \n\nEvery pour earns a stamp. Nine stamps and the tenth is free. You also get one free spin every month — real prizes, no catch.",
                chips:['Take me to my Pass','Spin the wheel','What do you recommend?'] };
     }
     if (/spin|wheel|prize|win|game/.test(L)) {
@@ -3368,7 +3367,7 @@ class Component extends DCLogic {
         { icon:'', label:'Plans',       sub:'Cleanses & subscriptions',  key:'packages' },
         { icon:'', label:'Events',      sub:'What\u2019s on this month', key:'events' },
         { icon:'', label:'Ingredients', sub:'What every ingredient does', key:'ingredients' },
-        { icon:'', label:'Event Space', sub:'Rent the whole bar',        key:'venue' },
+        { icon:'', label:'Event Space', sub:'Rent the whole space',        key:'venue' },
         { icon:'', label:'Gallery',     sub:'Photos on Instagram ↗',     key:'gallery' },
                 { icon:'', label:'Pour Pass',   sub:'9 pours = 1 free',          key:'pass' },
         { icon:'', label:'Monthly Spin', sub:'One free spin a month',    key:'wheel' },
