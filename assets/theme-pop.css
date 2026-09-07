@@ -338,3 +338,12 @@ img.pd-hero-logo[src][style]{order:3 !important;flex:0 0 100% !important;height:
 .is-scrolling .pd-pina-fab{transform:translateY(140%);opacity:0;pointer-events:none;}
 .pd-pina-fab:active{transform:scale(.94);}
 @media(min-width:1024px){.pd-pina-fab{right:28px !important;bottom:28px !important;}}
+
+/* ---- pop v7b: polish ---- */
+.hm-logo-lead{width:190px;}
+.blender{width:182px !important;right:-28px !important;top:30px !important;}
+.pd-grove :is(h1,h2,h3,.pd-hero-title,.hm-h1,.hm-h2){color:#fff !important;}
+.pd-grove p{color:rgba(255,255,255,.9) !important;}
+.pd-grove .vq-eyebrow,.pd-grove .hm-kicker,.pd-grove .pd-kicker{background:rgba(255,255,255,.14) !important;color:#FFE7A8 !important;display:inline-block;padding:6px 12px;border-radius:99px;}
+@media(min-width:768px){.hm-logo-lead{width:280px;}.blender{width:380px !important;right:6% !important;top:40px !important;}}
+@media(min-width:1200px){.blender{width:440px !important;right:10% !important;}}
