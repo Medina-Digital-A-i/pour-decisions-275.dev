@@ -205,3 +205,20 @@ span[style*="font-size:18px;"]:empty,span[style*="font-size:19px;"]:empty,span[s
 .mn-list{background:var(--paper) !important;}
 .mn-list .menu-section-head [style*="color:var(--gold)"]{color:var(--brass) !important;font-weight:700 !important;}
 .hm-hero-photo .hm-ctas{margin-top:8px;}
+
+/* ── Fix pass 2 ─────────────────────────────────────────────────────── */
+:root{--f-display:'Fraunces',ui-serif,Georgia,serif !important;--f-num:'Bebas Neue',Impact,sans-serif !important;}
+.pd-app h2,.pd-app h3,.pd-section-title{font-family:'Fraunces',Georgia,serif !important;font-style:italic !important;font-weight:900 !important;letter-spacing:-.02em;}
+.hm-h1,.hm-h2,.mn-title,.hm-cat-name,.ev-feat-title,.igp-name,.menu-section-head > div:first-child,.hm-band .hm-pass-title,.hm-band .hm-promo-title{font-family:'Fraunces',Georgia,serif !important;}
+.hm-row-name,.ig-name,.hm-ingstrip b{font-family:'Fraunces',Georgia,serif !important;font-style:normal !important;}
+.hm-eyebrow,.hm-kicker,.bf-title,.hm-row-price,.hm-hours,.pd-app .pd-pc{font-family:'Bebas Neue',Impact,sans-serif !important;}
+.hm-hero-photo{flex-direction:column;justify-content:flex-end;align-items:flex-start;}
+.hm-hero-photo .hm-lede{margin:0 0 18px !important;}
+.hm-band{flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:14px !important;}
+.hm-band.hm-pass{flex-direction:row;align-items:flex-end;justify-content:space-between;}
+.hm-venue img.bg{object-position:65% center;}
+.pd-app .pd-pc{background:var(--paper-2) !important;color:var(--bar) !important;font-size:15px !important;letter-spacing:.04em;padding:6px 11px !important;border-radius:99px !important;}
+.pd-app .pd-pc img{display:none !important;}
+.mn-note{display:none !important;}
+.menu-section-head.hide{display:none !important;}
+.mn-hero .hm-eyebrow{color:var(--brass-2) !important;}

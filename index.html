@@ -33,7 +33,7 @@
   ═══════════════════════════════════════════════════════════ -->
 
 <link rel="stylesheet" href="assets/light-theme.css?v=5">
-<link rel="stylesheet" href="assets/theme-bar.css?v=1">
+<link rel="stylesheet" href="assets/theme-bar.css?v=2">
 </head>
 <body>
 <x-dc>
@@ -575,14 +575,14 @@
           <div class="hm-sec" style="padding-top:14px"><div onClick="{{ goEvents }}" class="tap ev-strip" style="background:{{ nextEvent.soft }};color:{{ nextEvent.ink }}"><span class="ev-strip-date"><b>{{ nextEventDay }}</b> {{ nextEventMon }}</span><span class="ev-strip-text"><b>{{ nextEvent.kindLabel }}:</b> {{ nextEventTitle }} · {{ nextEventSub }}</span><span class="hm-link" style="color:inherit">Details →</span></div></div>
           </sc-if>
           <sc-if value="{{ hasMenuNote }}" hint-placeholder-val="{{ false }}">
-          <div style="padding:18px 16px 0;">
+          <div class="mn-note" style="padding:18px 16px 0;">
             <div style="background:rgba(239,138,0,.12);border:1px solid rgba(239,138,0,.35);border-radius:16px;padding:10px 14px;font-size:12.5px;line-height:1.5;color:var(--gold-glow);font-weight:600;">{{ menuNote }}</div>
           </div>
           </sc-if>
           <div class="mn-list" style="padding:18px 16px 30px;">
             <sc-for list="{{ menuSections }}" as="sec" hint-placeholder-count="2">
             <div class="menu-section">
-              <div class="menu-section-head">
+              <div class="menu-section-head {{ sec.headCls }}">
                 <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:26px;line-height:1;letter-spacing:-.02em;color:var(--teal-ink,#14615D);">{{ sec.title }}</div>
                 <sc-if value="{{ sec.hasNote }}" hint-placeholder-val="{{ true }}"><div style="font-size:12px;font-weight:800;color:var(--gold);margin-top:5px;line-height:1.4;">{{ sec.note }}</div></sc-if>
               </div>
@@ -3120,7 +3120,7 @@ class Component extends DCLogic {
       ...(() => { const k = MENU_KINDS.find(x => x.kind === activeCat); const all = !k; return {
         menuHeroPhoto: all ? 'assets/photos/hero-alt.jpg' : 'assets/photos/cat-' + k.key + '.jpg',
         menuHeroTitle: all ? 'Pick your pour.' : activeCat,
-        menuHeroSub: all ? 'Pressed fresh every morning · 16 oz and 24 oz' : ((this.MENU_NOTES || {})[activeCat] || 'Pressed fresh every morning') }; })(),
+        menuHeroSub: all ? 'Pressed fresh every morning · 16 oz and 24 oz' : (String((this.MENU_NOTES || {})[activeCat] || 'Pressed fresh every morning').split(/Add-ons|Build Your Own/)[0].split(' · ').slice(0, 3).join(' · ').trim()) }; })(),
 
       benefitChips: [{key:'',icon:'',label:'All'}].concat(
         this.BENEFIT_ORDER.map(k => ({ key:k, icon:this.BENEFIT_TAGS[k].icon, label:this.BENEFIT_TAGS[k].label }))
@@ -3540,7 +3540,7 @@ class Component extends DCLogic {
       // Menu grouped by category (TV-board order), honouring the category + benefit filters
       menuSections: (this.SECTIONS || []).map(sec => {
         const items = menu.filter(m =>m.kind === sec.kind && sec.itemIds.includes(m.id));
-        return { title: sec.title, note: sec.note, hasNote: !!sec.note, items: items.map(cardFields), count: items.length };
+        return { title: sec.title, note: sec.note, hasNote: !!sec.note, items: items.map(cardFields), count: items.length, headCls: activeCat === 'All' ? '' : 'hide' };
       }).filter(sec =>sec.count > 0)
     };
   }
