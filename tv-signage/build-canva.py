@@ -25,35 +25,35 @@ CSS = f'''
 *{{box-sizing:border-box}} body{{margin:0;background:#222;font-family:Manrope,Helvetica,Arial,sans-serif;color:#fff}}
 .pg{{position:relative;width:1920px;height:1080px;overflow:hidden;margin:0 0 24px}}
 .pg>img.bg{{position:absolute;left:0;top:0;width:1920px;height:1080px;display:block}}
-.tg{{position:absolute;left:{70+150+26}px;top:86px;font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:900;font-size:34px;color:#fff;opacity:.9}}
-.hdrR{{position:absolute;right:70px;top:66px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:34px;letter-spacing:.14em;color:#fff;line-height:1.2}}
+.tg{{position:absolute;left:300px;top:88px;width:600px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:900;font-size:34px;line-height:1.1;color:#fff}}
+.hdrR{{position:absolute;right:70px;top:66px;width:760px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:34px;letter-spacing:.14em;color:#fff;line-height:1.25}}
 .hdrR b{{color:{mango}}}
-.left{{position:absolute;left:70px;top:190px;width:1110px}}
-.cat{{font-family:'Bebas Neue',Impact,sans-serif;font-size:118px;line-height:.9;letter-spacing:.03em;color:#fff;text-shadow:0 0 18px var(--accent),0 0 60px var(--accent)}}
-.note{{font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;letter-spacing:.14em;color:{note_c};margin:8px 0 22px}}
-.row{{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:baseline;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.2)}}
-.row:last-child{{border-bottom:0}}
-.nm{{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:900;font-size:46px;line-height:1;letter-spacing:-.02em}}
-.tag{{font-family:Manrope,sans-serif;font-style:normal;font-weight:800;font-size:15px;letter-spacing:.1em;text-transform:uppercase;{tag_css};padding:6px 12px;border-radius:99px;margin-left:16px;vertical-align:middle}}
-.ing{{font-size:24px;font-weight:500;color:{ing_c};margin-top:6px}}
-.pr{{font-family:'Bebas Neue',Impact,sans-serif;font-size:60px;line-height:1;color:{mango};white-space:nowrap}}
-.pr small{{font-size:32px;color:rgba(255,255,255,.8);margin-left:8px}}
-.foot{{position:absolute;left:70px;right:70px;bottom:36px;display:flex;justify-content:space-between;font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;letter-spacing:.14em;color:rgba(255,255,255,.85)}}
-.foot b{{color:#fff}}
+.cat{{position:absolute;left:70px;top:190px;width:1110px;font-family:'Bebas Neue',Impact,sans-serif;font-size:118px;line-height:1;letter-spacing:.03em;color:#fff;text-shadow:0 0 18px var(--accent),0 0 60px var(--accent)}}
+.note{{position:absolute;left:70px;top:316px;width:1110px;font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;line-height:1.2;letter-spacing:.14em;color:{note_c}}}
+.row{{position:absolute;left:70px;width:1110px;height:104px}}
+.nm{{position:absolute;left:0;top:0;width:820px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:900;font-size:44px;line-height:1.1;letter-spacing:-.01em;color:#fff;white-space:nowrap}}
+.nm .tag{{font-family:Manrope,Helvetica,sans-serif;font-style:normal;font-weight:800;font-size:18px;letter-spacing:.12em;text-transform:uppercase;color:{mango};margin-left:14px}}
+.ing{{position:absolute;left:0;top:58px;width:830px;font-size:24px;line-height:1.2;font-weight:500;color:{ing_c};white-space:nowrap}}
+.pr{{position:absolute;right:0;top:0;width:280px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:58px;line-height:1;color:{mango};white-space:nowrap}}
+.pr small{{font-size:32px;color:rgba(255,255,255,.85);margin-left:6px}}
+.hr{{position:absolute;left:0;bottom:0;width:1110px;height:1px;background:rgba(255,255,255,.22)}}
+.foot1{{position:absolute;left:70px;bottom:36px;width:900px;font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;line-height:1.2;letter-spacing:.14em;color:#fff}}
+.foot2{{position:absolute;right:70px;bottom:36px;width:900px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;line-height:1.2;letter-spacing:.14em;color:rgba(255,255,255,.85)}}
 '''
 hdr = f"Smoothies <b>{money(S['smoothie'][0]['price'])}</b> 16 oz · <b>{money(S['smoothie'][1]['price'])}</b> 24 oz<br>Juices <b>{money(S['juice'][0]['price'])}</b> 16 oz · <b>{money(S['juice'][1]['price'])}</b> 24 oz"
-foot = '<div class="foot"><span><b>Cold-pressed · blended fresh · 7:30 AM – 5 PM</b></span><span>pourdecisionsjuicebar.com · 359 Northern Blvd, Albany</span></div>'
+foot = '<div class="foot1">Cold-pressed · blended fresh · 7:30 AM – 5 PM</div><div class="foot2">pourdecisionsjuicebar.com · 359 Northern Blvd, Albany</div>'
 
 def page(board, idx, title, note, items, accent, subtitle):
-    def row(i):
-        tag = (' <span class="tag">' + esc(i['tag']) + '</span>') if i.get('tag') else ''
-        return ('<div class="row"><div><div class="nm">' + esc(i['name']) + tag + '</div><div class="ing">' + esc(' · '.join(i['ingredients'])) + '</div></div><div class="pr">' + price_for(i) + '</div></div>')
-    rows = ''.join(row(i) for i in items)
+    def row(k, i):
+        tag = ('<span class="tag">' + esc(i['tag']) + '</span>') if i.get('tag') else ''
+        top = 372 + k * 108
+        return ('<div class="row" style="top:%dpx">' % top + '<div class="nm">' + esc(i['name']) + tag + '</div><div class="ing">' + esc(' · '.join(i['ingredients'])) + '</div><div class="pr">' + price_for(i) + '</div>' + ('<div class="hr"></div>' if k < len(items) - 1 else '') + '</div>')
+    rows = ''.join(row(k, i) for k, i in enumerate(items))
     return f'''<div class="pg" data-document-role="page" data-label="{esc(title)} {idx}" style="--accent:{accent}">
   <img class="bg" src="{BASE}/tv-signage/canva/bg-{THEME}-{board}{idx}.jpg" alt="">
   <div class="tg">{esc(subtitle)}</div>
   <div class="hdrR">{hdr}</div>
-  <div class="left"><div class="cat">{esc(title)}</div><div class="note">{esc(note)}</div>{rows}</div>
+  <div class="cat">{esc(title)}</div><div class="note">{esc(note)}</div>{rows}
   {foot}
 </div>'''
 
@@ -69,7 +69,7 @@ pages = [
     page('B', 3, 'Wellness Shots', sh.get('note', ''), sh['items'], '#FFB800', 'Juices & shots'),
 ]
 doc = f'''<!doctype html><html><head><meta charset="utf-8"><title>Pour Decisions — Neon Menu Board ({THEME})</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@1,9..144,900&family=Manrope:wght@500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@1,900&family=Manrope:wght@500;700;800&display=swap">
 <style>{CSS}</style></head><body>
 {''.join(pages)}
 </body></html>'''
