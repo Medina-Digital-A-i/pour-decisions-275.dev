@@ -9,7 +9,7 @@
 <helmet>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@500;600;700;800&display=swap">
   <style>
-:root{--cream:#FAF7F0;--paper:#FFFFFF;--ink:#14615D;--text:#2B2B26;--muted:#7C776A;--teal:#29B7AF;--teal-soft:#E4F6F4;--gold:#EF8A00;--gold-soft:#FFF1DC;--line:#E3D7C2;--sand:#F3EEE2}
+:root{--cream:#F8F7F3;--paper:#FFFFFF;--ink:#0B5C57;--text:#16302D;--muted:#6E7470;--teal:#14B8AC;--teal-soft:#E4F6F4;--gold:#FF8A00;--gold-soft:#FFF1DC;--line:#E6E3DA;--sand:#0B5C57;--mango:#FFB800}
 body{margin:0;background:var(--cream);color:var(--text);font-family:"Manrope","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--ink)} a:hover{color:var(--teal)}
 .cat{font-family:"Bebas Neue","Oswald","Impact",sans-serif;color:var(--ink);letter-spacing:.04em;line-height:.95;margin:0}
@@ -28,12 +28,16 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .box h4{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin:0}
 .box p{margin:0;font-weight:600;line-height:1.5}
 .box b{color:var(--gold)}
-.band{background:var(--ink);color:#fff;display:flex;align-items:center}
+.band{background:linear-gradient(135deg,#14B8AC 0%,#0F7A73 55%,#0B5C57 100%);color:#fff;display:flex;align-items:center;position:relative;overflow:hidden}.band::before{content:"";position:absolute;right:-16%;top:-230%;width:36%;padding-top:36%;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFB800 0%,#FF8A00 45%,rgba(255,138,0,0) 72%);opacity:.9;pointer-events:none}.band>*{position:relative;z-index:1}
 .bqr{display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:5px 10px 5px 5px;color:var(--ink);line-height:1.15}.bqr svg{display:block;width:44px;height:44px}.bqr b{font-size:10px;font-family:"Manrope",sans-serif;font-weight:800}
-.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#DDF3F1}
+.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:900;color:#fff;letter-spacing:-.01em}
 .sz{display:inline-flex;align-items:center;gap:.4em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:700;color:#fff;white-space:nowrap}
-.sz b{color:#FFBE66}
+.sz b{color:#FFE7A8}
 .shots{margin-top:1.1em}
+.sech-row{display:flex;align-items:center;gap:.35em}
+.ico{height:var(--ico,34px);width:auto;flex:0 0 auto;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18))}
+.foot{background:#0B5C57 !important;color:#fff !important}.foot .qr b,.foot b{color:#fff !important}.foot span{color:rgba(255,255,255,.9)}
+.cat{color:var(--ink)}
 
 .page{width:816px;height:1056px;background:var(--cream);display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden}
 .band{padding:22px 40px;gap:22px}
@@ -43,6 +47,7 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .sz{padding:4px 12px}
 .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 34px;padding:22px 40px 0;flex:1}
 .cat{font-size:34px}
+.sech{--ico:36px}.shots .sech{--ico:28px}
 .sech{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
 .catnote{font-size:11px}
 .it{padding:5px 0}

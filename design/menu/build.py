@@ -12,7 +12,7 @@ def esc(s): return html.escape(s)
 FONTS = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@500;600;700;800&display=swap">'
 
 CSS = """
-:root{--cream:#FAF7F0;--paper:#FFFFFF;--ink:#14615D;--text:#2B2B26;--muted:#7C776A;--teal:#29B7AF;--teal-soft:#E4F6F4;--gold:#EF8A00;--gold-soft:#FFF1DC;--line:#E3D7C2;--sand:#F3EEE2}
+:root{--cream:#F8F7F3;--paper:#FFFFFF;--ink:#0B5C57;--text:#16302D;--muted:#6E7470;--teal:#14B8AC;--teal-soft:#E4F6F4;--gold:#FF8A00;--gold-soft:#FFF1DC;--line:#E6E3DA;--sand:#0B5C57;--mango:#FFB800}
 body{margin:0;background:var(--cream);color:var(--text);font-family:"Manrope","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--ink)} a:hover{color:var(--teal)}
 .cat{font-family:"Bebas Neue","Oswald","Impact",sans-serif;color:var(--ink);letter-spacing:.04em;line-height:.95;margin:0}
@@ -31,12 +31,16 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .box h4{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin:0}
 .box p{margin:0;font-weight:600;line-height:1.5}
 .box b{color:var(--gold)}
-.band{background:var(--ink);color:#fff;display:flex;align-items:center}
+.band{background:linear-gradient(135deg,#14B8AC 0%,#0F7A73 55%,#0B5C57 100%);color:#fff;display:flex;align-items:center;position:relative;overflow:hidden}.band::before{content:"";position:absolute;right:-16%;top:-230%;width:36%;padding-top:36%;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFB800 0%,#FF8A00 45%,rgba(255,138,0,0) 72%);opacity:.9;pointer-events:none}.band>*{position:relative;z-index:1}
 .bqr{display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:5px 10px 5px 5px;color:var(--ink);line-height:1.15}.bqr svg{display:block;width:44px;height:44px}.bqr b{font-size:10px;font-family:"Manrope",sans-serif;font-weight:800}
-.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:500;color:#DDF3F1}
+.band .tg{font-family:"Fraunces","Georgia",serif;font-style:italic;font-weight:900;color:#fff;letter-spacing:-.01em}
 .sz{display:inline-flex;align-items:center;gap:.4em;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:999px;font-weight:700;color:#fff;white-space:nowrap}
-.sz b{color:#FFBE66}
+.sz b{color:#FFE7A8}
 .shots{margin-top:1.1em}
+.sech-row{display:flex;align-items:center;gap:.35em}
+.ico{height:var(--ico,34px);width:auto;flex:0 0 auto;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18))}
+.foot{background:#0B5C57 !important;color:#fff !important}.foot .qr b,.foot b{color:#fff !important}.foot span{color:rgba(255,255,255,.9)}
+.cat{color:var(--ink)}
 """
 
 ING_FLAGS = {g['name']: g.get('flags', []) for g in M.get('ingredients', [])}
@@ -85,10 +89,16 @@ def item(it, show_size=True, food=False):
     cls = ' multi' if it.get('prices') else ''
     return f'<div class="it{cls}"><div><div class="nm">{esc(it["name"])}{tag}</div><div class="ing">{ing}</div></div>{pr}</div>'
 
+ICON = {
+ 'smoothies': '<svg class="ico" viewBox="0 0 100 100"><rect x="57" y="4" width="6" height="30" rx="3" fill="#fff" transform="rotate(14 60 19)"/><rect x="57" y="12" width="6" height="5" fill="#FF8A00" transform="rotate(14 60 19)"/><path d="M26 34 Q50 12 74 34 Z" fill="#fff"/><rect x="22" y="32" width="56" height="7" rx="3.5" fill="#fff"/><path d="M26 39 L74 39 L69 90 Q50 96 31 90 Z" fill="#FF3D6E"/><path d="M56 39 L74 39 L69 90 Q60 94 52 94 Z" fill="#000" opacity=".12"/><path d="M26 39 L74 39 L69 90 Q50 96 31 90 Z" fill="#fff" opacity=".16" stroke="#fff" stroke-opacity=".8" stroke-width="1.5"/><rect x="36" y="54" width="28" height="20" rx="5" fill="#fff" opacity=".96"/></svg>',
+ 'protein-oats': '<svg class="ico" viewBox="0 0 100 100"><rect x="57" y="4" width="6" height="30" rx="3" fill="#fff" transform="rotate(14 60 19)"/><rect x="57" y="12" width="6" height="5" fill="#FF8A00" transform="rotate(14 60 19)"/><path d="M26 34 Q50 12 74 34 Z" fill="#fff"/><rect x="22" y="32" width="56" height="7" rx="3.5" fill="#fff"/><path d="M26 39 L74 39 L69 90 Q50 96 31 90 Z" fill="#7A4A1E"/><path d="M56 39 L74 39 L69 90 Q60 94 52 94 Z" fill="#000" opacity=".12"/><path d="M26 39 L74 39 L69 90 Q50 96 31 90 Z" fill="#fff" opacity=".16" stroke="#fff" stroke-opacity=".8" stroke-width="1.5"/><rect x="36" y="54" width="28" height="20" rx="5" fill="#fff" opacity=".96"/></svg>',
+ 'juices': '<svg class="ico" viewBox="0 0 100 100"><rect x="38" y="4" width="24" height="14" rx="4" fill="#0B5C57"/><path d="M41 18 L59 18 L66 34 L66 88 Q66 95 59 95 L41 95 Q34 95 34 88 L34 34 Z" fill="#8BE000"/><path d="M53 18 L59 18 L66 34 L66 88 Q66 95 59 95 L53 95 Z" fill="#000" opacity=".12"/><path d="M41 18 L59 18 L66 34 L66 88 Q66 95 59 95 L41 95 Q34 95 34 88 L34 34 Z" fill="#fff" opacity=".16" stroke="#fff" stroke-opacity=".8" stroke-width="1.5"/><rect x="38" y="48" width="24" height="26" rx="4" fill="#fff" opacity=".96"/></svg>',
+ 'shots': '<svg class="ico" viewBox="0 0 100 100"><path d="M20 46 L80 46 L74 90 Q50 97 26 90 Z" fill="#FF8A00"/><path d="M60 46 L80 46 L74 90 Q64 95 56 95 Z" fill="#000" opacity=".12"/><path d="M36 48 L34 90 M50 48 L50 93 M64 48 L66 90" stroke="#fff" stroke-opacity=".35" stroke-width="1.2" fill="none"/><path d="M20 46 L80 46 L74 90 Q50 97 26 90 Z" fill="#fff" opacity=".16" stroke="#fff" stroke-opacity=".8" stroke-width="1.5"/><rect x="16" y="39" width="68" height="8" rx="4" fill="#fff"/><rect x="26" y="34" width="48" height="6" rx="3" fill="#fff" opacity=".9"/><rect x="34" y="56" width="32" height="22" rx="4" fill="#fff" opacity=".96"/></svg>',
+}
 def section(cat, items=None, note=None, cls=''):
     items = items if items is not None else cat['items']
     note = note if note is not None else cat.get('note', '')
-    return (f'<div class="sec {cls}"><div class="sech"><h2 class="cat">{esc(cat["title"])}</h2>'
+    return (f'<div class="sec {cls}"><div class="sech"><div class="sech-row">{ICON.get(cat.get("key"), "")}<h2 class="cat">{esc(cat["title"])}</h2></div>'
             f'<div class="catnote">{esc(note)}</div></div>' + ''.join(item(i) for i in items) + '</div>')
 
 def box(title, body):
@@ -180,6 +190,7 @@ PRINT_CSS = """
 .sz{padding:4px 12px}
 .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 34px;padding:22px 40px 0;flex:1}
 .cat{font-size:34px}
+.sech{--ico:36px}.shots .sech{--ico:28px}
 .sech{display:flex;flex-direction:column;gap:2px;margin-bottom:8px}
 .catnote{font-size:11px}
 .it{padding:5px 0}
@@ -208,7 +219,7 @@ print_drinks = doc('drinks', PRINT_CSS, f'''
 PRINT_FOOD_CSS = PRINT_CSS + """
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 26px;padding:22px 40px 0;flex:1}
 .cols3 .nm{font-size:15px}.cols3 .ing{font-size:11px}.cols3 .pr{font-size:13px}
-.cols3 .cat{font-size:30px}
+.cols3 .cat{font-size:30px}.cols3 .sech{--ico:42px}
 .cols3 .it{padding:3px 0}.cols3 .ing{font-size:9.6px}.cols3 .nm{font-size:13.5px}.cols3 .box{padding:6px 10px;margin-top:6px}.cols3 .box p{font-size:9.8px;line-height:1.35}.cols3 .box h4{font-size:8.5px}.cols3 .sech{margin-bottom:5px}
 """
 print_food = doc('food', PRINT_FOOD_CSS, f'''
@@ -233,6 +244,7 @@ TV_CSS = """
 .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 70px;padding:34px 70px 0;flex:1}
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 56px;padding:34px 70px 0;flex:1}
 .cat{font-size:64px}
+.sech{--ico:74px}
 .sech{display:flex;flex-direction:column;gap:6px;margin-bottom:10px;min-height:96px}
 .catnote{font-size:22px}
 .it{padding:8px 0}
@@ -243,9 +255,9 @@ TV_CSS = """
 .box{padding:14px 22px;margin-top:16px}
 .box h4{font-size:16px;margin-bottom:6px}
 .box p{font-size:20px;line-height:1.45}
-.shots .cat{font-size:46px}.shots .it{padding:8px 0}.shots .nm{font-size:30px}.shots .ing{font-size:19px}.shots .pr{font-size:26px}.shots .sech{min-height:0;margin-bottom:8px}.shots{margin-top:0}
+.shots .cat{font-size:46px}.shots .sech{--ico:54px}.shots .it{padding:8px 0}.shots .nm{font-size:30px}.shots .ing{font-size:19px}.shots .pr{font-size:26px}.shots .sech{min-height:0;margin-bottom:8px}.shots{margin-top:0}
 .stack{display:flex;flex-direction:column}
-.cols3 .nm{font-size:26px}.cols3 .ing{font-size:16px}.cols3 .pr{font-size:23px}.cols3 .cat{font-size:54px}.cols3 .it{padding:7px 0}.cols3 .box{padding:14px 20px;margin-top:16px}.cols3 .box p{font-size:19px}.cols3 .sech{min-height:80px}
+.cols3 .nm{font-size:26px}.cols3 .ing{font-size:16px}.cols3 .pr{font-size:23px}.cols3 .cat{font-size:54px}.cols3 .sech{--ico:62px}.cols3 .it{padding:7px 0}.cols3 .box{padding:14px 20px;margin-top:16px}.cols3 .box p{font-size:19px}.cols3 .sech{min-height:80px}
 """
 tv1 = doc('tv1', TV_CSS, f'''
 <div class="page">
@@ -283,6 +295,7 @@ PHONE_CSS = """
 .sz{padding:5px 12px}
 .wrap{padding:22px 22px 10px;display:flex;flex-direction:column;gap:26px}
 .cat{font-size:38px}
+.sech{--ico:42px}
 .sech{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
 .catnote{font-size:12px}
 .it{padding:10px 0}
@@ -293,7 +306,7 @@ PHONE_CSS = """
 .box{padding:12px 16px;margin-top:12px}
 .box h4{font-size:10px;margin-bottom:5px}
 .box p{font-size:13px}
-.shots .cat{font-size:28px}
+.shots .cat{font-size:28px}.shots .sech{--ico:32px}
 .qr{display:flex;align-items:center;gap:12px;line-height:1.35;margin-bottom:8px}.qr svg{width:72px;height:72px;background:#fff;border-radius:8px;padding:4px;box-sizing:border-box}
 .foot{display:flex;flex-direction:column;gap:4px;padding:18px 22px 28px;background:var(--sand);font-size:12px;font-weight:700;color:var(--ink)}
 .stack{display:flex;flex-direction:column}
