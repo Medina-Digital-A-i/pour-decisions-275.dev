@@ -377,3 +377,7 @@ img.pd-hero-logo[src][style]{flex:0 0 auto !important;width:var(--logo-w) !impor
 .pd-hero-body{align-items:flex-start !important;}
 .pd-grove .pd-hero-title{font-size:46px !important;}
 @media(min-width:768px){.pd-grove .pd-hero-title{font-size:64px !important;}}
+
+/* one logo on home: the lead only */
+.hm-top .hm-logo{display:none !important;}
+.hm-top{justify-content:flex-end !important;}
