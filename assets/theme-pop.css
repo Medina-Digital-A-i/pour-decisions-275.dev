@@ -258,7 +258,7 @@ html,body,.pdbody,.pd-app,.hm,.pd-main-scroll,.ev,.mn-list,.mn-body{background:#
 .hm-legal a{color:#8A8F8C;text-decoration:none;font-weight:700;}
 
 /* ---- pop v4: the lineup (product cards) ---- */
-.hm-favs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(156px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:6px 16px 18px;scrollbar-width:none;}
+.hm-favs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(156px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:6px 16px 18px;scroll-padding:0 16px;scrollbar-width:none;}
 .hm-favs::-webkit-scrollbar{display:none;}
 .hm-fav{scroll-snap-align:start;position:relative;background:var(--tint,#EEF9F8);border-radius:22px;padding:14px 14px 16px;display:flex;flex-direction:column;gap:10px;min-height:300px;box-shadow:0 10px 30px rgba(11,92,87,.08);}
 .hm-fav-art{position:relative;height:156px;display:block;overflow:visible;}
