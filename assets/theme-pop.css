@@ -261,7 +261,7 @@ html,body,.pdbody,.pd-app,.hm,.pd-main-scroll,.ev,.mn-list,.mn-body{background:#
 .hm-favs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(156px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:6px 16px 18px;scrollbar-width:none;}
 .hm-favs::-webkit-scrollbar{display:none;}
 .hm-fav{scroll-snap-align:start;position:relative;background:var(--tint,#EEF9F8);border-radius:22px;padding:14px 14px 16px;display:flex;flex-direction:column;gap:10px;min-height:300px;box-shadow:0 10px 30px rgba(11,92,87,.08);}
-.hm-fav-art{position:relative;height:156px;display:grid;place-items:end center;}
+.hm-fav-art{position:relative;height:156px;display:block;overflow:visible;}
 .hm-fav-art::after{content:"";position:absolute;left:22%;right:22%;bottom:-6px;height:12px;border-radius:50%;background:rgba(0,0,0,.16);filter:blur(4px);}
 .hm-fav-art .pa-color{display:block;height:100%;width:100%;position:relative;z-index:1;}
 .hm-fav-art .pa{height:100%;width:100%;filter:drop-shadow(0 14px 16px rgba(0,0,0,.22));animation:pa-bob 5s ease-in-out infinite;}
