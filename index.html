@@ -2445,7 +2445,7 @@ class Component extends DCLogic {
     const label = k => (groups.find(g => g.key === k) || {}).label || k;
     let rows = (this.ING || []).slice().sort((a, b) => a.name.localeCompare(b.name));
     if (grp) rows = rows.filter(g => g.group === grp);
-    if (q) rows = rows.filter(g => (g.name + ' ' + g.benefit + ' ' + label(g.group)).toLowerCase().includes(q));
+    if (q) rows = rows.filter(g => (g.name + ' ' + g.benefit + ' ' + label(g.group) + ' ' + this.ingFlagLabels(g).join(' ') + ' ' + (g.flags || []).join(' ')).toLowerCase().includes(q));
     const open = S.ingOpen || null;
     const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
     return {
