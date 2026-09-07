@@ -24,6 +24,7 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .tag{font-family:"Manrope",sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--ink);background:var(--teal-soft);border-radius:999px;white-space:nowrap}
 .tag.house{color:var(--gold);background:var(--gold-soft)}
 .ing{color:var(--muted);font-weight:500;line-height:1.35}
+.al{color:#B8741A;font-weight:700;font-size:.86em;white-space:nowrap}
 .pr{font-weight:800;color:var(--gold);white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums;line-height:1.2}
 .pr small{font-weight:700;color:var(--muted)}
 .box{background:var(--paper);border:1px solid var(--line);border-radius:.6em}
@@ -38,11 +39,35 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 .shots{margin-top:1.1em}
 """
 
+ING_FLAGS = {g['name']: g.get('flags', []) for g in M.get('ingredients', [])}
+SHOW_FLAGS = {'gluten':'gluten','dairy':'dairy','nuts':'tree nuts','peanut':'peanuts','egg':'egg','fish':'fish','shellfish':'shellfish','sesame':'sesame','caffeine':'caffeine'}
+import re as _re
+def _norm(s):
+    s = s.lower().strip()
+    s = _re.sub(r'^(fresh|smashed|grilled|crispy|rolled|cherry|english|dried|roasted|smoked|mixed|or all|extra|plain)\s+', '', s)
+    return s
+def ing_flags(name):
+    L = _norm(name)
+    if L in ING_FLAGS: return ING_FLAGS[L]
+    sing = _re.sub(r'ies$', 'y', L); sing = _re.sub(r's$', '', sing)
+    if sing in ING_FLAGS: return ING_FLAGS[sing]
+    hits = [k for k in ING_FLAGS if _re.search(r'(^|\b)' + _re.escape(k) + r'(s|es)?(\b|$)', L)]
+    hits.sort(key=len, reverse=True)
+    return ING_FLAGS[hits[0]] if hits else []
+def allergens(it):
+    out = []
+    for n in it.get('ingredients', []):
+        for f in ing_flags(n):
+            if f in SHOW_FLAGS and SHOW_FLAGS[f] not in out: out.append(SHOW_FLAGS[f])
+    return out
+
 def item(it, show_size=True, food=False):
     tag = f'<span class="tag {"house" if it.get("tag")=="house" else ""}">{esc(it["tag"])}</span>' if it.get('tag') else ''
     ing = esc(' · '.join(it.get('ingredients', [])))
     if it.get('addons'):
         ing += ' · ' + esc(' · '.join(f"+{a['name']} {money(a['price'])}" for a in it['addons']))
+    al = allergens(it)
+    if al: ing += f' <span class="al">contains {esc(", ".join(al))}</span>'
     if it.get('size'):
         sz = S[it['size']]
         if it['size'] == 'smoothie_protein':

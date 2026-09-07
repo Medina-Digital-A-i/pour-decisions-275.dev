@@ -147,6 +147,10 @@
   .ig-empty{padding:30px 16px;text-align:center;color:#7C776A;font-weight:600}
   .igp{background:linear-gradient(160deg,#14615D,#0A2725)}
   .igp *{color:inherit}
+  .al-pill{background:#FFF1DC !important;color:#9A5B00 !important;border:1px solid rgba(154,91,0,.25);font-weight:800}
+  .al-box{display:flex;flex-wrap:wrap;align-items:center;gap:6px;background:rgba(239,138,0,.1);border:1px solid rgba(239,138,0,.35);border-radius:14px;padding:10px 12px;margin:-10px 0 22px;font-size:12.5px}
+  .al-box b{color:#FFBE66;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-right:4px}
+  .al-box .al-pill{font-size:11.5px;padding:4px 10px;border-radius:99px}
   .igp .ig-flag{color:#9A5B00}.igp .hm-kicker{color:#FFBE66}
   .igp-name{font-family:var(--f-display);font-weight:900;font-size:34px;letter-spacing:-.02em;line-height:1;margin:6px 0 10px}
   .igp-ben{font-size:16px;line-height:1.55;font-weight:500;color:rgba(255,255,255,.88);margin:0 0 14px}
@@ -576,7 +580,7 @@
                       <div style="font-family:var(--f-display);font-style:italic;font-weight:900;font-size:20px;color:#fff;line-height:1.05;margin-top:2px;">{{ it.name }}</div>
                       <div style="font-size:11.5px;color:rgba(255,255,255,.6);font-weight:500;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ it.ingredients }}</div>
                       <div class="pd-pcs"><sc-for list="{{ it.priceChips }}" as="pc" hint-placeholder-count="2"><span class="pd-pc" style="background:{{ pc.bg }};"><sc-if value="{{ pc.hasIcon }}" hint-placeholder-val="{{ false }}"><img src="{{ pc.icon }}" alt=""></sc-if>{{ pc.text }}</span></sc-for></div>
-                      <div class="bf-pills"><sc-for list="{{ it.tagPills }}" as="tp" hint-placeholder-count="2"><span class="bf-pill" style="background:{{ tp.bg }};color:{{ tp.fg }};">{{ tp.icon }} {{ tp.label }}</span></sc-for></div>
+                      <div class="bf-pills"><sc-for list="{{ it.tagPills }}" as="tp" hint-placeholder-count="2"><span class="bf-pill" style="background:{{ tp.bg }};color:{{ tp.fg }};">{{ tp.icon }} {{ tp.label }}</span></sc-for><sc-for list="{{ it.allergens }}" as="al" hint-placeholder-count="1"><span class="bf-pill al-pill">{{ al }}</span></sc-for></div>
                     </div>
                     <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
                       <button onClick="{{ it.add }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:22px;font-weight:800;display:grid;place-items:center;line-height:1;box-shadow:0 6px 14px rgba(239,138,0,.4);">+</button>
@@ -641,6 +645,9 @@
               </sc-for>
             </div>
             <div class="ig-hint">Tap an ingredient to see what it does for you.</div>
+            <sc-if value="{{ item.hasAllergens }}" hint-placeholder-val="{{ false }}">
+              <div class="al-box"><b>Contains</b><sc-for list="{{ item.allergens }}" as="al" hint-placeholder-count="1"><span class="al-pill">{{ al }}</span></sc-for></div>
+            </sc-if>
             <div class="bf-detail-label">WHAT IT DOES FOR YOU</div>
             <div class="bf-detail-pills">
               <sc-for list="{{ item.tagPills }}" as="tp" hint-placeholder-count="3">
@@ -2434,6 +2441,12 @@ class Component extends DCLogic {
     return this.ING.find(g => g.name === sing) ||
            this.ING.filter(g => new RegExp('(^|\\b)' + g.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '(s|es)?(\\b|$)').test(L)).sort((a, b) => b.name.length - a.name.length)[0] || null;
   }
+  allergensOf(it){
+    const SHOW = { gluten:'Gluten', dairy:'Dairy', nuts:'Tree nuts', peanut:'Peanuts', egg:'Egg', fish:'Fish', shellfish:'Shellfish', sesame:'Sesame', caffeine:'Caffeine' };
+    const seen = new Set();
+    (it && it.ingList || []).forEach(n => { const g = this.ingInfo(n); (g && g.flags || []).forEach(f => { if (SHOW[f]) seen.add(SHOW[f]); }); });
+    return [...seen];
+  }
   ingFlagLabels(g){
     const F = { gluten:'Contains gluten', dairy:'Dairy', nuts:'Tree nuts', peanut:'Peanuts', shellfish:'Shellfish', fish:'Fish', egg:'Egg', sesame:'Sesame', caffeine:'Caffeine', animal:'Not vegan' };
     return (g && g.flags || []).map(f => F[f] || f);
@@ -2986,6 +2999,7 @@ class Component extends DCLogic {
       ...it, priceLabel: this.fmt(it.price), calLabel: it.tag || '',
       fromLabel: it.hasSizes ? (it.drink ? 'from · ' + it.sizes[0].label : 'from') : (it.tag || ''),
       tagPills: (it.tagKeys || []).slice(0,2).map(k => ({ ...(this.BENEFIT_TAGS[k]||{icon:'',label:k,bg:'#EFE7D8',fg:'#2B2B26'}) })),
+      allergens: this.allergensOf(it), hasAllergens: this.allergensOf(it).length > 0, allergenLine: 'Contains ' + this.allergensOf(it).join(', ').toLowerCase(),
       open: () =>this.openItem(it), add: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.addToCart(it); this.go('cart'); }
     });
 
@@ -3098,6 +3112,7 @@ class Component extends DCLogic {
         hasBenefitLine: !!active.benefitLine,
         hasExtras: !!active.extras, extras: active.extras || '',
         tagPills: (active.tagKeys || []).map(k => ({ ...(this.BENEFIT_TAGS[k]||{icon:'',label:k,bg:'#EFE7D8',fg:'#2B2B26'}) })),
+        allergens: this.allergensOf(active), hasAllergens: this.allergensOf(active).length > 0,
         hasSizeOptions: !!active.hasSizes,
         sizeTitle: active.drink ? 'PICK A SIZE' : 'PICK A STYLE',
         sizeOptions: (active.sizes || []).map(sz => ({
