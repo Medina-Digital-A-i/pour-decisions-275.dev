@@ -188,3 +188,15 @@ html,body,.pdbody,.pd-app{background:#FFFFFF !important;}
 .dt-hero .pa-wrap{left:auto !important;right:16px;transform:none !important;width:186px;height:284px;top:56px;}
 .dt-hero > div:last-child{margin-top:240px !important;max-width:62%;}
 @media(min-width:768px){.dt-hero .pa-wrap{right:12%;width:250px;height:380px;top:70px;}.dt-hero > div:last-child{max-width:55%;margin-top:320px !important;}}
+
+/* ── Logo on every hero, sized right ───────────────────────────────── */
+.mn-nav > img{display:block !important;height:60px !important;filter:drop-shadow(0 6px 16px rgba(0,0,0,.3));}
+.mn-nav{top:12px;}
+.mn-hero{padding-top:100px;}
+.dt-hero .pd-hero-logo{display:block !important;height:60px !important;width:auto !important;left:50% !important;transform:translateX(-50%) !important;position:absolute !important;top:0;filter:drop-shadow(0 6px 16px rgba(0,0,0,.3)) !important;}
+.dt-hero > div:first-of-type{min-height:64px !important;}
+.hm-top .hm-logo{height:64px !important;}
+.ev-head{padding-top:14px !important;}
+.ev-head::after{content:"";}
+.ph-band .hm-h1{font-size:40px !important;}
+@media(min-width:768px){.mn-nav > img{height:72px !important;}.dt-hero .pd-hero-logo{height:72px !important;}}
