@@ -241,3 +241,20 @@ span[style*="font-size:18px;"]:empty,span[style*="font-size:19px;"]:empty,span[s
 .hm-band.hm-pass{flex-direction:column;align-items:flex-start;justify-content:flex-end;}
 .hm-band.hm-pass .hm-pass-r{margin-top:4px;}
 .hm-band .hm-btn-gold{align-self:flex-start;}
+
+/* ── Real space photos ──────────────────────────────────────────────── */
+.hm-visit{position:relative;overflow:hidden;padding:0 !important;display:block !important;}
+.hm-visit-photo{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:center 60%;}
+.hm-visit-inner{display:grid;grid-template-columns:1fr;gap:16px;padding:18px;}
+@media(min-width:768px){.hm-visit-inner{grid-template-columns:1fr 1fr 1fr;}}
+.hm-venue img.bg{object-position:center 55%;opacity:.95;}
+.hm-band.hm-venue::after{background:linear-gradient(180deg,rgba(14,44,42,.15) 0%,rgba(14,44,42,.55) 50%,rgba(14,44,42,.95) 100%) !important;}
+.hm-band.hm-pass img.bg{object-position:center 35%;}
+.ph-band img.bg{object-position:center 45%;}
+/* "The bar" section on home */
+.hm-space{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.hm-space img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:var(--r);box-shadow:var(--shadow-1);}
+.hm-space img.wide{grid-column:1/-1;aspect-ratio:16/9;}
+.hm-space-copy{grid-column:1/-1;padding:4px 2px 0;}
+.hm-space-copy p{margin:6px 0 0;color:var(--muted);font-size:15px;max-width:44ch;}
+@media(min-width:768px){.hm-space{grid-template-columns:2fr 1fr 1fr;}.hm-space img.wide{grid-column:span 1;aspect-ratio:auto;height:100%;}}

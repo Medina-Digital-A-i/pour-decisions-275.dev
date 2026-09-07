@@ -33,7 +33,7 @@
   ═══════════════════════════════════════════════════════════ -->
 
 <link rel="stylesheet" href="assets/light-theme.css?v=5">
-<link rel="stylesheet" href="assets/theme-bar.css?v=5">
+<link rel="stylesheet" href="assets/theme-bar.css?v=6">
 </head>
 <body>
 <x-dc>
@@ -456,10 +456,21 @@
             </div>
           </div>
 
+          <!-- the space -->
+          <div class="hm-sec">
+            <div class="hm-sec-head"><h2 class="hm-h2">Pull up a stool.</h2><span onClick="{{ goVenue }}" class="tap hm-link">Book the bar</span></div>
+            <div class="hm-space">
+              <img class="wide" src="assets/photos/space-bar.jpg" alt="The bar at Pour Decisions" loading="lazy">
+              <img src="assets/photos/space-tables.jpg" alt="High-top tables and the lounge" loading="lazy">
+              <img src="assets/photos/space-room.jpg" alt="Inside Pour Decisions" loading="lazy">
+              <div class="hm-space-copy"><p>A real bar — mahogany top, brass rail, twelve stools — pouring juice instead. Sit, work, meet, or take it to go.</p></div>
+            </div>
+          </div>
+
           <!-- Pour Pass -->
           <div class="hm-sec">
             <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
-              <div onClick="{{ goPass }}" class="tap hm-pass hm-band"><img class="bg" src="assets/photos/pass.jpg" alt="" loading="lazy">
+              <div onClick="{{ goPass }}" class="tap hm-pass hm-band"><img class="bg" src="assets/photos/space-rail.jpg" alt="" loading="lazy">
                 <div class="hm-pass-l">
                   <div class="hm-kicker">POUR PASS · {{ userName }}</div>
                   <div class="hm-pass-title">{{ passRemaining }} pours from a free juice</div>
@@ -469,7 +480,7 @@
               </div>
             </sc-if>
             <sc-if value="{{ signedOut }}" hint-placeholder-val="{{ true }}">
-              <div onClick="{{ goAuth }}" class="tap hm-pass hm-band"><img class="bg" src="assets/photos/pass.jpg" alt="" loading="lazy">
+              <div onClick="{{ goAuth }}" class="tap hm-pass hm-band"><img class="bg" src="assets/photos/space-rail.jpg" alt="" loading="lazy">
                 <div class="hm-pass-l">
                   <div class="hm-kicker">POUR PASS · FREE TO JOIN</div>
                   <div class="hm-pass-title">Every pour earns a stamp. Nine stamps, the tenth's on us.</div>
@@ -510,6 +521,8 @@
           <!-- Visit -->
           <div class="hm-sec">
             <div class="hm-visit">
+              <img class="hm-visit-photo" src="assets/photos/space-front.jpg" alt="Pour Decisions storefront" loading="lazy">
+              <div class="hm-visit-inner">
               <div class="hm-visit-col">
                 <div class="hm-kicker">VISIT</div>
                 <div class="hm-visit-big">359 Northern Blvd<br>Albany, NY 12204</div>
@@ -526,12 +539,13 @@
                 <a href="mailto:pourdecisionsalb@gmail.com" class="hm-link">pourdecisionsalb@gmail.com</a><br>
                 <a href="https://www.instagram.com/pourdecisions_juicebar/" target="_blank" rel="noopener" class="hm-link">@pourdecisions_juicebar</a>
               </div>
+              </div>
             </div>
           </div>
 
           <!-- Event space -->
           <div class="hm-sec">
-            <div class="hm-venue hm-band"><img class="bg" src="assets/photos/bar.jpg" alt="" loading="lazy">
+            <div class="hm-venue hm-band"><img class="bg" src="assets/photos/space-bar.jpg" alt="" loading="lazy">
               <div>
                 <div class="hm-kicker" style="color:#FFBE66">THE SPACE</div>
                 <div class="hm-promo-title">Birthdays, pop-ups, meetings — the whole bar, yours.</div>
@@ -1322,7 +1336,7 @@
             <span class="hm-status" style="background:{{ openBg }};color:{{ openFg }};"><i style="background:{{ openDot }}"></i>{{ openLabel }}</span>
           </div>
           <div class="ev-hero">
-            <div class="ph-band"><img class="bg" src="assets/photos/events.jpg" alt="" loading="lazy"><div>
+            <div class="ph-band"><img class="bg" src="assets/photos/space-tables.jpg" alt="" loading="lazy"><div>
               <div class="hm-eyebrow">359 Northern Blvd · Albany</div>
               <h1 class="hm-h1">What's on.</h1>
               <p class="hm-lede">Pop-ups, workshops, tastings and nights out — right here at the bar.</p>
@@ -1384,7 +1398,7 @@
           </sc-if>
 
           <div class="hm-sec">
-            <div class="hm-venue hm-band"><img class="bg" src="assets/photos/bar.jpg" alt="" loading="lazy">
+            <div class="hm-venue hm-band"><img class="bg" src="assets/photos/space-bar.jpg" alt="" loading="lazy">
               <div>
                 <div class="hm-kicker" style="color:#FFBE66">HOST YOUR OWN</div>
                 <div class="hm-promo-title">Birthdays, pop-ups, meetings — the whole bar, yours for the night.</div>
