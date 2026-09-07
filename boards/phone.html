@@ -40,7 +40,9 @@ a{color:var(--ink)} a:hover{color:var(--teal)}
 
 .page{width:390px;background:var(--cream);box-sizing:border-box}
 .band{padding:22px 22px;gap:14px;flex-direction:column;align-items:flex-start}
-.logo{height:70px}
+.logo{height:auto;width:190px;max-width:100%;display:block;margin:6px 0 4px;filter:drop-shadow(0 8px 18px rgba(0,0,0,.3))}
+.band{padding:24px 20px 26px !important}
+.band::before{right:-22%;top:-30%;width:72%;padding-top:72%;opacity:.85}
 .band .tg{font-size:16px}
 .pills{display:flex;flex-wrap:wrap;gap:8px;font-size:12px}
 .sz{padding:5px 12px}
