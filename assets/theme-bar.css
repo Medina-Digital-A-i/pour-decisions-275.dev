@@ -258,3 +258,4 @@ span[style*="font-size:18px;"]:empty,span[style*="font-size:19px;"]:empty,span[s
 .hm-space-copy{grid-column:1/-1;padding:4px 2px 0;}
 .hm-space-copy p{margin:6px 0 0;color:var(--muted);font-size:15px;max-width:44ch;}
 @media(min-width:768px){.hm-space{grid-template-columns:2fr 1fr 1fr;}.hm-space img.wide{grid-column:span 1;aspect-ratio:auto;height:100%;}}
+.hm-visit-photo{aspect-ratio:4/3;object-position:center 28%;}
