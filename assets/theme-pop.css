@@ -383,3 +383,7 @@ img.pd-hero-logo[src][style]{flex:0 0 auto !important;width:var(--logo-w) !impor
 .hm-top{justify-content:flex-end !important;}
 
 .pd-grove > svg[viewBox="0 0 240 520"],.dt-hero > svg[viewBox="0 0 240 520"]{display:none !important;}
+
+.pd-foot{margin-bottom:-28px;}
+.pd-foot-grid a b{white-space:nowrap;}
+.pd-foot-grid a:not(:has(b)){font-size:12.5px;overflow-wrap:anywhere;word-break:normal;}
