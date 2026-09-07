@@ -370,3 +370,10 @@ img.pd-hero-logo[src][style]{width:var(--logo-w) !important;}
 @media(min-width:768px){.pd-foot-grid{grid-template-columns:1fr 1fr 1fr;}.pd-foot-grid > div:nth-child(2){grid-column:auto;}}
 
 .dt-hero > div:has(> img.pd-hero-logo)::after{content:"";flex:0 0 100%;order:2;height:0;}
+
+/* ---- pop v8c: grove logo exactly --logo-w on every viewport ---- */
+.pd-hero-nav > span{order:2 !important;flex:0 0 100% !important;width:100% !important;height:0 !important;margin:0 !important;}
+img.pd-hero-logo[src][style]{flex:0 0 auto !important;width:var(--logo-w) !important;max-width:var(--logo-w) !important;height:auto !important;margin:14px auto 0 -4px !important;}
+.pd-hero-body{align-items:flex-start !important;}
+.pd-grove .pd-hero-title{font-size:46px !important;}
+@media(min-width:768px){.pd-grove .pd-hero-title{font-size:64px !important;}}
