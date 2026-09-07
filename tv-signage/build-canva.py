@@ -12,8 +12,8 @@ def money(n): return f"${n:.2f}".replace('.00', '')
 def price_for(it):
     if it.get('size'):
         sz = S[it['size']]
-        return money(sz[0]['price']) if len(sz) == 1 else f"{money(sz[0]['price'])}<small>/{money(sz[1]['price'])}</small>"
-    if it.get('prices'): return ' '.join(f"{money(v)}<small>{esc(k)}</small>" for k, v in it['prices'].items())
+        return money(sz[0]['price']) if len(sz) == 1 else f"{money(sz[0]['price'])} / {money(sz[1]['price'])}"
+    if it.get('prices'): return '  '.join(f"{money(v)} {esc(k)}" for k, v in it['prices'].items())
     return money(it['price'])
 
 DARK = THEME == 'dark'
@@ -31,21 +31,21 @@ CSS = f'''
 .cat{{position:absolute;left:70px;top:190px;width:1110px;font-family:'Bebas Neue',Impact,sans-serif;font-size:118px;line-height:1;letter-spacing:.03em;color:#fff;text-shadow:0 0 18px var(--accent),0 0 60px var(--accent)}}
 .note{{position:absolute;left:70px;top:316px;width:1110px;font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;line-height:1.2;letter-spacing:.14em;color:{note_c}}}
 .row{{position:absolute;left:70px;width:1110px;height:104px}}
-.nm{{position:absolute;left:0;top:0;width:820px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:900;font-size:44px;line-height:1.1;letter-spacing:-.01em;color:#fff;white-space:nowrap}}
-.nm .tag{{font-family:Manrope,Helvetica,sans-serif;font-style:normal;font-weight:800;font-size:18px;letter-spacing:.12em;text-transform:uppercase;color:{mango};margin-left:14px}}
+.nm{{position:absolute;left:0;top:0;width:560px;font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:900;font-size:44px;line-height:1.1;letter-spacing:-.01em;color:#fff;white-space:nowrap}}
+.tag{{position:absolute;left:580px;top:16px;width:250px;font-family:Manrope,Helvetica,sans-serif;font-weight:800;font-size:18px;line-height:1.2;letter-spacing:.12em;text-transform:uppercase;color:{mango};white-space:nowrap}}
 .ing{{position:absolute;left:0;top:58px;width:830px;font-size:24px;line-height:1.2;font-weight:500;color:{ing_c};white-space:nowrap}}
-.pr{{position:absolute;right:0;top:0;width:280px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:58px;line-height:1;color:{mango};white-space:nowrap}}
+.pr{{position:absolute;right:0;top:0;width:300px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:50px;line-height:1;color:{mango};white-space:nowrap}}
 .pr small{{font-size:32px;color:rgba(255,255,255,.85);margin-left:6px}}
 .hr{{position:absolute;left:0;bottom:0;width:1110px;height:1px;background:rgba(255,255,255,.22)}}
 .foot1{{position:absolute;left:70px;bottom:36px;width:900px;font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;line-height:1.2;letter-spacing:.14em;color:#fff}}
 .foot2{{position:absolute;right:70px;bottom:36px;width:900px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;line-height:1.2;letter-spacing:.14em;color:rgba(255,255,255,.85)}}
 '''
-hdr = f"Smoothies <b>{money(S['smoothie'][0]['price'])}</b> 16 oz · <b>{money(S['smoothie'][1]['price'])}</b> 24 oz<br>Juices <b>{money(S['juice'][0]['price'])}</b> 16 oz · <b>{money(S['juice'][1]['price'])}</b> 24 oz"
+hdr = f"Smoothies {money(S['smoothie'][0]['price'])} 16 oz · {money(S['smoothie'][1]['price'])} 24 oz<br>Juices {money(S['juice'][0]['price'])} 16 oz · {money(S['juice'][1]['price'])} 24 oz"
 foot = '<div class="foot1">Cold-pressed · blended fresh · 7:30 AM – 5 PM</div><div class="foot2">pourdecisionsjuicebar.com · 359 Northern Blvd, Albany</div>'
 
 def page(board, idx, title, note, items, accent, subtitle):
     def row(k, i):
-        tag = ('<span class="tag">' + esc(i['tag']) + '</span>') if i.get('tag') else ''
+        tag = ('<div class="tag">' + esc(i['tag']) + '</div>') if i.get('tag') else ''
         top = 372 + k * 108
         return ('<div class="row" style="top:%dpx">' % top + '<div class="nm">' + esc(i['name']) + tag + '</div><div class="ing">' + esc(' · '.join(i['ingredients'])) + '</div><div class="pr">' + price_for(i) + '</div>' + ('<div class="hr"></div>' if k < len(items) - 1 else '') + '</div>')
     rows = ''.join(row(k, i) for k, i in enumerate(items))
