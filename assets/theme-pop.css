@@ -174,3 +174,12 @@ html,body,.pdbody,.pd-app{background:#FFFFFF !important;}
 .hm-cat.wide .pa-wrap{left:44%;padding:14px 18px 0 !important;}
 .hm-row .pa-mini{width:44px;height:64px;display:block;}
 .menu-tile .pa-color{padding:4px 0 2px;}
+
+/* ── Fix pass C ─────────────────────────────────────────────────────── */
+.pa-color{color:var(--pa-c,#14B8AC) !important;}
+.pd-app .pd-pc,.pd-app .pd-pc *{color:#0B5C57 !important;}
+.mn-hero .mn-title,.mn-hero .mn-sub{color:#fff !important;max-width:58%;}
+.mn-hero{min-height:380px;padding-bottom:30px;}
+.mn-hero .pa-wrap{width:128px;height:200px;top:60px;right:14px;}
+.mn-nav > img{display:none;}
+@media(min-width:768px){.mn-hero .pa-wrap{width:210px;height:320px;top:44px;right:8%;}.mn-nav > img{display:block;}}
