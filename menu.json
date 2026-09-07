@@ -931,5 +931,593 @@
       "short": "BOGO 50%",
       "weight": 1
     }
+  ],
+  "ingredient_groups": [
+    {
+      "key": "fruit",
+      "label": "Fruit"
+    },
+    {
+      "key": "greens",
+      "label": "Greens"
+    },
+    {
+      "key": "veg",
+      "label": "Veggies"
+    },
+    {
+      "key": "roots",
+      "label": "Roots & Spice"
+    },
+    {
+      "key": "boosters",
+      "label": "Boosters"
+    },
+    {
+      "key": "pantry",
+      "label": "Pantry"
+    },
+    {
+      "key": "protein",
+      "label": "Proteins"
+    }
+  ],
+  "ingredients": [
+    {
+      "name": "açaí",
+      "group": "fruit",
+      "benefit": "Deep-purple Amazon berry loaded with antioxidants; supports heart and skin health."
+    },
+    {
+      "name": "apple",
+      "group": "fruit",
+      "benefit": "Fiber and natural sweetness; supports digestion and steady energy."
+    },
+    {
+      "name": "avocado",
+      "group": "fruit",
+      "benefit": "Healthy fats and potassium; keeps you full and supports skin and heart."
+    },
+    {
+      "name": "banana",
+      "group": "fruit",
+      "benefit": "Potassium and quick, clean energy; supports muscle and nerve function."
+    },
+    {
+      "name": "blueberry",
+      "group": "fruit",
+      "benefit": "Antioxidant powerhouse; supports brain, memory and heart health."
+    },
+    {
+      "name": "strawberry",
+      "group": "fruit",
+      "benefit": "Vitamin C and fiber; supports immunity and glowing skin."
+    },
+    {
+      "name": "berries",
+      "group": "fruit",
+      "benefit": "A mix of antioxidant-rich berries; supports brain, heart and immunity."
+    },
+    {
+      "name": "dried cranberry",
+      "group": "fruit",
+      "benefit": "Antioxidants that support urinary tract and gut health."
+    },
+    {
+      "name": "elderberry",
+      "group": "fruit",
+      "benefit": "Immune-support berry, traditionally used through cold season."
+    },
+    {
+      "name": "lemon",
+      "group": "fruit",
+      "benefit": "Vitamin C; aids digestion and helps the body flush out."
+    },
+    {
+      "name": "lime",
+      "group": "fruit",
+      "benefit": "Vitamin C and brightness; supports digestion and hydration."
+    },
+    {
+      "name": "mango",
+      "group": "fruit",
+      "benefit": "Vitamins A and C; supports eyes, skin and immunity."
+    },
+    {
+      "name": "orange",
+      "group": "fruit",
+      "benefit": "Vitamin C and folate; supports immunity and collagen."
+    },
+    {
+      "name": "orange juice",
+      "group": "fruit",
+      "benefit": "Fresh-squeezed vitamin C; supports immunity and hydration."
+    },
+    {
+      "name": "pear",
+      "group": "fruit",
+      "benefit": "Gentle fiber and hydration; easy on the stomach."
+    },
+    {
+      "name": "pineapple",
+      "group": "fruit",
+      "benefit": "Bromelain enzyme and vitamin C; aids digestion and eases inflammation."
+    },
+    {
+      "name": "pitaya",
+      "group": "fruit",
+      "benefit": "Dragon fruit — magnesium, fiber and antioxidants; supports gut health."
+    },
+    {
+      "name": "watermelon",
+      "group": "fruit",
+      "benefit": "Over 90% water plus lycopene; hydrates and supports recovery."
+    },
+    {
+      "name": "coconut water",
+      "group": "fruit",
+      "benefit": "Natural electrolytes; rehydrates fast after a workout or a long night."
+    },
+    {
+      "name": "coconut cream",
+      "group": "fruit",
+      "benefit": "Rich, creamy healthy fats for lasting fullness."
+    },
+    {
+      "name": "tomato",
+      "group": "veg",
+      "benefit": "Lycopene and vitamin C; supports heart and skin."
+    },
+    {
+      "name": "kalamata olives",
+      "group": "pantry",
+      "benefit": "Heart-healthy fats and antioxidants."
+    },
+    {
+      "name": "kale",
+      "group": "greens",
+      "benefit": "Vitamins A, C and K plus calcium; supports bones and immunity."
+    },
+    {
+      "name": "spinach",
+      "group": "greens",
+      "benefit": "Iron and folate; supports blood, energy and cell health."
+    },
+    {
+      "name": "celery",
+      "group": "greens",
+      "benefit": "Hydrating minerals; supports blood pressure and a gentle cleanse."
+    },
+    {
+      "name": "cucumber",
+      "group": "greens",
+      "benefit": "Hydrating and anti-inflammatory; supports skin and detox."
+    },
+    {
+      "name": "cilantro",
+      "group": "greens",
+      "benefit": "Supports the body's natural detox pathways; rich in antioxidants."
+    },
+    {
+      "name": "parsley",
+      "group": "greens",
+      "benefit": "Vitamin K and C; supports kidneys and fresh breath."
+    },
+    {
+      "name": "mint",
+      "group": "greens",
+      "benefit": "Soothes the stomach and aids digestion."
+    },
+    {
+      "name": "aloe vera",
+      "group": "greens",
+      "benefit": "Soothes the gut and supports skin hydration."
+    },
+    {
+      "name": "romaine",
+      "group": "greens",
+      "benefit": "Crisp, hydrating greens with vitamin A and folate."
+    },
+    {
+      "name": "mixed greens",
+      "group": "greens",
+      "benefit": "A blend of leafy greens for fiber, vitamins and minerals."
+    },
+    {
+      "name": "spring mix",
+      "group": "greens",
+      "benefit": "Tender young greens rich in vitamins A, C and K."
+    },
+    {
+      "name": "microgreens",
+      "group": "greens",
+      "benefit": "Baby greens packed with concentrated vitamins and antioxidants."
+    },
+    {
+      "name": "lettuce",
+      "group": "greens",
+      "benefit": "Light, hydrating crunch with folate and vitamin K."
+    },
+    {
+      "name": "red cabbage",
+      "group": "veg",
+      "benefit": "Anthocyanins and vitamin C; supports gut and immune health."
+    },
+    {
+      "name": "bell pepper",
+      "group": "veg",
+      "benefit": "More vitamin C than an orange; supports immunity and skin."
+    },
+    {
+      "name": "roasted red pepper",
+      "group": "veg",
+      "benefit": "Sweet, smoky and rich in vitamins A and C."
+    },
+    {
+      "name": "red onion",
+      "group": "veg",
+      "benefit": "Quercetin and prebiotics; supports heart and gut."
+    },
+    {
+      "name": "onion",
+      "group": "veg",
+      "benefit": "Prebiotic fiber and antioxidants; supports gut health."
+    },
+    {
+      "name": "corn",
+      "group": "veg",
+      "benefit": "Fiber and slow carbs for steady energy."
+    },
+    {
+      "name": "black beans",
+      "group": "pantry",
+      "benefit": "Plant protein and fiber; keeps you full and steadies blood sugar."
+    },
+    {
+      "name": "chickpeas",
+      "group": "pantry",
+      "benefit": "Plant protein, fiber and iron; supports fullness and energy."
+    },
+    {
+      "name": "carrot",
+      "group": "roots",
+      "benefit": "Beta-carotene for eyes and skin; naturally sweet."
+    },
+    {
+      "name": "beet",
+      "group": "roots",
+      "benefit": "Natural nitrates boost blood flow and stamina; supports liver health."
+    },
+    {
+      "name": "ginger",
+      "group": "roots",
+      "benefit": "Anti-inflammatory; settles the stomach and supports immunity."
+    },
+    {
+      "name": "turmeric",
+      "group": "roots",
+      "benefit": "Curcumin — a powerful anti-inflammatory for joints and recovery."
+    },
+    {
+      "name": "cayenne",
+      "group": "roots",
+      "benefit": "Fires up metabolism and circulation; clears the sinuses."
+    },
+    {
+      "name": "black pepper",
+      "group": "roots",
+      "benefit": "Helps your body absorb turmeric's curcumin up to 20x better."
+    },
+    {
+      "name": "cinnamon",
+      "group": "roots",
+      "benefit": "Helps balance blood sugar; naturally warming."
+    },
+    {
+      "name": "chili flake",
+      "group": "roots",
+      "benefit": "Capsaicin kick that supports metabolism."
+    },
+    {
+      "name": "black seed oil",
+      "group": "boosters",
+      "benefit": "Traditional immune and respiratory support; rich in antioxidants."
+    },
+    {
+      "name": "sea moss",
+      "group": "boosters",
+      "benefit": "92 trace minerals including iodine; supports thyroid, skin and immunity."
+    },
+    {
+      "name": "spirulina",
+      "group": "boosters",
+      "benefit": "Blue-green algae dense in protein, iron and chlorophyll; detox and energy."
+    },
+    {
+      "name": "chia",
+      "group": "boosters",
+      "benefit": "Omega-3s, fiber and protein; supports heart and digestion."
+    },
+    {
+      "name": "flax",
+      "group": "boosters",
+      "benefit": "Omega-3s and fiber; supports hormone balance and heart health."
+    },
+    {
+      "name": "collagen",
+      "group": "boosters",
+      "benefit": "Supports skin elasticity, hair, nails and joints."
+    },
+    {
+      "name": "protein",
+      "group": "boosters",
+      "benefit": "Whey or plant protein — builds muscle and keeps you full for hours."
+    },
+    {
+      "name": "chocolate protein",
+      "group": "boosters",
+      "benefit": "20g+ protein with rich cacao; post-workout recovery that tastes like dessert."
+    },
+    {
+      "name": "vanilla protein",
+      "group": "boosters",
+      "benefit": "20g+ protein; smooth, clean fuel for muscle and fullness."
+    },
+    {
+      "name": "oats",
+      "group": "boosters",
+      "benefit": "Slow-release carbs and beta-glucan fiber; steady energy and heart health.",
+      "flags": [
+        "gluten"
+      ]
+    },
+    {
+      "name": "peanut butter",
+      "group": "boosters",
+      "benefit": "Protein and healthy fats; sustained energy and fullness.",
+      "flags": [
+        "peanut"
+      ]
+    },
+    {
+      "name": "cacao",
+      "group": "boosters",
+      "benefit": "Raw chocolate — magnesium, iron and mood-lifting antioxidants."
+    },
+    {
+      "name": "cacao nibs",
+      "group": "boosters",
+      "benefit": "Crunchy raw cacao; magnesium, fiber and antioxidants."
+    },
+    {
+      "name": "cold brew",
+      "group": "boosters",
+      "benefit": "Smooth caffeine and antioxidants; focus without the jitters.",
+      "flags": [
+        "caffeine"
+      ]
+    },
+    {
+      "name": "espresso shot",
+      "group": "boosters",
+      "benefit": "A clean caffeine lift for focus and energy.",
+      "flags": [
+        "caffeine"
+      ]
+    },
+    {
+      "name": "granola",
+      "group": "pantry",
+      "benefit": "Whole-grain crunch with fiber for lasting energy.",
+      "flags": [
+        "gluten",
+        "nuts"
+      ]
+    },
+    {
+      "name": "walnut",
+      "group": "boosters",
+      "benefit": "Plant omega-3s; supports brain and heart health.",
+      "flags": [
+        "nuts"
+      ]
+    },
+    {
+      "name": "honey",
+      "group": "pantry",
+      "benefit": "Natural sweetener with antioxidants and soothing properties.",
+      "flags": [
+        "animal"
+      ]
+    },
+    {
+      "name": "agave",
+      "group": "pantry",
+      "benefit": "Plant-based sweetener with a lower glycemic index than sugar."
+    },
+    {
+      "name": "oat milk",
+      "group": "pantry",
+      "benefit": "Creamy dairy-free base with fiber; easy on the stomach.",
+      "flags": [
+        "gluten"
+      ]
+    },
+    {
+      "name": "almond milk",
+      "group": "pantry",
+      "benefit": "Light dairy-free base with vitamin E.",
+      "flags": [
+        "nuts"
+      ]
+    },
+    {
+      "name": "sourdough",
+      "group": "pantry",
+      "benefit": "Naturally fermented bread — easier to digest, lower glycemic.",
+      "flags": [
+        "gluten"
+      ]
+    },
+    {
+      "name": "ciabatta",
+      "group": "pantry",
+      "benefit": "Airy Italian bread, pressed crisp for our paninis.",
+      "flags": [
+        "gluten"
+      ]
+    },
+    {
+      "name": "wheat tortilla",
+      "group": "pantry",
+      "benefit": "Whole-wheat wrap with fiber.",
+      "flags": [
+        "gluten"
+      ]
+    },
+    {
+      "name": "tortilla strips",
+      "group": "pantry",
+      "benefit": "Crunchy corn tortilla strips.",
+      "flags": []
+    },
+    {
+      "name": "rice",
+      "group": "pantry",
+      "benefit": "Clean, steady carbs for energy."
+    },
+    {
+      "name": "cheddar",
+      "group": "pantry",
+      "benefit": "Calcium and protein.",
+      "flags": [
+        "dairy"
+      ]
+    },
+    {
+      "name": "feta",
+      "group": "pantry",
+      "benefit": "Tangy, lower-fat cheese with calcium and protein.",
+      "flags": [
+        "dairy"
+      ]
+    },
+    {
+      "name": "mozzarella",
+      "group": "pantry",
+      "benefit": "Mild cheese with calcium and protein.",
+      "flags": [
+        "dairy"
+      ]
+    },
+    {
+      "name": "pesto",
+      "group": "pantry",
+      "benefit": "Basil, olive oil and pine nuts — healthy fats and antioxidants.",
+      "flags": [
+        "dairy",
+        "nuts"
+      ]
+    },
+    {
+      "name": "chipotle aioli",
+      "group": "pantry",
+      "benefit": "Smoky, creamy house sauce.",
+      "flags": [
+        "egg"
+      ]
+    },
+    {
+      "name": "chipotle-lime",
+      "group": "pantry",
+      "benefit": "Smoky-citrus house dressing."
+    },
+    {
+      "name": "lemon-herb",
+      "group": "pantry",
+      "benefit": "Bright olive-oil dressing with fresh herbs."
+    },
+    {
+      "name": "lemon-lime",
+      "group": "pantry",
+      "benefit": "Light citrus dressing, no heavy oils."
+    },
+    {
+      "name": "balsamic",
+      "group": "pantry",
+      "benefit": "Aged vinegar with antioxidants; supports digestion."
+    },
+    {
+      "name": "honey-mustard",
+      "group": "pantry",
+      "benefit": "Sweet-tangy dressing made with real honey.",
+      "flags": [
+        "animal"
+      ]
+    },
+    {
+      "name": "ballistic sauce",
+      "group": "pantry",
+      "benefit": "Our spicy, creamy house sauce.",
+      "flags": [
+        "egg"
+      ]
+    },
+    {
+      "name": "sesame",
+      "group": "pantry",
+      "benefit": "Calcium, healthy fats and crunch.",
+      "flags": [
+        "sesame"
+      ]
+    },
+    {
+      "name": "crispy shrimp",
+      "group": "protein",
+      "benefit": "Lean protein and selenium.",
+      "flags": [
+        "shellfish"
+      ]
+    },
+    {
+      "name": "grilled chicken",
+      "group": "protein",
+      "benefit": "Lean protein for muscle and fullness.",
+      "flags": [
+        "animal"
+      ]
+    },
+    {
+      "name": "albacore tuna",
+      "group": "protein",
+      "benefit": "Lean protein with omega-3s.",
+      "flags": [
+        "fish"
+      ]
+    },
+    {
+      "name": "grilled salmon",
+      "group": "protein",
+      "benefit": "Omega-3s and protein; supports heart and brain.",
+      "flags": [
+        "fish"
+      ]
+    },
+    {
+      "name": "smoked salmon",
+      "group": "protein",
+      "benefit": "Omega-3 rich protein.",
+      "flags": [
+        "fish"
+      ]
+    },
+    {
+      "name": "egg",
+      "group": "protein",
+      "benefit": "Complete protein with choline for brain health.",
+      "flags": [
+        "egg"
+      ]
+    }
   ]
 }

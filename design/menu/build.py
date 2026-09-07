@@ -76,6 +76,26 @@ prot_body = ' · '.join(f'{esc(p["name"])} <b>+{money(p["price"])}</b>' for p in
 pass_body = '<br>'.join(f'{esc(m["name"])} <b>{money(m["price"])}</b>/{m["per"]} — {esc(m["note"])}' for m in M['memberships'])
 shots_body = '<br>'.join(f'<span style="color:var(--text)">{esc(i["name"])}</span> <span style="color:var(--muted)">— {esc(", ".join(i["ingredients"]))}</span>' for i in sh['items'])
 biz = M['business']
+ING = M.get('ingredients', [])
+ING_GROUPS = M.get('ingredient_groups', [])
+def ing_group_html(gk, glabel):
+    rows = sorted([g for g in ING if g['group'] == gk], key=lambda g: g['name'])
+    if not rows: return ''
+    return (f'<div class="igg"><h3 class="igh">{esc(glabel)}</h3>' +
+            ''.join(f'<p class="igr"><b>{esc(g["name"].capitalize())}</b> {esc(g["benefit"])}</p>' for g in rows) + '</div>')
+ING_ALL = ''.join(ing_group_html(g['key'], g['label']) for g in ING_GROUPS)
+def ing_cols(n):
+    # split groups across n columns by row count
+    blocks = [(g, ing_group_html(g['key'], g['label']), len([x for x in ING if x['group'] == g['key']])) for g in ING_GROUPS]
+    total = sum(c for _, _, c in blocks); per = total / n
+    cols, cur, cnt = [], '', 0
+    for g, html_, c in blocks:
+        if cur and cnt + c > per * 1.08 and len(cols) < n - 1:
+            cols.append(cur); cur, cnt = '', 0
+        cur += html_; cnt += c
+    cols.append(cur)
+    while len(cols) < n: cols.append('')
+    return ''.join(f'<div class="stack">{c}</div>' for c in cols)
 smoothie_note = f'16 oz {money(S["smoothie"][0]["price"])} · 24 oz {money(S["smoothie"][1]["price"])} · protein blends +$1'
 juice_note = f'16 oz {money(S["juice"][0]["price"])} · 24 oz {money(S["juice"][1]["price"])} · pressed fresh daily'
 shot_note = f'2 oz {money(S["shot"][0]["price"])} · two for $8'
@@ -237,6 +257,9 @@ PHONE_CSS = """
 .qr{display:flex;align-items:center;gap:12px;line-height:1.35;margin-bottom:8px}.qr svg{width:72px;height:72px;background:#fff;border-radius:8px;padding:4px;box-sizing:border-box}
 .foot{display:flex;flex-direction:column;gap:4px;padding:18px 22px 28px;background:var(--sand);font-size:12px;font-weight:700;color:var(--ink)}
 .stack{display:flex;flex-direction:column}
+.igh{font-family:"Bebas Neue","Oswald","Impact",sans-serif;color:var(--gold);letter-spacing:.06em;font-size:20px;margin:14px 0 4px;line-height:1}
+.igr{margin:0;font-size:12.5px;line-height:1.4;color:var(--muted);font-weight:500;padding:6px 0;border-bottom:1px solid var(--line)}
+.igr b{color:var(--text);font-family:"Fraunces","Georgia",serif;font-weight:700;font-size:14px}
 """
 phone = doc('phone', PHONE_CSS, f'''
 <div class="page">
@@ -249,11 +272,31 @@ phone = doc('phone', PHONE_CSS, f'''
     <div class="stack">{section(sa, note='Meat-free by design')}{box('Add protein', prot_body)}</div>
     <div class="stack">{section(wp)}</div>
     <div class="stack">{section(bb, note='')}{box('Smoothie add-ins', addons_body)}{box(pk['title'] + ' · ' + pk['note'], pack_body)}{box('Pour Pass', pass_body)}</div>
+    <div class="stack"><div class="sec"><div class="sech"><h2 class="cat">What's in it</h2><div class="catnote">Every ingredient we pour, and what it does for you</div></div>{ING_ALL}</div></div>
   </div>
   {footer()}
 </div>''')
 
-for name, s in [('Main', print_drinks), ('PrintFood', print_food), ('TV1Smoothies', tv1), ('TV2Juices', tv2), ('TV3Food', tv3), ('Phone', phone)]:
+PRINT_ING_CSS = PRINT_CSS + """
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;padding:16px 36px 0;flex:1;align-content:start}
+.igh{font-family:"Bebas Neue","Oswald","Impact",sans-serif;color:var(--gold);letter-spacing:.06em;font-size:15px;margin:7px 0 2px;line-height:1}
+.igg:first-child .igh{margin-top:0}
+.igr{margin:0;font-size:8.6px;line-height:1.28;color:var(--muted);font-weight:500;padding:1.6px 0;border-bottom:1px solid var(--line)}
+.igr b{color:var(--text);font-family:"Fraunces","Georgia",serif;font-weight:700;font-size:9.6px}
+.ttl{padding:12px 36px 0;display:flex;align-items:baseline;gap:14px}
+.ttl .cat{font-size:30px}.ttl .catnote{font-size:10.5px}
+.disc{padding:6px 36px 4px;font-size:8.5px;color:var(--muted);font-weight:600}
+"""
+print_ing = doc('ingredients', PRINT_ING_CSS, f'''
+<div class="page">
+  {band('logo-white.png', size_pills=False)}
+  <div class="ttl"><h2 class="cat">What's in it</h2><div class="catnote">Every ingredient we pour, and what it does for you</div></div>
+  <div class="cols3">{ing_cols(3)}</div>
+  <div class="disc">General wellness info, not medical advice. Ask us about allergies before you order — we prep nuts, dairy, gluten, egg, fish and shellfish in the same kitchen.</div>
+  {footer()}
+</div>''')
+
+for name, s in [('Main', print_drinks), ('PrintFood', print_food), ('PrintIngredients', print_ing), ('TV1Smoothies', tv1), ('TV2Juices', tv2), ('TV3Food', tv3), ('Phone', phone)]:
     open(f'./{name}.dc.html', 'w').write(s)
 
 canvas = {
