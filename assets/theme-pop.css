@@ -166,3 +166,11 @@ html,body,.pdbody,.pd-app{background:#FFFFFF !important;}
 .hm-cat.wide .pa{max-width:100%;}
 .blender{top:52px;right:-22px;width:214px;}
 @media(min-width:768px){.blender{top:40px;right:6%;width:380px;}}
+
+/* ── Fix pass B: product art always fits its box, anchored bottom ───── */
+.pa-color{display:block !important;width:100%;height:100%;}
+.pa{width:100% !important;height:100% !important;max-width:none !important;}
+.hm-cat .pa-wrap{display:block;padding:14px 22px 0 !important;}
+.hm-cat.wide .pa-wrap{left:44%;padding:14px 18px 0 !important;}
+.hm-row .pa-mini{width:44px;height:64px;display:block;}
+.menu-tile .pa-color{padding:4px 0 2px;}
