@@ -381,3 +381,5 @@ img.pd-hero-logo[src][style]{flex:0 0 auto !important;width:var(--logo-w) !impor
 /* one logo on home: the lead only */
 .hm-top .hm-logo{display:none !important;}
 .hm-top{justify-content:flex-end !important;}
+
+.pd-grove > svg[viewBox="0 0 240 520"],.dt-hero > svg[viewBox="0 0 240 520"]{display:none !important;}
