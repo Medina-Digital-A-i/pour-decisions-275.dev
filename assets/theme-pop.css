@@ -185,3 +185,6 @@ html,body,.pdbody,.pd-app{background:#FFFFFF !important;}
 @media(min-width:768px){.mn-hero .pa-wrap{width:210px;height:320px;top:44px;right:8%;}.mn-nav > img{display:block;}}
 .pa-color svg,.pa-color svg *{color:var(--pa-c,#14B8AC) !important;}
 .pa path[fill="currentColor"],.pa rect[fill="currentColor"],.pa ellipse[fill="currentColor"]{fill:var(--pa-c,#14B8AC) !important;}
+.dt-hero .pa-wrap{left:auto !important;right:16px;transform:none !important;width:186px;height:284px;top:56px;}
+.dt-hero > div:last-child{margin-top:240px !important;max-width:62%;}
+@media(min-width:768px){.dt-hero .pa-wrap{right:12%;width:250px;height:380px;top:70px;}.dt-hero > div:last-child{max-width:55%;margin-top:320px !important;}}

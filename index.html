@@ -34,7 +34,7 @@
 
 <link rel="stylesheet" href="assets/light-theme.css?v=5">
 <link rel="stylesheet" href="assets/theme-bar.css?v=7">
-<link rel="stylesheet" href="assets/theme-pop.css?v=5">
+<link rel="stylesheet" href="assets/theme-pop.css?v=6">
 </head>
 <body>
 <x-dc>
@@ -3198,7 +3198,7 @@ class Component extends DCLogic {
       item: {
         ...active, calLabel: active.tag || active.kind,
         photo: 'assets/photos/cat-' + (active.catKey || 'juices') + '.jpg',
-        isCup: active.art === 'cup', isBottle: active.art === 'bottle', isShot: active.art === 'shot', isBowl: active.art === 'bowl', tint: 'color-mix(in srgb,' + active.color + ' 62%,#0B5C57)',
+        isCup: active.art === 'cup', isBottle: active.art === 'bottle', isShot: active.art === 'shot', isBowl: active.art === 'bowl', tint: 'color-mix(in srgb,' + active.color + ' 78%,#0B5C57)',
         ingList: (active.ingList || active.ingredients.split(' · ')).map(n => { const g = this.ingInfo(n); return { name: n, show: () => { if (g) this.setState({ ingOpen: g }); }, border: g ? 'rgba(239,138,0,.6)' : 'rgba(255,255,255,.1)' }; }),
         benefits: this.BENEFITS[active.id] || [],
         benefitLine: active.benefitLine || '',
