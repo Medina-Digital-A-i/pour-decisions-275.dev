@@ -383,6 +383,7 @@
             <button onClick="{{ signIn }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:16px;padding:17px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">{{ authCta }}</button>
 
             <div onClick="{{ toggleAuthMode }}" class="tap" style="text-align:center;color:var(--gold-glow);font-weight:700;font-size:13.5px;margin-top:22px;">{{ authToggleText }}</div>
+            <sc-if value="{{ authModeIn }}" hint-placeholder-val="{{ true }}"><p style="text-align:center;color:rgba(255,255,255,.55);font-size:12.5px;line-height:1.5;margin:16px 0 0;">Forgot your password? Ask at the counter — we reset it in seconds, then you pick a new one in the app.</p></sc-if>
           </div>
         </div>
         </sc-if>
@@ -1239,6 +1240,22 @@
               <button onClick="{{ popEvent.rsvpFn }}" class="tap hm-btn" style="background:#fff;color:{{ popEvent.ink }};">{{ popEvent.rsvpLabel }}</button>
               <button onClick="{{ openEventPop }}" class="tap hm-btn ev-btn-glass">Details</button>
             </div>
+          </div>
+        </div>
+        </sc-if>
+
+        <!-- ===================== CHANGE PASSWORD ===================== -->
+        <sc-if value="{{ hasPwOpen }}" hint-placeholder-val="{{ false }}">
+        <div class="evp-backdrop" onClick="{{ closePw }}">
+          <div class="evp igp" onClick="{{ stopEvt }}">
+            <button onClick="{{ closePw }}" class="tap evp-x" title="Close">×</button>
+            <div class="hm-kicker">Your account</div>
+            <div class="igp-name">{{ pwTitle }}</div>
+            <p class="igp-ben">{{ pwSub }}</p>
+            <input type="password" value="{{ pwCur }}" onInput="{{ onPwCur }}" placeholder="Current (or temporary) password" autocomplete="current-password" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:12px;">
+            <input type="password" value="{{ pwNew }}" onInput="{{ onPwNew }}" placeholder="New password (6+ characters)" autocomplete="new-password" style="width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:16px;padding:15px 18px;color:#fff;font-size:14px;font-family:var(--f-body);outline:none;margin-bottom:14px;">
+            <sc-if value="{{ pwErr }}" hint-placeholder-val="{{ false }}"><div style="color:#FFBE66;font-size:13px;font-weight:600;margin:-4px 0 12px;">{{ pwErr }}</div></sc-if>
+            <button onClick="{{ savePw }}" class="tap" style="width:100%;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:15px;border-radius:99px;border:0;">{{ pwCta }}</button>
           </div>
         </div>
         </sc-if>
@@ -2125,6 +2142,7 @@ class Component extends DCLogic {
       user: ls('pd_user', { name:'Guest', initial:'G', email:'' }),
       authMode: 'in',
       authPassword: '', authMarketing: true, authBusy: false,
+      pwOpen: false, pwCur: '', pwNew: '', pwErr: '', pwBusy: false,
       token: ls('pd_token', ''),
       authName: '',
       authEmail: '',
@@ -2400,7 +2418,7 @@ class Component extends DCLogic {
   }
   _applyMember(m, token){
     const name = m.name || (m.email || '').split('@')[0] || 'Guest';
-    const user = { name, initial: name[0].toUpperCase(), email: m.email || '', phone: m.phone || '', marketing: !!m.marketing, role: m.role || 'member', birthday: m.birthday || '', rsvps: m.rsvps || [], created: m.created || '' };
+    const user = { name, initial: name[0].toUpperCase(), email: m.email || '', phone: m.phone || '', marketing: !!m.marketing, role: m.role || 'member', birthday: m.birthday || '', rsvps: m.rsvps || [], created: m.created || '', mustChange: !!m.mustChange };
     const patch = { signedIn:true, user, points: m.points || 0, filled: m.filled || 0, orders: m.orders || [], canSpin: m.canSpin !== false, prizes: (m.prizes || []).map(p => ({ ...p, name: p.label, emoji: '', cat: 'Show code ' + p.code + ' at the counter', wonDate: p.wonDate })) };
     if (token) { patch.token = token; this._sv('pd_token', token); }
     this._sv('pd_signedIn', true); this._sv('pd_user', user); this._sv('pd_points', patch.points); this._sv('pd_filled', patch.filled); this._sv('pd_orders', patch.orders);
@@ -2424,6 +2442,17 @@ class Component extends DCLogic {
       if (e.code === 'NO_ACCOUNT') patch.authMode = 'up';
       this.setState(patch);
     }
+  }
+  async savePassword(){
+    const s = this.state; if (s.pwBusy) return;
+    if ((s.pwNew || '').length < 6) return this.setState({ pwErr: 'New password needs at least 6 characters.' });
+    if (!s.pwCur) return this.setState({ pwErr: 'Enter your current password.' });
+    this.setState({ pwBusy: true, pwErr: '' });
+    try {
+      const data = await this._api('password', 'POST', { current: s.pwCur, next: s.pwNew });
+      const patch = this._applyMember(data.member);
+      this.setState({ ...patch, pwBusy: false, pwOpen: false, pwCur: '', pwNew: '' });
+    } catch (e) { this.setState({ pwBusy: false, pwErr: e.message || 'Could not save. Try again.' }); }
   }
   signOut(){
     if (this.state.token) { try { this._api('signout', 'POST', {}).catch(() => {}); } catch(e) {} }
@@ -2550,6 +2579,11 @@ class Component extends DCLogic {
         usedIn: (this.MENU || []).filter(it => (it.ingList || []).some(n => { const g = this.ingInfo(n); return g && g.name === open.name; })).slice(0, 6).map(it => ({ name: it.name, go: () => { this.setState({ ingOpen: null }); this.openItem(it); } })),
         get hasUsedIn(){ return this.usedIn.length > 0; } } : { name:'', benefit:'', group:'', flags:[], hasFlags:false, usedIn:[], hasUsedIn:false },
       closeIng: () => this.setState({ ingOpen: null }),
+      hasPwOpen: !!this.state.pwOpen, pwCur: this.state.pwCur, pwNew: this.state.pwNew, pwErr: this.state.pwErr, pwCta: this.state.pwBusy ? 'Saving…' : 'Save new password',
+      pwTitle: (this.state.user && this.state.user.mustChange) ? 'Set your new password' : 'Change password',
+      pwSub: (this.state.user && this.state.user.mustChange) ? 'You signed in with a temporary password from the counter. Pick your own now.' : 'Enter your current password, then the new one (6+ characters).',
+      onPwCur: (e) => this.setState({ pwCur: e.target.value }), onPwNew: (e) => this.setState({ pwNew: e.target.value }),
+      closePw: () => this.setState({ pwOpen: false }), savePw: () => this.savePassword(),
       goIngredients: () => this.go('ingredients'),
     };
   }
@@ -3291,7 +3325,7 @@ class Component extends DCLogic {
         { icon:'', label:'Admin Panel', go:()=>this.go('admin') },
         { icon:'', label:'@pourdecisions_juicebar  ', go:()=>window.open('https://www.instagram.com/pourdecisions_juicebar/','_blank') },
         ...((S.user && S.user.role === 'owner') ? [{ icon:'', label:'Owner dashboard →', go:()=>{ location.href = 'admin.html'; } }] : []),
-        { icon:'', label:'Settings', go:()=>{} },
+        { icon:'', label: (S.user && S.user.mustChange) ? 'Set your new password' : 'Change password', go:()=>this.setState({ pwOpen:true, pwCur:'', pwNew:'', pwErr:'' }) },
         { icon:'', label:'Sign out', go:()=>this.signOut() }
       ],
 
