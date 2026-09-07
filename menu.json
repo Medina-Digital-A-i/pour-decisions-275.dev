@@ -483,6 +483,19 @@
           "size": "shot"
         },
         {
+          "id": "golden-hour",
+          "name": "Golden Hour",
+          "ingredients": [
+            "turmeric",
+            "ginger",
+            "orange",
+            "black pepper",
+            "lemon"
+          ],
+          "tag": "the turmeric shot",
+          "size": "shot"
+        },
+        {
           "id": "the-bouncer",
           "name": "The Bouncer",
           "ingredients": [
