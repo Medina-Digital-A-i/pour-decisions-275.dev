@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Builds the animated neon menu-board pages (1920x1080) from ../menu.json.
 Each page exposes window.drawFrame(i, N) so capture-neon.js can render deterministic frames."""
-import json, html, os, base64
+import json, html, os, base64, sys
+THEME = os.environ.get('THEME', 'dark')
 HERE = os.path.dirname(os.path.abspath(__file__))
 M = json.load(open(os.path.join(HERE, '..', 'menu.json')))
 C = {c['key']: c for c in M['categories']}
@@ -12,6 +13,26 @@ def money(n): return f"${n:.2f}".replace('.00', '')
 COLORS = {'the-regular':'#F25C7A','happy-hour':'#FF9A3C','green-light':'#4CB96B','nightcap':'#6B4FBB','designated-driver':'#FFE08A','last-call':'#FF4FA3','malibu':'#FFB347','liquid-courage':'#8B5A2B','open-tab':'#B8336A','morning-shift':'#5C4033','heavy-pour':'#7A4A1E','early-bird':'#F47C8C','green-room':'#3E9E5E','carrot-cake':'#F28C28','innerg-elevator':'#F28C28','sober-up':'#5CB85C','ase':'#F2C230','red-eye':'#C2185B','hair-of-the-dog':'#B03060','skinny-dip':'#A8D8B9','sunday-brunch':'#FF5C7A','watermelon-lemon':'#FF6B6B','on-the-rocks':'#7FD6C2','clean-slate':'#8BC34A','flu-shot':'#F5A623','double-shot':'#F7D774','the-bouncer':'#6A4C93','golden-hour':'#E9A23B'}
 LOGO_B64 = base64.b64encode(open(os.path.join(HERE, '..', 'assets', 'logo-clean-512.png'), 'rb').read()).decode()
 LOGO = 'data:image/png;base64,' + LOGO_B64
+
+
+BRAND_CSS = """
+:root{--bg:#0F7A73}
+html,body{background:linear-gradient(135deg,#14B8AC 0%,#0F7A73 55%,#0B5C57 100%) !important}
+.g1{background:#FFB800;opacity:.5}.g2{background:#FF8A00;opacity:.45}.g3{background:#8BE000;opacity:.25}
+.grid{background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px)}
+.cat{color:#fff;text-shadow:0 0 18px rgba(255,184,0,.55),0 8px 30px rgba(0,0,0,.25)}
+.note{color:#FFE7A8}
+.ing{color:rgba(255,255,255,.88)}
+.row{border-bottom-color:rgba(255,255,255,.22)}
+.pr{color:#FFD24D;text-shadow:0 4px 18px rgba(0,0,0,.25)}
+.pr small{color:rgba(255,255,255,.85)}
+.tag{background:#FF8A00;color:#fff}
+.hdrR{opacity:.95}.hdrR b{color:#FFD24D}
+.foot{color:rgba(255,255,255,.9)}
+.dots i{background:rgba(255,255,255,.35)}.dots i.on{background:#FFD24D;box-shadow:0 0 14px #FFD24D}
+.mist{opacity:.9}
+.cupwrap{filter:drop-shadow(0 40px 50px rgba(0,0,0,.4))}
+"""
 
 def cup(color, kind):
     lab = f'<rect class="label" x="29" y="104" width="62" height="46" rx="10"/><image href="{LOGO}" x="33" y="109" width="54" height="36" preserveAspectRatio="xMidYMid meet"/>'
@@ -77,7 +98,7 @@ html,body{{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--
 .dots{{position:absolute;left:50%;bottom:44px;transform:translateX(-50%);display:flex;gap:12px}}
 .dots i{{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.25);display:block}}
 .dots i.on{{background:var(--mango);box-shadow:0 0 14px var(--mango)}}
-</style></head><body>
+{BRAND_CSS if THEME == 'brand' else ''}</style></head><body>
 <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div><div class="grid"></div>
 <div id="mist"></div>
 <div class="brand"><img src="{LOGO}" alt="Pour Decisions"><div class="tg">{esc(subtitle)}</div></div>
@@ -123,6 +144,7 @@ B = board('B', [
     ('juices', ju['items'][5:10], 'Cold-Pressed Juices', juice_note, 'bottle', '#14B8AC'),
     ('shots', sh['items'], 'Wellness Shots', sh.get('note', ''), 'shot', '#FFB800'),
 ], 'Juices & shots')
-open(os.path.join(HERE, 'board-neon-A.html'), 'w', encoding='utf-8').write(A)
-open(os.path.join(HERE, 'board-neon-B.html'), 'w', encoding='utf-8').write(B)
-print('built board-neon-A.html, board-neon-B.html')
+SUF = '' if THEME == 'dark' else '-' + THEME
+open(os.path.join(HERE, f'board-neon-A{SUF}.html'), 'w', encoding='utf-8').write(A)
+open(os.path.join(HERE, f'board-neon-B{SUF}.html'), 'w', encoding='utf-8').write(B)
+print(f'built board-neon-A{SUF}.html, board-neon-B{SUF}.html')

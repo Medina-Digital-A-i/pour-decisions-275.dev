@@ -34,7 +34,7 @@
 
 <link rel="stylesheet" href="assets/light-theme.css?v=5">
 <link rel="stylesheet" href="assets/theme-bar.css?v=7">
-<link rel="stylesheet" href="assets/theme-pop.css?v=7">
+<link rel="stylesheet" href="assets/theme-pop.css?v=8">
 </head>
 <body>
 <x-dc>
@@ -436,7 +436,9 @@
               <button onClick="{{ goPackages }}" class="tap hm-btn hm-btn-ghost">Build a juice pack</button>
             </div>
             <div class="hm-hours"><i></i>{{ hoursLabel }} · 359 Northern Blvd</div>
+            <div class="stk">Happy hour<b>7:30</b>AM daily</div>
           </div>
+          <div class="mq"><div class="mq-track"><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Happy hour starts at 7:30<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is on us<i></i></span><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Happy hour starts at 7:30<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is on us<i></i></span></div></div>
 
           <!-- categories (photo tiles) -->
           <div class="hm-sec">
@@ -481,6 +483,7 @@
             </div>
           </div>
 
+          <div class="mq teal" style="margin-top:30px"><div class="mq-track"><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Happy hour starts at 7:30<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is on us<i></i></span><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Happy hour starts at 7:30<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is on us<i></i></span></div></div>
           <!-- the space -->
           <div class="hm-sec">
             <div class="hm-sec-head"><h2 class="hm-h2">Pull up a stool.</h2><span onClick="{{ goVenue }}" class="tap hm-link">Book the bar</span></div>
@@ -3665,5 +3668,13 @@ window.addEventListener('beforeinstallprompt', function(e) {
 <form hidden method='post' name='owner-alert' data-netlify='true'><input type='text' name='subject'/><textarea name='message'></textarea></form>
 <form hidden method='post' name='event-booking'><input type='hidden' name='form-name' value='event-booking' /><input type="text" name="name"/><input type="email" name="email"/><input type="text" name="date"/><textarea name="note"></textarea><input name="bot-field"/></form>
 <form hidden method='post' name='venue-booking'><input type='hidden' name='form-name' value='venue-booking' /><input type="text" name="name"/><input type="email" name="email"/><input type="tel" name="phone"/><input type="text" name="eventType"/><input type="text" name="package"/><input type="text" name="date"/><input type="text" name="timeBlock"/><input type="text" name="guests"/><textarea name="notes"></textarea><input name="bot-field"/></form>
+<script>
+(function pdReveal(){
+  if (!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  const arm = () => document.querySelectorAll('.hm-sec:not(.rv), .menu-grid > .tap:not(.rv), .ev-row:not(.rv), .ig-row:not(.rv)').forEach(el => { const r = el.getBoundingClientRect(); el.classList.add('rv'); if (r.top < window.innerHeight) { el.classList.add('in'); } else io.observe(el); });
+  arm(); new MutationObserver(() => arm()).observe(document.body, { childList: true, subtree: true });
+})();
+</script>
 </body>
 </html>

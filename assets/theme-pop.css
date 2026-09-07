@@ -200,3 +200,36 @@ html,body,.pdbody,.pd-app{background:#FFFFFF !important;}
 .ev-head::after{content:"";}
 .ph-band .hm-h1{font-size:40px !important;}
 @media(min-width:768px){.mn-nav > img{height:72px !important;}.dt-hero .pd-hero-logo{height:72px !important;}}
+
+/* ── Research pass: hierarchy, marquee, stickers, reveals ───────────── */
+html,body,.pdbody,.pd-app,.hm,.pd-main-scroll,.ev,.mn-list,.mn-body{background:#F8F7F3 !important;}
+.hm-menu,.ig-row,.hm-visit,.hm-ingstrip,.menu-grid > .tap,.ev-row{background:#fff !important;}
+.hm-hero-pop .hm-h1{font-size:60px !important;line-height:.9 !important;letter-spacing:-.04em !important;}
+.hm-h2{font-size:34px !important;letter-spacing:-.03em !important;}
+.hm-eyebrow,.hm-kicker,.bf-title{font-size:12px !important;letter-spacing:.22em !important;}
+.hm-cat-name{font-size:28px !important;}
+.hm-row-name{font-size:21px !important;}
+@media(min-width:768px){.hm-hero-pop .hm-h1{font-size:104px !important;}.hm-h2{font-size:44px !important;}.hm-cat-name{font-size:36px !important;}}
+/* marquee divider */
+.mq{overflow:hidden;background:var(--brass);color:#fff;font-family:'Bebas Neue',Impact,sans-serif;font-size:22px;letter-spacing:.16em;padding:14px 0;white-space:nowrap;position:relative;}
+.mq-track{display:inline-flex;gap:0;animation:mq 28s linear infinite;will-change:transform;}
+.mq-track span{padding:0 22px;}
+.mq-track span i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;margin-left:22px;vertical-align:middle;opacity:.9;}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq.teal{background:var(--bar);}
+@media(prefers-reduced-motion:reduce){.mq-track{animation:none;}}
+/* sticker badge in hero */
+.stk{position:absolute;right:18px;bottom:150px;width:118px;height:118px;border-radius:50%;background:#FFB800;color:#0B5C57;display:grid;place-items:center;text-align:center;font-family:'Bebas Neue',Impact,sans-serif;font-size:17px;letter-spacing:.08em;line-height:1.05;transform:rotate(-12deg);box-shadow:0 16px 30px rgba(0,0,0,.25);z-index:3 !important;padding:12px;}
+.stk b{display:block;font-size:30px;color:#fff;letter-spacing:.02em;}
+@media(min-width:768px){.stk{right:10%;bottom:auto;top:110px;width:150px;height:150px;font-size:20px;}.stk b{font-size:40px;}}
+@media(max-width:400px){.stk{display:none;}}
+/* stickers: rotate tag pills a touch */
+.bf-pill,.al-pill{transform:rotate(-2deg);}
+.bf-pills .bf-pill:nth-child(2n){transform:rotate(2deg);}
+/* product depth */
+.hm-cat .pa{filter:drop-shadow(0 26px 26px rgba(0,0,0,.35));}
+.menu-tile .pa{filter:drop-shadow(0 8px 10px rgba(0,0,0,.18));}
+/* scroll reveals (below the fold only; JS adds .in) */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,.68,0,1.1);}
+.rv.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}}
