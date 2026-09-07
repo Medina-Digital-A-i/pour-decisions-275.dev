@@ -47,6 +47,8 @@ def _norm(s):
     s = _re.sub(r'^(fresh|smashed|grilled|crispy|rolled|cherry|english|dried|roasted|smoked|mixed|or all|extra|plain)\s+', '', s)
     return s
 def ing_flags(name):
+    raw = name.lower().strip()
+    if raw in ING_FLAGS: return ING_FLAGS[raw]
     L = _norm(name)
     if L in ING_FLAGS: return ING_FLAGS[L]
     sing = _re.sub(r'ies$', 'y', L); sing = _re.sub(r's$', '', sing)

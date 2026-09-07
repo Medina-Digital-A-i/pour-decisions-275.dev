@@ -1339,9 +1339,7 @@
       "name": "oat milk",
       "group": "pantry",
       "benefit": "Creamy dairy-free base with fiber; easy on the stomach.",
-      "flags": [
-        "gluten"
-      ]
+      "flags": []
     },
     {
       "name": "almond milk",
