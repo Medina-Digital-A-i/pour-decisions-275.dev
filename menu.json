@@ -1517,5 +1517,32 @@
         "egg"
       ]
     }
-  ]
+  ],
+  "rewards": {
+    "points_per_dollar": 10,
+    "pours_for_free": 9,
+    "free_pour_label": "Free 16 oz juice or smoothie (Pour Pass)",
+    "catalog": [
+      {
+        "id": "size-up",
+        "title": "Free size upgrade (16 → 24 oz)",
+        "cost": 200
+      },
+      {
+        "id": "smoothie-3",
+        "title": "$3 off any smoothie",
+        "cost": 300
+      },
+      {
+        "id": "free-shot",
+        "title": "Free wellness shot",
+        "cost": 450
+      },
+      {
+        "id": "free-pour",
+        "title": "Free 16 oz juice or smoothie",
+        "cost": 950
+      }
+    ]
+  }
 }

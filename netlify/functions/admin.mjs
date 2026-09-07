@@ -2,11 +2,13 @@
 //   GET /api/admin/overview            -> KPIs, signups/day, traffic/day, top screens, top items, recent members & orders
 //   GET /api/admin/members?q=          -> member list (search by name/email/phone)
 //   GET /api/admin/member?email=       -> full profile incl. orders + prizes
+//   GET  /api/admin/orders             -> every order request, newest first, + unpaid count
+//   POST /api/admin/order              -> {email, orderId, status:'paid'|'unpaid'|'cancelled'}  (paid = award points + Pour Pass stamps)
 //   POST /api/admin/prize              -> {email, prizeId, claimed:true|false}  (staff marks a prize redeemed)
 //   GET /api/admin/members.csv         -> CSV export (owner session, or Authorization: Bearer <ADMIN_TOKEN>)
 import { getStore } from '@netlify/blobs';
 import { timingSafeEqual } from 'node:crypto';
-import { auth, store, isOwner, pub, saveMember } from './members.mjs';
+import { auth, store, isOwner, pub, saveMember, loadMenu, rewardRules, settleOrder } from './members.mjs';
 
 const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
 async function listAll(st, prefix) {
@@ -85,6 +87,24 @@ export default async (req) => {
     const m = await st.get('member:' + email, { type: 'json' });
     if (!m) return json({ error: 'Not found' }, 404);
     return json({ member: pub(m) });
+  }
+  if (path === 'orders') {
+    const keys = await listAll(st, 'list:');
+    const light = (await Promise.all(keys.map((k) => st.get(k, { type: 'json' })))).filter(Boolean).filter((m) => m.orders > 0);
+    const full = (await Promise.all(light.map((m) => st.get('member:' + m.email, { type: 'json' })))).filter(Boolean);
+    const orders = full.flatMap((m) => (m.orders || []).map((o) => ({ ...o, name: m.name, email: m.email, phone: m.phone || '' }))).sort((a, b) => b.id - a.id);
+    return json({ orders: orders.slice(0, 300), unpaid: orders.filter((o) => (o.status || 'unpaid') === 'unpaid').length });
+  }
+  if (path === 'order' && req.method === 'POST') {
+    let b = {}; try { b = await req.json(); } catch {}
+    const m = await st.get('member:' + String(b.email || '').toLowerCase(), { type: 'json' });
+    if (!m) return json({ error: 'Not found' }, 404);
+    const o = (m.orders || []).find((x) => x.id === +b.orderId);
+    if (!o) return json({ error: 'Order not found' }, 404);
+    const status = ['paid', 'unpaid', 'cancelled'].includes(b.status) ? b.status : 'paid';
+    settleOrder(m, o, rewardRules(await loadMenu(req)), status);
+    await saveMember(st, m);
+    return json({ member: pub(m), order: o });
   }
   if (path === 'prize' && req.method === 'POST') {
     let b = {}; try { b = await req.json(); } catch {}

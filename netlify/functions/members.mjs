@@ -7,6 +7,7 @@
 //   POST order   {items:[{name,qty}], total}                        -> {member, order}  (recorded as unpaid; points only when paid)
 //   POST profile {name?, phone?, marketing?, birthday?}             -> {member}
 //   POST spin                                                       -> {index, prize, member}  (one spin per calendar month, prizes from menu.json "wheel")
+//   POST redeem  {rewardId}                                        -> {prize, member}   (spend points on a menu.json rewards.catalog item)
 //   POST claim   {prizeId}                                          -> {member}          (member marks a prize used; staff verify by code)
 import { getStore } from '@netlify/blobs';
 import { scrypt, randomBytes, timingSafeEqual } from 'node:crypto';
@@ -49,16 +50,43 @@ export async function auth(req, st) {
   const m = await st.get('member:' + s.email, { type: 'json' });
   return m ? { m, token } : null;
 }
-async function loadWheel(req) {
+export async function loadMenu(req) {
   const base = new URL(req.url).origin;
-  try {
-    const r = await fetch(base + '/menu.json', { cache: 'no-store' });
-    const menu = await r.json();
-    if (Array.isArray(menu.wheel) && menu.wheel.length) return menu.wheel;
-  } catch {}
+  try { const r = await fetch(base + '/menu.json', { cache: 'no-store' }); return await r.json(); } catch { return {}; }
+}
+async function loadWheel(req) {
+  const menu = await loadMenu(req);
+  if (Array.isArray(menu.wheel) && menu.wheel.length) return menu.wheel;
   return [{ id: 'try-again', label: 'Not this time', weight: 1 }];
 }
-const code = () => { const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s = ''; for (let i = 0; i < 6; i++) s += A[Math.floor(Math.random() * A.length)]; return s; };
+export const DEFAULT_REWARDS = { points_per_dollar: 10, pours_for_free: 9, free_pour_label: 'Free 16 oz juice or smoothie (Pour Pass)', catalog: [] };
+export const rewardRules = (menu) => ({ ...DEFAULT_REWARDS, ...((menu && menu.rewards) || {}) });
+export const makeCode = () => { const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; let s = ''; for (let i = 0; i < 6; i++) s += A[Math.floor(Math.random() * A.length)]; return s; };
+// Marks an order paid and awards points + Pour Pass stamps. Idempotent: a paid order stays paid.
+export function settleOrder(m, order, rules, status) {
+  const prev = order.status || 'unpaid';
+  if (status === 'paid' && prev !== 'paid') {
+    const pts = Math.round((order.total || 0) * (rules.points_per_dollar || 0));
+    order.points = pts; order.status = 'paid'; order.paidAt = new Date().toISOString();
+    m.points = (m.points || 0) + pts;
+    let filled = (m.filled || 0) + (order.pours || 0);
+    const need = rules.pours_for_free || 9;
+    while (filled >= need) {
+      filled -= need;
+      m.prizes = [{ id: Date.now() + Math.floor(Math.random() * 1000), code: makeCode(), label: rules.free_pour_label, itemId: '', wonDate: new Date().toISOString().slice(0, 10), expires: new Date(Date.now() + 60 * 864e5).toISOString().slice(0, 10), claimed: false, source: 'pour-pass' }, ...(m.prizes || [])];
+    }
+    m.filled = filled;
+  } else if (status !== 'paid' && prev === 'paid') {
+    // undo: take the points back; stamps come back down (never below 0); an already-issued free pour stays
+    m.points = Math.max(0, (m.points || 0) - (order.points || 0));
+    m.filled = Math.max(0, (m.filled || 0) - (order.pours || 0));
+    order.points = 0; order.status = status; delete order.paidAt;
+  } else {
+    order.status = status;
+  }
+  return order;
+}
+const code = makeCode;
 const okBirthday = (b) => !b || /^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(b); // MM-DD, no year needed
 
 export default async (req) => {
@@ -117,13 +145,15 @@ export default async (req) => {
   if (path === 'me' && req.method === 'GET') return json({ member: pub(m) });
   if (path === 'signout' && req.method === 'POST') { await st.delete('session:' + a.token); return json({ ok: true }); }
   if (path === 'order' && req.method === 'POST') {
-    const items = Array.isArray(body.items) ? body.items.slice(0, 40).map((i) => ({ name: String(i.name || '').slice(0, 80), qty: Math.max(1, Math.min(20, +i.qty || 1)) })) : [];
+    const items = Array.isArray(body.items) ? body.items.slice(0, 40).map((i) => ({ name: String(i.name || '').slice(0, 80), qty: Math.max(1, Math.min(20, +i.qty || 1)), drink: !!i.drink })) : [];
     const total = Math.round(Math.max(0, Math.min(1000, +body.total || 0)) * 100) / 100;
-    // Recorded, not rewarded: points are granted only when an order is paid (Clover confirmation, later step).
-    const order = { id: Date.now(), date: new Date().toISOString().slice(0, 10), items, total, points: 0, status: 'unpaid' };
+    const pours = items.reduce((a, i) => a + (i.drink ? i.qty : 0), 0);
+    const rules = rewardRules(await loadMenu(req));
+    // Recorded, not rewarded yet: points + Pour Pass stamps land when staff marks it paid (dashboard) or Clover confirms.
+    const order = { id: Date.now(), date: new Date().toISOString().slice(0, 10), items, total, pours, points: 0, pending: Math.round(total * (rules.points_per_dollar || 0)), status: 'unpaid' };
     m.orders = [order, ...(m.orders || [])].slice(0, 100);
     await saveMember(st, m);
-    if (process.env.NOTIFY_ORDERS === '1') notifyOwners({ origin: url.origin, subject: `Order request from ${m.name} — $${total.toFixed(2)}`, text: items.map((i) => `${i.qty} × ${i.name}`).join('\n') + `\n\nTotal $${total.toFixed(2)} (pay at pickup)\n${m.name} · ${m.email} · ${m.phone || ''}` }).catch(() => {});
+    if (process.env.NOTIFY_ORDERS !== '0') notifyOwners({ origin: url.origin, subject: `Order #${String(order.id).slice(-5)} — ${m.name} — $${total.toFixed(2)}`, text: items.map((i) => `${i.qty} × ${i.name}`).join('\n') + `\n\nTotal $${total.toFixed(2)} · pay at pickup\n${m.name} · ${m.email}${m.phone ? ' · ' + m.phone : ''}\n\nMark it paid in the dashboard when they pay: ${process.env.URL || url.origin}/admin.html#orders` }).catch(() => {});
     return json({ member: pub(m), order });
   }
   if (path === 'profile' && req.method === 'POST') {
@@ -166,6 +196,17 @@ export default async (req) => {
     e.guests = (e.guests || []).filter(g => g.email !== m.email); if (!has) e.guests.push({ name: m.name, email: m.email, at: new Date().toISOString() });
     await ev.setJSON('events', events); await saveMember(st, m);
     return json({ member: pub(m), rsvpd: !has });
+  }
+  if (path === 'redeem' && req.method === 'POST') {
+    const rules = rewardRules(await loadMenu(req));
+    const r = (rules.catalog || []).find((c) => c.id === String(body.rewardId || ''));
+    if (!r) return json({ error: 'That reward is not available.' }, 400);
+    if ((m.points || 0) < r.cost) return json({ error: `You need ${r.cost - (m.points || 0)} more points for that.`, code: 'NOT_ENOUGH' }, 400);
+    m.points -= r.cost;
+    const prize = { id: Date.now(), code: makeCode(), label: r.title, itemId: '', wonDate: new Date().toISOString().slice(0, 10), expires: new Date(Date.now() + 60 * 864e5).toISOString().slice(0, 10), claimed: false, source: 'points', cost: r.cost };
+    m.prizes = [prize, ...(m.prizes || [])];
+    await saveMember(st, m);
+    return json({ prize, member: pub(m) });
   }
   if (path === 'claim' && req.method === 'POST') {
     m.prizes = (m.prizes || []).map((p) => (p.id === +body.prizeId ? { ...p, claimed: true, claimedAt: new Date().toISOString() } : p));

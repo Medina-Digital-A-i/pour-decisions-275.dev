@@ -60,4 +60,5 @@ if (m.wheel !== undefined) {
 }
 if (errs.length) { console.error('✖ menu.json has ' + errs.length + ' problem(s):\n  - ' + errs.join('\n  - ')); process.exit(1); }
 const n = m.categories.reduce((a, c) => a + c.items.length, 0);
+if (m.rewards) { const r = m.rewards; if (!isNum(r.points_per_dollar) || !isNum(r.pours_for_free)) E('rewards: points_per_dollar and pours_for_free must be numbers'); (r.catalog || []).forEach((x, i) => { if (!x.id || !x.title || !isNum(x.cost)) E(`rewards.catalog[${i}]: needs id, title, cost`); }); }
 console.log(`✔ menu.json OK — ${m.categories.length} categories, ${n} items${m.business.order_url ? ', online ordering → ' + m.business.order_url : ', online ordering not set (pay at pickup)'}`);
