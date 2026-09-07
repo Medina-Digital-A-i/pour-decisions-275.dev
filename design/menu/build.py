@@ -236,7 +236,7 @@ print_food = doc('food', PRINT_FOOD_CSS, f'''
 # ---------- TV: 1920x1080 ----------
 TV_CSS = """
 .page{width:1920px;height:1080px;background:var(--cream);display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden}
-.band{padding:22px 70px;gap:44px}
+.band{padding:22px 70px;gap:44px;flex:0 0 auto}
 .logo{height:104px}
 .band .tg{font-size:32px;flex:1}
 .pills{display:flex;gap:14px;font-size:24px}
@@ -259,8 +259,8 @@ TV_CSS = """
 .stack{display:flex;flex-direction:column}
 .cols3 .nm{font-size:26px}.cols3 .ing{font-size:16px}.cols3 .pr{font-size:23px}.cols3 .cat{font-size:54px}.cols3 .sech{--ico:62px}.cols3 .it{padding:7px 0}.cols3 .box{padding:14px 20px;margin-top:16px}.cols3 .box p{font-size:19px}.cols3 .sech{min-height:80px}
 """
-tv1 = doc('tv1', TV_CSS, f'''
-<div class="page">
+tv1 = doc('tv1', TV_CSS + '.page.tv1 .cols>.stack:first-child .it{padding:6px 0}.page.tv1 .cols>.stack:first-child .nm{font-size:30px}.page.tv1 .cols>.stack:first-child .ing{font-size:18px}', f'''
+<div class="page tv1">
   {band('logo-white.png')}
   <div class="cols">
     <div class="stack">{section(sm, note=smoothie_note)}</div>
