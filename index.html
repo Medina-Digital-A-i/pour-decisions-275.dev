@@ -34,7 +34,7 @@
 
 <link rel="stylesheet" href="assets/light-theme.css?v=5">
 <link rel="stylesheet" href="assets/theme-bar.css?v=7">
-<link rel="stylesheet" href="assets/theme-pop.css?v=8">
+<link rel="stylesheet" href="assets/theme-pop.css?v=9">
 </head>
 <body>
 <x-dc>
@@ -3668,13 +3668,5 @@ window.addEventListener('beforeinstallprompt', function(e) {
 <form hidden method='post' name='owner-alert' data-netlify='true'><input type='text' name='subject'/><textarea name='message'></textarea></form>
 <form hidden method='post' name='event-booking'><input type='hidden' name='form-name' value='event-booking' /><input type="text" name="name"/><input type="email" name="email"/><input type="text" name="date"/><textarea name="note"></textarea><input name="bot-field"/></form>
 <form hidden method='post' name='venue-booking'><input type='hidden' name='form-name' value='venue-booking' /><input type="text" name="name"/><input type="email" name="email"/><input type="tel" name="phone"/><input type="text" name="eventType"/><input type="text" name="package"/><input type="text" name="date"/><input type="text" name="timeBlock"/><input type="text" name="guests"/><textarea name="notes"></textarea><input name="bot-field"/></form>
-<script>
-(function pdReveal(){
-  if (!('IntersectionObserver' in window)) return;
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
-  const arm = () => document.querySelectorAll('.hm-sec:not(.rv), .menu-grid > .tap:not(.rv), .ev-row:not(.rv), .ig-row:not(.rv)').forEach(el => { const r = el.getBoundingClientRect(); el.classList.add('rv'); if (r.top < window.innerHeight) { el.classList.add('in'); } else io.observe(el); });
-  arm(); new MutationObserver(() => arm()).observe(document.body, { childList: true, subtree: true });
-})();
-</script>
 </body>
 </html>
