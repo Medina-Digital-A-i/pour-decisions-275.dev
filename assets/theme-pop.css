@@ -293,3 +293,25 @@ html,body,.pdbody,.pd-app,.hm,.pd-main-scroll,.ev,.mn-list,.mn-body{background:#
   .mn-hero .pa-wrap{width:190px !important;height:290px !important;right:8% !important;top:40px !important;}
 }
 @media(min-width:1200px){.blender{width:440px !important;right:10% !important;}}
+
+/* ---- pop v6: one header system everywhere ---- */
+.pd-grove{background:linear-gradient(135deg,#14B8AC 0%,#0F7A73 55%,#0B5C57 100%) !important;color:#fff !important;padding:16px 20px 30px !important;}
+.pd-grove .pd-palm-l,.pd-grove .pd-palm-r{display:none !important;}
+.pd-grove::before{content:"";position:absolute;width:420px;height:420px;right:-140px;top:-200px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFB800 0%,#FF8A00 45%,rgba(255,138,0,0) 72%);opacity:.9;pointer-events:none;}
+.pd-hero-nav{position:relative;z-index:2;flex-wrap:wrap !important;justify-content:space-between !important;row-gap:0 !important;min-height:0 !important;}
+.pd-hero-nav > div:first-child{order:1;}
+.pd-hero-nav > span{order:2;}
+img.pd-hero-logo[src][style]{order:3 !important;flex:0 0 100% !important;height:auto !important;width:190px !important;max-width:62vw !important;margin:18px 0 0 -4px !important;position:static !important;transform:none !important;filter:drop-shadow(0 10px 22px rgba(0,0,0,.35)) !important;object-fit:contain;}
+.pd-hero-nav button.tap{background:rgba(255,255,255,.16) !important;border:1.5px solid rgba(255,255,255,.4) !important;color:#fff !important;}
+.pd-hero-nav button.tap svg *{stroke:#fff !important;}
+.pd-hero-body{position:relative;z-index:2;text-align:left !important;margin-top:12px !important;}
+.pd-grove .pd-hero-title{color:#fff !important;font-family:var(--f-display) !important;font-style:italic !important;font-weight:900 !important;font-size:46px !important;line-height:.95 !important;letter-spacing:-.035em !important;text-shadow:0 4px 18px rgba(0,0,0,.25) !important;text-align:left !important;}
+.pd-grove .pd-hero-body p,.pd-grove .vq-sub,.pd-grove .pd-hero-sub{color:rgba(255,255,255,.9) !important;text-align:left !important;margin-left:0 !important;}
+.pd-grove .vq-eyebrow,.pd-grove .hm-kicker{color:#FFE7A8 !important;text-align:left !important;}
+.pd-grove .pd-hero-body > *{margin-left:0 !important;margin-right:0 !important;}
+.pd-grove > div[style*="height:56px"]{display:none !important;}
+@media(min-width:768px){img.pd-hero-logo[src][style]{width:250px !important;}.pd-grove .pd-hero-title{font-size:64px !important;}.pd-grove{padding:24px 40px 40px !important;}}
+/* detail: product is the hero, logo small */
+.dt-hero img.pd-hero-logo[src][style]{height:56px !important;width:auto !important;max-width:none !important;margin:0 !important;flex:none !important;order:0 !important;position:absolute !important;left:50% !important;top:14px !important;transform:translateX(-50%) !important;}
+/* 2 oz cup sits centred in the small menu tiles */
+.menu-tile .pa.pa-shot{transform:translateY(-22%);}
