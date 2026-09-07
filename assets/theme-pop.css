@@ -315,3 +315,26 @@ img.pd-hero-logo[src][style]{order:3 !important;flex:0 0 100% !important;height:
 .dt-hero img.pd-hero-logo[src][style]{height:56px !important;width:auto !important;max-width:none !important;margin:0 !important;flex:none !important;order:0 !important;position:absolute !important;left:50% !important;top:14px !important;transform:translateX(-50%) !important;}
 /* 2 oz cup sits centred in the small menu tiles */
 .menu-tile .pa.pa-shot{transform:translateY(-22%);}
+
+/* ---- pop v7: footer ---- */
+.pd-foot{background:#0B5C57;color:#fff;padding:16px 16px 26px;margin-top:28px;}
+.pd-foot-map{position:relative;border-radius:22px;overflow:hidden;box-shadow:0 16px 40px rgba(0,0,0,.25);}
+.pd-foot-map iframe{filter:saturate(.9);}
+.pd-foot-dir{position:absolute;right:12px;bottom:12px;background:var(--brass);color:#fff;font-weight:800;font-size:13px;padding:10px 14px;border-radius:99px;text-decoration:none;box-shadow:0 8px 18px rgba(0,0,0,.25);}
+.pd-foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 14px;padding:22px 4px 6px;font-size:13.5px;line-height:1.45;color:rgba(255,255,255,.85);}
+.pd-foot-grid > div b{display:block;color:#fff;font-size:15px;}
+.pd-foot-grid a{color:#fff;text-decoration:none;display:block;}
+.pd-foot-grid a:not(:has(b)){color:rgba(255,255,255,.85);word-break:break-all;}
+.pd-foot-k{font-size:10.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#FFB800;margin-bottom:6px;}
+.pd-foot-logo{grid-column:1/-1;width:150px;height:auto;filter:drop-shadow(0 8px 18px rgba(0,0,0,.3));margin:2px 0 -4px -4px;}
+.pd-foot-legal{border-top:1px solid rgba(255,255,255,.14);margin-top:14px;padding-top:14px;font-size:12px;color:rgba(255,255,255,.6);}
+.pd-foot-legal a{color:rgba(255,255,255,.8);text-decoration:none;font-weight:700;}
+@media(min-width:768px){.pd-foot{padding:24px 40px 34px;}.pd-foot-grid{grid-template-columns:auto 1fr 1fr 1fr;align-items:start;gap:24px;}.pd-foot-logo{grid-column:auto;width:170px;margin-right:24px;}.pd-foot-map iframe{height:240px;}}
+/* ---- pop v7: Ask Piña button ---- */
+.pd-pina-fab{position:fixed !important;right:16px !important;bottom:96px !important;z-index:80;display:flex !important;align-items:center;gap:8px;height:52px;padding:0 18px 0 13px !important;background:var(--brass) !important;color:#fff;border:0 !important;border-radius:99px !important;box-shadow:0 12px 28px rgba(255,138,0,.42),0 3px 8px rgba(0,0,0,.15) !important;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s,padding .3s;}
+.pd-pina-fab .pf-label{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:16px;letter-spacing:-.01em;white-space:nowrap;}
+.pf-min .pd-pina-fab{padding:0 13px !important;}
+.pf-min .pd-pina-fab .pf-label{display:none;}
+.is-scrolling .pd-pina-fab{transform:translateY(140%);opacity:0;pointer-events:none;}
+.pd-pina-fab:active{transform:scale(.94);}
+@media(min-width:1024px){.pd-pina-fab{right:28px !important;bottom:28px !important;}}
