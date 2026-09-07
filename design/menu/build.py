@@ -85,17 +85,30 @@ def ing_group_html(gk, glabel):
             ''.join(f'<p class="igr"><b>{esc(g["name"].capitalize())}</b> {esc(g["benefit"])}</p>' for g in rows) + '</div>')
 ING_ALL = ''.join(ing_group_html(g['key'], g['label']) for g in ING_GROUPS)
 def ing_cols(n):
-    # split groups across n columns by row count
-    blocks = [(g, ing_group_html(g['key'], g['label']), len([x for x in ING if x['group'] == g['key']])) for g in ING_GROUPS]
-    total = sum(c for _, _, c in blocks); per = total / n
-    cols, cur, cnt = [], '', 0
-    for g, html_, c in blocks:
-        if cur and cnt + c > per * 1.08 and len(cols) < n - 1:
-            cols.append(cur); cur, cnt = '', 0
-        cur += html_; cnt += c
+    # flow rows across n columns (a group may continue into the next column)
+    items = []
+    for g in ING_GROUPS:
+        rows = sorted([x for x in ING if x['group'] == g['key']], key=lambda x: x['name'])
+        if not rows: continue
+        items.append(('h', g['label']))
+        for x in rows: items.append(('r', x))
+    weight = lambda it: 1.15 if it[0] == 'h' else (1.0 if len(it[1]['benefit']) < 52 else 1.55)
+    total = sum(weight(i) for i in items); per = total / n
+    cols, cur, acc, last = [], [], 0.0, None
+    for it in items:
+        if len(cols) < n - 1 and acc + weight(it) > per + 0.6:
+            cols.append(cur); cur, acc = [], 0.0
+            if it[0] == 'r' and last: cur.append(('h', last + ' (cont.)'))
+        if it[0] == 'h': last = it[1]
+        cur.append(it); acc += weight(it)
     cols.append(cur)
-    while len(cols) < n: cols.append('')
-    return ''.join(f'<div class="stack">{c}</div>' for c in cols)
+    def render(col):
+        out = ''
+        for k, v in col:
+            if k == 'h': out += f'<h3 class="igh">{esc(v)}</h3>'
+            else: out += f'<p class="igr"><b>{esc(v["name"].capitalize())}</b> {esc(v["benefit"])}</p>'
+        return out
+    return ''.join(f'<div class="stack">{render(c)}</div>' for c in cols)
 smoothie_note = f'16 oz {money(S["smoothie"][0]["price"])} · 24 oz {money(S["smoothie"][1]["price"])} · protein blends +$1'
 juice_note = f'16 oz {money(S["juice"][0]["price"])} · 24 oz {money(S["juice"][1]["price"])} · pressed fresh daily'
 shot_note = f'2 oz {money(S["shot"][0]["price"])} · two for $8'
@@ -281,8 +294,8 @@ PRINT_ING_CSS = PRINT_CSS + """
 .cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 22px;padding:16px 36px 0;flex:1;align-content:start}
 .igh{font-family:"Bebas Neue","Oswald","Impact",sans-serif;color:var(--gold);letter-spacing:.06em;font-size:15px;margin:7px 0 2px;line-height:1}
 .igg:first-child .igh{margin-top:0}
-.igr{margin:0;font-size:8.6px;line-height:1.28;color:var(--muted);font-weight:500;padding:1.6px 0;border-bottom:1px solid var(--line)}
-.igr b{color:var(--text);font-family:"Fraunces","Georgia",serif;font-weight:700;font-size:9.6px}
+.igr{margin:0;font-size:8.3px;line-height:1.25;color:var(--muted);font-weight:500;padding:1.4px 0;border-bottom:1px solid var(--line)}
+.igr b{color:var(--text);font-family:"Fraunces","Georgia",serif;font-weight:700;font-size:9.2px}
 .ttl{padding:12px 36px 0;display:flex;align-items:baseline;gap:14px}
 .ttl .cat{font-size:30px}.ttl .catnote{font-size:10.5px}
 .disc{padding:6px 36px 4px;font-size:8.5px;color:var(--muted);font-weight:600}
