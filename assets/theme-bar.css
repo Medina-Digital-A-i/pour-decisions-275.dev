@@ -234,3 +234,10 @@ span[style*="font-size:18px;"]:empty,span[style*="font-size:19px;"]:empty,span[s
 @media(max-width:360px){.hm-hero-photo .hm-btn{padding:13px 16px !important;font-size:14px !important;}}
 .pd-app .menu-grid .pd-pcs .pd-pc,.pd-app .pd-pcs .pd-pc{color:#0E2C2A !important;background:#EAE2D2 !important;}
 .hm-hero-photo .hm-h1{max-width:12ch;}
+
+/* ── Fix pass 5: bands legible everywhere ───────────────────────────── */
+.hm-band::after{background:linear-gradient(180deg,rgba(14,44,42,.38) 0%,rgba(14,44,42,.72) 45%,rgba(14,44,42,.97) 100%) !important;}
+.hm-band img.bg{opacity:.85;}
+.hm-band.hm-pass{flex-direction:column;align-items:flex-start;justify-content:flex-end;}
+.hm-band.hm-pass .hm-pass-r{margin-top:4px;}
+.hm-band .hm-btn-gold{align-self:flex-start;}
