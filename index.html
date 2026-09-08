@@ -3217,8 +3217,8 @@ class Component extends DCLogic {
       benefitFilterActive: !!S.benefitFilter,
       benefitFilterLabel: S.benefitFilter ? (this.BENEFIT_TAGS[S.benefitFilter]||{}).label : '',
       menuEmpty: menu.length === 0,
-      menuNote: (this.MENU_NOTES || {})[activeCat] || '',
-      hasMenuNote: !!((this.MENU_NOTES || {})[activeCat]),
+      menuNote: ((FOOD_COMING_SOON && FOOD_KINDS.includes(activeCat)) ? '🍴 Coming soon — enjoy it in-store; online ordering shortly. ' : '') + ((this.MENU_NOTES || {})[activeCat] || ''),
+      hasMenuNote: (FOOD_COMING_SOON && FOOD_KINDS.includes(activeCat)) || !!((this.MENU_NOTES || {})[activeCat]),
       clearBenefitFilter: () =>this.setState({ benefitFilter:'' }),
 
       categories: this.CATS.map(c => ({
