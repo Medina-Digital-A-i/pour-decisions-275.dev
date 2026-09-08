@@ -451,9 +451,10 @@
             </div>
             <div class="hm-cats">
               <sc-for list="{{ homeCats }}" as="c" hint-placeholder-count="7">
-                <div onClick="{{ c.go }}" class="tap hm-cat {{ c.cls }}" style="--tint:{{ c.tint }};--photo:{{ c.photoCss }}">
+                <div onClick="{{ c.go }}" class="tap hm-cat {{ c.cls }}" style="--tint:{{ c.tint }};--photo:{{ c.photoCss }};position:relative;">
                   <div class="pa-wrap pa-float"><span class="pa-color" style="--pa-c:{{ c.color }}"><sc-if value="{{ c.isCup }}" hint-placeholder-val="{{ true }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="straw" x="72" y="2" width="9" height="66" rx="4.5" transform="rotate(14 76 34)"/><rect class="strawStripe" x="72" y="22" width="9" height="8" transform="rotate(14 76 34)"/><path class="lid" d="M20 66 Q60 14 100 66 Z"/><rect class="rim" x="13" y="63" width="94" height="11" rx="5.5"/><path fill="currentColor" d="M18 74 L102 74 L93 196 Q60 207 27 196 Z"/><path class="shade" d="M70 74 L102 74 L93 196 Q77 203 62 203 Z"/><path class="sheen" d="M22 80 L34 80 L31 190 L27 190 Z"/><ellipse cx="60" cy="76" rx="42" ry="4" fill="#fff" fill-opacity=".4"/><path class="glass" d="M18 74 L102 74 L93 196 Q60 207 27 196 Z"/><circle class="bub" cx="45" cy="185" r="3"/><circle class="bub b2" cx="62" cy="190" r="2.2"/><circle class="bub b3" cx="78" cy="182" r="2.6"/><rect class="label" x="29" y="104" width="62" height="46" rx="10"/><image href="assets/logo-clean-512.png" x="33" y="109" width="54" height="36" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ c.isBottle }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="cap" x="41" y="4" width="38" height="24" rx="6"/><rect x="41" y="12" width="38" height="3" fill="#fff" fill-opacity=".35"/><path fill="currentColor" d="M46 28 L74 28 L84 56 L84 190 Q84 204 70 204 L50 204 Q36 204 36 190 L36 56 Z"/><path class="shade" d="M64 28 L74 28 L84 56 L84 190 Q84 204 70 204 L64 204 Z"/><path class="sheen" d="M41 60 L48 60 L48 190 L43 190 Z"/><path class="glass" d="M46 28 L74 28 L84 56 L84 190 Q84 204 70 204 L50 204 Q36 204 36 190 L36 56 Z"/><rect class="label" x="39" y="92" width="42" height="58" rx="8"/><image href="assets/logo-clean-512.png" x="41" y="103" width="38" height="36" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ c.isShot }}" hint-placeholder-val="{{ false }}"><svg class="pa pa-shot" viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path fill="currentColor" d="M14 122 L106 122 L97 196 Q60 207 23 196 Z"/><path class="shade" d="M74 122 L106 122 L97 196 Q80 204 66 204 Z"/><path class="sheen" d="M20 128 L30 128 L27 190 L23 190 Z"/><path d="M40 124 L36 196 M60 124 L60 200 M80 124 L84 196" fill="none" stroke="#fff" stroke-opacity=".32" stroke-width="1.5"/><path class="glass" d="M14 122 L106 122 L97 196 Q60 207 23 196 Z"/><rect class="lid" x="8" y="111" width="104" height="13" rx="6.5"/><rect x="22" y="104" width="76" height="9" rx="4.5" fill="#fff" fill-opacity=".9"/><ellipse cx="60" cy="112" rx="36" ry="2.5" fill="#fff" fill-opacity=".55"/><rect class="label" x="34" y="136" width="52" height="40" rx="8"/><image href="assets/logo-clean-512.png" x="37" y="142" width="46" height="28" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ c.isBowl }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><ellipse cx="60" cy="198" rx="34" ry="6" fill="#000" fill-opacity=".14"/><path d="M8 116 Q60 226 112 116 Z" fill="currentColor"/><path d="M60 116 Q60 226 112 116 Z" class="shade"/><path d="M14 116 Q60 150 106 116 Z" fill="#fff" fill-opacity=".22"/><ellipse cx="60" cy="116" rx="52" ry="15" fill="#fff" fill-opacity=".97"/><ellipse cx="60" cy="116" rx="45" ry="11.5" fill="#FFE7A8"/><ellipse cx="46" cy="112" rx="9" ry="6" fill="#1FA84E"/><ellipse cx="72" cy="119" rx="8" ry="5.5" fill="#2FB36B"/><circle cx="60" cy="110" r="6" fill="#FF3D6E"/><circle cx="82" cy="112" r="4.5" fill="#FFB800"/><circle cx="36" cy="119" r="4" fill="#7A3DFF"/><circle cx="52" cy="121" r="3" fill="#FF8A00"/><path d="M62 104 q6 -10 14 -6 q-4 8 -14 6z" fill="#8BE000"/></svg></sc-if></span></div>
                   <span><span class="hm-cat-name">{{ c.label }}</span><span class="hm-cat-sub">{{ c.sub }}</span></span>
+                  <sc-if value="{{ c.comingSoon }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;right:10px;font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(11,92,87,.85);border-radius:99px;padding:5px 9px;z-index:4;">Coming soon</span></sc-if>
                 </div>
               </sc-for>
             </div>
@@ -470,7 +471,7 @@
                 <div onClick="{{ it.open }}" class="tap hm-fav" style="--tint:{{ it.tint }}">
                   <div class="hm-fav-art"><span class="pa-color" style="--pa-c:{{ it.color }}"><sc-if value="{{ it.isCup }}" hint-placeholder-val="{{ true }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="straw" x="72" y="2" width="9" height="66" rx="4.5" transform="rotate(14 76 34)"/><rect class="strawStripe" x="72" y="22" width="9" height="8" transform="rotate(14 76 34)"/><path class="lid" d="M20 66 Q60 14 100 66 Z"/><rect class="rim" x="13" y="63" width="94" height="11" rx="5.5"/><path fill="currentColor" d="M18 74 L102 74 L93 196 Q60 207 27 196 Z"/><path class="shade" d="M70 74 L102 74 L93 196 Q77 203 62 203 Z"/><path class="sheen" d="M22 80 L34 80 L31 190 L27 190 Z"/><ellipse cx="60" cy="76" rx="42" ry="4" fill="#fff" fill-opacity=".4"/><path class="glass" d="M18 74 L102 74 L93 196 Q60 207 27 196 Z"/><circle class="bub" cx="45" cy="185" r="3"/><circle class="bub b2" cx="62" cy="190" r="2.2"/><circle class="bub b3" cx="78" cy="182" r="2.6"/><rect class="label" x="29" y="104" width="62" height="46" rx="10"/><image href="assets/logo-clean-512.png" x="33" y="109" width="54" height="36" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isBottle }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><rect class="cap" x="41" y="4" width="38" height="24" rx="6"/><rect x="41" y="12" width="38" height="3" fill="#fff" fill-opacity=".35"/><path fill="currentColor" d="M46 28 L74 28 L84 56 L84 190 Q84 204 70 204 L50 204 Q36 204 36 190 L36 56 Z"/><path class="shade" d="M64 28 L74 28 L84 56 L84 190 Q84 204 70 204 L64 204 Z"/><path class="sheen" d="M41 60 L48 60 L48 190 L43 190 Z"/><path class="glass" d="M46 28 L74 28 L84 56 L84 190 Q84 204 70 204 L50 204 Q36 204 36 190 L36 56 Z"/><rect class="label" x="39" y="92" width="42" height="58" rx="8"/><image href="assets/logo-clean-512.png" x="41" y="103" width="38" height="36" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isShot }}" hint-placeholder-val="{{ false }}"><svg class="pa pa-shot" viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><path fill="currentColor" d="M14 122 L106 122 L97 196 Q60 207 23 196 Z"/><path class="shade" d="M74 122 L106 122 L97 196 Q80 204 66 204 Z"/><path class="sheen" d="M20 128 L30 128 L27 190 L23 190 Z"/><path d="M40 124 L36 196 M60 124 L60 200 M80 124 L84 196" fill="none" stroke="#fff" stroke-opacity=".32" stroke-width="1.5"/><path class="glass" d="M14 122 L106 122 L97 196 Q60 207 23 196 Z"/><rect class="lid" x="8" y="111" width="104" height="13" rx="6.5"/><rect x="22" y="104" width="76" height="9" rx="4.5" fill="#fff" fill-opacity=".9"/><ellipse cx="60" cy="112" rx="36" ry="2.5" fill="#fff" fill-opacity=".55"/><rect class="label" x="34" y="136" width="52" height="40" rx="8"/><image href="assets/logo-clean-512.png" x="37" y="142" width="46" height="28" preserveAspectRatio="xMidYMid meet"/></svg></sc-if><sc-if value="{{ it.isBowl }}" hint-placeholder-val="{{ false }}"><svg class="pa " viewBox="0 0 120 210" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><ellipse cx="60" cy="198" rx="34" ry="6" fill="#000" fill-opacity=".14"/><path d="M8 116 Q60 226 112 116 Z" fill="currentColor"/><path d="M60 116 Q60 226 112 116 Z" class="shade"/><path d="M14 116 Q60 150 106 116 Z" fill="#fff" fill-opacity=".22"/><ellipse cx="60" cy="116" rx="52" ry="15" fill="#fff" fill-opacity=".97"/><ellipse cx="60" cy="116" rx="45" ry="11.5" fill="#FFE7A8"/><ellipse cx="46" cy="112" rx="9" ry="6" fill="#1FA84E"/><ellipse cx="72" cy="119" rx="8" ry="5.5" fill="#2FB36B"/><circle cx="60" cy="110" r="6" fill="#FF3D6E"/><circle cx="82" cy="112" r="4.5" fill="#FFB800"/><circle cx="36" cy="119" r="4" fill="#7A3DFF"/><circle cx="52" cy="121" r="3" fill="#FF8A00"/><path d="M62 104 q6 -10 14 -6 q-4 8 -14 6z" fill="#8BE000"/></svg></sc-if></span></div>
                   <div class="hm-fav-body"><span class="hm-fav-name">{{ it.name }}</span><span class="hm-fav-ing">{{ it.ingredients }}</span><span class="hm-fav-price">{{ it.priceLabel }}<small>{{ it.fromLabel }}</small></span></div>
-                  <button onClick="{{ it.add }}" class="tap hm-fav-add" title="Add to cart">+</button>
+                  <sc-if value="{{ it.orderable }}" hint-placeholder-val="{{ true }}"><button onClick="{{ it.add }}" class="tap hm-fav-add" title="Add to cart">+</button></sc-if>
                 </div>
               </sc-for>
             </div>
@@ -643,7 +644,7 @@
                       <div class="bf-pills"><sc-for list="{{ it.tagPills }}" as="tp" hint-placeholder-count="2"><span class="bf-pill" style="background:{{ tp.bg }};color:{{ tp.fg }};">{{ tp.icon }} {{ tp.label }}</span></sc-for><sc-for list="{{ it.allergens }}" as="al" hint-placeholder-count="1"><span class="bf-pill al-pill">{{ al }}</span></sc-for></div>
                     </div>
                     <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
-                      <button onClick="{{ it.add }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:22px;font-weight:800;display:grid;place-items:center;line-height:1;box-shadow:0 6px 14px rgba(239,138,0,.4);">+</button>
+                      <sc-if value="{{ it.orderable }}" hint-placeholder-val="{{ true }}"><button onClick="{{ it.add }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:var(--gold);border:0;color:var(--teal-deep);font-size:22px;font-weight:800;display:grid;place-items:center;line-height:1;box-shadow:0 6px 14px rgba(239,138,0,.4);">+</button></sc-if><sc-if value="{{ it.comingSoon }}" hint-placeholder-val="{{ false }}"><span style="font-size:9px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);background:rgba(239,138,0,.14);border:1px solid rgba(239,138,0,.4);border-radius:12px;padding:6px 8px;text-align:center;line-height:1.15;white-space:nowrap;">Coming<br>soon</span></sc-if>
                     </div>
                   </div>
                 </sc-for>
@@ -739,7 +740,7 @@
               <span style="font-family:var(--f-num);font-size:24px;color:#fff;min-width:20px;text-align:center;">{{ qty }}</span>
               <button onClick="{{ incQty }}" class="tap" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);border:0;color:#fff;font-size:22px;line-height:1;display:grid;place-items:center;">+</button>
             </div>
-            <button onClick="{{ addDetail }}" class="tap" style="flex:1;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">Add · {{ detailTotal }}</button>
+            <sc-if value="{{ detailOrderable }}" hint-placeholder-val="{{ true }}"><button onClick="{{ addDetail }}" class="tap" style="flex:1;background:var(--gold);color:var(--teal-deep);font-weight:800;font-size:15px;padding:16px;border-radius:99px;border:0;box-shadow:0 10px 24px rgba(239,138,0,.45);">Add · {{ detailTotal }}</button></sc-if><sc-if value="{{ detailComingSoon }}" hint-placeholder-val="{{ false }}"><div style="flex:1;background:rgba(239,138,0,.14);border:1px solid rgba(239,138,0,.4);color:var(--gold);font-weight:800;font-size:15px;padding:16px;border-radius:99px;text-align:center;">Coming soon — in-store only for now</div></sc-if>
           </div>
         </div>
         </sc-if>
@@ -1911,6 +1912,7 @@ const MENU_KINDS = [
 ];
 const DRINK_KINDS = MENU_KINDS.filter(k =>k.drink).map(k =>k.kind);
 const FOOD_KINDS  = MENU_KINDS.filter(k => !k.drink).map(k =>k.kind);
+const FOOD_COMING_SOON = true; // food not orderable online yet — drinks only
 
 // Card colour palettes. Chosen by ingredient keyword so a new item in menu.json gets a sensible look.
 // Category backdrops + product art (bright, commercial). tint = backdrop, color = liquid.
@@ -2588,6 +2590,7 @@ class Component extends DCLogic {
 
   addToCart(it, q, free, sizeKey){
     q = q || 1;
+    if (FOOD_COMING_SOON && it && it.drink === false) return false; // food coming soon
     const size = this.sizeOf(it, sizeKey).key;
     this.setState(s => {
       const cart = s.cart.slice();
@@ -3113,7 +3116,8 @@ class Component extends DCLogic {
       tagPills: (it.tagKeys || []).slice(0,2).map(k => ({ ...(this.BENEFIT_TAGS[k]||{icon:'',label:k,bg:'#EFE7D8',fg:'#2B2B26'}) })),
       allergens: this.allergensOf(it), hasAllergens: this.allergensOf(it).length > 0, allergenLine: 'Contains ' + this.allergensOf(it).join(', ').toLowerCase(),
       isCup: it.art === 'cup', isBottle: it.art === 'bottle', isShot: it.art === 'shot', isBowl: it.art === 'bowl', tint: 'color-mix(in srgb,' + it.color + ' 18%,#fff)',
-      open: () =>this.openItem(it), add: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.addToCart(it); this.go('cart'); }
+      open: () =>this.openItem(it), add: (e) => { if(e&&e.stopPropagation)e.stopPropagation(); this.addToCart(it); this.go('cart'); },
+      comingSoon: FOOD_COMING_SOON && it.drink === false, orderable: !(FOOD_COMING_SOON && it.drink === false)
     });
 
     return {
@@ -3197,7 +3201,7 @@ class Component extends DCLogic {
       menu: menu.map(cardFields),
 
       homeChips: MENU_KINDS.filter(k =>this.CATS.includes(k.kind)).map((k, i) => ({ label:k.chip, cat:k.kind })).map(c => ({ ...c, go:()=>{ this.setState({cat:c.cat}); this.go('menu'); } })),
-      homeCats: MENU_KINDS.filter(k => this.CATS.includes(k.kind)).map((k, i) => { const n = this.MENU.filter(m => m.kind === k.kind).length; const A = CAT_ART[k.key] || CAT_ART._; return { label: k.chip, sub: n + (k.drink ? (n === 1 ? ' pour' : ' pours') : (n === 1 ? ' plate' : ' plates')), photo: 'assets/photos/cat-' + k.key + '.jpg', photoCss: 'url(/assets/photos/cat-' + k.key + '.jpg)', cls: (i === 0 ? 'wide' : '') + (k.drink ? '' : ' food'), tint: A.tint, color: A.color, isCup: A.art === 'cup', isBottle: A.art === 'bottle', isShot: A.art === 'shot', isBowl: A.art === 'bowl', go: () => { this.setState({ cat: k.kind }); this.go('menu'); } }; }),
+      homeCats: MENU_KINDS.filter(k => this.CATS.includes(k.kind)).map((k, i) => { const n = this.MENU.filter(m => m.kind === k.kind).length; const A = CAT_ART[k.key] || CAT_ART._; return { label: k.chip, sub: n + (k.drink ? (n === 1 ? ' pour' : ' pours') : (n === 1 ? ' plate' : ' plates')), photo: 'assets/photos/cat-' + k.key + '.jpg', photoCss: 'url(/assets/photos/cat-' + k.key + '.jpg)', cls: (i === 0 ? 'wide' : '') + (k.drink ? '' : ' food'), tint: A.tint, color: A.color, isCup: A.art === 'cup', isBottle: A.art === 'bottle', isShot: A.art === 'shot', isBowl: A.art === 'bowl', comingSoon: (FOOD_COMING_SOON && !k.drink), go: () => { this.setState({ cat: k.kind }); this.go('menu'); } }; }),
       mh: (() => { const k = MENU_KINDS.find(x => x.kind === activeCat); const A = k ? (CAT_ART[k.key] || CAT_ART._) : CAT_ART._; const juicer = !!k && k.key === 'juices'; return { tint: A.tint, color: A.color, isJuicer: juicer, isCup: !juicer && A.art === 'cup', isBottle: !juicer && A.art === 'bottle', isShot: !juicer && A.art === 'shot', isBowl: !juicer && A.art === 'bowl' }; })(),
       ...(() => { const k = MENU_KINDS.find(x => x.kind === activeCat); const all = !k; return {
         menuHeroPhoto: all ? 'assets/photos/hero-alt.jpg' : 'assets/photos/cat-' + k.key + '.jpg',
@@ -3213,8 +3217,8 @@ class Component extends DCLogic {
       benefitFilterActive: !!S.benefitFilter,
       benefitFilterLabel: S.benefitFilter ? (this.BENEFIT_TAGS[S.benefitFilter]||{}).label : '',
       menuEmpty: menu.length === 0,
-      menuNote: (this.MENU_NOTES || {})[activeCat] || '',
-      hasMenuNote: !!((this.MENU_NOTES || {})[activeCat]),
+      menuNote: ((FOOD_COMING_SOON && FOOD_KINDS.includes(activeCat)) ? '🍴 Coming soon — enjoy it in-store; online ordering shortly. ' : '') + ((this.MENU_NOTES || {})[activeCat] || ''),
+      hasMenuNote: (FOOD_COMING_SOON && FOOD_KINDS.includes(activeCat)) || !!((this.MENU_NOTES || {})[activeCat]),
       clearBenefitFilter: () =>this.setState({ benefitFilter:'' }),
 
       categories: this.CATS.map(c => ({
@@ -3249,6 +3253,7 @@ class Component extends DCLogic {
       },
       qty:S.qty, incQty:()=>this.setState(s=>({qty:s.qty+1})), decQty:()=>this.setState(s=>({qty:Math.max(1,s.qty-1)})),
       addDetail:()=>{ this.addToCart(active, S.qty, false, activeSize.key); this.go('cart'); },
+      detailOrderable: !(FOOD_COMING_SOON && active.drink === false), detailComingSoon: FOOD_COMING_SOON && active.drink === false,
       detailTotal:this.fmt(activeSize.price * S.qty),
 
       cart: this.cartDetailed().map((ci, i) => ({
@@ -3623,7 +3628,8 @@ class Component extends DCLogic {
       // Menu grouped by category (TV-board order), honouring the category + benefit filters
       menuSections: (this.SECTIONS || []).map(sec => {
         const items = menu.filter(m =>m.kind === sec.kind && sec.itemIds.includes(m.id));
-        return { title: sec.title, note: sec.note, hasNote: !!sec.note, items: items.map(cardFields), count: items.length, headCls: activeCat === 'All' ? '' : 'hide' };
+        const foodSoon = FOOD_COMING_SOON && FOOD_KINDS.includes(sec.kind);
+        return { title: sec.title, note: foodSoon ? 'Coming soon — enjoy it in-store; online ordering shortly' : sec.note, hasNote: foodSoon || !!sec.note, items: items.map(cardFields), count: items.length, headCls: activeCat === 'All' ? '' : 'hide' };
       }).filter(sec =>sec.count > 0)
     };
   }
