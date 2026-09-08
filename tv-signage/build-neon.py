@@ -76,6 +76,7 @@ html,body{{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--
 .brand .tg{{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:900;font-size:34px;color:#fff;opacity:.9;letter-spacing:-.01em}}
 .hdrR{{position:absolute;right:70px;top:66px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:34px;letter-spacing:.14em;color:#fff;opacity:.85}}
 .hdrR b{{color:var(--mango)}}
+.hdrR .soon{{display:inline-block;margin-top:10px;font-size:27px;letter-spacing:.18em;color:var(--mango);text-shadow:0 0 18px rgba(255,184,0,.45)}}
 .page{{position:absolute;left:0;top:190px;width:1920px;height:800px;display:grid;grid-template-columns:1180px 1fr;opacity:0}}
 .left{{padding:0 0 0 70px}}
 .cat{{font-family:'Bebas Neue',Impact,sans-serif;font-size:118px;line-height:.9;letter-spacing:.03em;color:#fff;text-shadow:0 0 18px var(--accent),0 0 60px var(--accent)}}
@@ -102,7 +103,7 @@ html,body{{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--
 <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div><div class="grid"></div>
 <div id="mist"></div>
 <div class="brand"><img src="{LOGO}" alt="Pour Decisions"><div class="tg">{esc(subtitle)}</div></div>
-<div class="hdrR">Smoothies <b>{money(S['smoothie'][0]['price'])}</b> 16 oz · <b>{money(S['smoothie'][1]['price'])}</b> 24 oz<br>Juices <b>{money(S['juice'][0]['price'])}</b> 16 oz · <b>{money(S['juice'][1]['price'])}</b> 24 oz</div>
+<div class="hdrR">Smoothies <b>{money(S['smoothie'][0]['price'])}</b> 16 oz · <b>{money(S['smoothie'][1]['price'])}</b> 24 oz<br>Juices <b>{money(S['juice'][0]['price'])}</b> 16 oz · <b>{money(S['juice'][1]['price'])}</b> 24 oz<br><span class="soon">Food menu · coming soon</span></div>
 {pages}
 <div class="dots">{''.join('<i></i>' for _ in range(n))}</div>
 <div class="foot"><span><b>Cold-pressed · blended fresh · 7:30 AM – 5 PM</b></span><span>pourdecisionsjuicebar.com · 359 Northern Blvd, Albany</span></div>

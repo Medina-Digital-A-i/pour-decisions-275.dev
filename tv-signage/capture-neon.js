@@ -18,5 +18,6 @@ const START = parseInt(process.env.START || '0', 10); const COUNT = parseInt(pro
     if (i % 150 === 0) console.log(`${FILE} frame ${i}/${N} (${((Date.now() - t0) / 1000).toFixed(1)}s)`);
   }
   console.log(`done ${N} frames in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
-  await browser.close();
+  await Promise.race([browser.close(), new Promise(r => setTimeout(r, 5000))]); // never hang on exit
+  process.exit(0);
 })().catch(e => { console.error(e); process.exit(1); });

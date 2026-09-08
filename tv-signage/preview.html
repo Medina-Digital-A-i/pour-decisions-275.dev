@@ -19,6 +19,9 @@ h1{font:italic 900 clamp(30px,5vw,46px)/1.05 Fraunces,Georgia,serif;letter-spaci
 .v1 .head{background:linear-gradient(135deg,#050914 0%,#0B1630 60%,#08111f 100%)}
 .v1 .head h2{color:#7CF5EA;text-shadow:0 0 14px rgba(124,245,234,.75),0 0 30px rgba(124,245,234,.35)}
 .v2 .head{background:linear-gradient(135deg,#14B8AC 0%,#0F7A73 55%,#0B5C57 100%)}
+.v0 .head{background:linear-gradient(135deg,#FFF1DC 0%,#F8F7F3 55%,#E4F6F4 100%);color:var(--ink)}
+.v0 .head .v{color:var(--orange);opacity:1}.v0 .head h2{color:var(--ink)}.v0 .head p{color:var(--text)}
+@media(min-width:900px){.card.v0 video{max-height:520px;object-fit:cover}}
 .v2 .head::before{content:"";position:absolute;right:-8%;top:-90%;width:44%;padding-top:44%;border-radius:50%;background:radial-gradient(circle at 40% 40%,#FFB800 0%,#FF8A00 45%,rgba(255,138,0,0) 72%);opacity:.9}
 .head>*{position:relative}
 video{display:block;width:100%;aspect-ratio:16/9;background:#000}
@@ -34,25 +37,33 @@ video{display:block;width:100%;aspect-ratio:16/9;background:#000}
 .note b{color:var(--ink)}
 </style></head><body><div class="wrap">
 <div class="top"><img src="logo.png" alt="Pour Decisions"><div class="k">TV Menu · Preview</div></div>
-<h1>Two TV menus, ready for the stick.</h1>
-<p class="sub">Each preview below is one full ~58-second cycle of the show (Smoothies + Protein → Juices + Shots). The stick gets the same thing as a seamless 60-minute file plus the single 58-second cycle for TVs that can repeat. Tap “Open live” to see a board animate full screen in your browser.</p>
+<h1>The TV menu — plus two backup looks.</h1>
+<p class="sub"><b>Pop Menu is the main TV menu</b> — one file on every screen: the Smoothies + Protein board and the Juices + Shots + Packs board alternate, with “Food menu · coming soon” pinned by the prices during the soft opening. Neon and Brand below are backup looks. Tap “Open live” to see a board animate full screen.</p>
+<section class="card v0" style="margin-bottom:26px"><div class="head"><div class="v">Main · on every TV</div><h2>Pop Menu</h2><p>Cream cards, fruit stickers, colored price pills — the light look. Left board ↔ right board on one screen.</p></div>
+  <video controls muted loop playsinline autoplay preload="metadata" poster="preview/v0-pop-poster.jpg"><source src="preview/v0-pop-show.mp4" type="video/mp4"></video>
+  <div class="body"><div class="btns">
+   <a class="btn o" href="pop-left.html" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open left board live</a>
+   <a class="btn o" href="pop-right.html" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open right board live</a>
+   <a class="btn g" href="preview/v0-pop-show.mp4" target="_blank">Video only</a></div>
+   <div class="files"><b>On the stick as</b><span>0 Pop Menu (MAIN)/</span><span>  Pop Menu - 60 min.mp4   (one file, plays on any TV — Repeat: On)</span></div></div>
+ </section>
 <div class="grid">
- <section class="card v1"><div class="head"><div class="v">Version 1</div><h2>Neon Menu — dark</h2><p>The earlier look: neon fruit on a midnight background.</p></div>
+ <section class="card v1"><div class="head"><div class="v">Backup 1</div><h2>Neon Menu — dark</h2><p>Neon fruit on a midnight background. Now shows “Food menu · coming soon”.</p></div>
   <video controls muted loop playsinline autoplay preload="metadata" poster="preview/v1-neon-poster.jpg"><source src="preview/v1-neon-show.mp4" type="video/mp4"></video>
   <div class="body"><div class="btns">
    <a class="btn" href="board-neon-a" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open Menu A live</a>
    <a class="btn" href="board-neon-b" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open Menu B live</a>
    <a class="btn g" href="preview/v1-neon-show.mp4" target="_blank">Video only</a></div>
-   <div class="files"><b>Goes on the stick as</b><span>1 Neon Menu (dark)/</span><span>  1 Neon Menu - Smoothies + Juices + Shots - 60 min.mp4</span><span>  2 Neon Menu - Smoothies + Protein only - 60 min.mp4</span><span>  3 Neon Menu - Juices + Shots only - 60 min.mp4</span><span>  4 Neon Menu - one 58 sec cycle (set TV to Repeat).mp4</span></div></div>
+   <div class="files"><b>On the stick as</b><span>1 Neon Menu (dark)/</span><span>  1 Neon Menu - Smoothies + Juices + Shots - 60 min.mp4</span><span>  2 Neon Menu - Smoothies + Protein only - 60 min.mp4</span><span>  3 Neon Menu - Juices + Shots only - 60 min.mp4</span><span>  4 Neon Menu - one 58 sec cycle (set TV to Repeat).mp4</span></div></div>
  </section>
- <section class="card v2"><div class="head"><div class="v">Version 2 · new</div><h2>Brand Menu — Canva design</h2><p>Same animation on the Pour Decisions teal + orange, matched to the website and the Canva master.</p></div>
+ <section class="card v2"><div class="head"><div class="v">Backup 2</div><h2>Brand Menu — Canva design</h2><p>Same animation on the teal + orange. Now shows “Food menu · coming soon”.</p></div>
   <video controls muted loop playsinline autoplay preload="metadata" poster="preview/v2-brand-poster.jpg"><source src="preview/v2-brand-show.mp4" type="video/mp4"></video>
   <div class="body"><div class="btns">
    <a class="btn o" href="board-neon-a-brand" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open Menu A live</a>
    <a class="btn o" href="board-neon-b-brand" target="_blank"><svg viewBox="0 0 16 16"><path d="M4 2l10 6-10 6z"/></svg>Open Menu B live</a>
    <a class="btn g" href="preview/v2-brand-show.mp4" target="_blank">Video only</a>
    <a class="btn g" href="https://www.canva.com/d/5vxE6U-XITix9KM" target="_blank">Canva master</a></div>
-   <div class="files"><b>Goes on the stick as</b><span>2 Brand Menu (Canva)/</span><span>  1 Brand Menu - Smoothies + Juices + Shots - 60 min.mp4</span><span>  2 Brand Menu - Smoothies + Protein only - 60 min.mp4</span><span>  3 Brand Menu - Juices + Shots only - 60 min.mp4</span><span>  4 Brand Menu - one 58 sec cycle (set TV to Repeat).mp4</span></div></div>
+   <div class="files"><b>On the stick as</b><span>2 Brand Menu (Canva)/</span><span>  1 Brand Menu - Smoothies + Juices + Shots - 60 min.mp4</span><span>  2 Brand Menu - Smoothies + Protein only - 60 min.mp4</span><span>  3 Brand Menu - Juices + Shots only - 60 min.mp4</span><span>  4 Brand Menu - one 58 sec cycle (set TV to Repeat).mp4</span></div></div>
  </section>
 </div>
 <div class="note"><b>On the TV:</b> 1920×1080, 30 fps, no audio. Roku: Home → USB Media Player → Videos → pick the file → press ✱ → Repeat: On. Two-TV setup: file 2 on the left screen, file 3 on the right. Nothing already on the stick gets removed — these land in their own two folders.</div>

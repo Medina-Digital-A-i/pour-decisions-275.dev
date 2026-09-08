@@ -11,11 +11,11 @@ LABEL="Neon"; [ "$THEME" = brand ] && LABEL="Brand"
 THEME="$THEME" python3 build-neon.py
 ENC="-c:v libx264 -preset medium -crf 19 -pix_fmt yuv420p -movflags +faststart"
 for B in ${BOARDS:-A B}; do
-  rm -rf frames && mkdir -p frames
-  FILE="board-neon-$B$SUF.html" FRAMES="$FRAMES" OUT="$PWD/frames" node capture-neon.js
-  ffmpeg -y -loglevel error -framerate 30 -i frames/frame_%04d.png $ENC "$OUT/neon-$B-loop.mp4"
+  rm -rf "frames$SUF" && mkdir -p "frames$SUF"
+  FILE="board-neon-$B$SUF.html" FRAMES="$FRAMES" OUT="$PWD/frames$SUF" node capture-neon.js
+  ffmpeg -y -loglevel error -framerate 30 -i "frames$SUF/frame_%04d.png" $ENC "$OUT/neon-$B-loop.mp4"
 done
-rm -rf frames
+rm -rf "frames$SUF"
 # 60-minute versions of each board (seamless: each loop ends where it starts)
 for B in A B; do
   printf "file 'neon-$B-loop.mp4'\n%.0s" $(seq 1 120) > "$OUT/list-$B.txt"

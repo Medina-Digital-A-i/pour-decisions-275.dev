@@ -14,3 +14,7 @@ tv-signage/tv-out*/
 tv-signage/frames/
 tv-signage/*.log
 tv-signage/package-lock.json
+tv-signage/pop-out/
+tv-signage/neon-out-prev/
+tv-signage/neon-out-brand-prev/
+tv-signage/frames*/
