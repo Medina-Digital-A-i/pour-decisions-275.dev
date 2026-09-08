@@ -443,6 +443,7 @@
           </div>
           <div class="mq"><div class="mq-track"><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Smoothies · Juices · Wellness shots<i></i></span><span>Open 7:30 AM – 5 PM daily<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is free<i></i></span><span>Cold-pressed<i></i></span><span>Blended fresh every morning<i></i></span><span>Make a pour decision<i></i></span><span>Smoothies · Juices · Wellness shots<i></i></span><span>Open 7:30 AM – 5 PM daily<i></i></span><span>359 Northern Blvd · Albany<i></i></span><span>Pour Pass: 9 stamps, the tenth is free<i></i></span></div></div>
 
+          <sc-if value="{{ softOpen }}" hint-placeholder-val="{{ true }}"><div role="status" style="margin:16px 16px 0;padding:13px 15px;border-radius:16px;background:linear-gradient(135deg,#FF8A00,#FFB800);color:#16302D;display:flex;gap:12px;align-items:center;box-shadow:0 10px 24px rgba(255,138,0,.28);"><span style="flex:0 0 auto;font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:10px;line-height:1;letter-spacing:.18em;text-transform:uppercase;background:#16302D;color:#FFB800;padding:7px 9px;border-radius:99px;">Soft opening</span><span style="font-size:13.5px;line-height:1.4;font-weight:600;"><b>Drinks only right now</b> — juices, smoothies, wellness shots &amp; protein blends. <b>Food menu coming soon.</b></span></div></sc-if>
           <!-- categories (photo tiles) -->
           <div class="hm-sec">
             <div class="hm-sec-head">
@@ -609,6 +610,7 @@
             </div>
           </div>
           <div class="mn-body">
+            <sc-if value="{{ softOpen }}" hint-placeholder-val="{{ true }}"><div role="status" style="margin:0 0 16px;padding:13px 15px;border-radius:16px;background:linear-gradient(135deg,#FF8A00,#FFB800);color:#16302D;display:flex;gap:12px;align-items:center;box-shadow:0 10px 24px rgba(255,138,0,.28);"><span style="flex:0 0 auto;font-family:Inter,system-ui,sans-serif;font-weight:800;font-size:10px;line-height:1;letter-spacing:.18em;text-transform:uppercase;background:#16302D;color:#FFB800;padding:7px 9px;border-radius:99px;">Soft opening</span><span style="font-size:13.5px;line-height:1.4;font-weight:600;"><b>Drinks only right now</b> — juices, smoothies, wellness shots &amp; protein blends. <b>Food menu coming soon.</b></span></div></sc-if>
             <div class="bf-title">SHOP BY WHAT YOU NEED</div>
             <div class="noscroll bf-row">
               <sc-for list="{{ benefitChips }}" as="b" hint-placeholder-count="6">
@@ -2524,6 +2526,7 @@ class Component extends DCLogic {
     this.PACK_RULES = (data && data.packages && data.packages.byo && Array.isArray(data.packages.byo.tiers)) ? data.packages.byo : (this.PACK_RULES || { min: 4, tiers: [], kinds: ['juice','shot'] });
     this.WHEEL_PRIZES = (data && Array.isArray(data.wheel) && data.wheel.length) ? data.wheel : (this.WHEEL_PRIZES || []);
     this.MENU = b.menu; this.CATS = b.cats; this.WHEEL = b.wheel; this.BENEFITS = b.benefits; this.MENU_NOTES = b.notes; this.FEATURED = b.featured; this.SECTIONS = b.sections;
+    if (FOOD_COMING_SOON) { this.CATS = (this.CATS || []).filter(c => !FOOD_KINDS.includes(c)); this.SECTIONS = (this.SECTIONS || []).filter(sec => !FOOD_KINDS.includes(sec.kind)); }
     this.REWARDS = { points_per_dollar: 10, pours_for_free: 9, catalog: [], ...((data && data.rewards) || {}) };
     this.ING = (data && Array.isArray(data.ingredients)) ? data.ingredients : (this.ING || []);
     this.ING_GROUPS = (data && Array.isArray(data.ingredient_groups)) ? data.ingredient_groups : (this.ING_GROUPS || []);
@@ -2757,7 +2760,8 @@ class Component extends DCLogic {
       const last = this._pinaLastItem;
       if (last) {
         const it = M.find(m =>m.id === last);
-        if (it) { this.addToCart(it, 1); return { text:'Done — ' + it.emoji + ' ' + this.labelWithSize(it, this.sizeOf(it)) + ' is in your cart. Anything else while you’re here?', chips:['Add the Double Shot','Something to eat','Take me to my cart'] }; }
+        if (it && FOOD_COMING_SOON && it.drink === false) return { text:"That one's on the food menu — coming soon. Drinks only during soft opening.", chips:['What do you recommend?','Something with protein','Take me to the menu'] };
+        if (it) { this.addToCart(it, 1); return { text:'Done — ' + it.emoji + ' ' + this.labelWithSize(it, this.sizeOf(it)) + ' is in your cart. Anything else while you’re here?', chips:['Add the Double Shot','Something with protein','Take me to my cart'] }; }
       }
       return { text:"Tell me which one and I'll drop it in", chips:DEFAULT_CHIPS };
     }
@@ -2770,7 +2774,7 @@ class Component extends DCLogic {
       const g = this.pinaById('double-shot'), w = this.pinaById('on-the-rocks'), c = this.pinaById('hair-of-the-dog');
       this._pinaLastItem = g.id;
       return { text:"Say less  Here's the rescue order:\n\n1. " + line(g) + "\n   Settles your stomach fast.\n\n2. " + line(w) + "\n   Pure hydration, that's what you're missing.\n\n3. " + line(c) + "\n   The name says it all — beet, apple and ginger to get you upright.",
-               chips:['Add the Double Shot','Something to eat','What else helps?'] };
+               chips:['Add the Double Shot','Something with protein','What else helps?'] };
     }
 
     // ── 4. Feeling sick ─────────────────────────────────────────
@@ -2873,6 +2877,11 @@ class Component extends DCLogic {
       }
     }
     if (/food|eat|hungry|snack|meal|lunch/.test(L)) {
+      if (FOOD_COMING_SOON) {
+        const meals = M.filter(m => m.drink && m.kind === 'Protein & Oats').slice(0,3);
+        return { text:"Food menu's coming soon — we're in soft opening, so it's drinks only right now.\n\nHungry though? The Protein & Oats blends eat like a meal:\n\n" + meals.map(p=>line(p)).join('\n\n'),
+                 chips:['Add the ' + (meals[0] ? meals[0].name : 'Heavy Pour'), 'What do you recommend?', 'What are your hours?'] };
+      }
       const picks = M.filter(m => !m.drink).slice(0,5);
       return { text:"We do real food too \n\n" + picks.map(p=>line(p)).join('\n\n'),
                chips:['Show me paninis','Something light','Add a juice with that'] };
@@ -3088,6 +3097,7 @@ class Component extends DCLogic {
     const bf = S.benefitFilter;
     const menu = this.MENU
       .filter(m =>activeCat === 'All' || m.kind === activeCat)
+      .filter(m => !(FOOD_COMING_SOON && m.drink === false))
       .filter(m => !bf || (m.tagKeys || []).includes(bf))
       .slice().sort((a, b) =>this.CATS.indexOf(a.kind) - this.CATS.indexOf(b.kind));
     const activeSize = this.sizeOf(active, S.sizeKey);
@@ -3124,6 +3134,7 @@ class Component extends DCLogic {
       splashGrad: this.themeGrad(),
       stickerDisplay: (this.props.showFruitStickers ?? true) ? 'block' : 'none',
 
+      softOpen: FOOD_COMING_SOON,
       isHome:S.screen==='home', isMenu:S.screen==='menu', isDetail:S.screen==='detail',
       isCart:S.screen==='cart', isCheckout:S.screen==='checkout', isConfirm:S.screen==='confirm',
       isPass:S.screen==='pass', isNotif:S.screen==='notifications', isAccount:S.screen==='account', isPina:S.screen==='pina',
@@ -3358,7 +3369,7 @@ class Component extends DCLogic {
       closeDrawer: ()=>this.setState({drawerOpen:false}),
       drawerItems: [
         { icon:'', label:'Home',        sub:'Fresh today',               key:'home' },
-        { icon:'', label:'Menu',        sub:'Juices, food & shots',      key:'menu' },
+        { icon:'', label:'Menu',        sub:'Juices, smoothies & shots',      key:'menu' },
         { icon:'', label:'Plans',       sub:'Cleanses & subscriptions',  key:'packages' },
         { icon:'', label:'Events',      sub:'What\u2019s on this month', key:'events' },
         { icon:'', label:'Ingredients', sub:'What every ingredient does', key:'ingredients' },
@@ -3703,6 +3714,10 @@ window.addEventListener('beforeinstallprompt', function(e) {
 (function(){var t;function on(){document.body.classList.add('is-scrolling');clearTimeout(t);t=setTimeout(function(){document.body.classList.remove('is-scrolling')},650)}
 var sc=document.querySelector('.pd-main-scroll');if(sc)sc.addEventListener('scroll',on,{passive:true});window.addEventListener('scroll',on,{passive:true});
 setTimeout(function(){document.body.classList.add('pf-min')},5000);})();
+</script>
+<script>
+// One-time: retire any old service worker and its caches so every visitor gets the current site.
+(function(){ try { if (!('serviceWorker' in navigator)) return; navigator.serviceWorker.getRegistrations().then(function(rs){ if (!rs.length) return; var hadCtl = !!navigator.serviceWorker.controller; Promise.all(rs.map(function(r){ return r.unregister(); })).then(function(){ return window.caches ? caches.keys().then(function(ks){ return Promise.all(ks.map(function(k){ return caches.delete(k); })); }) : null; }).then(function(){ if (hadCtl && !sessionStorage.getItem('pd_purged')) { sessionStorage.setItem('pd_purged','1'); location.reload(); } }); }).catch(function(){}); } catch(e){} })();
 </script>
 </body>
 </html>
