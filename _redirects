@@ -1,1 +1,8 @@
+# Old site-builder pages still in Google — send them home permanently
+/about-3        /   301
+/about-3/       /   301
+/about          /   301
+/menu-1         /#/menu   301
+/contact        /   301
+/blank          /   301
 /*    /index.html   200

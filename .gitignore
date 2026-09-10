@@ -18,3 +18,7 @@ tv-signage/pop-out/
 tv-signage/neon-out-prev/
 tv-signage/neon-out-brand-prev/
 tv-signage/frames*/
+
+# Real shop photos: only the -web.jpg versions ship; full-size originals stay local
+assets/social/real/*.jpg
+!assets/social/real/*-web.jpg
