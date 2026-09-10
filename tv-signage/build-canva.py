@@ -41,7 +41,7 @@ CSS = f'''
 .foot2{{position:absolute;right:70px;bottom:36px;width:900px;text-align:right;font-family:'Bebas Neue',Impact,sans-serif;font-size:30px;line-height:1.2;letter-spacing:.14em;color:rgba(255,255,255,.85)}}
 '''
 hdr = f"Smoothies {money(S['smoothie'][0]['price'])} 16 oz · {money(S['smoothie'][1]['price'])} 24 oz<br>Juices {money(S['juice'][0]['price'])} 16 oz · {money(S['juice'][1]['price'])} 24 oz"
-foot = '<div class="foot1">Cold-pressed · blended fresh · 7:30 AM – 5 PM</div><div class="foot2">pourdecisionsjuicebar.com · 359 Northern Blvd, Albany</div>'
+foot = '<div class="foot1">Cold-pressed · blended fresh · 8 AM – 5 PM</div><div class="foot2">pourdecisionsjuicebar.com · 359 Northern Blvd, Albany</div>'
 
 def page(board, idx, title, note, items, accent, subtitle):
     def row(k, i):

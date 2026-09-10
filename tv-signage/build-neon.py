@@ -106,7 +106,7 @@ html,body{{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--
 <div class="hdrR">Smoothies <b>{money(S['smoothie'][0]['price'])}</b> 16 oz · <b>{money(S['smoothie'][1]['price'])}</b> 24 oz<br>Juices <b>{money(S['juice'][0]['price'])}</b> 16 oz · <b>{money(S['juice'][1]['price'])}</b> 24 oz<br><span class="soon">Food menu · coming soon</span></div>
 {pages}
 <div class="dots">{''.join('<i></i>' for _ in range(n))}</div>
-<div class="foot"><span><b>Cold-pressed · blended fresh · 7:30 AM – 5 PM</b></span><span>pourdecisionsjuicebar.com · 359 Northern Blvd, Albany</span></div>
+<div class="foot"><span><b>Cold-pressed · blended fresh · 8 AM – 5 PM</b></span><span>pourdecisionsjuicebar.com · 359 Northern Blvd, Albany</span></div>
 <script>
 const TAU=Math.PI*2, N_PAGES={n};
 const pages=[...document.querySelectorAll('.page')], dots=[...document.querySelectorAll('.dots i')];
