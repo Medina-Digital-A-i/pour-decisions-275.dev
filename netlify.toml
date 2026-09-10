@@ -12,3 +12,9 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
+
+# Real shop photos — fetchable cross-origin (used to push photos into Google Business Profile / social tools)
+[[headers]]
+  for = "/assets/social/real/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
