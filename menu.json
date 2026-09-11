@@ -830,6 +830,18 @@
         "save": "17% off"
       },
       {
+        "name": "The Whole Floor",
+        "desc": "24 × 16 oz juices · swap any juice for two shots",
+        "price": 178,
+        "save": "22% off"
+      },
+      {
+        "name": "Shot Round",
+        "desc": "24 × 2 oz wellness shots",
+        "price": 84,
+        "save": "22% off"
+      },
+      {
         "name": "Shot Week",
         "desc": "7 × 2 oz wellness shots",
         "price": 27.5,
@@ -881,6 +893,36 @@
         }
       ],
       "note": "Discount ladder by item count. Prices round to the nearest $0.50. Assumed COGS ~ $3.25/16oz juice, ~$1.05/2oz shot → margins stay 56–75% at every tier."
+    },
+    "office": {
+      "title": "For the office",
+      "note": "Office juice drops, meetings and wellness challenges. Call (838) 261-9233 or email pourdecisionsalb@gmail.com. 12 or more, give us a day.",
+      "items": [
+        {
+          "name": "Morning Shift",
+          "desc": "12 × 16 oz cold-pressed juices, mix any flavors",
+          "price": 94.5,
+          "note": "$7.88 a bottle · 17% off"
+        },
+        {
+          "name": "The Whole Floor",
+          "desc": "24 × 16 oz juices · swap any juice for two 2 oz shots",
+          "price": 178,
+          "note": "22% off · give us a day"
+        },
+        {
+          "name": "Shot Round",
+          "desc": "24 × 2 oz wellness shots — Flu Shot, Golden Hour, Double Shot, The Bouncer",
+          "price": 84,
+          "note": "$3.50 a shot"
+        },
+        {
+          "name": "Meeting Bar",
+          "desc": "Our lounge + a made-to-order smoothie or juice for each person",
+          "price": "from $8.50 / person",
+          "note": "10 or more · space included"
+        }
+      ]
     }
   },
   "wheel": [
