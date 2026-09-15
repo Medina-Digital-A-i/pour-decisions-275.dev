@@ -610,36 +610,46 @@
     },
     {
       "key": "wraps-paninis",
-      "title": "Wraps & Paninis",
-      "note": "Any wrap or panini + 16 oz smoothie $17",
+      "title": "Wraps",
+      "note": "Wheat tortilla · Any wrap + 16 oz smoothie $17",
       "items": [
         {
-          "id": "southwest-wrap",
-          "name": "Southwest Wrap",
+          "id": "grilled-chicken-wrap",
+          "name": "Grilled Chicken Wrap",
           "ingredients": [
-            "the Southwest salad in a wheat tortilla"
+            "grilled chicken",
+            "mixed greens",
+            "tomato",
+            "cucumber",
+            "red onion",
+            "lemon-herb"
           ],
-          "prices": {
-            "chicken": 11,
-            "salmon": 14,
-            "tuna": 10.5
-          }
+          "price": 11
         },
         {
-          "id": "mediterranean-wrap",
-          "name": "Mediterranean Wrap",
+          "id": "chicken-salad-wrap",
+          "name": "Chicken Salad Wrap",
           "ingredients": [
-            "the Mediterranean salad in a wheat tortilla"
+            "house chicken salad",
+            "mixed greens",
+            "tomato"
           ],
-          "prices": {
-            "chicken": 11,
-            "salmon": 14,
-            "tuna": 10.5
-          }
+          "price": 11
         },
         {
-          "id": "ballistic-shrimp-burrito",
-          "name": "Ballistic Shrimp Burrito",
+          "id": "tuna-wrap",
+          "name": "Tuna Wrap",
+          "ingredients": [
+            "albacore tuna salad",
+            "mixed greens",
+            "tomato",
+            "cucumber"
+          ],
+          "price": 10.5
+        },
+        {
+          "id": "shrimp-burrito",
+          "name": "Shrimp Burrito",
           "ingredients": [
             "crispy shrimp",
             "rice",
@@ -649,152 +659,9 @@
             "avocado",
             "lettuce",
             "cilantro",
-            "ballistic sauce"
+            "chipotle-lime"
           ],
-          "price": 13.5,
-          "tag": "spicy"
-        },
-        {
-          "id": "pesto-panini",
-          "name": "Pesto Panini",
-          "ingredients": [
-            "ciabatta",
-            "mozzarella",
-            "tomato",
-            "basil pesto"
-          ],
-          "prices": {
-            "chicken": 11.5,
-            "salmon": 14.5,
-            "tuna": 10.5
-          }
-        },
-        {
-          "id": "chipotle-panini",
-          "name": "Chipotle Panini",
-          "ingredients": [
-            "ciabatta",
-            "cheddar",
-            "avocado",
-            "chipotle aioli"
-          ],
-          "prices": {
-            "chicken": 11.5,
-            "salmon": 14.5,
-            "tuna": 10.5
-          }
-        },
-        {
-          "id": "veggie-panini",
-          "name": "Veggie Panini",
-          "ingredients": [
-            "ciabatta",
-            "roasted red pepper",
-            "mozzarella",
-            "spinach",
-            "pesto"
-          ],
-          "price": 9.5
-        }
-      ]
-    },
-    {
-      "key": "bowls-breakfast",
-      "title": "Bowls & Breakfast",
-      "items": [
-        {
-          "id": "acai-bowl",
-          "name": "Açaí Bowl",
-          "ingredients": [
-            "açaí",
-            "banana",
-            "granola",
-            "strawberry",
-            "blueberry",
-            "honey or PB drizzle"
-          ],
-          "price": 12.5
-        },
-        {
-          "id": "fruit-bowl",
-          "name": "Fruit Bowl",
-          "ingredients": [
-            "mixed fresh fruit",
-            "or all pineapple",
-            "or all watermelon"
-          ],
-          "price": 7,
-          "tag": "fresh cut"
-        },
-        {
-          "id": "oatmeal",
-          "name": "Oatmeal",
-          "ingredients": [
-            "plain",
-            "or loaded: berries, walnuts, honey, cinnamon"
-          ],
-          "prices": {
-            "plain": 5,
-            "loaded": 8
-          },
-          "addons": [
-            {
-              "name": "raisins",
-              "price": 1
-            }
-          ]
-        },
-        {
-          "id": "overnight-oats",
-          "name": "Overnight Oats",
-          "ingredients": [
-            "rolled oats",
-            "oat milk",
-            "chia",
-            "honey",
-            "fresh berries"
-          ],
-          "price": 7,
-          "tag": "grab & go",
-          "addons": [
-            {
-              "name": "raisins",
-              "price": 1
-            }
-          ]
-        },
-        {
-          "id": "soup",
-          "name": "Soup of the Day",
-          "ingredients": [
-            "with sourdough"
-          ],
-          "prices": {
-            "cup": 6,
-            "bowl": 9
-          }
-        },
-        {
-          "id": "avocado-toast",
-          "name": "Avocado Toast",
-          "ingredients": [
-            "sourdough",
-            "smashed avocado",
-            "lemon",
-            "chili flake",
-            "microgreens"
-          ],
-          "price": 9,
-          "addons": [
-            {
-              "name": "egg",
-              "price": 2
-            },
-            {
-              "name": "smoked salmon",
-              "price": 5
-            }
-          ]
+          "price": 13.5
         }
       ]
     }
@@ -1557,5 +1424,107 @@
         "cost": 950
       }
     ]
-  }
+  },
+  "parked_categories": [
+    {
+      "key": "bowls-breakfast",
+      "title": "Bowls & Breakfast",
+      "items": [
+        {
+          "id": "acai-bowl",
+          "name": "Açaí Bowl",
+          "ingredients": [
+            "açaí",
+            "banana",
+            "granola",
+            "strawberry",
+            "blueberry",
+            "honey or PB drizzle"
+          ],
+          "price": 12.5
+        },
+        {
+          "id": "fruit-bowl",
+          "name": "Fruit Bowl",
+          "ingredients": [
+            "mixed fresh fruit",
+            "or all pineapple",
+            "or all watermelon"
+          ],
+          "price": 7,
+          "tag": "fresh cut"
+        },
+        {
+          "id": "oatmeal",
+          "name": "Oatmeal",
+          "ingredients": [
+            "plain",
+            "or loaded: berries, walnuts, honey, cinnamon"
+          ],
+          "prices": {
+            "plain": 5,
+            "loaded": 8
+          },
+          "addons": [
+            {
+              "name": "raisins",
+              "price": 1
+            }
+          ]
+        },
+        {
+          "id": "overnight-oats",
+          "name": "Overnight Oats",
+          "ingredients": [
+            "rolled oats",
+            "oat milk",
+            "chia",
+            "honey",
+            "fresh berries"
+          ],
+          "price": 7,
+          "tag": "grab & go",
+          "addons": [
+            {
+              "name": "raisins",
+              "price": 1
+            }
+          ]
+        },
+        {
+          "id": "soup",
+          "name": "Soup of the Day",
+          "ingredients": [
+            "with sourdough"
+          ],
+          "prices": {
+            "cup": 6,
+            "bowl": 9
+          }
+        },
+        {
+          "id": "avocado-toast",
+          "name": "Avocado Toast",
+          "ingredients": [
+            "sourdough",
+            "smashed avocado",
+            "lemon",
+            "chili flake",
+            "microgreens"
+          ],
+          "price": 9,
+          "addons": [
+            {
+              "name": "egg",
+              "price": 2
+            },
+            {
+              "name": "smoked salmon",
+              "price": 5
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
