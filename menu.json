@@ -512,7 +512,7 @@
     {
       "key": "salads",
       "title": "Salads",
-      "note": "Add grilled chicken +$5 · albacore tuna +$4 · grilled salmon +$7",
+      "note": "Every salad comes meat-free · add grilled chicken +$5 · albacore tuna +$4 · crispy shrimp +$6 · grilled salmon +$7",
       "items": [
         {
           "id": "southwest-black-bean",
@@ -528,7 +528,13 @@
             "tortilla strips",
             "chipotle-lime"
           ],
-          "price": 11
+          "prices": {
+            "salad": 11,
+            "chicken": 16,
+            "tuna": 15,
+            "shrimp": 17,
+            "salmon": 18
+          }
         },
         {
           "id": "mediterranean-chickpea",
@@ -544,7 +550,13 @@
             "roasted red pepper",
             "lemon-herb"
           ],
-          "price": 11
+          "prices": {
+            "salad": 11,
+            "chicken": 16,
+            "tuna": 15,
+            "shrimp": 17,
+            "salmon": 18
+          }
         },
         {
           "id": "cucumber-crunch",
@@ -560,8 +572,14 @@
             "feta",
             "lemon-lime"
           ],
-          "price": 9.5,
-          "tag": "house"
+          "tag": "house",
+          "prices": {
+            "salad": 9.5,
+            "chicken": 14.5,
+            "tuna": 13.5,
+            "shrimp": 15.5,
+            "salmon": 16.5
+          }
         },
         {
           "id": "strawberry-spinach",
@@ -575,7 +593,13 @@
             "red onion",
             "balsamic"
           ],
-          "price": 11
+          "prices": {
+            "salad": 11,
+            "chicken": 16,
+            "tuna": 15,
+            "shrimp": 17,
+            "salmon": 18
+          }
         },
         {
           "id": "apple-walnut-cranberry",
@@ -590,7 +614,13 @@
             "red onion",
             "honey-mustard"
           ],
-          "price": 11
+          "prices": {
+            "salad": 11,
+            "chicken": 16,
+            "tuna": 15,
+            "shrimp": 17,
+            "salmon": 18
+          }
         }
       ],
       "proteins": [
@@ -605,6 +635,10 @@
         {
           "name": "Grilled salmon",
           "price": 7
+        },
+        {
+          "name": "Crispy shrimp",
+          "price": 6
         }
       ]
     },
