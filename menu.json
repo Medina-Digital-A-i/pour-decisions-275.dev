@@ -512,50 +512,43 @@
     {
       "key": "salads",
       "title": "Salads",
-      "note": "Every salad comes meat-free · add grilled chicken +$5 · albacore tuna +$4 · crispy shrimp +$6 · grilled salmon +$7",
+      "note": "Every salad comes meat-free · add grilled chicken +$4 · albacore tuna +$3.50 · crispy shrimp +$5 · wild-caught salmon +$6",
       "items": [
         {
-          "id": "southwest-black-bean",
-          "name": "Southwest Black Bean",
+          "id": "house",
+          "name": "House Salad",
           "ingredients": [
-            "romaine",
-            "black beans",
-            "corn",
+            "mixed greens",
             "tomato",
-            "avocado",
+            "cucumber",
+            "carrot",
             "red onion",
-            "cheddar",
-            "tortilla strips",
-            "chipotle-lime"
+            "your choice of dressing"
           ],
+          "tag": "simple",
           "prices": {
-            "salad": 11,
-            "chicken": 16,
-            "tuna": 15,
-            "shrimp": 17,
-            "salmon": 18
+            "salad": 7,
+            "chicken": 11,
+            "tuna": 10.5,
+            "shrimp": 12,
+            "salmon": 13
           }
         },
         {
-          "id": "mediterranean-chickpea",
-          "name": "Mediterranean Chickpea",
+          "id": "caesar",
+          "name": "Caesar Salad",
           "ingredients": [
-            "mixed greens",
-            "chickpeas",
-            "cucumber",
-            "tomato",
-            "red onion",
-            "kalamata olives",
-            "feta",
-            "roasted red pepper",
-            "lemon-herb"
+            "romaine",
+            "parmesan",
+            "croutons",
+            "caesar"
           ],
           "prices": {
-            "salad": 11,
-            "chicken": 16,
-            "tuna": 15,
-            "shrimp": 17,
-            "salmon": 18
+            "salad": 7,
+            "chicken": 11,
+            "tuna": 10.5,
+            "shrimp": 12,
+            "salmon": 13
           }
         },
         {
@@ -574,31 +567,33 @@
           ],
           "tag": "house",
           "prices": {
-            "salad": 9.5,
-            "chicken": 14.5,
-            "tuna": 13.5,
-            "shrimp": 15.5,
-            "salmon": 16.5
+            "salad": 8.5,
+            "chicken": 12.5,
+            "tuna": 12.0,
+            "shrimp": 13.5,
+            "salmon": 14.5
           }
         },
         {
-          "id": "strawberry-spinach",
-          "name": "Strawberry Spinach",
+          "id": "southwest-black-bean",
+          "name": "Southwest Black Bean",
           "ingredients": [
-            "spinach",
-            "strawberry",
-            "blueberry",
-            "walnut",
-            "feta",
+            "romaine",
+            "black beans",
+            "corn",
+            "tomato",
+            "avocado",
             "red onion",
-            "balsamic"
+            "cheddar",
+            "tortilla strips",
+            "chipotle-lime"
           ],
           "prices": {
-            "salad": 11,
-            "chicken": 16,
-            "tuna": 15,
-            "shrimp": 17,
-            "salmon": 18
+            "salad": 9.5,
+            "chicken": 13.5,
+            "tuna": 13.0,
+            "shrimp": 14.5,
+            "salmon": 15.5
           }
         },
         {
@@ -615,29 +610,49 @@
             "honey-mustard"
           ],
           "prices": {
-            "salad": 11,
-            "chicken": 16,
-            "tuna": 15,
-            "shrimp": 17,
-            "salmon": 18
+            "salad": 9.5,
+            "chicken": 13.5,
+            "tuna": 13.0,
+            "shrimp": 14.5,
+            "salmon": 15.5
+          }
+        },
+        {
+          "id": "strawberry-spinach",
+          "name": "Strawberry Spinach",
+          "ingredients": [
+            "spinach",
+            "strawberry",
+            "blueberry",
+            "walnut",
+            "feta",
+            "red onion",
+            "balsamic"
+          ],
+          "prices": {
+            "salad": 10.5,
+            "chicken": 14.5,
+            "tuna": 14.0,
+            "shrimp": 15.5,
+            "salmon": 16.5
           }
         }
       ],
       "proteins": [
         {
           "name": "Grilled chicken",
-          "price": 5
-        },
-        {
-          "name": "Albacore tuna",
           "price": 4
         },
         {
-          "name": "Grilled salmon",
-          "price": 7
+          "name": "Albacore tuna",
+          "price": 3.5
         },
         {
           "name": "Crispy shrimp",
+          "price": 5
+        },
+        {
+          "name": "Wild-caught salmon",
           "price": 6
         }
       ]
@@ -658,7 +673,7 @@
             "red onion",
             "lemon-herb"
           ],
-          "price": 11
+          "price": 12
         },
         {
           "id": "chicken-salad-wrap",
@@ -668,7 +683,7 @@
             "mixed greens",
             "tomato"
           ],
-          "price": 11
+          "price": 12
         },
         {
           "id": "tuna-wrap",
@@ -679,13 +694,29 @@
             "tomato",
             "cucumber"
           ],
-          "price": 10.5
+          "price": 11
         },
         {
           "id": "shrimp-burrito",
           "name": "Shrimp Burrito",
           "ingredients": [
             "crispy shrimp",
+            "rice",
+            "black beans",
+            "tomato",
+            "onion",
+            "avocado",
+            "lettuce",
+            "cilantro",
+            "chipotle-lime"
+          ],
+          "price": 13.5
+        },
+        {
+          "id": "salmon-burrito",
+          "name": "Salmon Burrito",
+          "ingredients": [
+            "grilled wild-caught salmon",
             "rice",
             "black beans",
             "tomato",
