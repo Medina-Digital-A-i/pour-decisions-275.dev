@@ -512,7 +512,7 @@
     {
       "key": "salads",
       "title": "Salads",
-      "note": "Every salad comes meat-free · add grilled chicken +$4 · albacore tuna +$3.50 · crispy shrimp +$5 · wild-caught salmon +$6",
+      "note": "Add chicken +$4 · tuna +$3.50 · shrimp +$5 · wild salmon +$6 · fruit +$1.50",
       "items": [
         {
           "id": "house",
@@ -549,6 +549,44 @@
             "tuna": 10.5,
             "shrimp": 12,
             "salmon": 13
+          }
+        },
+        {
+          "id": "kale",
+          "name": "Kale Salad",
+          "ingredients": [
+            "kale",
+            "tomato",
+            "cucumber",
+            "red onion",
+            "parmesan",
+            "lemon"
+          ],
+          "prices": {
+            "salad": 8.5,
+            "chicken": 12.5,
+            "tuna": 12.0,
+            "shrimp": 13.5,
+            "salmon": 14.5
+          }
+        },
+        {
+          "id": "spinach",
+          "name": "Spinach Salad",
+          "ingredients": [
+            "spinach",
+            "tomato",
+            "cucumber",
+            "red onion",
+            "feta",
+            "balsamic"
+          ],
+          "prices": {
+            "salad": 8.5,
+            "chicken": 12.5,
+            "tuna": 12.0,
+            "shrimp": 13.5,
+            "salmon": 14.5
           }
         },
         {
@@ -616,26 +654,6 @@
             "shrimp": 14.5,
             "salmon": 15.5
           }
-        },
-        {
-          "id": "strawberry-spinach",
-          "name": "Strawberry Spinach",
-          "ingredients": [
-            "spinach",
-            "strawberry",
-            "blueberry",
-            "walnut",
-            "feta",
-            "red onion",
-            "balsamic"
-          ],
-          "prices": {
-            "salad": 10.5,
-            "chicken": 14.5,
-            "tuna": 14.0,
-            "shrimp": 15.5,
-            "salmon": 16.5
-          }
         }
       ],
       "proteins": [
@@ -654,6 +672,12 @@
         {
           "name": "Wild-caught salmon",
           "price": 6
+        }
+      ],
+      "addons": [
+        {
+          "name": "fresh fruit",
+          "price": 1.5
         }
       ]
     },
