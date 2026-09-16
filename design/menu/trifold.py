@@ -21,7 +21,7 @@ TRI_CSS = """
 .back{background:linear-gradient(160deg,#0F7A73 0%,#0B5C57 100%);color:#fff}
 .back .h{font-family:"Bebas Neue","Oswald",sans-serif;font-size:26px;color:#FFE7A8;letter-spacing:.04em;margin:0 0 6px}
 .back p{font-size:10.5px;line-height:1.55;margin:0 0 10px;font-weight:600;color:#fff}
-.back .box{margin-top:0;margin-bottom:8px}
+.back .box{margin-top:0;margin-bottom:8px;color:var(--text)}.back .box p{color:var(--text)}
 .hours{margin-top:auto;font-size:11px;font-weight:800;color:#fff;line-height:1.8}
 """
 inside = doc('trifold-inside', TRI_CSS, f'''
@@ -34,7 +34,7 @@ outside = doc('trifold-outside', TRI_CSS, f'''
 <div class="sheet">
   <div class="panel back">
     <h3 class="h">Juice Packs</h3>
-    {box(pk['title'], pack_body)}
+    {box('Mix juices and shots, any combo', pack_body)}
     {box('Pour Pass', pass_body)}
     <h3 class="h" style="margin-top:8px">Event space</h3>
     <p>Meetings, parties, pop-ups and workshops — call or email to book.</p>
