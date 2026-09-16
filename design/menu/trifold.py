@@ -18,11 +18,11 @@ TRI_CSS = """
 .cover .qrw{background:#fff;border-radius:14px;padding:10px;display:inline-flex;flex-direction:column;align-items:center;gap:6px;color:var(--ink)}
 .cover .qrw svg{width:96px;height:96px}.cover .qrw b{font-size:11px}
 .cover .addr{font-size:11px;font-weight:700;line-height:1.7;opacity:.95}
-.back{background:var(--sand)}
-.back .h{font-family:"Bebas Neue","Oswald",sans-serif;font-size:26px;color:var(--ink);letter-spacing:.04em;margin:0 0 6px}
-.back p{font-size:10.5px;line-height:1.55;margin:0 0 10px;font-weight:600;color:var(--text)}
+.back{background:linear-gradient(160deg,#0F7A73 0%,#0B5C57 100%);color:#fff}
+.back .h{font-family:"Bebas Neue","Oswald",sans-serif;font-size:26px;color:#FFE7A8;letter-spacing:.04em;margin:0 0 6px}
+.back p{font-size:10.5px;line-height:1.55;margin:0 0 10px;font-weight:600;color:#fff}
 .back .box{margin-top:0;margin-bottom:8px}
-.hours{margin-top:auto;font-size:10.5px;font-weight:800;color:var(--ink);line-height:1.7}
+.hours{margin-top:auto;font-size:11px;font-weight:800;color:#fff;line-height:1.8}
 """
 inside = doc('trifold-inside', TRI_CSS, f'''
 <div class="sheet">
