@@ -522,10 +522,8 @@
             "tomato",
             "cucumber",
             "carrot",
-            "red onion",
-            "your choice of dressing"
+            "red onion"
           ],
-          "tag": "simple",
           "prices": {
             "salad": 7,
             "chicken": 11,
@@ -658,25 +656,25 @@
       ],
       "proteins": [
         {
-          "name": "Grilled chicken",
+          "name": "Chicken",
           "price": 4
         },
         {
-          "name": "Albacore tuna",
+          "name": "Tuna",
           "price": 3.5
         },
         {
-          "name": "Crispy shrimp",
+          "name": "Shrimp",
           "price": 5
         },
         {
-          "name": "Wild-caught salmon",
+          "name": "Wild salmon",
           "price": 6
         }
       ],
       "addons": [
         {
-          "name": "fresh fruit",
+          "name": "fruit",
           "price": 1.5
         }
       ]
