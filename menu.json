@@ -25,11 +25,11 @@
     "smoothie_protein": [
       {
         "oz": 16,
-        "price": 10.5
+        "price": 11.5
       },
       {
         "oz": 24,
-        "price": 13.5
+        "price": 14.5
       }
     ],
     "juice": [
@@ -447,7 +447,7 @@
         },
         {
           "name": "Add a wellness shot to any juice",
-          "price": 3
+          "price": 5
         }
       ]
     },

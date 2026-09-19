@@ -150,7 +150,7 @@ def ing_cols(n):
             else: out += f'<p class="igr"><b>{esc(v["name"].capitalize())}</b> {esc(v["benefit"])}</p>'
         return out
     return ''.join(f'<div class="stack">{render(c)}</div>' for c in cols)
-smoothie_note = f'16 oz {money(S["smoothie"][0]["price"])} · 24 oz {money(S["smoothie"][1]["price"])} · protein blends +$1'
+smoothie_note = f'16 oz {money(S["smoothie"][0]["price"])} · 24 oz {money(S["smoothie"][1]["price"])} · protein blends +$2'
 juice_note = f'16 oz {money(S["juice"][0]["price"])} · 24 oz {money(S["juice"][1]["price"])} · pressed fresh daily'
 shot_note = next((c.get('note') for c in M['categories'] if c['key']=='shots'), None) or f'2 oz {money(S["shot"][0]["price"])}'
 

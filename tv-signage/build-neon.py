@@ -133,7 +133,7 @@ drawFrame(0,900);
 </script></body></html>'''
 
 sm, mo, ju, sh = C['smoothies'], C['protein-oats'], C['juices'], C['shots']
-smoothie_note = f"16 oz {money(S['smoothie'][0]['price'])} · 24 oz {money(S['smoothie'][1]['price'])} · protein blends +$1"
+smoothie_note = f"16 oz {money(S['smoothie'][0]['price'])} · 24 oz {money(S['smoothie'][1]['price'])} · protein blends +$2"
 juice_note = f"16 oz {money(S['juice'][0]['price'])} · 24 oz {money(S['juice'][1]['price'])} · pressed fresh daily"
 A = board('A', [
     ('smoothies', sm['items'][:5], 'Smoothies', smoothie_note, 'cup', '#FF3D6E'),
