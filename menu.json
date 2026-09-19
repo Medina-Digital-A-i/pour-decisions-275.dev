@@ -766,6 +766,14 @@
           "price": 8
         },
         {
+          "id": "sea-moss-bottle",
+          "name": "Sea Moss Bottle",
+          "ingredients": [
+            "16 oz bottle"
+          ],
+          "price": 20
+        },
+        {
           "id": "bottled-water",
           "name": "Bottled Water",
           "ingredients": [],
