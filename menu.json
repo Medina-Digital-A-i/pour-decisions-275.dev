@@ -45,7 +45,7 @@
     "shot": [
       {
         "oz": 2,
-        "price": 4.5
+        "price": 6
       }
     ],
     "meal": [
@@ -63,7 +63,7 @@
     {
       "key": "smoothies",
       "title": "Smoothies",
-      "note": "16 oz $9.50 · 24 oz $12.50 · protein blends +$1 · make any smoothie a meal (oats + protein) +$3",
+      "note": "16 oz $9.50 · 24 oz $12.50 · add protein +$2 · make any smoothie a meal (oats + protein) +$3",
       "items": [
         {
           "id": "the-regular",
@@ -454,7 +454,7 @@
     {
       "key": "shots",
       "title": "Wellness Shots",
-      "note": "2 oz $4.50 · two for $8",
+      "note": "2 oz $6 · two for $11",
       "items": [
         {
           "id": "flu-shot",
@@ -512,39 +512,80 @@
     {
       "key": "salads",
       "title": "Salads",
-      "note": "Add grilled chicken +$5 · albacore tuna +$4 · grilled salmon +$7",
+      "note": "Add chicken +$6 · tuna +$6 · shrimp (6) +$6 · wild-caught salmon (8 oz) +$9 · fruit +$1.50",
       "items": [
         {
-          "id": "southwest-black-bean",
-          "name": "Southwest Black Bean",
-          "ingredients": [
-            "romaine",
-            "black beans",
-            "corn",
-            "tomato",
-            "avocado",
-            "red onion",
-            "cheddar",
-            "tortilla strips",
-            "chipotle-lime"
-          ],
-          "price": 11
-        },
-        {
-          "id": "mediterranean-chickpea",
-          "name": "Mediterranean Chickpea",
+          "id": "house",
+          "name": "House Salad",
           "ingredients": [
             "mixed greens",
-            "chickpeas",
-            "cucumber",
             "tomato",
-            "red onion",
-            "kalamata olives",
-            "feta",
-            "roasted red pepper",
-            "lemon-herb"
+            "cucumber",
+            "carrot",
+            "red onion"
           ],
-          "price": 11
+          "prices": {
+            "salad": 10,
+            "chicken": 16,
+            "tuna": 16,
+            "shrimp": 16,
+            "salmon": 19
+          }
+        },
+        {
+          "id": "caesar",
+          "name": "Caesar Salad",
+          "ingredients": [
+            "romaine",
+            "parmesan",
+            "croutons",
+            "caesar"
+          ],
+          "prices": {
+            "salad": 10,
+            "chicken": 16,
+            "tuna": 16,
+            "shrimp": 16,
+            "salmon": 19
+          }
+        },
+        {
+          "id": "kale",
+          "name": "Kale Salad",
+          "ingredients": [
+            "kale",
+            "tomato",
+            "cucumber",
+            "red onion",
+            "parmesan",
+            "lemon"
+          ],
+          "prices": {
+            "salad": 10,
+            "chicken": 16,
+            "tuna": 16,
+            "shrimp": 16,
+            "salmon": 19
+          }
+        },
+        {
+          "id": "spinach",
+          "name": "Spinach Salad",
+          "ingredients": [
+            "spinach",
+            "tomato",
+            "cucumber",
+            "red onion",
+            "feta",
+            "balsamic"
+          ],
+          "prices": {
+            "salad": 12,
+            "chicken": 18,
+            "tuna": 18,
+            "shrimp": 18,
+            "salmon": 21
+          }
         },
         {
           "id": "cucumber-crunch",
@@ -560,22 +601,36 @@
             "feta",
             "lemon-lime"
           ],
-          "price": 9.5,
-          "tag": "house"
+          "tag": "house",
+          "prices": {
+            "salad": 12,
+            "chicken": 18,
+            "tuna": 18,
+            "shrimp": 18,
+            "salmon": 21
+          }
         },
         {
-          "id": "strawberry-spinach",
-          "name": "Strawberry Spinach",
+          "id": "southwest-black-bean",
+          "name": "Southwest Black Bean",
           "ingredients": [
-            "spinach",
-            "strawberry",
-            "blueberry",
-            "walnut",
-            "feta",
+            "romaine",
+            "black beans",
+            "corn",
+            "tomato",
+            "avocado",
             "red onion",
-            "balsamic"
+            "cheddar",
+            "tortilla strips",
+            "chipotle-lime"
           ],
-          "price": 11
+          "prices": {
+            "salad": 11.5,
+            "chicken": 17.5,
+            "tuna": 17.5,
+            "shrimp": 17.5,
+            "salmon": 20.5
+          }
         },
         {
           "id": "apple-walnut-cranberry",
@@ -590,56 +645,82 @@
             "red onion",
             "honey-mustard"
           ],
-          "price": 11
+          "prices": {
+            "salad": 11.5,
+            "chicken": 17.5,
+            "tuna": 17.5,
+            "shrimp": 17.5,
+            "salmon": 20.5
+          }
         }
       ],
       "proteins": [
         {
-          "name": "Grilled chicken",
-          "price": 5
+          "name": "Chicken",
+          "price": 6
         },
         {
-          "name": "Albacore tuna",
-          "price": 4
+          "name": "Tuna",
+          "price": 6
         },
         {
-          "name": "Grilled salmon",
-          "price": 7
+          "name": "Shrimp",
+          "price": 6
+        },
+        {
+          "name": "Wild salmon",
+          "price": 9
+        }
+      ],
+      "addons": [
+        {
+          "name": "fruit",
+          "price": 1.5
         }
       ]
     },
     {
       "key": "wraps-paninis",
-      "title": "Wraps & Paninis",
-      "note": "Any wrap or panini + 16 oz smoothie $17",
+      "title": "Wraps",
+      "note": "Wheat tortilla",
       "items": [
         {
-          "id": "southwest-wrap",
-          "name": "Southwest Wrap",
+          "id": "grilled-chicken-wrap",
+          "name": "Grilled Chicken Wrap",
           "ingredients": [
-            "the Southwest salad in a wheat tortilla"
+            "grilled chicken",
+            "mixed greens",
+            "tomato",
+            "cucumber",
+            "red onion",
+            "lemon-herb"
           ],
-          "prices": {
-            "chicken": 11,
-            "salmon": 14,
-            "tuna": 10.5
-          }
+          "price": 12
         },
         {
-          "id": "mediterranean-wrap",
-          "name": "Mediterranean Wrap",
+          "id": "chicken-salad-wrap",
+          "name": "Chicken Salad Wrap",
           "ingredients": [
-            "the Mediterranean salad in a wheat tortilla"
+            "house chicken salad",
+            "mixed greens",
+            "tomato"
           ],
-          "prices": {
-            "chicken": 11,
-            "salmon": 14,
-            "tuna": 10.5
-          }
+          "price": 12
         },
         {
-          "id": "ballistic-shrimp-burrito",
-          "name": "Ballistic Shrimp Burrito",
+          "id": "tuna-wrap",
+          "name": "Tuna Wrap",
+          "ingredients": [
+            "albacore tuna salad",
+            "mixed greens",
+            "tomato",
+            "cucumber"
+          ],
+          "price": 11
+        },
+        {
+          "id": "shrimp-burrito",
+          "name": "Shrimp Burrito",
           "ingredients": [
             "crispy shrimp",
             "rice",
@@ -649,152 +730,46 @@
             "avocado",
             "lettuce",
             "cilantro",
-            "ballistic sauce"
+            "chipotle-lime"
           ],
-          "price": 13.5,
-          "tag": "spicy"
+          "price": 13.5
         },
         {
-          "id": "pesto-panini",
-          "name": "Pesto Panini",
+          "id": "salmon-burrito",
+          "name": "Salmon Burrito",
           "ingredients": [
-            "ciabatta",
-            "mozzarella",
+            "grilled wild-caught salmon",
+            "rice",
+            "black beans",
             "tomato",
-            "basil pesto"
-          ],
-          "prices": {
-            "chicken": 11.5,
-            "salmon": 14.5,
-            "tuna": 10.5
-          }
-        },
-        {
-          "id": "chipotle-panini",
-          "name": "Chipotle Panini",
-          "ingredients": [
-            "ciabatta",
-            "cheddar",
+            "onion",
             "avocado",
-            "chipotle aioli"
+            "lettuce",
+            "cilantro",
+            "chipotle-lime"
           ],
-          "prices": {
-            "chicken": 11.5,
-            "salmon": 14.5,
-            "tuna": 10.5
-          }
-        },
-        {
-          "id": "veggie-panini",
-          "name": "Veggie Panini",
-          "ingredients": [
-            "ciabatta",
-            "roasted red pepper",
-            "mozzarella",
-            "spinach",
-            "pesto"
-          ],
-          "price": 9.5
+          "price": 14.5
         }
       ]
     },
     {
-      "key": "bowls-breakfast",
-      "title": "Bowls & Breakfast",
+      "key": "grab-go",
+      "title": "Grab & Go",
+      "note": "From the cooler",
       "items": [
         {
-          "id": "acai-bowl",
-          "name": "Açaí Bowl",
+          "id": "pressed-juice-bottle",
+          "name": "Pressed Juice Bottle",
           "ingredients": [
-            "açaí",
-            "banana",
-            "granola",
-            "strawberry",
-            "blueberry",
-            "honey or PB drizzle"
+            "any of our cold-pressed juices, bottled and capped"
           ],
-          "price": 12.5
+          "price": 8
         },
         {
-          "id": "fruit-bowl",
-          "name": "Fruit Bowl",
-          "ingredients": [
-            "mixed fresh fruit",
-            "or all pineapple",
-            "or all watermelon"
-          ],
-          "price": 7,
-          "tag": "fresh cut"
-        },
-        {
-          "id": "oatmeal",
-          "name": "Oatmeal",
-          "ingredients": [
-            "plain",
-            "or loaded: berries, walnuts, honey, cinnamon"
-          ],
-          "prices": {
-            "plain": 5,
-            "loaded": 8
-          },
-          "addons": [
-            {
-              "name": "raisins",
-              "price": 1
-            }
-          ]
-        },
-        {
-          "id": "overnight-oats",
-          "name": "Overnight Oats",
-          "ingredients": [
-            "rolled oats",
-            "oat milk",
-            "chia",
-            "honey",
-            "fresh berries"
-          ],
-          "price": 7,
-          "tag": "grab & go",
-          "addons": [
-            {
-              "name": "raisins",
-              "price": 1
-            }
-          ]
-        },
-        {
-          "id": "soup",
-          "name": "Soup of the Day",
-          "ingredients": [
-            "with sourdough"
-          ],
-          "prices": {
-            "cup": 6,
-            "bowl": 9
-          }
-        },
-        {
-          "id": "avocado-toast",
-          "name": "Avocado Toast",
-          "ingredients": [
-            "sourdough",
-            "smashed avocado",
-            "lemon",
-            "chili flake",
-            "microgreens"
-          ],
-          "price": 9,
-          "addons": [
-            {
-              "name": "egg",
-              "price": 2
-            },
-            {
-              "name": "smoked salmon",
-              "price": 5
-            }
-          ]
+          "id": "bottled-water",
+          "name": "Bottled Water",
+          "ingredients": [],
+          "price": 2
         }
       ]
     }
@@ -838,13 +813,13 @@
       {
         "name": "Shot Round",
         "desc": "24 × 2 oz wellness shots",
-        "price": 84,
+        "price": 112.5,
         "save": "22% off"
       },
       {
         "name": "Shot Week",
         "desc": "7 × 2 oz wellness shots",
-        "price": 27.5,
+        "price": 37,
         "save": "12% off"
       },
       {
@@ -913,8 +888,8 @@
         {
           "name": "Shot Round",
           "desc": "24 × 2 oz wellness shots — Flu Shot, Golden Hour, Double Shot, The Bouncer",
-          "price": 84,
-          "note": "$3.50 a shot"
+          "price": 112.5,
+          "note": "$4.69 a shot"
         },
         {
           "name": "Meeting Bar",
@@ -1599,5 +1574,107 @@
         "cost": 950
       }
     ]
-  }
+  },
+  "parked_categories": [
+    {
+      "key": "bowls-breakfast",
+      "title": "Bowls & Breakfast",
+      "items": [
+        {
+          "id": "acai-bowl",
+          "name": "Açaí Bowl",
+          "ingredients": [
+            "açaí",
+            "banana",
+            "granola",
+            "strawberry",
+            "blueberry",
+            "honey or PB drizzle"
+          ],
+          "price": 12.5
+        },
+        {
+          "id": "fruit-bowl",
+          "name": "Fruit Bowl",
+          "ingredients": [
+            "mixed fresh fruit",
+            "or all pineapple",
+            "or all watermelon"
+          ],
+          "price": 7,
+          "tag": "fresh cut"
+        },
+        {
+          "id": "oatmeal",
+          "name": "Oatmeal",
+          "ingredients": [
+            "plain",
+            "or loaded: berries, walnuts, honey, cinnamon"
+          ],
+          "prices": {
+            "plain": 5,
+            "loaded": 8
+          },
+          "addons": [
+            {
+              "name": "raisins",
+              "price": 1
+            }
+          ]
+        },
+        {
+          "id": "overnight-oats",
+          "name": "Overnight Oats",
+          "ingredients": [
+            "rolled oats",
+            "oat milk",
+            "chia",
+            "honey",
+            "fresh berries"
+          ],
+          "price": 7,
+          "tag": "grab & go",
+          "addons": [
+            {
+              "name": "raisins",
+              "price": 1
+            }
+          ]
+        },
+        {
+          "id": "soup",
+          "name": "Soup of the Day",
+          "ingredients": [
+            "with sourdough"
+          ],
+          "prices": {
+            "cup": 6,
+            "bowl": 9
+          }
+        },
+        {
+          "id": "avocado-toast",
+          "name": "Avocado Toast",
+          "ingredients": [
+            "sourdough",
+            "smashed avocado",
+            "lemon",
+            "chili flake",
+            "microgreens"
+          ],
+          "price": 9,
+          "addons": [
+            {
+              "name": "egg",
+              "price": 2
+            },
+            {
+              "name": "smoked salmon",
+              "price": 5
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

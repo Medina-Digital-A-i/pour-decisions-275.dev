@@ -16,17 +16,21 @@ for B in ${BOARDS:-A B}; do
   ffmpeg -y -loglevel error -framerate 30 -i "frames$SUF/frame_%04d.png" $ENC "$OUT/neon-$B-loop.mp4"
 done
 rm -rf "frames$SUF"
-# 60-minute versions of each board (seamless: each loop ends where it starts)
-for B in A B; do
+for B in A B; do cp "$OUT/neon-$B-loop.mp4" "$OUT/$LABEL Menu $B - loop.mp4"; done
+# 60-minute versions of each board (seamless: each loop ends where it starts) — skipped when LOOPS_ONLY=1
+if [ -z "${LOOPS_ONLY:-}" ]; then for B in A B; do
   printf "file 'neon-$B-loop.mp4'\n%.0s" $(seq 1 120) > "$OUT/list-$B.txt"
   (cd "$OUT" && ffmpeg -y -loglevel error -f concat -safe 0 -i "list-$B.txt" -c copy "$LABEL Menu $B - 60 min.mp4")
-done
+done; fi
 # alternating show: A(from 1s) -> fade -> B -> fade -> A(first 1s); cycle N+1 continues A exactly
 cd "$OUT"
 ffmpeg -y -loglevel error -ss 1 -i neon-A-loop.mp4 -i neon-B-loop.mp4 -i neon-A-loop.mp4 \
   -filter_complex "[0:v]format=yuv420p[a];[1:v]format=yuv420p[b];[2:v]trim=duration=1,format=yuv420p[a2];[a][b]xfade=transition=fade:duration=1:offset=28[ab];[ab][a2]xfade=transition=fade:duration=1:offset=57[v]" \
   -map "[v]" $ENC neon-show-cycle.mp4
-SC=$(ffprobe -v error -show_entries format=duration -of csv=p=0 neon-show-cycle.mp4 | cut -d. -f1)
-printf "file 'neon-show-cycle.mp4'\n%.0s" $(seq 1 $((3600 / SC))) > list-show.txt
-ffmpeg -y -loglevel error -f concat -safe 0 -i list-show.txt -c copy "$LABEL Menu Show (A+B) - 60 min.mp4"
+cp neon-show-cycle.mp4 "$LABEL Menu Show (A+B) - loop.mp4"
+if [ -z "${LOOPS_ONLY:-}" ]; then
+  SC=$(ffprobe -v error -show_entries format=duration -of csv=p=0 neon-show-cycle.mp4 | cut -d. -f1)
+  printf "file 'neon-show-cycle.mp4'\n%.0s" $(seq 1 $((3600 / SC))) > list-show.txt
+  ffmpeg -y -loglevel error -f concat -safe 0 -i list-show.txt -c copy "$LABEL Menu Show (A+B) - 60 min.mp4"
+fi
 ls -la *.mp4 | awk '{print int($5/1048576)" MB  "$9" "$10" "$11" "$12" "$13" "$14" "$15" "$16}'

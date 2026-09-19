@@ -104,12 +104,16 @@ def section(cat, items=None, note=None, cls=''):
 def box(title, body):
     return f'<div class="box"><h4>{esc(title)}</h4><p>{body}</p></div>'
 
-sm, mo, ju, sh, sa, wp, bb = C['smoothies'], C['protein-oats'], C['juices'], C['shots'], C['salads'], C['wraps-paninis'], C['bowls-breakfast']
+sm, mo, ju, sh, sa, wp = C['smoothies'], C['protein-oats'], C['juices'], C['shots'], C['salads'], C['wraps-paninis']
+# Salads print with one base price; proteins/fruit live in their own 'Add a protein' box
+sa = dict(sa, items=[{k: v for k, v in dict(it, price=it['prices']['salad']).items() if k != 'prices'} if it.get('prices') else it for it in sa['items']])
+_parked = {c['key']: c for c in M.get('parked_categories', [])}
+bb = C.get('bowls-breakfast') or _parked.get('bowls-breakfast') or {'key': 'bowls-breakfast', 'title': 'Bowls & Breakfast', 'items': []}
 addons_body = ' · '.join(f'{esc(a["name"])} <b>+{money(a["price"])}</b>' for a in sm['addons']) + f'<br>{esc(sm["byo"]["name"])} — {esc(sm["byo"]["note"])}'
 pk = M['packages']
 pack_body = '<br>'.join(f'<b style="color:var(--text)">{esc(c["name"])}</b> <span style="color:var(--muted)">{esc(c["desc"])}</span> <b>{money(c["price"])}</b>' + (f' <span style="color:var(--muted)">· {esc(c["save"])}</span>' if c.get('save') else '') for c in pk['items'])
 juice_add = ' · '.join(f'{esc(a["name"])} <b>+{money(a["price"])}</b>' for a in ju['addons'])
-prot_body = ' · '.join(f'{esc(p["name"])} <b>+{money(p["price"])}</b>' for p in sa['proteins'])
+prot_body = ' · '.join(f'{esc(p["name"])} <b>+{money(p["price"])}</b>' for p in sa['proteins']) + ''.join(f'<br>Add {esc(a["name"])} <b>+{money(a["price"])}</b>' for a in sa.get('addons', []))
 pass_body = '<br>'.join(f'{esc(m["name"])} <b>{money(m["price"])}</b>/{m["per"]} — {esc(m["note"])}' for m in M['memberships'])
 shots_body = '<br>'.join(f'<span style="color:var(--text)">{esc(i["name"])}</span> <span style="color:var(--muted)">— {esc(", ".join(i["ingredients"]))}</span>' for i in sh['items'])
 biz = M['business']
@@ -148,7 +152,7 @@ def ing_cols(n):
     return ''.join(f'<div class="stack">{render(c)}</div>' for c in cols)
 smoothie_note = f'16 oz {money(S["smoothie"][0]["price"])} · 24 oz {money(S["smoothie"][1]["price"])} · protein blends +$1'
 juice_note = f'16 oz {money(S["juice"][0]["price"])} · 24 oz {money(S["juice"][1]["price"])} · pressed fresh daily'
-shot_note = f'2 oz {money(S["shot"][0]["price"])} · two for $8'
+shot_note = next((c.get('note') for c in M['categories'] if c['key']=='shots'), None) or f'2 oz {money(S["shot"][0]["price"])}'
 
 QR=open('qr-menu.svg').read()
 def band(logo, size_pills=True, h='', qr=True):
@@ -222,13 +226,15 @@ PRINT_FOOD_CSS = PRINT_CSS + """
 .cols3 .cat{font-size:30px}.cols3 .sech{--ico:42px}
 .cols3 .it{padding:3px 0}.cols3 .ing{font-size:9.6px}.cols3 .nm{font-size:13.5px}.cols3 .box{padding:6px 10px;margin-top:6px}.cols3 .box p{font-size:9.8px;line-height:1.35}.cols3 .box h4{font-size:8.5px}.cols3 .sech{margin-bottom:5px}
 """
-print_food = doc('food', PRINT_FOOD_CSS, f'''
+print_food = doc('food', PRINT_FOOD_CSS + '''
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 34px;padding:22px 40px 0;flex:1}
+.cols2 .box.big{padding:12px 16px}.cols2 .box.big h4{font-size:11px}.cols2 .box.big p{font-size:13px;line-height:1.6}
+''', f'''
 <div class="page">
   {band('logo-white.png', size_pills=False)}
-  <div class="cols3">
-    <div class="stack">{section(sa, note='Meat-free by design')}{box('Add protein', prot_body)}</div>
-    <div class="stack">{section(wp)}</div>
-    <div class="stack">{section(bb, note='')}{box('Smoothie add-ins', addons_body)}{box(pk['title'] + ' · ' + pk['note'], pack_body)}{box('Pour Pass', pass_body)}</div>
+  <div class="cols2">
+    <div class="stack">{section(sa, note='Every salad comes meat-free')}{box('Add a protein', prot_body).replace('class="box"','class="box big"')}</div>
+    <div class="stack">{section(wp)}{box(pk['title'] + ' · ' + pk['note'], pack_body)}{box('Pour Pass', pass_body)}{box('Smoothie add-ins', addons_body)}</div>
   </div>
   {footer()}
 </div>''')
