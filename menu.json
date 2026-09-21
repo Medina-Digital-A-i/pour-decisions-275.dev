@@ -753,6 +753,49 @@
       ]
     },
     {
+      "key": "bowls-breakfast",
+      "title": "Bowls",
+      "note": "Yellow rice, black beans, salad, garlic sauce",
+      "items": [
+        {
+          "id": "grilled-chicken-rice-bowl",
+          "name": "Grilled Chicken Rice Bowl",
+          "ingredients": [
+            "grilled chicken",
+            "yellow rice",
+            "black beans",
+            "salad",
+            "garlic sauce"
+          ],
+          "price": 13.5
+        },
+        {
+          "id": "shrimp-rice-bowl",
+          "name": "Shrimp Rice Bowl",
+          "ingredients": [
+            "shrimp (6)",
+            "yellow rice",
+            "black beans",
+            "salad",
+            "garlic sauce"
+          ],
+          "price": 14.5
+        },
+        {
+          "id": "salmon-rice-bowl",
+          "name": "Salmon Rice Bowl",
+          "ingredients": [
+            "wild-caught salmon (8 oz)",
+            "yellow rice",
+            "black beans",
+            "salad",
+            "garlic sauce"
+          ],
+          "price": 16.5
+        }
+      ]
+    },
+    {
       "key": "grab-go",
       "title": "Grab & Go",
       "note": "From the cooler",
@@ -1585,8 +1628,8 @@
   },
   "parked_categories": [
     {
-      "key": "bowls-breakfast",
-      "title": "Bowls & Breakfast",
+      "key": "breakfast-parked",
+      "title": "Breakfast (parked — açaí bowl, oatmeal, toast, soup)",
       "items": [
         {
           "id": "acai-bowl",
