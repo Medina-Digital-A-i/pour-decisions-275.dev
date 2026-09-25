@@ -877,13 +877,19 @@
         "name": "Day Off",
         "desc": "1-day cleanse · 6 juices",
         "price": 45,
-        "save": ""
+        "save": "save $12"
       },
       {
         "name": "Long Weekend",
         "desc": "3-day cleanse · 18 juices",
         "price": 120,
         "save": "save $51"
+      },
+      {
+        "name": "5-Day Cleanse",
+        "desc": "5-day cleanse · 30 juices",
+        "price": 185,
+        "save": "save $100"
       }
     ],
     "byo": {
@@ -936,7 +942,7 @@
         }
       ],
       "box_min": 6,
-      "upgrades": "Swap the juice for a 16 oz smoothie +$2 · protein smoothie +$4 · salmon on a salad +$5 · add a wellness shot +$3",
+      "upgrades": "Swap the juice for a 16 oz smoothie +$1.50 · protein smoothie +$3.50 · salmon on a salad +$5 · add a wellness shot +$3",
       "items": [
         {
           "group": "team",
@@ -979,7 +985,7 @@
           "group": "crew",
           "name": "Teachers' Lounge Pack",
           "desc": "12 smoothies or juices (16 oz). Staff meetings & PTA thank-yous.",
-          "price": 99
+          "price": 94.5
         }
       ],
       "big_box_upgrade": 3.5,
