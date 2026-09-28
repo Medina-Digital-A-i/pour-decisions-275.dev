@@ -172,7 +172,8 @@ export default async (req) => {
     }
   } catch (e) {
     console.error('[pina]', e && e.status, e && e.message);
-    return json({ fallback: true, reason: 'api error' }, 503);
+    // status + error type only (no message text) so the owner can tell a bad key (401), no credit (400) and rate limits (429) apart
+    return json({ fallback: true, reason: 'api error', status: (e && e.status) || 0, type: (e && e.error && e.error.error && e.error.error.type) || (e && e.name) || '' }, 503);
   }
   const { text, chips } = splitChips(reply || "Sorry — lost my train of thought. Ask me again?");
   return json({ text, chips, actions: ctx.actions });
