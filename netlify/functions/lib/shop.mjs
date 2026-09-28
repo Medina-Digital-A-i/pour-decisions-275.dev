@@ -46,7 +46,7 @@ export function shopKnowledge(menu = {}) {
 - Address: ${b.address || '359 Northern Blvd, Albany NY 12204'} (Loudon Plaza). Free parking on site.
 - Hours: ${b.hours || '8 AM – 5 PM'}, ${b.days || 'Mon–Sat · Closed Sunday'}.
 - Phone / text: ${b.phone || '(838) 261-9233'} · Email: ${b.email || 'pourdecisionsalb@gmail.com'} · Instagram @${b.instagram || 'pourdecisions_juicebar'}
-- Ways to order: (1) right here in the app/site — add to cart, check out, pay at pickup (needs a free account; earns points + Pour Pass stamps); (2) Clover online ordering: ${b.order_url || 'https://pourdecisionsjuicebar.cloveronline.com'}; (3) delivery on Uber Eats and DoorDash (links on the home page); (4) walk in.`);
+- Ways to order: (1) right here in the app/site — add to cart, then check out (needs a free account; checkout finishes with secure payment on Clover Online Ordering, then pick up; use the same email or phone so it earns points + Pour Pass stamps); (2) Clover online ordering: ${b.order_url || 'https://pourdecisionsjuicebar.cloveronline.com'}; (3) delivery on Uber Eats and DoorDash (links on the home page); (4) walk in.`);
 
   out.push('MENU (prices are exact — quote them exactly)');
   for (const c of menu.categories || []) {
