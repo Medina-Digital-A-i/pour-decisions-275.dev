@@ -1995,7 +1995,7 @@ const MENU_KINDS = [
   { key:'salads',        kind:'Salads',            one:'Salad',    drink:false, chip:'Salads',            emoji:'' },
   { key:'wraps-paninis',   kind:'Wraps',             one:'Wrap',     drink:false, chip:'Wraps',   emoji:'' },
   { key:'bowls-breakfast', kind:'Bowls',             one:'Bowl',     drink:false, chip:'Bowls',             emoji:'' },
-  { key:'grab-go',         kind:'Grab & Go',         one:'Bottle',   drink:false, chip:'Grab & Go',         emoji:'' }
+  { key:'grab-go',         kind:'Grab & Go',         one:'Bottle',   drink:false, chip:'Grab & Go',         emoji:'', unit:'item', art:true }
 ];
 const DRINK_KINDS = MENU_KINDS.filter(k =>k.drink).map(k =>k.kind);
 const FOOD_KINDS  = MENU_KINDS.filter(k => !k.drink).map(k =>k.kind);
@@ -3332,7 +3332,7 @@ class Component extends DCLogic {
       menu: menu.map(cardFields),
 
       homeChips: MENU_KINDS.filter(k =>this.CATS.includes(k.kind)).map((k, i) => ({ label:k.chip, cat:k.kind })).map(c => ({ ...c, go:()=>{ this.setState({cat:c.cat}); this.go('menu'); } })),
-      homeCats: MENU_KINDS.filter(k => this.CATS.includes(k.kind)).map((k, i) => { const n = this.MENU.filter(m => m.kind === k.kind).length; const A = CAT_ART[k.key] || CAT_ART._; return { label: k.chip, sub: n + (k.drink ? (n === 1 ? ' pour' : ' pours') : (n === 1 ? ' plate' : ' plates')), photo: 'assets/photos/cat-' + k.key + '.jpg', photoCss: 'url(/assets/photos/cat-' + k.key + '.jpg)', cls: (i === 0 ? 'wide' : '') + (k.drink ? '' : ' food'), tint: A.tint, color: A.color, isCup: A.art === 'cup', isBottle: A.art === 'bottle', isShot: A.art === 'shot', isBowl: A.art === 'bowl', comingSoon: (FOOD_COMING_SOON && !k.drink), go: () => { this.setState({ cat: k.kind }); this.go('menu'); } }; }),
+      homeCats: MENU_KINDS.filter(k => this.CATS.includes(k.kind)).map((k, i) => { const n = this.MENU.filter(m => m.kind === k.kind).length; const A = CAT_ART[k.key] || CAT_ART._; return { label: k.chip, sub: n + ' ' + (k.unit || (k.drink ? 'pour' : 'plate')) + (n === 1 ? '' : 's'), photo: 'assets/photos/cat-' + k.key + '.jpg', photoCss: 'url(/assets/photos/cat-' + k.key + '.jpg)', cls: (i === 0 ? 'wide' : '') + (k.drink || k.art ? '' : ' food'), tint: A.tint, color: A.color, isCup: A.art === 'cup', isBottle: A.art === 'bottle', isShot: A.art === 'shot', isBowl: A.art === 'bowl', comingSoon: (FOOD_COMING_SOON && !k.drink), go: () => { this.setState({ cat: k.kind }); this.go('menu'); } }; }),
       mh: (() => { const k = MENU_KINDS.find(x => x.kind === activeCat); const A = k ? (CAT_ART[k.key] || CAT_ART._) : CAT_ART._; const juicer = !!k && k.key === 'juices'; return { tint: A.tint, color: A.color, isJuicer: juicer, isCup: !juicer && A.art === 'cup', isBottle: !juicer && A.art === 'bottle', isShot: !juicer && A.art === 'shot', isBowl: !juicer && A.art === 'bowl' }; })(),
       ...(() => { const k = MENU_KINDS.find(x => x.kind === activeCat); const all = !k; return {
         menuHeroPhoto: all ? 'assets/photos/hero-alt.jpg' : 'assets/photos/cat-' + k.key + '.jpg',
