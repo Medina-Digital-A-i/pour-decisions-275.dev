@@ -3117,7 +3117,16 @@ class Component extends DCLogic {
   }
 
   doCheckout(){
-    if (this.ORDER_URL) { try { window.open(this.ORDER_URL, '_blank', 'noopener'); } catch(e) { location.href = this.ORDER_URL; } return; }
+    // Accounts are required to order — that's how every order lands on a member and earns points.
+    if (!this.state.token) { this.setState({ authError: 'Create a free account (or sign in) to order — every order earns points and Pour Pass stamps.' }); this.go('auth'); return; }
+    if (this.ORDER_URL) {
+      // Payment happens on Clover Online. Record the order on the member now; the Clover sync marks it paid
+      // (and awards points) when the matching Clover payment comes through.
+      try { window.open(this.ORDER_URL, '_blank', 'noopener'); } catch(e) { location.href = this.ORDER_URL; }
+      const items = this.cartDetailed().map(ci => ({ name: ci.sub ? ci.name + ' — ' + ci.sub : ci.name, qty: ci.qty, drink: !!ci.drink && !ci.packId }));
+      this._api('order', 'POST', { items, total: Math.round(this.subtotal()*100)/100, via: 'clover-online' }).then(d => this.setState(this._applyMember(d.member))).catch(() => {});
+      return;
+    }
     this.placeOrderNow();
   }
 

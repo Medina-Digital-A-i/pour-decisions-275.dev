@@ -7,12 +7,17 @@
 //   POST /api/admin/prize              -> {email, prizeId, claimed:true|false}  (staff marks a prize redeemed)
 //   GET  /api/admin/requests           -> event-space + call-back requests (site form and Piña chat), newest first
 //   POST /api/admin/request            -> {id, status:'new'|'contacted'|'confirmed'|'declined', note?}
+//   GET  /api/admin/status             -> which integrations are switched on (Clover, Piña AI, email, texts) + last Clover sync
+//   POST /api/admin/clover-sync        -> run the Clover order sync now
+//   POST /api/admin/clover-push        -> add every member to Clover as a customer (backfill)
 //   GET /api/admin/members.csv         -> CSV export (owner session, or Authorization: Bearer <ADMIN_TOKEN>)
 import { getStore } from '@netlify/blobs';
 import { timingSafeEqual, scrypt, randomBytes } from 'node:crypto';
 const hash = (pw, salt) => new Promise((res, rej) => scrypt(pw, salt, 64, (e, k) => (e ? rej(e) : res(k.toString('hex')))));
 import { auth, store, isOwner, pub, saveMember, loadMenu, rewardRules, settleOrder } from './members.mjs';
 import { reqStore, listRequests, STATUSES } from './lib/requests.mjs';
+import { cloverReady, syncOrders, pushMember } from './lib/clover.mjs';
+import { smsReady } from './lib/notify.mjs';
 
 const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
 async function listAll(st, prefix) {
@@ -66,7 +71,7 @@ export default async (req) => {
         optIn: members.filter((m) => m.marketing).length,
         newThisWeek: members.filter((m) => Date.now() - Date.parse(m.created) < 7 * 864e5).length,
         newThisMonth: members.filter((m) => (m.created || '').slice(0, 7) === new Date().toISOString().slice(0, 7)).length,
-        orders: orders.length, paidOrders: orders.filter((o) => o.status === 'paid').length,
+        orders: orders.length, cloverOrders: orders.filter((o) => o.cloverId).length, paidOrders: orders.filter((o) => o.status === 'paid').length,
         revenue: Math.round(orders.filter((o) => o.status === 'paid').reduce((a, o) => a + o.total, 0) * 100) / 100,
         requested: Math.round(orders.reduce((a, o) => a + o.total, 0) * 100) / 100,
         views30: total, mobileShare: total ? Math.round((mobile / total) * 100) : 0,
@@ -157,6 +162,22 @@ export default async (req) => {
     r.updated = new Date().toISOString();
     await st.setJSON('req:' + r.id, r);
     return json({ request: r });
+  }
+  if (path === 'status') {
+    return json({
+      clover: cloverReady(), cloverLast: (await st.get('clover:cursor', { type: 'json' })) || null,
+      pinaAI: !!process.env.ANTHROPIC_API_KEY, gmail: !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD), texts: smsReady(), ownerPhones: !!process.env.OWNER_PHONES,
+    });
+  }
+  if (path === 'clover-sync' && req.method === 'POST') {
+    try { return json(await syncOrders(req)); } catch (e) { return json({ error: e.message }, 502); }
+  }
+  if (path === 'clover-push' && req.method === 'POST') {
+    if (!cloverReady()) return json({ error: 'Clover is not connected yet.' }, 400);
+    const keys = await listAll(st, 'member:');
+    let added = 0, failed = 0;
+    for (const k of keys) { const m = await st.get(k, { type: 'json' }); if (!m || m.cloverId) continue; try { await pushMember(m, st); added++; } catch { failed++; } }
+    return json({ added, failed });
   }
   if (path === 'purge-test' && req.method === 'POST') {
     // removes accounts on the internal test domain only

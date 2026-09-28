@@ -4,7 +4,7 @@
 //   POST signin  {email,password}                                   -> {token, member}
 //   GET  me                                                         -> {member}
 //   POST signout                                                    -> {ok}
-//   POST order   {items:[{name,qty}], total}                        -> {member, order}  (recorded as unpaid; points only when paid)
+//   POST order   {items:[{name,qty}], total, via?}                  -> {member, order}  (recorded as unpaid; points only when paid; via 'clover-online' = paying on Clover Online)
 //   POST profile {name?, phone?, marketing?, birthday?}             -> {member}
 //   POST password {current, next}                                  -> {member}   (also clears a staff-issued temp password)
 //   POST spin                                                       -> {index, prize, member}  (one spin per calendar month, prizes from menu.json "wheel")
@@ -13,6 +13,7 @@
 import { getStore } from '@netlify/blobs';
 import { scrypt, randomBytes, timingSafeEqual } from 'node:crypto';
 import { notifyOwners } from './lib/notify.mjs';
+import { pushMember } from './lib/clover.mjs';
 
 const SESSION_DAYS = 90;
 const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
@@ -115,6 +116,7 @@ export default async (req) => {
     const salt = randomBytes(16).toString('hex');
     const m = { name, email, phone: String(body.phone || '').slice(0, 30), marketing: body.marketing !== false, birthday: body.birthday || '', salt, hash: await hash(pw, salt), points: 0, filled: 0, orders: [], prizes: [], created: new Date().toISOString(), fails: 0 };
     await saveMember(st, m);
+    await pushMember(m, st).catch((e) => console.error('[clover] push member', e.message)); // so the register can find them by phone
     notifyOwners({
       origin: url.origin,
       subject: `New Pour Pass member: ${name}`,
@@ -151,10 +153,11 @@ export default async (req) => {
     const pours = items.reduce((a, i) => a + (i.drink ? i.qty : 0), 0);
     const rules = rewardRules(await loadMenu(req));
     // Recorded, not rewarded yet: points + Pour Pass stamps land when staff marks it paid (dashboard) or Clover confirms.
-    const order = { id: Date.now(), date: new Date().toISOString().slice(0, 10), items, total, pours, points: 0, pending: Math.round(total * (rules.points_per_dollar || 0)), status: 'unpaid' };
+    const via = body.via === 'clover-online' ? 'clover-online' : 'site';
+    const order = { id: Date.now(), date: new Date().toISOString().slice(0, 10), items, total, pours, points: 0, pending: Math.round(total * (rules.points_per_dollar || 0)), status: 'unpaid', via };
     m.orders = [order, ...(m.orders || [])].slice(0, 100);
     await saveMember(st, m);
-    if (process.env.NOTIFY_ORDERS !== '0') notifyOwners({ origin: url.origin, subject: `Order #${String(order.id).slice(-5)} — ${m.name} — $${total.toFixed(2)}`, text: items.map((i) => `${i.qty} × ${i.name}`).join('\n') + `\n\nTotal $${total.toFixed(2)} · pay at pickup\n${m.name} · ${m.email}${m.phone ? ' · ' + m.phone : ''}\n\nMark it paid in the dashboard when they pay: ${process.env.URL || url.origin}/admin.html#orders` }).catch(() => {});
+    if (process.env.NOTIFY_ORDERS !== '0' && via === 'site') notifyOwners({ origin: url.origin, subject: `Order #${String(order.id).slice(-5)} — ${m.name} — $${total.toFixed(2)}`, text: items.map((i) => `${i.qty} × ${i.name}`).join('\n') + `\n\nTotal $${total.toFixed(2)} · pay at pickup\n${m.name} · ${m.email}${m.phone ? ' · ' + m.phone : ''}\n\nMark it paid in the dashboard when they pay: ${process.env.URL || url.origin}/admin.html#orders` }).catch(() => {});
     return json({ member: pub(m), order });
   }
   if (path === 'password' && req.method === 'POST') {
