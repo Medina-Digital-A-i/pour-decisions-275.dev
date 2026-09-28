@@ -1,0 +1,54 @@
+/* Sept 2026 refresh — same look, tightened. Loaded after theme-pop.css; everything here is additive.
+   Design reference: the "Pour Decisions site refresh" canvas. */
+
+/* Hero: nothing runs off a phone screen; readable buttons */
+.hm-hero-pop{overflow:hidden !important;}
+.hm-hero-pop .hm-h1{max-width:100% !important;overflow-wrap:break-word;}
+.hm-hero-pop .hm-lede{max-width:34ch;}
+@media(max-width:560px){
+  .hm-hero-pop .hm-h1{font-size:clamp(42px,12.5vw,56px) !important;}
+  .hm-hero-pop .blender{width:150px !important;right:-6px !important;top:64px !important;opacity:.9;}
+  .hm-hero-pop .hm-logo-lead{max-width:62% !important;height:auto !important;}
+  .hm-ctas{display:grid !important;grid-template-columns:1fr 1fr;gap:10px !important;}
+  .hm-ctas .hm-btn{padding:14px 12px !important;text-align:center;}
+  .hm-ctas .hm-btn-gold{grid-column:1 / -1;}
+}
+.hm-btn-gold{color:#1D2B2A !important;}                 /* dark on orange: 4.5:1+, white on orange was ~2.3:1 */
+.hm-band .hm-btn-gold{color:#1D2B2A !important;}
+.hm-btn-white{background:#fff !important;color:#0B5C57 !important;border:0 !important;}
+.hm-deliv{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;font-size:13px;font-weight:700;color:rgba(255,255,255,.85);}
+.hm-deliv a{color:#fff !important;background:rgba(0,0,0,.25);padding:8px 14px;border-radius:99px;text-decoration:none !important;min-height:20px;}
+.hm-deliv a:hover{background:rgba(0,0,0,.4);}
+
+/* Menu tiles: an even grid (2 x 4 on phones, 4 x 2 on desktop) */
+.hm-cat.wide{grid-column:auto !important;}
+.hm-cat-sticker{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.25);z-index:3;}
+.hm-cat-sticker img{width:36px;height:auto;}
+@media(min-width:768px){.hm-cat-sticker{width:54px;height:54px;top:14px;right:14px;}.hm-cat-sticker img{width:44px;}}
+.pa-trio{overflow:visible;}
+
+/* Get it your way */
+.hm-ways{display:grid;grid-template-columns:1fr;gap:10px;}
+@media(min-width:768px){.hm-ways{grid-template-columns:repeat(3,1fr);gap:16px;}}
+.hm-way{display:grid;grid-template-columns:44px 1fr;grid-template-rows:auto auto;column-gap:14px;align-items:center;text-align:left;background:#fff;border:1px solid #E6DDCB;border-radius:18px;padding:14px 16px;color:#1D2B2A !important;text-decoration:none !important;font:inherit;cursor:pointer;width:100%;box-sizing:border-box;}
+.hm-way i{grid-row:1 / 3;width:44px;height:44px;border-radius:12px;background:#FFF1DE;color:#B85F00;display:grid;place-items:center;}
+.hm-way b{font-size:16px;font-weight:800;}
+.hm-way span{font-size:14px;color:#5B6664;}
+.hm-way span a{color:#0B5C57;font-weight:800;}
+
+/* The space: bookable band */
+.hm-venue{min-height:340px !important;flex-direction:column;align-items:flex-start !important;justify-content:flex-end;gap:14px;}
+@media(min-width:768px){.hm-venue{flex-direction:row;align-items:flex-end !important;justify-content:space-between;min-height:360px !important;}}
+.hm-pkgs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.hm-pkgs span{font-size:13px;font-weight:700;color:#fff;border:1px solid rgba(255,255,255,.45);border-radius:99px;padding:6px 12px;}
+.hm-pkgs span.hot{background:#FFB35C;border-color:#FFB35C;color:#1D2B2A;}
+.hm-venue-ctas{display:flex;flex-direction:column;align-items:flex-start;gap:6px;flex:0 0 auto;}
+.hm-venue-ask{background:none;border:0;color:#fff;font:inherit;font-size:14px;font-weight:700;text-decoration:underline;padding:8px 2px;cursor:pointer;}
+
+/* older rules hide every <img> inside a tile — the logo sticker is the exception */
+.hm-cat .hm-cat-sticker img{display:block !important;position:static !important;width:36px !important;height:auto !important;opacity:1 !important;inset:auto !important;transform:none !important;}
+@media(min-width:768px){.hm-cat .hm-cat-sticker img{width:44px !important;}}
+
+/* section titles: no single orphan word on phones */
+.hm-h2{text-wrap:balance;}
+@media(max-width:560px){.hm-h2{font-size:30px !important;}}
