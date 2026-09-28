@@ -5,11 +5,14 @@
 //   GET  /api/admin/orders             -> every order request, newest first, + unpaid count
 //   POST /api/admin/order              -> {email, orderId, status:'paid'|'unpaid'|'cancelled'}  (paid = award points + Pour Pass stamps)
 //   POST /api/admin/prize              -> {email, prizeId, claimed:true|false}  (staff marks a prize redeemed)
+//   GET  /api/admin/requests           -> event-space + call-back requests (site form and Piña chat), newest first
+//   POST /api/admin/request            -> {id, status:'new'|'contacted'|'confirmed'|'declined', note?}
 //   GET /api/admin/members.csv         -> CSV export (owner session, or Authorization: Bearer <ADMIN_TOKEN>)
 import { getStore } from '@netlify/blobs';
 import { timingSafeEqual, scrypt, randomBytes } from 'node:crypto';
 const hash = (pw, salt) => new Promise((res, rej) => scrypt(pw, salt, 64, (e, k) => (e ? rej(e) : res(k.toString('hex')))));
 import { auth, store, isOwner, pub, saveMember, loadMenu, rewardRules, settleOrder } from './members.mjs';
+import { reqStore, listRequests, STATUSES } from './lib/requests.mjs';
 
 const json = (b, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } });
 async function listAll(st, prefix) {
@@ -139,6 +142,21 @@ export default async (req) => {
     else events.push({ id: Date.now(), ...clean, rsvps: 0, guests: [], created: new Date().toISOString() });
     await ev.setJSON('events', events);
     return json({ events: events.sort((a, b) => (a.date < b.date ? -1 : 1)) });
+  }
+  if (path === 'requests') {
+    const list = await listRequests();
+    return json({ requests: list.slice(0, 300), open: list.filter((r) => r.status === 'new').length });
+  }
+  if (path === 'request' && req.method === 'POST') {
+    let b = {}; try { b = await req.json(); } catch {}
+    const st = reqStore();
+    const r = await st.get('req:' + String(+b.id || ''), { type: 'json' });
+    if (!r) return json({ error: 'Not found' }, 404);
+    if (STATUSES.includes(b.status)) r.status = b.status;
+    if (b.note !== undefined) r.ownerNote = String(b.note).slice(0, 500);
+    r.updated = new Date().toISOString();
+    await st.setJSON('req:' + r.id, r);
+    return json({ request: r });
   }
   if (path === 'purge-test' && req.method === 'POST') {
     // removes accounts on the internal test domain only

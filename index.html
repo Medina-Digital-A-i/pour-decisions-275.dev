@@ -1326,30 +1326,12 @@
                 <div style="font-size:12px;color:rgba(255,255,255,.88);font-weight:600;display:flex;align-items:center;gap:6px;margin-top:3px;"><span style="width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(163,230,53,.4);animation:pulseDot 1.6s infinite;flex:0 0 8px;"></span>Online now</div>
               </div>
               <div style="display:flex;gap:6px;flex-shrink:0;">
-                <button onClick="{{ setPinaChat }}" class="tap pina-tabbtn {{ pinaChatOn }}" style="border:0;border-radius:99px;padding:5px 11px;font-size:11px;font-weight:700;color:#fff;cursor:pointer;">Chat</button>
-                <button onClick="{{ setPinaProfile }}" class="tap pina-tabbtn {{ pinaProfOn }}" style="border:0;border-radius:99px;padding:5px 11px;font-size:11px;font-weight:700;color:#fff;cursor:pointer;">Profile</button>
+                <button onClick="{{ newPinaChat }}" class="tap pina-tabbtn on" style="border:0;border-radius:99px;padding:5px 11px;font-size:11px;font-weight:700;color:#fff;cursor:pointer;" aria-label="Start a new chat">New chat</button>
               </div>
               <button onClick="{{ closePinaModal }}" class="tap" style="width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.2);border:0;color:#fff;font-size:24px;font-weight:300;display:grid;place-items:center;cursor:pointer;flex:0 0 36px;line-height:1;padding:0;">×</button>
             </div>
             <!-- Messages -->
-              <sc-if value="{{ isPinaProfile }}" hint-placeholder-val="{{ false }}">
-              <div style="flex:1;overflow-y:auto;padding:16px;background:#fff;">
-                <div style="text-align:center;padding:16px 0 8px;">
-                  <div style="font-size:48px;margin-bottom:8px;"></div>
-                  <div style="font-weight:800;font-size:18px;color:var(--navy);">{{ pinaProfileName }}</div>
-                  <div style="font-size:13px;color:#888;margin-top:4px;">Goal: {{ pinaProfileGoal }}</div>
-                </div>
-                <div style="background:#f8f8f8;border-radius:16px;padding:14px 16px;margin-bottom:12px;">
-                  <div style="font-weight:700;font-size:13px;color:var(--navy);margin-bottom:8px;">Recent Check-ins</div>
-                  <div style="font-size:13px;color:#555;">{{ pinaCheckInSummary }}</div>
-                </div>
-                <div style="background:#f8f8f8;border-radius:16px;padding:14px 16px;margin-bottom:12px;">
-                  <div style="font-weight:700;font-size:13px;color:var(--navy);margin-bottom:4px;">Dietary Notes</div>
-                  <div style="font-size:13px;color:#555;">{{ pinaRestrictions }}</div>
-                </div>
-                <button onClick="{{ resetPinaProfile }}" class="tap" style="width:100%;background:none;border:1px solid #ddd;border-radius:12px;padding:10px;font-size:13px;color:#999;margin-top:4px;">Reset Profile</button>
-              </div>
-              </sc-if>
+              
               <sc-if value="{{ isPinaChat }}" hint-placeholder-val="{{ false }}">
             <div class="noscroll" style="flex:1;overflow-y:auto;padding:18px 16px;display:flex;flex-direction:column;gap:12px;min-height:160px;">
               <sc-for list="{{ pinaMessages }}" as="m" hint-placeholder-count="2">
@@ -2017,6 +1999,8 @@ const MENU_KINDS = [
 ];
 const DRINK_KINDS = MENU_KINDS.filter(k =>k.drink).map(k =>k.kind);
 const FOOD_KINDS  = MENU_KINDS.filter(k => !k.drink).map(k =>k.kind);
+const PINA_HELLO = { role:'bot', text:"Hey, I'm Piña. I know the whole menu, every deal, and the event space.\n\nI can build your order, find you the best deal, check a date for a party or meeting, or have an owner call you back. What are you after?" };
+const PINA_STARTERS = ['What do you recommend?','Show me deals','Book the space for a party','Order for my office'];
 const FOOD_COMING_SOON = false; // food is live (Sep 19 2026). Set true to hide food everywhere again.
 
 // Card colour palettes. Chosen by ingredient keyword so a new item in menu.json gets a sensible look.
@@ -2254,11 +2238,8 @@ class Component extends DCLogic {
       theme: 'Sunset',
       points: ls('pd_points', 0),
       filled: ls('pd_filled', 0),
-      pina: (()=>{
-  try{const h=JSON.parse(localStorage.getItem('pd_pina_chat')||'null');if(h&&Array.isArray(h)&&h.length)return h;}catch(e){}
-  const prof=ls('pd_pina_profile',null);
-  return [{role:'bot',text:"Hey! I'm Piña  — I know every pour on our menu, what's in it, and what it does for your body.\n\nTell me what you're after and I'll match you. Or ask me anything about the shop."}];
-})(),
+      // Piña starts fresh every visit — the conversation lives in memory only (older builds saved it; clear that).
+      pina: (()=>{ try{ localStorage.removeItem('pd_pina_chat'); localStorage.removeItem('pd_pina_profile'); }catch(e){} return [PINA_HELLO]; })(),
       pinaInput: '',
       pinaTyping: false,
       pinaOnboarding: false,
@@ -2968,7 +2949,7 @@ class Component extends DCLogic {
       [/coffee|caffeine|cold brew|espresso|latte/, 'Smoothies', "No espresso bar — but Morning Shift is a cold brew smoothie"],
       [/bowl|acai|açaí|breakfast|oatmeal|toast|soup|morning food/, 'Bowls & Breakfast', "Bowls and breakfast — the eat-with-a-spoon side of the board"],
       [/panini|sandwich|wrap|burrito|eats/, 'Wraps', "Wraps and burritos, made to order on a wheat tortilla."],
-      [/salad/, 'Salads', "Salads  Add grilled chicken +$5, albacore tuna +$4 or grilled salmon +$7."]
+      [/salad/, 'Salads', "Salads. " + (((MENU_DATA.categories || []).find(c => c.key === 'salads') || {}).note || '')]
     ];
     for (const [re, kind, lead] of CATS) {
       if (re.test(L)) {
@@ -3044,7 +3025,7 @@ class Component extends DCLogic {
                chips:['What do you recommend?','Best juice for energy','Show me the shots'] };
     }
     if (/deliver|pickup|pick up|order ahead|online order|to.?go/.test(L)) {
-      return { text:"Order ahead right here and pick it up at " + F.address + " — tap Order ahead on the home screen and it'll be waiting.",
+      return { text:"Order ahead right here and pick it up at " + F.address + " — tap Order ahead on the home screen and it'll be waiting. Want it delivered? We're on Uber Eats and DoorDash (links on the home screen).",
                chips:['What do you recommend?','What are your hours?','Show me the menu'] };
     }
     if (/who are you|what are you|your name|piña|pina/.test(L)) {
@@ -3064,18 +3045,34 @@ class Component extends DCLogic {
     this.askPina(convo, text);
   }
   async askPina(convo, lastText){
-    const q = lastText || '';
-    const delay = Math.min(700, 260 + q.length * 8);
-    setTimeout(() => {
+    const seq = this._pinaSeq || 0;
+    const reply = (res) => {
+      if ((this._pinaSeq || 0) !== seq) return; // chat was reset while we were waiting
+      this.setState(s => ({ pina: s.pina.concat([{ role:'bot', text: res.text }]), pinaTyping:false, typing:false, pinaChips: res.chips || [] }));
+    };
+    const scripted = () => {
       let res;
-      try { res = this.pinaAnswer(q); }
-      catch(err){ res = { text:"My blender jammed for a second  — ask me again?", chips:['What do you recommend?','Something for energy'] }; }
-      this.setState(s => {
-        const newPina = s.pina.concat([{ role:'bot', text: res.text }]);
-        try{ localStorage.setItem('pd_pina_chat', JSON.stringify(newPina.slice(-40))); }catch(e){}
-        return { pina:newPina, pinaTyping:false, typing:false, pinaChips: res.chips || [] };
-      });
-    }, delay);
+      try { res = this.pinaAnswer(lastText || ''); }
+      catch(err){ res = { text:"My blender jammed for a second — ask me again?", chips:['What do you recommend?','Something for energy'] }; }
+      setTimeout(() => reply(res), Math.min(700, 260 + (lastText || '').length * 8));
+    };
+    if (this._pinaOffline) return scripted();
+    try {
+      const cart = this.cartDetailed().map(c => ({ name: c.name || (this.MENU.find(m => m.id === c.id) || {}).name || c.id, qty: c.qty, size: c.size || '' }));
+      const r = await fetch('/api/pina', { method:'POST', headers:{ 'content-type':'application/json' }, cache:'no-store',
+        body: JSON.stringify({ messages: convo.map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', text: m.text })), cart,
+                               member: this.state.signedIn && this.state.user ? { name: this.state.user.name } : null }) });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || d.fallback || !d.text) { if (d.fallback) this._pinaOffline = true; return scripted(); }
+      this.pinaActions(d.actions || []);
+      reply(d);
+    } catch (e) { scripted(); }
+  }
+  pinaActions(actions){
+    for (const a of actions) {
+      if (a.type === 'add_to_cart') { const it = this.MENU.find(m => m.id === a.id); if (it) this.addToCart(it, a.qty || 1, false, a.size || undefined); }
+      else if (a.type === 'navigate' && a.screen) { this.setState({ pinaOpen:false }); this.go(a.screen); }
+    }
   }
 
   sendPina(){ const t = this.state.pinaInput.trim(); if (t) this.submit(t); }
@@ -3143,6 +3140,11 @@ class Component extends DCLogic {
     this.setState({ vqSent: true });
     const T = (this.VENUE_TYPES.find(x=>x.key===s.vqType)||{}).label || 'Not specified';
     const P = (this.VENUE_PKGS.find(x=>x.key===s.vqPkg)||{}).name || 'Not specified';
+    try{
+      fetch('/api/requests', { method:'POST', headers:{ 'content-type':'application/json' },
+        body: JSON.stringify({ kind:'venue', name:s.vqName, email:s.vqEmail, phone:s.vqPhone||'', date:s.vqDate, block:s.vqTime||'flexible',
+                               guests:s.vqGuests||'', eventType:T, package:P, notes:s.vqNote||'' }) }).catch(() => {});
+    }catch(e){}
     try{
       fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},
         body: new URLSearchParams({
@@ -3452,20 +3454,9 @@ class Component extends DCLogic {
         radius: m.role === 'user' ? '20px 20px 6px 20px' : '20px 20px 20px 6px'
       })),
       typing:S.typing,
-      pinaTab: S.pinaTab || 'chat',
-      isPinaChat: (S.pinaTab || 'chat') === 'chat',
-      isPinaProfile: (S.pinaTab || 'chat') === 'profile',
-      pinaChatOn: (S.pinaTab || 'chat') === 'chat' ? 'on' : '',
-      pinaProfOn: (S.pinaTab || 'chat') === 'profile' ? 'on' : '',
-      setPinaChat: ()=>this.setState({pinaTab:'chat'}),
-      setPinaProfile: ()=>this.setState({pinaTab:'profile'}),
-      pinaOnboarding: S.pinaOnboarding,
-      pinaProfileName: (()=>{ try{ const p=this._ls('pd_pina_profile',null); return p&&p.name ? p.name : 'Not set'; }catch(e){return 'Not set';} })(),
-      pinaProfileGoal: (()=>{ try{ const p=this._ls('pd_pina_profile',null); return p&&p.goal ? p.goal : 'Not set'; }catch(e){return 'Not set';} })(),
-      pinaCheckInSummary: (()=>{ try{ const p=this._ls('pd_pina_profile',null); if(!p||!p.checkIns||!p.checkIns.length) return 'No check-ins yet. Ask Piña to check in!'; const last=p.checkIns[p.checkIns.length-1]; const avg=Math.round(p.checkIns.reduce((a,c)=>a+c.score,0)/p.checkIns.length); return `${p.checkIns.length} check-in(s) · Last: ${last.score}/10 · Avg: ${avg}/10`; }catch(e){return 'N/A';} })(),
-      pinaRestrictions: (()=>{ try{ const p=this._ls('pd_pina_profile',null); if(!p||!p.restrictions||!p.restrictions.length) return 'None specified'; return p.restrictions.join(', '); }catch(e){return 'None';} })(),
-      resetPinaProfile: ()=>{ this._sv('pd_pina_profile',null); localStorage.removeItem('pd_pina_chat'); this.setState({pina:[{role:'bot',text:"Hey! I'm Piña  I'm your personal juice guide. What's your name?"}], pinaOnboarding:true, pinaOnboardStep:0, pinaTab:'chat'}); },
-      pinaSuggestions: ((S.pinaChips && S.pinaChips.length ? S.pinaChips : ['What do you recommend?','Something for energy','Best detox juice','What are your hours?'])
+      isPinaChat: true,
+      newPinaChat: ()=>{ this._pinaSeq = (this._pinaSeq || 0) + 1; this._pinaLastItem = null; this.setState({ pina:[PINA_HELLO], pinaChips:[], pinaInput:'', typing:false, pinaTyping:false }); },
+      pinaSuggestions: ((S.pinaChips && S.pinaChips.length ? S.pinaChips : PINA_STARTERS)
         .map(label => ({ label, ask:()=>this.submit(label) }))),
       pinaInput:S.pinaInput,
       onPinaInput:(e)=>this.setState({pinaInput:e.target.value}),
