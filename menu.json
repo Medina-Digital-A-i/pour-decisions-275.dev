@@ -845,7 +845,7 @@
   ],
   "packages": {
     "title": "Juice Packs",
-    "note": "Mix juices and shots, any combo. The bigger the pack, the bigger the discount. Pressed to order — 12 or more, give us a day.",
+    "note": "Mix juices and shots, any combo. The bigger the pack, the bigger the discount. Cleanses come two ways: The Classic (InnerG Elevator, Sober Up, Ase, Hair of the Dog, Skinny Dip, Clean Slate) or Green Reset, low sugar (2 Clean Slate, 2 Sober Up, Skinny Dip, Ase). Day Off and Immune Week same day if you order by 10 AM; Long Weekend and 5-Day order by 2 PM for next-morning pickup.",
     "items": [
       {
         "name": "Six Pack",
@@ -878,22 +878,28 @@
         "save": "12% off"
       },
       {
+        "name": "Immune Week",
+        "desc": "5 mornings · InnerG Elevator + Flu Shot each day",
+        "price": 55,
+        "save": "save $22.50"
+      },
+      {
         "name": "Day Off",
-        "desc": "1-day cleanse · 6 juices",
+        "desc": "1-day cleanse · 6 juices + 1 shot",
         "price": 45,
-        "save": "save $12"
+        "save": "save $18"
       },
       {
         "name": "Long Weekend",
-        "desc": "3-day cleanse · 18 juices",
+        "desc": "3-day cleanse · 18 juices + 3 shots",
         "price": 120,
-        "save": "save $51"
+        "save": "save $69"
       },
       {
         "name": "5-Day Cleanse",
-        "desc": "5-day cleanse · 30 juices",
+        "desc": "5-day cleanse · 30 juices + 5 shots · two pickups",
         "price": 185,
-        "save": "save $100"
+        "save": "save $130"
       }
     ],
     "byo": {
