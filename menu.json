@@ -534,7 +534,8 @@
             "tuna": 16,
             "shrimp": 16,
             "salmon": 19
-          }
+          },
+          "photo": "assets/photos/menu/house.jpg"
         },
         {
           "id": "caesar",
@@ -551,7 +552,8 @@
             "tuna": 16,
             "shrimp": 16,
             "salmon": 19
-          }
+          },
+          "photo": "assets/photos/menu/caesar.jpg"
         },
         {
           "id": "kale",
@@ -634,7 +636,8 @@
             "tuna": 17.5,
             "shrimp": 17.5,
             "salmon": 20.5
-          }
+          },
+          "photo": "assets/photos/menu/southwest-black-bean.jpg"
         },
         {
           "id": "apple-walnut-cranberry",
@@ -655,7 +658,8 @@
             "tuna": 17.5,
             "shrimp": 17.5,
             "salmon": 20.5
-          }
+          },
+          "photo": "assets/photos/menu/apple-walnut-cranberry.jpg"
         }
       ],
       "proteins": [
@@ -752,7 +756,8 @@
             "cilantro",
             "chipotle-lime"
           ],
-          "price": 14.5
+          "price": 14.5,
+          "photo": "assets/photos/menu/salmon-burrito.jpg"
         }
       ]
     },
@@ -771,7 +776,8 @@
             "salad",
             "garlic sauce"
           ],
-          "price": 13.5
+          "price": 13.5,
+          "photo": "assets/photos/menu/grilled-chicken-rice-bowl.jpg"
         },
         {
           "id": "shrimp-rice-bowl",
@@ -783,7 +789,8 @@
             "salad",
             "garlic sauce"
           ],
-          "price": 14.5
+          "price": 14.5,
+          "photo": "assets/photos/menu/shrimp-rice-bowl.jpg"
         },
         {
           "id": "salmon-rice-bowl",
@@ -795,7 +802,8 @@
             "salad",
             "garlic sauce"
           ],
-          "price": 16.5
+          "price": 16.5,
+          "photo": "assets/photos/menu/salmon-rice-bowl.jpg"
         }
       ]
     },
@@ -810,7 +818,8 @@
           "ingredients": [
             "any of our cold-pressed juices, bottled and capped"
           ],
-          "price": 8
+          "price": 8,
+          "photo": "assets/photos/menu/pressed-juice-bottle.jpg"
         },
         {
           "id": "sea-moss-bottle",
@@ -818,7 +827,8 @@
           "ingredients": [
             "16 oz bottle"
           ],
-          "price": 20
+          "price": 20,
+          "photo": "assets/photos/menu/sea-moss-bottle.jpg"
         },
         {
           "id": "bottled-water",

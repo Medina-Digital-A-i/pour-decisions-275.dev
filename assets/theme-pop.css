@@ -387,3 +387,9 @@ img.pd-hero-logo[src][style]{flex:0 0 auto !important;width:var(--logo-w) !impor
 .pd-foot{margin-bottom:-28px;}
 .pd-foot-grid a b{white-space:nowrap;}
 .pd-foot-grid a:not(:has(b)){font-size:12.5px;overflow-wrap:anywhere;word-break:normal;}
+
+/* real food photos (menu.json "photo") — full-bleed hero on the item page */
+.dt-hero img.bg.dt-photo{display:block !important;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.dt-hero:has(img.dt-photo)::before{display:none;}
+.dt-hero:has(img.dt-photo)::after{background:linear-gradient(180deg,rgba(0,0,0,.25) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.15) 55%,rgba(0,0,0,.7) 100%) !important;z-index:1;}
+.dt-hero:has(img.dt-photo) .pa-wrap{display:none !important;}
