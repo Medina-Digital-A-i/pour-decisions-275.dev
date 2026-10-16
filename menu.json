@@ -6,11 +6,16 @@
     "email": "pourdecisionsalb@gmail.com",
     "instagram": "pourdecisions_juicebar",
     "order_url": "https://pourdecisionsjuicebar.cloveronline.com",
-    "hours": "8 AM – 5 PM",
+    "hours": "Wed–Fri 8 AM – 8 PM",
     "open": "08:00",
     "close": "17:00",
+    "close_by_day": {
+      "3": "20:00",
+      "4": "20:00",
+      "5": "20:00"
+    },
     "phone": "(838) 261-9233",
-    "days": "Mon–Sat · Closed Sunday",
+    "days": "Mon, Tue, Sat 8 AM – 5 PM · Closed Sunday",
     "closed_days": [
       0
     ]
