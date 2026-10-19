@@ -813,6 +813,29 @@
       ]
     },
     {
+      "key": "patties",
+      "title": "Jamaican Patties",
+      "note": "Hot and flaky · in coco bread +$2",
+      "addons": [
+        {
+          "name": "Coco Bread",
+          "price": 2
+        }
+      ],
+      "items": [
+        {
+          "id": "jamaican-beef-patty",
+          "name": "Jamaican Beef Patty",
+          "ingredients": [
+            "flaky golden crust",
+            "spiced beef filling"
+          ],
+          "tag": "hot",
+          "price": 4
+        }
+      ]
+    },
+    {
       "key": "grab-go",
       "title": "Grab & Go",
       "note": "From the cooler",
